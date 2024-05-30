@@ -1,19 +1,17 @@
-= render 'devise/header'
-= page_title 'Passwort ändern'
+= render 'devise/header', active: :reset_password
 
 .row
   .col-md-8
     = simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
-      .card
-        .card-body
+      = card do |card|
+        = card.title 'Passwort vergessen?'
+        = card.body do
           = f.error_notification
           = f.input :reset_password_token, as: :hidden
-          = f.full_error :reset_password_token
+          .text-danger= f.full_error :reset_password_token
 
           .form-inputs
             = f.input :password, required: true, autofocus: true, input_html: { autocomplete: 'new-password' }, label: 'Neues Passwort'
             = f.input :password_confirmation, required: true, input_html: { autocomplete: 'new-password' }
-          .btn-toolbar.mt-3
-            = f.button :submit, 'Passwort ändern', class: 'btn btn-primary'
-  .col-md-4
-    = render 'devise/shared/links'
+        = card.footer do
+          = f.button :submit, 'Passwort ändern', class: 'btn btn-primary'

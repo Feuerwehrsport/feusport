@@ -5,6 +5,7 @@ Ui::PageBuilder = Struct.new(:options, :view, :block) do
 
   def initialize(*args)
     super
+    @tabs = Ui::NavBuilder.new(options, view)
     view.capture_haml(self, &block)
   end
 

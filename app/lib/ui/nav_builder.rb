@@ -3,12 +3,12 @@
 Ui::NavBuilder = Struct.new(:options, :view, :block) do
   attr_reader :items
 
-  delegate :each, :map, :filter, :detect, to: :items
+  delegate :each, :empty?, :map, :filter, :detect, to: :items
 
   def initialize(*args)
     super
     @items = []
-    view.capture_haml(self, &block)
+    view.capture_haml(self, &block) if block
   end
 
   def link_to(label, url, options = {})
@@ -35,6 +35,18 @@ end
 Ui::NavBuilderItem = Struct.new(:label, :url, :options) do
   def active
     options[:active]
+  end
+
+  def data
+    options[:data]
+  end
+
+  def variant
+    options[:variant]
+  end
+
+  def btn_classes(fallback_variant, additional_classes = [])
+    ["btn btn-#{variant || fallback_variant}", additional_classes.presence].compact.join(' ')
   end
 
   def start_icon_class

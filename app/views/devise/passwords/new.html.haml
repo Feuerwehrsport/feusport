@@ -1,16 +1,14 @@
-= render 'devise/header'
-= page_title 'Passwort vergessen?'
+= render 'devise/header', active: :reset_password
 
 .row
   .col-md-8
     = simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
-      .card
-        .card-body
+      = card do |card|
+        = card.title 'Passwort vergessen?'
+        = card.body do
           = f.error_notification
 
           .form-inputs
             = f.input :email, autofocus: true, required: true, input_html: { autocomplete: 'email' }
-          .btn-toolbar.mt-3
-            = f.button :submit, 'Link zum Zurücksetzen zusenden', class: 'btn btn-primary'
-  .col-md-4
-    = render 'devise/shared/links'
+        = card.footer do
+          = f.button :submit, 'Link zum Zurücksetzen zusenden', class: 'btn btn-primary'

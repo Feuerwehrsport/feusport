@@ -1,4 +1,4 @@
-= active_link_to(link.url, class: a_class, active: link.active) do
+= active_link_to(link.url, class: a_class, active: link.active, data: link.data) do
   - if link.start_icon_class
     %i{ class: link.start_icon_class }
   = link.label

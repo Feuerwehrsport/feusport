@@ -1,17 +1,15 @@
-= render 'devise/header'
-= page_title 'Bestätigungs-E-Mail erneut zusenden'
+= render 'devise/header', active: :confirm
 
 .row
   .col-md-8
     = simple_form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f|
-      .card
-        .card-body
+      = card do |card|
+        = card.title 'Bestätigungs-E-Mail erneut senden'
+        = card.body do
           = f.error_notification
           = f.full_error :confirmation_token
 
           .form-inputs
             = f.input :email, autofocus: true, required: true, input_html: { autocomplete: 'email' }, value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email)
-          .btn-toolbar.mt-3
-            = f.button :submit, 'Link zusenden', class: 'btn btn-primary'
-  .col-md-4
-    = render 'devise/shared/links'
+        = card.footer do
+          = f.button :submit, 'Link zusenden', class: 'btn btn-primary'

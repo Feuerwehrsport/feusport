@@ -1,12 +1,12 @@
 = page do |page|
   = page.title 'Anmelden oder Registrieren'
   = page.tabs do |tabs|
-    = tabs.link_to 'Anmelden', new_session_path(resource_name)
+    = tabs.link_to 'Anmelden', new_session_path(resource_name), active: active == :sign_in
     - if devise_mapping.registerable?
-      = tabs.link_to 'Registrieren', new_registration_path(resource_name)
+      = tabs.link_to 'Registrieren', new_registration_path(resource_name), active: active == :register
     - if devise_mapping.recoverable?
-      = tabs.link_to 'Passwort vergessen?', new_password_path(resource_name)
+      = tabs.link_to 'Passwort vergessen?', new_password_path(resource_name), active: active == :reset_password
     - if devise_mapping.confirmable?
-      = tabs.link_to 'Bestätigungs-E-Mail nicht erhalten?', new_confirmation_path(resource_name)
+      = tabs.link_to 'Bestätigungs-E-Mail nicht erhalten?', new_confirmation_path(resource_name), active: active == :confirm
     - if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email)
-      = tabs.link_to 'Entsperr-E-Mail nicht erhalten?', new_unlock_path(resource_name)
+      = tabs.link_to 'Entsperr-E-Mail nicht erhalten?', new_unlock_path(resource_name), active: active == :unlock

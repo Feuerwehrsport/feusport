@@ -18,6 +18,6 @@
           %div
             .btn-group
               - card.actions.each do |action|
-                = render 'nav_link', link: action, a_class: 'btn btn-outline-secondary btn-sm'
+                = render 'nav_link', link: action, a_class: action.btn_classes('outline-secondary', 'btn-sm')
   - elsif card.footer.present?
     .card-footer= card.footer

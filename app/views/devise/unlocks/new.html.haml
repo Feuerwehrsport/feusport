@@ -1,17 +1,15 @@
-= render 'devise/header'
-= page_title 'Entsperr-E-Mail erneut zusenden'
+= render 'devise/header', active: :unlock
 
 .row
   .col-md-8
     = simple_form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f|
-      .card
-        .card-body
+      = card do |card|
+        = card.title 'Entsperr-E-Mail senden'
+        = card.body do
           = f.error_notification
           = f.full_error :unlock_token
 
           .form-inputs
             = f.input :email, autofocus: true, required: true, input_html: { autocomplete: 'email' }
-          .btn-toolbar.mt-3
-            = f.button :submit, 'Zusenden', class: 'btn btn-primary'
-  .col-md-4
-    = render 'devise/shared/links'
+        = card.footer do
+          = f.button :submit, 'Zusenden', class: 'btn btn-primary'

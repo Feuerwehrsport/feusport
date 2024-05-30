@@ -1,10 +1,12 @@
-= page_title 'Benutzerkontos bearbeiten'
+= page do |page|
+  = page.title resource.name
 
 .row
   .col-md-8
     = simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
-      .card
-        .card-body
+      = card do |card|
+        = card.title 'Nutzer bearbeiten'
+        = card.body do
           = f.error_notification
 
           .form-inputs
@@ -15,10 +17,11 @@
             = f.input :password, input_html: { autocomplete: 'new-password' }, hint: 'Freilassen, wenn keine Änderung gewünscht ist'
             = f.input :password_confirmation, input_html: { autocomplete: 'new-password' }
             = f.input :current_password, input_html: { autocomplete: 'current-password' }, hint: 'Aktuelles Passwort, um Änderungen zu bestätigen'
-          .btn-toolbar.mt-3
-            = f.button :submit, class: 'btn btn-primary'
+        = card.footer do
+          = f.button :submit, class: 'btn btn-primary'
+
   .col-md-4
-    .card
-      .card-body
-        %h4 Benutzerkonto entfernen
-        = link_to 'Jetzt löschen', registration_path(resource_name), data: { turbo_confirm: 'Benutzerkonto wirklich entfernen?', 'turbo-method': :delete }, class: 'btn btn-danger btn-sm'
+    = card do |card|
+      = card.title 'Benutzerkonto löschen'
+      = card.actions do |actions|
+        = actions.link_to 'Jetzt löschen', registration_path(resource_name), data: { turbo_confirm: 'Benutzerkonto wirklich entfernen?', 'turbo-method': :delete }, variant: :danger

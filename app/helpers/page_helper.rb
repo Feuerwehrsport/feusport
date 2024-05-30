@@ -10,6 +10,6 @@ module PageHelper
     page = Ui::PageBuilder.new(options, self, block)
     page_title(page.head_title)
     content_for(:page_header, render('page_header', page:))
-    content_for(:page_tabs, render('page_tabs', page:))
+    content_for(:page_tabs, render('page_tabs', page:)) if page.tabs.present?
   end
 end
