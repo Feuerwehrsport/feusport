@@ -40,7 +40,7 @@ const editTimes = function () {
     });
     disableHandler();
 
-    context.querySelectorAll('.time-entries input.numeric.second_time').forEach(function (timeInput) {
+    context.querySelectorAll('.time-entries input.numeric.second_time').forEach(function (timeInput, tindex) {
       handleBadInput(timeInput);
       const selectRadioButton = function () {
         if (timeInput.value !== '') {
@@ -51,7 +51,7 @@ const editTimes = function () {
       timeInput.addEventListener('change', selectRadioButton);
       timeInput.addEventListener('keydown', selectRadioButton);
       timeInput.addEventListener('paste', selectRadioButton);
-      if (i == 0) timeInput.focus();
+      if (i == 0 && tindex == 0) timeInput.focus();
     });
   });
 };
