@@ -8,8 +8,8 @@ AllCops:
   - public/**/*
   - private/**/*
   - app/models/concerns/schema_validations.rb
-  TargetRailsVersion: 7
-  TargetRubyVersion: 3.2.6
+  TargetRailsVersion: 7.2
+  TargetRubyVersion: 3.3.7
 Bundler/OrderedGems:
   Enabled: false
 FactoryBot/AssociationStyle:
@@ -426,11 +426,6 @@ Rails/TopLevelHashWithIndifferentAccess:
   Enabled: true
 Rails/TransactionExitStatement:
   Enabled: true
-Rails/UnknownEnv:
-  Environments:
-  - development
-  - production
-  - test
 Rails/UnusedIgnoredColumns:
   Enabled: true
 Rails/UnusedRenderContent:
