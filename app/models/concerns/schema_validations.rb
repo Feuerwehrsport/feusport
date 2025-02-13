@@ -4,7 +4,7 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 
-# generated from version 20241118214336
+# generated from version 20250213092728
 
 module SchemaValidations
   extend ActiveSupport::Concern
@@ -103,6 +103,8 @@ module SchemaValidations
 
     def dbv_bands_validations(enums: [])
       belongs_to_presence_validations_for([:competition_id, :gender])
+      belongs_to_uniqueness_validations_for([["name", "competition_id"]])
+      uniqueness_validations_for([["name", "competition_id"]])
       validates_with_filter :competition_id, {:presence=>{}}
       validates_with_filter :gender, {:presence=>{}}
       validates_with_filter :gender, {:numericality=>{:allow_nil=>true, :only_integer=>true, :greater_than_or_equal_to=>-2147483648, :less_than=>2147483648}} unless enums.include?(:gender)
