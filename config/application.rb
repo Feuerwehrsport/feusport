@@ -23,7 +23,7 @@ Bundler.require(*Rails.groups)
 module Feusport
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.0
+    config.load_defaults 7.2
 
     config.generators.orm :active_record, primary_key_type: :uuid
     config.time_zone = 'Berlin'
@@ -41,8 +41,10 @@ module Feusport
                                      view_specs: false
 
     config.active_record.belongs_to_required_by_default = false
-    config.active_record.encryption.key_derivation_salt = Rails.application.secrets.encryption_key_derivation_salt
-    config.active_record.encryption.primary_key = Rails.application.secrets.encryption_primary_key
+    config.active_record.encryption.key_derivation_salt =
+      ENV.fetch('ENCRYPTION_KEY_DERIVATION_SALT', 'Oe0dCt3pLslia4nLkADHWmskBTfSRwb6')
+    config.active_record.encryption.primary_key =
+      ENV.fetch('ENCRYPTION_PRIMARY_KEY', 'S0KXvOn2ar5TOKTBv7KBxqwguYgaIdUO')
 
     config.x.email_validation = { mx: true }
 

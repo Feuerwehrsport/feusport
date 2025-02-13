@@ -64,7 +64,7 @@ class MarkdownTemplateHandler
 
   def call(template, a)
     compiled_source = erb.call(template, a)
-    "EmailMarkdown.renderer.render(begin;#{compiled_source};end).html_safe"
+    "EmailMarkdown.renderer.render(begin;#{compiled_source};end.to_s).html_safe"
   end
 end
 

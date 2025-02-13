@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 ruby '3.3.7'
 
-gem 'rails', '~> 7.0.5'
+gem 'rails', '~> 7.0'
 
 gem 'pg' # database
 gem 'puma' # webserver for development
