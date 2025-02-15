@@ -114,7 +114,7 @@ module Exports::ScoreLists
       best_per_assessments = runners.group_by(&:assessment_id).map do |_, ass_runners|
         ass_runners.group_by(&:time).min.second
       end
-      [run, best_per_assessments.sum]
+      [run, best_per_assessments.inject(&:+)]
     end
   end
 

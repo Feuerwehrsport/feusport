@@ -202,7 +202,7 @@ Performance/StringIdentifierArgument:
 Performance/StringInclude:
   Enabled: true
 Performance/Sum:
-  Enabled: true
+  Enabled: false
 RSpec/AnyInstance:
   Enabled: false
 RSpec/BeEmpty:
