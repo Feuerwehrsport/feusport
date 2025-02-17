@@ -1,6 +1,6 @@
 - c.body do
   = f.input :title
-  = f.input :file, hint: 'Wenn du eine neue Datei angibst, wird die vorhandene Datei ersetzt.'
+  = f.input :file, hint: f.object.persisted? ? 'Wenn du eine neue Datei angibst, wird die vorhandene Datei ersetzt.' : nil
 - c.footer do
   = f.primary_button :submit, 'Hochladen'
   = f.cancel_button(competition_show_path)
