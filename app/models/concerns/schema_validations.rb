@@ -4,7 +4,7 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 
-# generated from version 20250213213353
+# generated from version 20250224112552
 
 module SchemaValidations
   extend ActiveSupport::Concern
@@ -192,20 +192,6 @@ module SchemaValidations
       validates_with_filter :updated_at, {:presence=>{}}
       validates_with_filter :updated_at, {:date_time_in_db_range=>{}}
       validates_with_filter :locked_at, {:date_time_in_db_range=>{}}
-    end
-
-    def dbv_delayed_jobs_validations(enums: [])
-      belongs_to_presence_validations_for([:priority, :attempts])
-      validates_with_filter :priority, {:presence=>{}}
-      validates_with_filter :priority, {:numericality=>{:allow_nil=>true, :only_integer=>true, :greater_than_or_equal_to=>-2147483648, :less_than=>2147483648}} unless enums.include?(:priority)
-      validates_with_filter :attempts, {:presence=>{}}
-      validates_with_filter :attempts, {:numericality=>{:allow_nil=>true, :only_integer=>true, :greater_than_or_equal_to=>-2147483648, :less_than=>2147483648}} unless enums.include?(:attempts)
-      validates_with_filter :handler, {:presence=>{}}
-      validates_with_filter :run_at, {:date_time_in_db_range=>{}}
-      validates_with_filter :locked_at, {:date_time_in_db_range=>{}}
-      validates_with_filter :failed_at, {:date_time_in_db_range=>{}}
-      validates_with_filter :created_at, {:date_time_in_db_range=>{}}
-      validates_with_filter :updated_at, {:date_time_in_db_range=>{}}
     end
 
     def dbv_disciplines_validations(enums: [])
@@ -603,6 +589,150 @@ module SchemaValidations
       uniqueness_validations_for([["competition_id", "name"]])
       validates_with_filter :competition_id, {:presence=>{}}
       validates_with_filter :name, {:presence=>{}}
+      validates_with_filter :created_at, {:presence=>{}}
+      validates_with_filter :created_at, {:date_time_in_db_range=>{}}
+      validates_with_filter :updated_at, {:presence=>{}}
+      validates_with_filter :updated_at, {:date_time_in_db_range=>{}}
+    end
+
+    def dbv_solid_queue_blocked_executions_validations(enums: [])
+      belongs_to_presence_validations_for([:job_id, :priority])
+      belongs_to_uniqueness_validations_for([["job_id"]])
+      uniqueness_validations_for([["job_id"]])
+      validates_with_filter :job_id, {:presence=>{}}
+      validates_with_filter :job_id, {:numericality=>{:allow_nil=>true}} unless enums.include?(:job_id)
+      validates_with_filter :queue_name, {:presence=>{}}
+      validates_with_filter :priority, {:presence=>{}}
+      validates_with_filter :priority, {:numericality=>{:allow_nil=>true, :only_integer=>true, :greater_than_or_equal_to=>-2147483648, :less_than=>2147483648}} unless enums.include?(:priority)
+      validates_with_filter :concurrency_key, {:presence=>{}}
+      validates_with_filter :expires_at, {:presence=>{}}
+      validates_with_filter :expires_at, {:date_time_in_db_range=>{}}
+      validates_with_filter :created_at, {:presence=>{}}
+      validates_with_filter :created_at, {:date_time_in_db_range=>{}}
+    end
+
+    def dbv_solid_queue_claimed_executions_validations(enums: [])
+      belongs_to_presence_validations_for([:job_id])
+      belongs_to_uniqueness_validations_for([["job_id"]])
+      uniqueness_validations_for([["job_id"]])
+      validates_with_filter :job_id, {:presence=>{}}
+      validates_with_filter :job_id, {:numericality=>{:allow_nil=>true}} unless enums.include?(:job_id)
+      validates_with_filter :process_id, {:numericality=>{:allow_nil=>true}} unless enums.include?(:process_id)
+      validates_with_filter :created_at, {:presence=>{}}
+      validates_with_filter :created_at, {:date_time_in_db_range=>{}}
+    end
+
+    def dbv_solid_queue_failed_executions_validations(enums: [])
+      belongs_to_presence_validations_for([:job_id])
+      belongs_to_uniqueness_validations_for([["job_id"]])
+      uniqueness_validations_for([["job_id"]])
+      validates_with_filter :job_id, {:presence=>{}}
+      validates_with_filter :job_id, {:numericality=>{:allow_nil=>true}} unless enums.include?(:job_id)
+      validates_with_filter :created_at, {:presence=>{}}
+      validates_with_filter :created_at, {:date_time_in_db_range=>{}}
+    end
+
+    def dbv_solid_queue_jobs_validations(enums: [])
+      belongs_to_presence_validations_for([:priority])
+      validates_with_filter :queue_name, {:presence=>{}}
+      validates_with_filter :class_name, {:presence=>{}}
+      validates_with_filter :priority, {:presence=>{}}
+      validates_with_filter :priority, {:numericality=>{:allow_nil=>true, :only_integer=>true, :greater_than_or_equal_to=>-2147483648, :less_than=>2147483648}} unless enums.include?(:priority)
+      validates_with_filter :scheduled_at, {:date_time_in_db_range=>{}}
+      validates_with_filter :finished_at, {:date_time_in_db_range=>{}}
+      validates_with_filter :created_at, {:presence=>{}}
+      validates_with_filter :created_at, {:date_time_in_db_range=>{}}
+      validates_with_filter :updated_at, {:presence=>{}}
+      validates_with_filter :updated_at, {:date_time_in_db_range=>{}}
+    end
+
+    def dbv_solid_queue_pauses_validations(enums: [])
+      belongs_to_uniqueness_validations_for([["queue_name"]])
+      uniqueness_validations_for([["queue_name"]])
+      validates_with_filter :queue_name, {:presence=>{}}
+      validates_with_filter :created_at, {:presence=>{}}
+      validates_with_filter :created_at, {:date_time_in_db_range=>{}}
+    end
+
+    def dbv_solid_queue_processes_validations(enums: [])
+      belongs_to_presence_validations_for([:pid])
+      belongs_to_uniqueness_validations_for([["name", "supervisor_id"]])
+      uniqueness_validations_for([["name", "supervisor_id"]])
+      validates_with_filter :kind, {:presence=>{}}
+      validates_with_filter :last_heartbeat_at, {:presence=>{}}
+      validates_with_filter :last_heartbeat_at, {:date_time_in_db_range=>{}}
+      validates_with_filter :supervisor_id, {:numericality=>{:allow_nil=>true}} unless enums.include?(:supervisor_id)
+      validates_with_filter :pid, {:presence=>{}}
+      validates_with_filter :pid, {:numericality=>{:allow_nil=>true, :only_integer=>true, :greater_than_or_equal_to=>-2147483648, :less_than=>2147483648}} unless enums.include?(:pid)
+      validates_with_filter :created_at, {:presence=>{}}
+      validates_with_filter :created_at, {:date_time_in_db_range=>{}}
+      validates_with_filter :name, {:presence=>{}}
+    end
+
+    def dbv_solid_queue_ready_executions_validations(enums: [])
+      belongs_to_presence_validations_for([:job_id, :priority])
+      belongs_to_uniqueness_validations_for([["job_id"]])
+      uniqueness_validations_for([["job_id"]])
+      validates_with_filter :job_id, {:presence=>{}}
+      validates_with_filter :job_id, {:numericality=>{:allow_nil=>true}} unless enums.include?(:job_id)
+      validates_with_filter :queue_name, {:presence=>{}}
+      validates_with_filter :priority, {:presence=>{}}
+      validates_with_filter :priority, {:numericality=>{:allow_nil=>true, :only_integer=>true, :greater_than_or_equal_to=>-2147483648, :less_than=>2147483648}} unless enums.include?(:priority)
+      validates_with_filter :created_at, {:presence=>{}}
+      validates_with_filter :created_at, {:date_time_in_db_range=>{}}
+    end
+
+    def dbv_solid_queue_recurring_executions_validations(enums: [])
+      belongs_to_presence_validations_for([:job_id])
+      belongs_to_uniqueness_validations_for([["job_id"], ["task_key", "run_at"]])
+      uniqueness_validations_for([["job_id"], ["task_key", "run_at"]])
+      validates_with_filter :job_id, {:presence=>{}}
+      validates_with_filter :job_id, {:numericality=>{:allow_nil=>true}} unless enums.include?(:job_id)
+      validates_with_filter :task_key, {:presence=>{}}
+      validates_with_filter :run_at, {:presence=>{}}
+      validates_with_filter :run_at, {:date_time_in_db_range=>{}}
+      validates_with_filter :created_at, {:presence=>{}}
+      validates_with_filter :created_at, {:date_time_in_db_range=>{}}
+    end
+
+    def dbv_solid_queue_recurring_tasks_validations(enums: [])
+      belongs_to_uniqueness_validations_for([["key"]])
+      uniqueness_validations_for([["key"]])
+      validates_with_filter :key, {:presence=>{}}
+      validates_with_filter :schedule, {:presence=>{}}
+      validates_with_filter :command, {:length=>{:allow_nil=>true, :maximum=>2048}}
+      validates_with_filter :priority, {:numericality=>{:allow_nil=>true, :only_integer=>true, :greater_than_or_equal_to=>-2147483648, :less_than=>2147483648}} unless enums.include?(:priority)
+      validates_with_filter :static, {:inclusion=>{:in=>[true, false], :message=>:blank}}
+      validates_with_filter :created_at, {:presence=>{}}
+      validates_with_filter :created_at, {:date_time_in_db_range=>{}}
+      validates_with_filter :updated_at, {:presence=>{}}
+      validates_with_filter :updated_at, {:date_time_in_db_range=>{}}
+    end
+
+    def dbv_solid_queue_scheduled_executions_validations(enums: [])
+      belongs_to_presence_validations_for([:job_id, :priority])
+      belongs_to_uniqueness_validations_for([["job_id"]])
+      uniqueness_validations_for([["job_id"]])
+      validates_with_filter :job_id, {:presence=>{}}
+      validates_with_filter :job_id, {:numericality=>{:allow_nil=>true}} unless enums.include?(:job_id)
+      validates_with_filter :queue_name, {:presence=>{}}
+      validates_with_filter :priority, {:presence=>{}}
+      validates_with_filter :priority, {:numericality=>{:allow_nil=>true, :only_integer=>true, :greater_than_or_equal_to=>-2147483648, :less_than=>2147483648}} unless enums.include?(:priority)
+      validates_with_filter :scheduled_at, {:presence=>{}}
+      validates_with_filter :scheduled_at, {:date_time_in_db_range=>{}}
+      validates_with_filter :created_at, {:presence=>{}}
+      validates_with_filter :created_at, {:date_time_in_db_range=>{}}
+    end
+
+    def dbv_solid_queue_semaphores_validations(enums: [])
+      belongs_to_presence_validations_for([:value])
+      belongs_to_uniqueness_validations_for([["key"]])
+      uniqueness_validations_for([["key"]])
+      validates_with_filter :key, {:presence=>{}}
+      validates_with_filter :value, {:presence=>{}}
+      validates_with_filter :value, {:numericality=>{:allow_nil=>true, :only_integer=>true, :greater_than_or_equal_to=>-2147483648, :less_than=>2147483648}} unless enums.include?(:value)
+      validates_with_filter :expires_at, {:presence=>{}}
+      validates_with_filter :expires_at, {:date_time_in_db_range=>{}}
       validates_with_filter :created_at, {:presence=>{}}
       validates_with_filter :created_at, {:date_time_in_db_range=>{}}
       validates_with_filter :updated_at, {:presence=>{}}

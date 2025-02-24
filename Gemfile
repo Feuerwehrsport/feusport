@@ -22,9 +22,7 @@ gem 'generated_schema_validations' # validate models by schema
 gem 'rails_log_parser' # to analyise log
 
 # background jobs
-gem 'daemons'
-gem 'delayed_job_active_record'
-gem 'delayed_job_schedule'
+gem 'solid_queue'
 gem 'whenever'
 
 gem 'simple_form' # rails form helper
