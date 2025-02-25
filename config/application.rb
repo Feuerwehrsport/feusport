@@ -53,6 +53,8 @@ module Feusport
     config.action_mailer.default_options = {
       from: 'Feuerwehrsport <no-reply@feusport.de>',
     }
+
+    config.debug_email_address = 'georf@georf.de'
   end
 end
 
