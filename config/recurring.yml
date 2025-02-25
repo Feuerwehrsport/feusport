@@ -8,6 +8,6 @@ production:
     priority: 50
     schedule: 21 5 * * *
   solid_queue_debug:
-    class: SolidQueueDebugJob
+    class: DebugJob
     priority: 10
     schedule: '*/20 * * * *'

@@ -13,7 +13,7 @@ set :rvm_ruby_version, '3.3.7'
 set :migration_servers, -> { release_roles(fetch(:migration_role)) }
 
 set :enable_delayed_job, false # default is true
-# set :enable_whenever, true # default is true
+set :enable_whenever, false # default is true
 
 set :systemd_usage, true
 

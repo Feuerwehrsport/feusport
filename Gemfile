@@ -21,9 +21,7 @@ gem 'bootsnap', require: false # Reduces boot times through caching; required in
 gem 'generated_schema_validations' # validate models by schema
 gem 'rails_log_parser' # to analyise log
 
-# background jobs
-gem 'solid_queue'
-gem 'whenever'
+gem 'solid_queue' # background jobs
 
 gem 'simple_form' # rails form helper
 gem 'devise' # user authentication
