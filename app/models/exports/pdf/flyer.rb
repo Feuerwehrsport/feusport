@@ -11,7 +11,7 @@ Exports::Pdf::Flyer = Struct.new(:competition) do
     end
     pdf.move_down(12)
 
-    pdf.text_box(competition.flyer_content, at: [90, 600], align: :left, width: 500, size: 16)
+    pdf.text_box(competition.flyer_content.to_s, at: [90, 600], align: :left, width: 500, size: 16)
 
     pdf.text_box(competition.self_url, at: [26, 345], align: :center,
                                        width: 500, size: 20)
