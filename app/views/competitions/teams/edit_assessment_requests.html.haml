@@ -3,7 +3,7 @@
 .row.g-4
   .col-lg-8
     = simple_form_for(resource_instance, url: url_for(controller: controller_path, action: :update, form: :edit_assessment_requests)) do |f|
-      = card("#{resource_class.model_name.human} aktualisieren") do |c|
+      = card("Gewünschte Wertungen von #{@team.full_name}") do |c|
         - c.body do
           - @competition.assessments.requestable_for_team(@team.band).each do |assessment|
             .assessment-request

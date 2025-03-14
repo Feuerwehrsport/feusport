@@ -125,6 +125,7 @@ Erweitert
 </header>
 <div class='container mt-4'>
 <div class='alert-flash'>
+<div class='alert alert-info'>Die Änderungen wurden gespeichert.</div>
 </div>
 </div>
 <div class='pb-4 mt-4 container'>
@@ -133,7 +134,7 @@ Erweitert
 <form class="simple_form edit_team" id="edit_team_UUID" novalidate="novalidate" action="/2024/mv-cup/teams/UUID?form=edit_assessment_requests" accept-charset="UTF-8" method="post"><input type="hidden" name="_method" value="patch" autocomplete="off" /><div class='card'>
 <div class='card-header p-0'>
 <div class='d-flex justify-content-between'>
-<h4 class='m-0 py-2 ps-3'>Gewünschte Wertungen von Frauen-Team</h4>
+<h4 class='m-0 py-2 ps-3'>Gewünschte Wertungen von new-name</h4>
 </div>
 </div>
 <div class='card-body'>
@@ -146,15 +147,6 @@ Erweitert
 <option value="out_of_competition">Außer der Wertung</option></select></div>
 </div>
 <input autocomplete="off" type="hidden" value="UUID" name="team[requests_attributes][0][id]" id="team_requests_attributes_0_id" /></div>
-<div class='assessment-request'>
-<fieldset class="form-group boolean optional team_requests__destroy"><div class="form-check"><input name="team[requests_attributes][1][_destroy]" type="hidden" value="1" autocomplete="off" /><input class="form-check-input boolean optional" type="checkbox" value="0" name="team[requests_attributes][1][_destroy]" id="team_requests_attributes_1__destroy" /><label class="form-check-label boolean optional" for="team_requests_attributes_1__destroy">Teilnahme</label></div></fieldset>
-<div class="form-group hidden team_requests_assessment_id form-group-valid"><input class="form-control hidden" autocomplete="off" type="hidden" value="UUID" name="team[requests_attributes][1][assessment_id]" id="team_requests_attributes_1_assessment_id" /></div>
-<div class='edit-assesment-type'>
-<div class="form-group select required team_requests_assessment_type form-group-valid"><label class="control-label select required" for="team_requests_attributes_1_assessment_type">TGL <abbr title="required">*</abbr></label><select class="form-select select required" name="team[requests_attributes][1][assessment_type]" id="team_requests_attributes_1_assessment_type"><option value="" label=" "></option>
-<option selected="selected" value="group_competitor">Mannschaftswertung</option>
-<option value="out_of_competition">Außer der Wertung</option></select></div>
-</div>
-</div>
 
 </div>
 <div class='card-footer'>

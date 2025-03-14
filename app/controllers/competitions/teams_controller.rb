@@ -21,7 +21,11 @@ class Competitions::TeamsController < CompetitionNestedController
     if @team.save
       CompetitionMailer.with(team: @team).registration_team.deliver_later if @team.applicant.present?
 
-      redirect_to competition_team_path(id: @team.id), notice: :saved
+      if @team.requests.present?
+        redirect_to edit_assessment_requests_competition_team_path(id: @team.id), notice: :saved
+      else
+        redirect_to competition_team_path(id: @team.id), notice: :saved
+      end
     else
       flash.now[:alert] = :check_errors
       render action: :new, status: :unprocessable_entity
