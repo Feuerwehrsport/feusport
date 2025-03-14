@@ -19,7 +19,15 @@ class FireSportStatistics::SuggestionsController < ApplicationController
 
   def teams
     suggestions = FireSportStatistics::Team.where(dummy: false).limit(10)
-    suggestions = suggestions.where_name_like(params[:name]) if params[:name]
+    if params[:name]
+      suggestions = suggestions.where_name_like(params[:name])
+      suggestions = suggestions.order(Arel.sql(<<~SQL.squish, params[:name], params[:name]))
+        GREATEST(
+            similarity(fire_sport_statistics_teams.name, ?),
+            similarity(fire_sport_statistics_teams.short, ?)
+        ) DESC
+      SQL
+    end
 
     render json: suggestions.to_json(
       only: %i[id name short federal_state_id],
