@@ -35,7 +35,7 @@ Score::GroupResultRow = Struct.new(:team, :score_count, :run_count, :result) do
   # Zeigt an, ob es generell gültig ist
   # Ungültig, wenn zu viele oder zu wenige gestartet sind
   def competition_result_valid?
-    @result_rows.count >= score_count && @result_rows.count <= run_count
+    @result_rows.count.between?(score_count, run_count)
   end
 
   def valid_compare
