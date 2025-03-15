@@ -38,16 +38,7 @@ onVisit(resetHandler);
 const quickAssessmentChange = function () {
   document.querySelectorAll('.quick-assessment-change-link').forEach(function (btn) {
     btn.addEventListener('click', () => {
-      const modal = document.createElement('div');
-      modal.classList.add('feusport-modal');
-      modal.style.display = 'block';
-      const modalContent = document.createElement('div');
-      modalContent.classList.add('feusport-modal-content');
-      modal.appendChild(modalContent);
-
-      modalContent.innerText = 'spinning';
-
-      document.querySelector('body').appendChild(modal);
+      const [modal, modalContent] = feusportModal();
 
       const csrfToken = document.head.querySelector('[name~=csrf-token][content]').content;
       fetch(btn.dataset.url, {

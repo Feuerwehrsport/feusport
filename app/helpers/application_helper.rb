@@ -10,6 +10,17 @@ module ApplicationHelper
     competition_show_path(competition.year, competition.slug)
   end
 
+  def documents_link_array(competition)
+    competition.documents.map do |document|
+      out = { title: document.title, url: rails_blob_url(document.file), preview: false }
+      if document.file.representable?
+        out[:preview] = document.file.representation(resize_to_limit: [100, 100]).processed.url
+        out[:image] = document.file.representation(resize_to_limit: [1000, 1000]).processed.url
+      end
+      out
+    end
+  end
+
   def social_share_button_tag(_title = '', _opts = {})
     links = SOCIAL_SHARE_SITES.map do |name|
       link_title = t('social_share_button.share_to', name: t("social_share_button.#{name}"))

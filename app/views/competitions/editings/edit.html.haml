@@ -8,7 +8,7 @@
           = f.input :name, autofocus: true
           = f.input :date, html5: true
           = f.input :place
-          = f.input :description, input_html: { class: 'easymde-required' }, hint: 'Du kannst den Text mittels <em>Markdown</em> formatieren.'.html_safe
+          = f.input :description, input_html: { class: 'easymde-required', data: { files: documents_link_array(@competition) } }, hint: 'Du kannst den Text mittels <em>Markdown</em> formatieren.'.html_safe
 
           %fieldset.group
             %legend Wettkampfordnung
