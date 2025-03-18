@@ -7,7 +7,7 @@
       = run
   %th.track= track
   - if list.single_discipline?
-    - if @competition.show_bib_numbers?
+    - if list.competition.show_bib_numbers?
       %td= entry&.entity&.bib_number
     %td= entry&.entity&.last_name.to_s.truncate(20)
     %td= entry&.entity&.first_name.to_s.truncate(20)
