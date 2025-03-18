@@ -34,6 +34,8 @@ class Score::ListEntry < ApplicationRecord
   scope :waiting, -> { where(result_type: :waiting) }
   default_scope { order(:run, :track) }
 
+  after_commit { ScoreListChannel::Updater.perform_later(list, run:) }
+
   BEFORE_CHECK_METHODS.each do |method_name|
     define_method(:"#{method_name}_before") do
       send(method_name)

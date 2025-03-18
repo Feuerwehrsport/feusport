@@ -5,24 +5,11 @@
     = card(@list.name) do |c|
       - if can?(:edit, @list) || !@list.hidden?
         - c.direct do
-          %table.table.much-data
+          %table.table.much-data.score-list-channel{ data: { score_list_id: @list.id, score_list_editable: can?(:edit, @list) ? '1' : '0' } }
             = render 'list_headline', times: true, list: @list, edit: false
             %tbody
               - score_list_entries(@list) do |entry, run, track, best_of_run|
-                = render layout: 'list_entry', locals: { entry:, run:, track:, list: @list, best_of_run: } do
-                  - if @list.separate_target_times?
-                    %td.separate-times
-                      = entry&.human_time_left_target
-                      %br
-                      = entry&.human_time_right_target
-                  %td.time-col
-                    = entry&.human_time
-                  - if can?(:edit, @list) && can?(:edit_times, @list)
-                    %td.text-end
-                      - if track == 1 && params[:destroy_index].nil?
-                        = short_edit_link edit_competition_score_list_run_path(list_id: @list.id, run:), title: 'Zeiten bearbeiten', class: 'btn-xs'
-                      - if entry.present? && params[:destroy_index]
-                        = short_destroy_link destroy_entity_competition_score_list_path(id: @list, entry_id: entry.id), title: 'Aus Liste entfernen', class: 'btn-xs'
+                = render partial: 'list_entry_with_times', locals: { entry:, run:, track:, list: @list, best_of_run:, editable: can?(:edit, @list), destroy_index: params[:destroy_index] }
         - c.actions do |actions|
           - actions.link_to 'PDF', { format: :pdf }, end_icon: :file_pdf, target: '_blank', rel: 'noopener'
           - actions.link_to 'XLS', { format: :xlsx }, end_icon: :file_excel

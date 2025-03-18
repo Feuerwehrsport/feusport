@@ -3,6 +3,7 @@ import * as bootstrap from 'bootstrap';
 import '@hotwired/turbo-rails';
 
 import './_global';
+import './_channels';
 import './_certificates';
 import './_edit_assessment_requests';
 import './_edit_team_markers';

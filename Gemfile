@@ -8,6 +8,7 @@ gem 'rails', '~> 7.0'
 gem 'pg' # database
 gem 'puma' # webserver for development
 gem 'bcrypt' # password hashing
+gem 'redis' # Adapter for ActionCable
 
 gem 'sprockets-rails' # asset pipeline
 gem 'jsbundling-rails' # bundle and transpile JavaScript

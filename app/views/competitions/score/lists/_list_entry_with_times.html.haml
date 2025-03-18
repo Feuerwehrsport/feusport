@@ -1,0 +1,14 @@
+= render layout: 'competitions/score/lists/list_entry', locals: { entry:, run:, track:, list:, best_of_run: } do
+  - if list.separate_target_times?
+    %td.separate-times
+      = entry&.human_time_left_target
+      %br
+      = entry&.human_time_right_target
+  %td.time-col
+    = entry&.human_time
+  - if editable
+    %td.text-end
+      - if track == 1 && destroy_index.nil?
+        = short_edit_link edit_competition_score_list_run_path(slug: list.competition.slug, year: list.competition.year, list_id: list.id, run:), title: 'Zeiten bearbeiten', class: 'btn-xs'
+      - if entry.present? && destroy_index
+        = short_destroy_link destroy_entity_competition_score_list_path(slug: list.competition.slug, year: list.competition.year, id: list.id, entry_id: entry.id), title: 'Aus Liste entfernen', class: 'btn-xs'

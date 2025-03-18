@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  mount ActionCable.server => '/cable'
+
   root 'home#home'
   get 'info', to: 'home#info', as: :info
   get 'disseminators', to: 'home#disseminators', as: :disseminators
