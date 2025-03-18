@@ -49,10 +49,6 @@ gem 'mutex_m' # remove on Rails 7.2
 gem 'drb' # remove on Rails 7.2
 gem 'base64' # remove on Rails 7.2
 
-group :production do
-  gem 'unicorn' # compiled webserver
-end
-
 group :development, :test do
   gem 'debug' # debugger
 
