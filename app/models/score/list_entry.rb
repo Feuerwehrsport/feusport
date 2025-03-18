@@ -34,7 +34,18 @@ class Score::ListEntry < ApplicationRecord
   scope :waiting, -> { where(result_type: :waiting) }
   default_scope { order(:run, :track) }
 
-  after_commit { ScoreListChannel::Updater.perform_later(list, run:) }
+  after_commit(on: :update) do
+    if previous_changes.keys.intersection(
+      %w[competition_id list_id entity_type entity_id assessment_type assessment_id track run],
+    ).any?
+      ScoreListChannel::Updater.safe_perform_later(list)
+    elsif previous_changes.keys.intersection(%w[result_type time time_left_target time_right_target]).any?
+      ScoreListChannel::Updater.safe_perform_later(list, run:)
+    end
+  end
+  after_commit(on: %i[create destroy]) do
+    ScoreListChannel::Updater.safe_perform_later(list)
+  end
 
   BEFORE_CHECK_METHODS.each do |method_name|
     define_method(:"#{method_name}_before") do

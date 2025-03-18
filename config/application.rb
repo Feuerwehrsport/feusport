@@ -30,6 +30,7 @@ module Feusport
     config.i18n.default_locale = :de
 
     config.active_job.queue_adapter = :solid_queue
+    config.solid_queue.preserve_finished_jobs = false
 
     config.generators.system_tests = nil
     config.generators.helper = false

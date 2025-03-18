@@ -8,12 +8,13 @@ class ScoreListChannel < ApplicationCable::Channel
   class Updater < ApplicationJob
     include Exports::ScoreLists
 
-    def perform(list, run:, action: :update)
+    def perform(list, run: nil)
       tracks = {}
       tracks_editable = {}
-      if action == :update
+      if run.present?
         score_list_entries(list) do |entry, crun, track, best_of_run|
           next if run != crun
+          next if entry.nil?
 
           tracks[entry.id] = ApplicationController.render(
             partial: 'competitions/score/lists/list_entry_with_times',
@@ -27,8 +28,18 @@ class ScoreListChannel < ApplicationCable::Channel
         end
       end
 
-      ActionCable.server.broadcast("score_list_#{list.id}_editable_false", { action:, run:, tracks: tracks })
-      ActionCable.server.broadcast("score_list_#{list.id}_editable_true", { action:, run:, tracks: tracks_editable })
+      ActionCable.server.broadcast("score_list_#{list.id}_editable_false", { run:, tracks: tracks })
+      ActionCable.server.broadcast("score_list_#{list.id}_editable_true", { run:, tracks: tracks_editable })
+    end
+
+    def self.safe_perform_later(list, run: nil)
+      updater = ScoreListChannel::Updater.set(wait: 0.5.seconds).perform_later(list, run:)
+
+      my_job = SolidQueue::Job.find_by(active_job_id: updater.job_id)
+      future_jobs = SolidQueue::Job.where(class_name: 'ScoreListChannel::Updater', finished_at: nil)
+                                   .where.not(active_job_id: updater.job_id)
+
+      future_jobs.select { |fj| fj.arguments['arguments'] == my_job.arguments['arguments'] }.each(&:discard)
     end
   end
 end
