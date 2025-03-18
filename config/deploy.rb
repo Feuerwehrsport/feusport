@@ -12,10 +12,8 @@ set :branch, 'main'
 set :rvm_ruby_version, '3.3.7'
 set :migration_servers, -> { release_roles(fetch(:migration_role)) }
 
-set :enable_delayed_job, false # default is true
-set :enable_whenever, false # default is true
-
-set :systemd_usage, true
+set :enable_solid_queue, true
+set :enable_puma, true
 
 namespace :feusport do
   desc 'generate static error pages'
@@ -33,13 +31,4 @@ namespace :feusport do
   end
 end
 
-after 'm3:unicorn_upgrade', 'feusport:generate_static_html'
-
-desc 'restart solid_queue process'
-task :solid_queue_restart do
-  on roles(:app) do
-    execute 'sudo', '/usr/sbin/service solid_queue_feusport', 'restart'
-  end
-end
-
-after 'deploy:publishing', 'solid_queue_restart'
+after 'm3:puma_reload', 'feusport:generate_static_html'
