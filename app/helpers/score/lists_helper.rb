@@ -7,7 +7,7 @@ module Score::ListsHelper
     options = { class: [] }
     options[:class].push('next-run') if track == list.track_count
     options[:data] = { id: entry.id } if entry.present?
-    options[:class].push('best-time-of-rund') if best_of_run
+    options[:class].push('best-time-of-run') if best_of_run
     options
   end
 end
