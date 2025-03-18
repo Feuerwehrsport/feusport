@@ -26,6 +26,17 @@ onVisit(() => {
     if (!target) return;
     target.scrollIntoView({ behavior: 'smooth' });
   }, 100);
+
+  setTimeout(() => {
+    document.querySelectorAll('form').forEach((form) => {
+      if (form.querySelector('input[type=hidden][name=tab_session_id]')) return;
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = 'tab_session_id';
+      input.value = tabSessionId();
+      form.append(input);
+    });
+  }, 101);
 });
 
 document.addEventListener('turbo:load', () => {

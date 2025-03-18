@@ -26,3 +26,10 @@ window.div = function (htmlClasses, innerText = null) {
   if (innerText) element.innerText = innerText;
   return element;
 };
+
+window.tabSessionId = function () {
+  if (!sessionStorage.getItem('tabSessionId')) {
+    sessionStorage.setItem('tabSessionId', crypto.randomUUID());
+  }
+  return sessionStorage.getItem('tabSessionId');
+};

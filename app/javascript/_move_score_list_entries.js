@@ -39,7 +39,7 @@ const bindSortedTable = function () {
       },
       method: 'POST',
       credentials: 'same-origin',
-      body: JSON.stringify({ new_order: tableData, save: save }),
+      body: JSON.stringify({ new_order: tableData, save: save, tab_session_id: tabSessionId() }),
     })
       .then((res) => res.text())
       .then((html) => {

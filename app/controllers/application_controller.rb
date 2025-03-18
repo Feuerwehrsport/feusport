@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   include AccessDeniedSupport
   include ExportsSupport
   include ActiveStorage::SetCurrent
+  include TabSessionIdSupport
 
   protected
 

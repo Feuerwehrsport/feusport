@@ -38,13 +38,15 @@ class Score::ListEntry < ApplicationRecord
     if previous_changes.keys.intersection(
       %w[competition_id list_id entity_type entity_id assessment_type assessment_id track run],
     ).any?
-      ScoreListChannel::Updater.safe_perform_later(list)
+      ScoreListChannel::Updater.safe_perform_later(list,
+                                                   tab_session_id: TabSessionIdSupport::Current.tab_session_id)
     elsif previous_changes.keys.intersection(%w[result_type time time_left_target time_right_target]).any?
-      ScoreListChannel::Updater.safe_perform_later(list, run:)
+      ScoreListChannel::Updater.safe_perform_later(list,
+                                                   tab_session_id: TabSessionIdSupport::Current.tab_session_id, run:)
     end
   end
   after_commit(on: %i[create destroy]) do
-    ScoreListChannel::Updater.safe_perform_later(list)
+    ScoreListChannel::Updater.safe_perform_later(list, tab_session_id: TabSessionIdSupport::Current.tab_session_id)
   end
 
   BEFORE_CHECK_METHODS.each do |method_name|

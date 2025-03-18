@@ -8,7 +8,7 @@ class ScoreListChannel < ApplicationCable::Channel
   class Updater < ApplicationJob
     include Exports::ScoreLists
 
-    def perform(list, run: nil)
+    def perform(list, tab_session_id:, run: nil)
       tracks = {}
       tracks_editable = {}
       if run.present?
@@ -28,12 +28,14 @@ class ScoreListChannel < ApplicationCable::Channel
         end
       end
 
-      ActionCable.server.broadcast("score_list_#{list.id}_editable_false", { run:, tracks: tracks })
-      ActionCable.server.broadcast("score_list_#{list.id}_editable_true", { run:, tracks: tracks_editable })
+      ActionCable.server.broadcast("score_list_#{list.id}_editable_false",
+                                   { run:, tab_session_id:, tracks: tracks })
+      ActionCable.server.broadcast("score_list_#{list.id}_editable_true",
+                                   { run:, tab_session_id:, tracks: tracks_editable })
     end
 
-    def self.safe_perform_later(list, run: nil)
-      updater = ScoreListChannel::Updater.set(wait: 0.5.seconds).perform_later(list, run:)
+    def self.safe_perform_later(list, run: nil, tab_session_id: nil)
+      updater = ScoreListChannel::Updater.set(wait: 0.5.seconds).perform_later(list, run:, tab_session_id:)
 
       my_job = SolidQueue::Job.find_by(active_job_id: updater.job_id)
       future_jobs = SolidQueue::Job.where(class_name: 'ScoreListChannel::Updater', finished_at: nil)

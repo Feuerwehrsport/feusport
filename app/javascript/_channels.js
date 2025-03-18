@@ -8,6 +8,7 @@ const subscribeScoreListChannel = function (id, editable) {
     { channel: 'ScoreListChannel', score_list_id: id, editable: editable == '1' },
     {
       received(data) {
+        if (data.tab_session_id == tabSessionId()) return;
         if (data.run != null) {
           for (var entryId in data.tracks) {
             const tr = document.querySelector(`tr[data-id="${entryId}"]`);
