@@ -3,5 +3,6 @@
 RailsLogParser.configure do |parser|
   parser.ignore_lines = [
     /SolidQueue.* Fail claimed jobs .* job_ids: \[\], process_ids: \[\]/,
+    /WebSocket error occurred: Broken pipe/,
   ]
 end
