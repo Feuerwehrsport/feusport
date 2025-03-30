@@ -4,7 +4,6 @@ SimpleCov.start do
   track_files '{app,lib}/**/*.rb'
 
   add_filter '/spec/'
-  add_filter '/app/lib/wettkampf_manager_import.rb'
   add_filter '/app/models/concerns/schema_validations.rb'
   add_filter '/app/jobs/debug_job.rb'
 end

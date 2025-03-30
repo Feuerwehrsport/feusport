@@ -476,7 +476,6 @@ GEM
       actionpack (>= 6.1)
       activesupport (>= 6.1)
       sprockets (>= 3.0.0)
-    sqlite3 (2.6.0-x86_64-linux-gnu)
     sshkit (1.24.0)
       base64
       logger
@@ -581,7 +580,6 @@ DEPENDENCIES
   solid_queue
   spec_views
   sprockets-rails
-  sqlite3
   turbo-rails
   valid_email2
   vcr
