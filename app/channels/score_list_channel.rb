@@ -8,6 +8,8 @@ class ScoreListChannel < ApplicationCable::Channel
   class Updater < ApplicationJob
     include Exports::ScoreLists
 
+    discard_on ActiveJob::DeserializationError
+
     def perform(list, tab_session_id:, run: nil)
       tracks = {}
       tracks_editable = {}
