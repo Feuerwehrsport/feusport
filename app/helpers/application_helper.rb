@@ -12,10 +12,13 @@ module ApplicationHelper
 
   def documents_link_array(competition)
     competition.documents.map do |document|
-      out = { title: document.title, url: rails_blob_url(document.file), preview: false }
+      link_params = { slug: competition.slug, year: competition.year, idpart: document.idpart }
+      out = { title: document.title, preview: false, url: competition_document_download_path(link_params) }
       if document.file.representable?
-        out[:preview] = document.file.representation(resize_to_limit: [100, 100]).processed.url
-        out[:image] = document.file.representation(resize_to_limit: [1000, 1000]).processed.url
+        out[:preview] =
+          competition_document_preview_path(link_params)
+        out[:image] =
+          competition_document_image_path(link_params)
       end
       out
     end

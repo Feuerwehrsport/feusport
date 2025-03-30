@@ -26,6 +26,9 @@ Rails.application.routes.draw do
     resource :registration, only: %i[edit update]
     resource :deletion, only: %i[new create]
     resources :documents, only: %i[new create edit update destroy]
+    get 'dd/:idpart', to: 'documents#download', as: :document_download
+    get 'dp/:idpart', to: 'documents#preview', as: :document_preview
+    get 'di/:idpart', to: 'documents#image', as: :document_image
     resource :publishing, only: %i[new create]
 
     # top menu

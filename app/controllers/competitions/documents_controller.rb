@@ -28,6 +28,21 @@ class Competitions::DocumentsController < CompetitionNestedController
     redirect_to competition_show_path, notice: :deleted
   end
 
+  def download
+    document = @competition.documents.find_idpart!(params[:idpart])
+    redirect_to(rails_blob_url(document.file))
+  end
+
+  def preview
+    document = @competition.documents.find_idpart!(params[:idpart])
+    redirect_to(document.file.representation(resize_to_limit: [100, 100]).processed.url)
+  end
+
+  def image
+    document = @competition.documents.find_idpart!(params[:idpart])
+    redirect_to(document.file.representation(resize_to_limit: [1000, 1000]).processed.url)
+  end
+
   protected
 
   def document_params
