@@ -43,4 +43,26 @@ RSpec.describe 'competitions/documents' do
       end.to change(Document, :count).by(-1)
     end
   end
+
+  describe 'download' do
+    it 'redirects to' do
+      get "/#{competition.year}/#{competition.slug}/dd/foo"
+      expect(response).to have_http_status(:not_found)
+
+      document = competition.documents.create!(title: 'Foo', file: fixture_file_upload('doc.pdf'))
+
+      get "/#{competition.year}/#{competition.slug}/dd/#{document.idpart}"
+      expect(response).to redirect_to(%r{active_storage/blobs})
+
+      competition.update!(visible: false)
+
+      get "/#{competition.year}/#{competition.slug}/dd/#{document.idpart}"
+      expect(response).to redirect_to('/users/sign_in')
+
+      sign_in user
+
+      get "/#{competition.year}/#{competition.slug}/dd/#{document.idpart}"
+      expect(response).to redirect_to(%r{active_storage/blobs})
+    end
+  end
 end

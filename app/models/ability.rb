@@ -92,7 +92,7 @@ class Ability
 
   def global_abilities
     can(:read, Competition, visible: true)
-    can(:read, Document, competition: { visible: true })
+    can(%i[read download preview image], Document, competition: { visible: true })
     can(:read, Discipline, competition: { visible: true })
     can(:read, Band, competition: { visible: true })
     can(:read, Assessment, competition: { visible: true })
