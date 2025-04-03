@@ -12,7 +12,7 @@ class FireSportStatistics::Publishing < ApplicationRecord
 
   class Worker < ApplicationJob
     retry_on Errno::ECONNRESET, EOFError, OpenSSL::SSL::SSLError, Errno::ECONNREFUSED, SocketError, Net::ReadTimeout,
-             wait: :exponentially_longer, attempts: 8
+             wait: :polynomially_longer, attempts: 8
 
     def perform
       FireSportStatistics::Publishing.where(published_at: nil).find_each(&:publish!)

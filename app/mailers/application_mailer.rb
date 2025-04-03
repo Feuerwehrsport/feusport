@@ -5,7 +5,7 @@ class ApplicationMailer < ActionMailer::Base
 
   class DeliveryJob < ActionMailer::MailDeliveryJob
     retry_on Net::SMTPError, Timeout::Error, OpenSSL::OpenSSLError, SystemCallError, IOError, SocketError,
-             wait: :exponentially_longer, attempts: 10
+             wait: :polynomially_longer, attempts: 10
   end
 
   self.delivery_job = DeliveryJob
