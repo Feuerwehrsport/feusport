@@ -1,5 +1,27 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: assessments
+#
+#  id             :uuid             not null, primary key
+#  forced_name    :string(100)
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  band_id        :uuid             not null
+#  competition_id :uuid
+#  discipline_id  :uuid             not null
+#
+# Indexes
+#
+#  index_assessments_on_band_id         (band_id)
+#  index_assessments_on_competition_id  (competition_id)
+#  index_assessments_on_discipline_id   (discipline_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (competition_id => competitions.id)
+#
 require 'rails_helper'
 
 RSpec.describe Assessment do

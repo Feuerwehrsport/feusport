@@ -1,5 +1,29 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: fire_sport_statistics_people
+#
+#  id                           :bigint           not null, primary key
+#  dummy                        :boolean          default(FALSE), not null
+#  first_name                   :string(100)      not null
+#  gender                       :integer          not null
+#  last_name                    :string(100)      not null
+#  personal_best_hb             :integer
+#  personal_best_hb_competition :string
+#  personal_best_hl             :integer
+#  personal_best_hl_competition :string
+#  personal_best_zk             :integer
+#  personal_best_zk_competition :string
+#  saison_best_hb               :integer
+#  saison_best_hb_competition   :string
+#  saison_best_hl               :integer
+#  saison_best_hl_competition   :string
+#  saison_best_zk               :integer
+#  saison_best_zk_competition   :string
+#  created_at                   :datetime         not null
+#  updated_at                   :datetime         not null
+#
 class FireSportStatistics::Person < ApplicationRecord
   include Genderable
   BEST_TABLE_HEAD = { personal_best: ['PB', 'Persönliche Bestleistung'],

@@ -1,5 +1,25 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: certificates_templates
+#
+#  id                    :uuid             not null, primary key
+#  importable_for_me     :boolean          default(TRUE), not null
+#  importable_for_others :boolean          default(FALSE), not null
+#  name                  :string(200)      not null
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  competition_id        :uuid             not null
+#
+# Indexes
+#
+#  index_certificates_templates_on_competition_id  (competition_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (competition_id => competitions.id)
+#
 require 'fileutils'
 
 class Certificates::Template < ApplicationRecord

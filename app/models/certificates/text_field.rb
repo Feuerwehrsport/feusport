@@ -1,5 +1,32 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: certificates_text_fields
+#
+#  id          :uuid             not null, primary key
+#  align       :string(50)       not null
+#  color       :string(20)       default("000000"), not null
+#  font        :string(20)       default("regular"), not null
+#  height      :decimal(, )      not null
+#  key         :string(50)       not null
+#  left        :decimal(, )      not null
+#  size        :integer          not null
+#  text        :string(200)
+#  top         :decimal(, )      not null
+#  width       :decimal(, )      not null
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  template_id :uuid             not null
+#
+# Indexes
+#
+#  index_certificates_text_fields_on_template_id  (template_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (template_id => certificates_templates.id)
+#
 class Certificates::TextField < ApplicationRecord
   schema_validations
 

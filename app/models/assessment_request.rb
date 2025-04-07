@@ -1,5 +1,29 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: assessment_requests
+#
+#  id                      :uuid             not null, primary key
+#  assessment_type         :integer          default("group_competitor"), not null
+#  competitor_order        :integer          default(0), not null
+#  entity_type             :string(100)      not null
+#  group_competitor_order  :integer          default(0), not null
+#  relay_count             :integer          default(1), not null
+#  single_competitor_order :integer          default(0), not null
+#  created_at              :datetime         not null
+#  updated_at              :datetime         not null
+#  assessment_id           :uuid             not null
+#  entity_id               :uuid             not null
+#
+# Indexes
+#
+#  index_assessment_requests_on_assessment_id  (assessment_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (assessment_id => assessments.id)
+#
 class AssessmentRequest < ApplicationRecord
   def self.fs_names
     %w[

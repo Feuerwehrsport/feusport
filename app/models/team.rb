@@ -1,5 +1,38 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: teams
+#
+#  id                            :uuid             not null, primary key
+#  certificate_name              :string
+#  enrolled                      :boolean          default(FALSE), not null
+#  lottery_number                :integer
+#  name                          :string(100)      not null
+#  number                        :integer          default(1), not null
+#  registration_hint             :text
+#  shortcut                      :string(50)       default(""), not null
+#  tags                          :string           default([]), is an Array
+#  created_at                    :datetime         not null
+#  updated_at                    :datetime         not null
+#  applicant_id                  :uuid
+#  band_id                       :uuid             not null
+#  competition_id                :uuid             not null
+#  fire_sport_statistics_team_id :integer
+#
+# Indexes
+#
+#  index_teams_on_band_id                                         (band_id)
+#  index_teams_on_competition_id                                  (competition_id)
+#  index_teams_on_competition_id_and_band_id_and_name_and_number  (competition_id,band_id,name,number) UNIQUE
+#  index_teams_on_fire_sport_statistics_team_id                   (fire_sport_statistics_team_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (applicant_id => users.id)
+#  fk_rails_...  (band_id => bands.id)
+#  fk_rails_...  (competition_id => competitions.id)
+#
 class Team < ApplicationRecord
   include Taggable
 

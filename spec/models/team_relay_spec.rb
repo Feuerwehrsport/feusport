@@ -1,5 +1,23 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: team_relays
+#
+#  id         :uuid             not null, primary key
+#  number     :integer          default(1), not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  team_id    :uuid             not null
+#
+# Indexes
+#
+#  index_team_relays_on_team_id  (team_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (team_id => teams.id)
+#
 require 'rails_helper'
 
 RSpec.describe TeamRelay do

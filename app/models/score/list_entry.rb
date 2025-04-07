@@ -1,5 +1,37 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: score_list_entries
+#
+#  id                :uuid             not null, primary key
+#  assessment_type   :integer          default("group_competitor"), not null
+#  entity_type       :string(50)       not null
+#  result_type       :string(20)       default("waiting"), not null
+#  run               :integer          not null
+#  time              :integer
+#  time_left_target  :integer
+#  time_right_target :integer
+#  track             :integer          not null
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  assessment_id     :uuid             not null
+#  competition_id    :uuid             not null
+#  entity_id         :uuid             not null
+#  list_id           :uuid             not null
+#
+# Indexes
+#
+#  index_score_list_entries_on_assessment_id   (assessment_id)
+#  index_score_list_entries_on_competition_id  (competition_id)
+#  index_score_list_entries_on_list_id         (list_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (assessment_id => assessments.id)
+#  fk_rails_...  (competition_id => competitions.id)
+#  fk_rails_...  (list_id => score_lists.id)
+#
 class Score::ListEntry < ApplicationRecord
   include Score::ResultEntrySupport
 

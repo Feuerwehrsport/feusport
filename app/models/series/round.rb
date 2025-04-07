@@ -1,5 +1,17 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: series_rounds
+#
+#  id             :bigint           not null, primary key
+#  aggregate_type :string(100)      not null
+#  full_cup_count :integer          default(4), not null
+#  name           :string(100)      not null
+#  year           :integer          not null
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#
 class Series::Round < ApplicationRecord
   include Series::Importable
 

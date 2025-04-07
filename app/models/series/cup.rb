@@ -1,5 +1,17 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: series_cups
+#
+#  id                       :bigint           not null, primary key
+#  competition_date         :date             not null
+#  competition_place        :string(100)      not null
+#  created_at               :datetime         not null
+#  updated_at               :datetime         not null
+#  dummy_for_competition_id :uuid
+#  round_id                 :integer          not null
+#
 class Series::Cup < ApplicationRecord
   belongs_to :round, class_name: 'Series::Round', inverse_of: :cups
   belongs_to :dummy_for_competition, class_name: 'Competition'

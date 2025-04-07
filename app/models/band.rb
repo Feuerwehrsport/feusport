@@ -1,5 +1,28 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: bands
+#
+#  id             :uuid             not null, primary key
+#  gender         :integer          not null
+#  name           :string(100)      not null
+#  person_tags    :string           default([]), is an Array
+#  position       :integer
+#  team_tags      :string           default([]), is an Array
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  competition_id :uuid             not null
+#
+# Indexes
+#
+#  index_bands_on_competition_id           (competition_id)
+#  index_bands_on_name_and_competition_id  (name,competition_id) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (competition_id => competitions.id)
+#
 class Band < ApplicationRecord
   include SortableByName
 

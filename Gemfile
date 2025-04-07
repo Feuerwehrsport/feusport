@@ -55,6 +55,7 @@ group :development, :test do
   gem 'factory_bot' # create db fixtures
   gem 'vcr' # record http requests
   gem 'webmock' # mock http requests
+  gem 'annotate' # schema info in model
 
   # code beautifier
   gem 'rubocop', require: false

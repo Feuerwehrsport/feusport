@@ -1,5 +1,38 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: people
+#
+#  id                              :uuid             not null, primary key
+#  bib_number                      :string(50)
+#  first_name                      :string(100)      not null
+#  last_name                       :string(100)      not null
+#  registration_hint               :text
+#  registration_order              :integer          default(0), not null
+#  tags                            :string           default([]), is an Array
+#  created_at                      :datetime         not null
+#  updated_at                      :datetime         not null
+#  applicant_id                    :uuid
+#  band_id                         :uuid             not null
+#  competition_id                  :uuid
+#  fire_sport_statistics_person_id :integer
+#  team_id                         :uuid
+#
+# Indexes
+#
+#  index_people_on_band_id                          (band_id)
+#  index_people_on_competition_id                   (competition_id)
+#  index_people_on_fire_sport_statistics_person_id  (fire_sport_statistics_person_id)
+#  index_people_on_team_id                          (team_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (applicant_id => users.id)
+#  fk_rails_...  (band_id => bands.id)
+#  fk_rails_...  (competition_id => competitions.id)
+#  fk_rails_...  (team_id => teams.id)
+#
 class Person < ApplicationRecord
   include Taggable
 

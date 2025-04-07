@@ -1,5 +1,33 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: team_list_restrictions
+#
+#  id             :uuid             not null, primary key
+#  restriction    :integer          not null
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  competition_id :uuid             not null
+#  discipline_id  :uuid             not null
+#  team1_id       :uuid             not null
+#  team2_id       :uuid             not null
+#
+# Indexes
+#
+#  index_team_list_restrictions_on_competition_id  (competition_id)
+#  index_team_list_restrictions_on_discipline_id   (discipline_id)
+#  index_team_list_restrictions_on_team1_id        (team1_id)
+#  index_team_list_restrictions_on_team2_id        (team2_id)
+#  index_team_list_restrictions_unique             (team1_id,team2_id,discipline_id) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (competition_id => competitions.id)
+#  fk_rails_...  (discipline_id => disciplines.id)
+#  fk_rails_...  (team1_id => teams.id)
+#  fk_rails_...  (team2_id => teams.id)
+#
 require 'rails_helper'
 
 RSpec.describe TeamListRestriction do

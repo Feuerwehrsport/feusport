@@ -1,5 +1,27 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: disciplines
+#
+#  id                :uuid             not null, primary key
+#  key               :string(10)       not null
+#  like_fire_relay   :boolean          default(FALSE), not null
+#  name              :string(100)      not null
+#  short_name        :string(20)       not null
+#  single_discipline :boolean          default(FALSE), not null
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  competition_id    :uuid             not null
+#
+# Indexes
+#
+#  index_disciplines_on_competition_id  (competition_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (competition_id => competitions.id)
+#
 class Discipline < ApplicationRecord
   include SortableByName
 

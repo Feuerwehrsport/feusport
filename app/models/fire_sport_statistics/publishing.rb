@@ -1,5 +1,27 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: fire_sport_statistics_publishings
+#
+#  id             :uuid             not null, primary key
+#  hint           :text
+#  published_at   :datetime
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  competition_id :uuid             not null
+#  user_id        :uuid             not null
+#
+# Indexes
+#
+#  index_fire_sport_statistics_publishings_on_competition_id  (competition_id)
+#  index_fire_sport_statistics_publishings_on_user_id         (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (competition_id => competitions.id)
+#  fk_rails_...  (user_id => users.id)
+#
 require 'net/http'
 
 class FireSportStatistics::Publishing < ApplicationRecord

@@ -1,5 +1,26 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: score_competition_results
+#
+#  id             :uuid             not null, primary key
+#  hidden         :boolean          default(FALSE), not null
+#  name           :string(100)      not null
+#  result_type    :string(50)       not null
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  competition_id :uuid             not null
+#
+# Indexes
+#
+#  index_score_competition_results_on_competition_id           (competition_id)
+#  index_score_competition_results_on_name_and_competition_id  (name,competition_id) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (competition_id => competitions.id)
+#
 class Score::CompetitionResult < ApplicationRecord
   AssessmentResult = Struct.new(:points, :result, :result_entry, :team, :row) do
     delegate :assessment, to: :result

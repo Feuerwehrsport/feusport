@@ -1,5 +1,29 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: team_marker_values
+#
+#  id             :uuid             not null, primary key
+#  boolean_value  :boolean          default(FALSE), not null
+#  date_value     :date
+#  string_value   :text
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  team_id        :uuid             not null
+#  team_marker_id :uuid             not null
+#
+# Indexes
+#
+#  index_team_marker_values_on_team_id                     (team_id)
+#  index_team_marker_values_on_team_marker_id              (team_marker_id)
+#  index_team_marker_values_on_team_marker_id_and_team_id  (team_marker_id,team_id) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (team_id => teams.id)
+#  fk_rails_...  (team_marker_id => team_markers.id)
+#
 class TeamMarkerValue < ApplicationRecord
   belongs_to :team_marker
   belongs_to :team
