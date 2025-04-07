@@ -16,6 +16,7 @@ import './_easymde';
 import './_list_print_generator';
 import './_name_preview';
 import './_vertical_scroll';
+import './_hcaptcha';
 
 onVisit(() => {
   setTimeout(() => {
