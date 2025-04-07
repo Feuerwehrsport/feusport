@@ -3,7 +3,7 @@ Hallo,
 zu deinem Wettkampf *<%= @competition.name %>* am *<%= I18n.l(@competition.date) %>* wurde eine Informationsanfrage gestellt:
 
 Name: **<%= @information_request.user.name %>**
-Abkürzung: **<%= @information_request.user.email %>**
+E-Mail-Adresse: **<%= @information_request.user.email %>**
 
 Nachricht:
 
