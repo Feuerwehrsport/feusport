@@ -36,6 +36,11 @@ onVisit(() => {
       input.value = tabSessionId();
       form.append(input);
     });
+
+    const captchaDiv = document.querySelector('[data-controller=hcaptcha]');
+    if (captchaDiv && window.hcaptcha) {
+      hcaptcha.render(captchaDiv, { sitekey: captchaDiv.dataset.sitekey });
+    }
   }, 101);
 });
 

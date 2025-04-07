@@ -33,6 +33,7 @@ gem 'redcarpet' # markdown to html parser
 gem 'image_processing' # generate previews and thumbs
 gem 'activestorage-validator' # validate stored files
 gem 'valid_email2' # validates email addresses
+gem 'recaptcha', require: 'recaptcha/rails' # captch for registration
 
 # exports
 gem 'caxlsx'

@@ -367,6 +367,7 @@ GEM
       ffi (~> 1.0)
     rdoc (6.13.1)
       psych (>= 4.0.0)
+    recaptcha (5.19.0)
     redcarpet (3.6.1)
     redis (5.4.0)
       redis-client (>= 0.22.0)
@@ -571,6 +572,7 @@ DEPENDENCIES
   puma
   rails (~> 7.0)
   rails_log_parser
+  recaptcha
   redcarpet
   redis
   rspec-rails

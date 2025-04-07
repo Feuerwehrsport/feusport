@@ -10,5 +10,8 @@
         %legend Passwort
         = f.input :password, required: true, input_html: { autocomplete: 'new-password' }
         = f.input :password_confirmation, required: true, input_html: { autocomplete: 'new-password' }
+      %fieldset.group
+        %legend Bot-Erkennung
+        = hcaptcha
     - c.footer do
       = f.primary_button :submit

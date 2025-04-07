@@ -12,4 +12,12 @@ module PageHelper
     content_for(:page_header, render('page_header', page:))
     content_for(:page_tabs, render('page_tabs', page:))
   end
+
+  def hcaptcha
+    safe_join([
+                tag.div(data: { controller: 'hcaptcha', sitekey: Recaptcha.configuration.site_key }),
+                tag.script(async: true, defer: true,
+                           src: 'https://hcaptcha.com/1/api.js?onload=hcaptchaOnLoad&render=explicit'),
+              ])
+  end
 end

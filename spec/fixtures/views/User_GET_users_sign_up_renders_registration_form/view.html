@@ -97,6 +97,10 @@
 <div class="form-group password required user_password"><label class="control-label password required" for="user_password">Passwort <abbr title="required">*</abbr></label><input class="form-control password required" autocomplete="new-password" required="required" aria-required="true" type="password" name="user[password]" id="user_password" /></div>
 <div class="form-group password required user_password_confirmation"><label class="control-label password required" for="user_password_confirmation">Passwortbestätigung <abbr title="required">*</abbr></label><input class="form-control password required" autocomplete="new-password" required="required" aria-required="true" type="password" name="user[password_confirmation]" id="user_password_confirmation" /></div>
 </fieldset>
+<fieldset class='group'>
+<legend>Bot-Erkennung</legend>
+<div data-controller="hcaptcha"></div><script async="async" defer="defer" src="https://hcaptcha.com/1/api.js?onload=hcaptchaOnLoad&amp;render=explicit"></script>
+</fieldset>
 
 </div>
 <div class='card-footer'>

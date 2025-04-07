@@ -10,9 +10,19 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    if verify_recaptcha(model: resource)
+      super
+    else
+      build_resource(sign_up_params)
+      resource.validate
+
+      clean_up_passwords resource
+      set_minimum_password_length
+      flash.now[:alert] = 'hCaptcha-Überprüfung fehlgeschlagen. Versuch es nochmal.'
+      respond_with resource
+    end
+  end
 
   # GET /resource/edit
   # def edit
