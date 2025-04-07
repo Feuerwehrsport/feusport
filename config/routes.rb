@@ -97,7 +97,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :accesses, only: [:index]
+    resources :accesses, only: %i[index edit]
     resources :access_requests, only: %i[new create destroy] do
       member { get :connect }
     end

@@ -1,0 +1,4 @@
+Competitions::AccessesController when toggle mail info toggles registration_mail_info-index-without-mailinfo
+
+request
+html

@@ -4,11 +4,12 @@
 #
 # Table name: user_accesses
 #
-#  id             :uuid             not null, primary key
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  competition_id :uuid             not null
-#  user_id        :uuid             not null
+#  id                     :uuid             not null, primary key
+#  registration_mail_info :boolean          default(TRUE), not null
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  competition_id         :uuid             not null
+#  user_id                :uuid             not null
 #
 # Indexes
 #

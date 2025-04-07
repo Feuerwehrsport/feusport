@@ -25,7 +25,9 @@ class CompetitionMailer < ApplicationMailer
     @team = params[:team]
     @competition = @team.competition
 
-    to = @competition.users.map { |user| email_address_with_name(user.email, user.name) }
+    to = @competition.user_accesses.where(registration_mail_info: true).map(&:user).map do |user|
+      email_address_with_name(user.email, user.name)
+    end
     mail(
       to:,
       subject: "Neue Wettkampfanmeldung - #{@team.competition.name}",
@@ -36,7 +38,9 @@ class CompetitionMailer < ApplicationMailer
     @person = params[:person]
     @competition = @person.competition
 
-    to = @competition.users.map { |user| email_address_with_name(user.email, user.name) }
+    to = @competition.user_accesses.where(registration_mail_info: true).map(&:user).map do |user|
+      email_address_with_name(user.email, user.name)
+    end
     mail(
       to:,
       subject: "Neue Wettkampfanmeldung - #{@person.competition.name}",

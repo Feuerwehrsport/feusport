@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_03_14_204939) do
+ActiveRecord::Schema[7.2].define(version: 2025_04_07_093450) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
@@ -680,6 +680,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_14_204939) do
     t.uuid "competition_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "registration_mail_info", default: true, null: false
     t.index ["competition_id"], name: "index_user_accesses_on_competition_id"
     t.index ["user_id"], name: "index_user_accesses_on_user_id"
   end

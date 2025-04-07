@@ -14,6 +14,9 @@ de:
         phone_number: Telefonnummer
         remember_me: Eingeloggt bleiben
         reset_password_token: Zurücksetz-Link
+      user_access:
+        registration_mail_info: Infomail
+        registration_mail_info_full: E-Mail-Information über neue Registrierungen
       user_access_request:
         created_at: Erstellt am
         drop_myself: Eigenen Zugang löschen

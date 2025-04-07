@@ -110,4 +110,26 @@ RSpec.describe Competitions::AccessesController do
       expect(response).to match_html_fixture.with_affix('new-with-selected-friend')
     end
   end
+
+  context 'when toggle mail info' do
+    it 'toggles registration_mail_info' do
+      sign_in user
+
+      get competition_nested('accesses')
+      expect(response).to be_successful
+
+      get competition_nested("accesses/#{competition.user_accesses.first.id}/edit?registration_mail_info=false")
+      expect(response).to redirect_to(competition_nested('accesses'))
+
+      expect(UserAccess.pluck(:registration_mail_info)).to eq [false]
+
+      get "/#{competition.year}/#{competition.slug}/accesses"
+      expect(response).to match_html_fixture.with_affix('index-without-mailinfo')
+
+      get competition_nested("accesses/#{competition.user_accesses.first.id}/edit?registration_mail_info=true")
+      expect(response).to redirect_to(competition_nested('accesses'))
+
+      expect(UserAccess.pluck(:registration_mail_info)).to eq [true]
+    end
+  end
 end
