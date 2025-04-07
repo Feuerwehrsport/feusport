@@ -523,6 +523,8 @@ Style/HashConversion:
   Enabled: true
 Style/HashExcept:
   Enabled: true
+Style/HashFetchChain:
+  Enabled: true
 Style/HashSlice:
   Enabled: true
 Style/IfWithBooleanLiteralBranches:
@@ -530,6 +532,8 @@ Style/IfWithBooleanLiteralBranches:
 Style/InPatternThen:
   Enabled: true
 Style/ItAssignment:
+  Enabled: true
+Style/ItBlockParameter:
   Enabled: true
 Style/KeywordArgumentsMerging:
   Enabled: true

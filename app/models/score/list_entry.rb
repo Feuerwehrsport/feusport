@@ -67,12 +67,11 @@ class Score::ListEntry < ApplicationRecord
   default_scope { order(:run, :track) }
 
   after_commit(on: :update) do
-    if previous_changes.keys.intersection(
-      %w[competition_id list_id entity_type entity_id assessment_type assessment_id track run],
-    ).any?
+    if previous_changes.keys.intersect?(%w[competition_id list_id entity_type entity_id assessment_type assessment_id
+                                           track run])
       ScoreListChannel::Updater.safe_perform_later(list,
                                                    tab_session_id: TabSessionIdSupport::Current.tab_session_id)
-    elsif previous_changes.keys.intersection(%w[result_type time time_left_target time_right_target]).any?
+    elsif previous_changes.keys.intersect?(%w[result_type time time_left_target time_right_target])
       ScoreListChannel::Updater.safe_perform_later(list,
                                                    tab_session_id: TabSessionIdSupport::Current.tab_session_id, run:)
     end
