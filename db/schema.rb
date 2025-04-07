@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_04_07_093450) do
+ActiveRecord::Schema[7.2].define(version: 2025_04_07_112939) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
@@ -239,6 +239,16 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_07_093450) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "best_scores", default: {}
+  end
+
+  create_table "information_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "competition_id", null: false
+    t.uuid "user_id", null: false
+    t.text "message", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["competition_id"], name: "index_information_requests_on_competition_id"
+    t.index ["user_id"], name: "index_information_requests_on_user_id"
   end
 
   create_table "people", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -737,6 +747,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_07_093450) do
   add_foreign_key "documents", "competitions"
   add_foreign_key "fire_sport_statistics_publishings", "competitions"
   add_foreign_key "fire_sport_statistics_publishings", "users"
+  add_foreign_key "information_requests", "competitions"
+  add_foreign_key "information_requests", "users"
   add_foreign_key "people", "bands"
   add_foreign_key "people", "competitions"
   add_foreign_key "people", "teams"

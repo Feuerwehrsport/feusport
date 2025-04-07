@@ -56,4 +56,16 @@ class CompetitionMailer < ApplicationMailer
       subject: "Veröffentliche deinen Wettkampf - #{@competition.name}",
     )
   end
+
+  def information_request
+    @information_request = @params[:information_request]
+    @competition = @information_request.competition
+
+    to = @competition.users.map { |user| email_address_with_name(user.email, user.name) }
+    mail(
+      to:,
+      reply_to: email_address_with_name(@information_request.user.email, @information_request.user.name),
+      subject: "Informationsanfrage zu deinem Wettkampf - #{@competition.name}",
+    )
+  end
 end

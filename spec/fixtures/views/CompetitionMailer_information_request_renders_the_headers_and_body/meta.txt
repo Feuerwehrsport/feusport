@@ -1,0 +1,4 @@
+CompetitionMailer information_request renders the headers and body
+
+mailer
+html

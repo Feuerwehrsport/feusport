@@ -30,8 +30,21 @@
 <li class='nav-item'>
 <a class="nav-link" href="/info">Über feusport.de</a>
 </li>
-<li class='nav-item'>
-<a class="nav-link" href="/users/sign_in">Anmelden</a>
+<li class='nav-item dropdown'>
+<a aria-expanded='false' class='nav-link dropdown-toggle' data-bs-toggle='dropdown' href='#' role='button'>
+Benutzer
+</a>
+<ul class='dropdown-menu'>
+<li>
+<a class="dropdown-item" href="/users/edit">Bearbeiten</a>
+</li>
+<li>
+<hr class='dropdown-divider'>
+</li>
+<li>
+<a data-turbo-method="delete" class="dropdown-item" href="/users/sign_out">Abmelden</a>
+</li>
+</ul>
 </li>
 </ul>
 </div>
@@ -52,6 +65,46 @@
 <a class="nav-link active" aria-current="page" href="/2024/mv-cup">Informationen
 </a>
 </div>
+<div class='dropdown nav-item'>
+<a aria-expanded='false' class='nav-link dropdown-toggle' data-bs-toggle='dropdown' href='#' id='navbar-dropdown-menu-link' role='button'>
+Erweitert
+</a>
+<ul aria-labelledby='navbar-dropdown-menu-link' class='dropdown-menu'>
+<div class=''>
+<a class="dropdown-item" href="/2024/mv-cup/disciplines">Disziplinen
+</a>
+</div>
+<div class=''>
+<a class="dropdown-item" href="/2024/mv-cup/bands">Wertungsgruppen
+</a>
+</div>
+<div class=''>
+<a class="dropdown-item" href="/2024/mv-cup/assessments">Wertungen
+</a>
+</div>
+<div class=''>
+<a class="dropdown-item" href="/2024/mv-cup/score/competition_results">Gesamtwertungen
+</a>
+</div>
+<div class=''>
+<a class="dropdown-item" href="/2024/mv-cup/certificates/templates">Urkundenvorlagen
+</a>
+</div>
+<div class=''>
+<a class="dropdown-item" href="/2024/mv-cup/team_markers">Mannschaftsspalten
+</a>
+</div>
+<div class=''>
+<a class="dropdown-item" href="/2024/mv-cup/publishing/new">Veröffentlichen
+</a>
+</div>
+<div class=''>
+<a class="dropdown-item" href="/2024/mv-cup/accesses">Zugänge
+</a>
+</div>
+
+</ul>
+</div>
 
 </div>
 
@@ -59,6 +112,7 @@
 </header>
 <div class='container mt-4'>
 <div class='alert-flash'>
+<div class='alert alert-info'>Die Anfrage wird per E-Mail übermittelt.</div>
 </div>
 </div>
 <div class='pb-4 mt-4 container'>
@@ -76,22 +130,35 @@
 
 </div>
 </div>
-<div class='text-end mt-2'>
-<a class="btn btn-sm btn-secondary" href="/wko/2023">DFV-Wettkampfordnung - 4. Auflage 2023</a>
-</div>
 </div>
 <div class='col-lg-6 col-xl-4'>
 <div class='card text-bg-light'>
+<div class='card-header text-bg-info'>
+<div class='d-grid gap-2 col-10 mx-auto'>
+<div class='text-center'>
+Nächster Schritt
+</div>
+<a class="btn btn-light btn-sm" href="/2024/mv-cup/presets">Vorlage wählen</a>
+</div>
+</div>
+
 <div class='card-header'>
 <div class='d-grid gap-2 col-10 mx-auto'>
 <a class="btn btn-light btn-sm" href="/2024/mv-cup/information_requests/new">Anfrage stellen</a>
-<a class="btn btn-light btn-sm" href="/2024/mv-cup/simple_access_login/new">Gastzugang</a>
+<a class="btn btn-light btn-sm" href="/2024/mv-cup/editing/edit">Bearbeiten</a>
+<a class="btn btn-light btn-sm" href="/2024/mv-cup/visibility/edit">Sichtbarkeit bearbeiten</a>
+<a class="btn btn-light btn-sm" href="/2024/mv-cup/registration/edit">Anmeldungen bearbeiten</a>
+<a class="btn btn-light btn-sm" href="/2024/mv-cup/documents/new">Dokument hinzufügen</a>
+<a class="btn btn-danger btn-sm" href="/2024/mv-cup/deletion/new">Löschen</a>
 <div class="social-share-button"><a rel="nofollow" data-site="twitter" class="ssb-icon ssb-twitter" onclick="return SocialShareButton.share(this);" title="Teilen via Twitter" href="#"></a> <a rel="nofollow" data-site="facebook" class="ssb-icon ssb-facebook" onclick="return SocialShareButton.share(this);" title="Teilen via Facebook" href="#"></a> <a rel="nofollow" data-site="email" class="ssb-icon ssb-email" onclick="return SocialShareButton.share(this);" title="Teilen via Email" href="#"></a> <a rel="nofollow" data-site="vkontakte" class="ssb-icon ssb-vkontakte" onclick="return SocialShareButton.share(this);" title="Teilen via Vkontakte" href="#"></a> <a rel="nofollow" data-site="telegram" class="ssb-icon ssb-telegram" onclick="return SocialShareButton.share(this);" title="Teilen via Telegram" href="#"></a> <a rel="nofollow" data-site="whatsapp_app" class="ssb-icon ssb-whatsapp_app" onclick="return SocialShareButton.share(this);" title="Teilen via WhatsApp" href="#"></a> <a rel="nofollow" data-site="whatsapp_web" class="ssb-icon ssb-whatsapp_web" onclick="return SocialShareButton.share(this);" title="Teilen via WhatsApp Web" href="#"></a></div>
 </div>
 </div>
 <div class='card-body text-center p-0 pt-3'>
 <pre class='small'><a href="http://www.example.com/2024/mv-cup">www.example.com/2024/mv-cup</a></pre>
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAQAAAAHUWYVAAAEg0lEQVR4nO2dUY/bIBAG2/v//7l9cqUibb8FgzP1zeTpHIOxRrBmN7l8/RAUX58egPyNQmAoBIZCYCgEhkJgKASGQmAoBIZCYCgEhkJgKASGQmAoBIZCYCgEhkJgKASGQmAoBIZCYCgEhkJgKASGQmAoBIZCYCgEhkJgKASGQmAoBMYeIb8WX6n9+H76u3u9qt2u+7mBMwSGQmAoBMZeIT+br9S+Op5iSepvXPPTuO7ezwLOEBgKgaEQGGeErD6nj2t7N0aMa/nYvlrrZ8d1YN8x4gyBoRAYCoHBEDLGgmrtn33u78YSEAwh8geFwFAIjHcLmc19AXi3kP8QhcBQCIwzQmbrBt3a9q5xzNYzHqiDXDhDYCgEhkJg7BVy9/NLq7mrVEeZ/XvX/SzgDIGhEBgKgbFHSPd5Pz3HpzpIt+aeYkm3/d37WcAZAkMhMBQC4zOfy0prd3VetVaPMaFqV8Wmqv3s/mQDzhAYCoGhEBhnvmN4Ua3R1d9jf2m/UJ0/Xr8aZ4oBKaYdwBkCQyEwFALj7HcML9I+pLuWp1g10u035c66970BZwgMhcBQCIy99ZCRtC/p5pa61+nuR6rxpfta7WcCZwgMhcBQCIxnc1np/CoWdGNJGt9qDEjXdx/yXhQCQyEwnhHSjQHdtXi27pJIubcqlzab82rgDIGhEBgKgXE2lzVSrcGpfRUbZusuq+Ouzp+NVQ2cITAUAkMhMPbmsqrjqQ5S9ZOe+2frIGmcs/fnPuT9KASGQmCcFTJbBxnbpZiz63h1Xoods/02cIbAUAgMhcB45nNZKQc1G2vSmt3db6S6R3ff5D7kvSgEhkJgPCOkW7fo1kW6/aQcV7e+ka7jPuS9KASGQmDsrYektfuiOm+2XlHFhtX9SlVvWR3fAs4QGAqBoRAYe3NZ1Zpbvbr7g4vV/Us1znRedV3rId8HhcBQCIwzn8vq7kNW21fXT+1S7KrO6453A84QGAqBoRAYZ/5f1sVs7me17jC+313ju7m2lPNyH/JeFAJDITCe+R3D6niKEWktT9e/u8an8WyMHRfOEBgKgaEQGM/8fkh3f3LRrTdU/Xb3Halek/qZjW0NnCEwFAJDITDOfD9kNfdU5aBW6w9V/6ku0q2DHMAZAkMhMBQC48z/7Z19vu/uM1Ls6eaWqrrJeD9pPOn4As4QGAqBoRAYZ3+DKj3XJ7o5rxQTUvvu8bv7ogbOEBgKgaEQGJ/5PfXq/KpmPVv3ODXuajzuQ96LQmAoBAZLSKqHVDmrKuakHFeKEakesrr/+QcsIaIQGgqBwRaS1vT0/N89v6qvrF7nBmwh3xCFwFAIjGe+H7Jrrd9dh0jXna25b8AZAkMhMBQCY6+Q/EmsXo18tn4yHk/jqd4fx1HFmAM5rAtnCAyFwFAIjL3fD5l9pf7SdWaPd9vN3vdGnCEwFAJDITAUAkMhMBQCQyEwFAJDITAUAkMhMBQCQyEwFAJDITAUAkMhMBQCQyEwFAJDITAUAkMhMBQCQyEwFAJDITAUAkMhMBQCQyEwFAJDITB+AxBKfc1yHEspAAAAAElFTkSuQmCC" />
+<div class='d-grid gap-2 col-10 mx-auto mb-2'>
+<a class="btn btn-dark btn-sm" target="_blank" rel="noopener" href="/2024/mv-cup.pdf">Flyer anzeigen</a>
+</div>
 </div>
 </div>
 </div>

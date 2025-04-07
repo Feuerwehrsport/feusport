@@ -52,6 +52,8 @@
         = render('next_step_card')
       .card-header
         .d-grid.gap-2.col-10.mx-auto
+          = link_to 'Anfrage stellen', new_competition_information_request_path, class: 'btn btn-light btn-sm'
+
           - if can?(:edit, @competition)
             - if @competition.date < Date.current && can?(:publish, @competition)
               = link_to 'Veröffentlichen', new_competition_publishing_path, class: 'btn btn-dark btn-sm'

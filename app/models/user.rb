@@ -49,6 +49,7 @@ class User < ApplicationRecord
   has_many :competitions, through: :user_accesses
   has_many :teams, class_name: 'Team', dependent: :nullify, foreign_key: :applicant_id, inverse_of: :applicant
   has_many :people, class_name: 'Person', dependent: :nullify, foreign_key: :applicant_id, inverse_of: :applicant
+  has_many :information_requests, dependent: :destroy
 
   auto_strip_attributes :name, :email, :phone_number
 

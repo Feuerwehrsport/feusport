@@ -30,6 +30,7 @@ Rails.application.routes.draw do
     get 'dp/:idpart', to: 'documents#preview', as: :document_preview
     get 'di/:idpart', to: 'documents#image', as: :document_image
     resource :publishing, only: %i[new create]
+    resources :information_requests, only: %i[new create]
 
     # top menu
     resources :teams do

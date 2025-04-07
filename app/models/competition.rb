@@ -58,6 +58,7 @@ class Competition < ApplicationRecord
   has_many :score_list_print_generators, class_name: 'Score::ListPrintGenerator', dependent: :destroy
   has_many :simple_accesses, class_name: 'SimpleAccess', dependent: :destroy
   has_many :team_list_restrictions, dependent: :destroy
+  has_many :information_requests, dependent: :destroy
 
   scope :current, -> { where(date: (1.month.ago..6.months.from_now)) }
 

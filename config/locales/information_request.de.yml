@@ -1,0 +1,14 @@
+---
+de:
+  activerecord:
+    attributes:
+      information_request:
+        message: Nachricht
+    models:
+      information_request:
+        one: Informationsanfrage
+        other: Informationsanfragen
+  simple_form:
+    hints:
+      information_request:
+        message: Die Nachricht wird an die Administratoren des Wettkampfes übermittelt. Bitte gebe auch eine Kontaktmöglichkeit von dir an, damit man sich bei dir melden kann. Außerdem wird die E-Mail-Adresse deines Nutzerkontos mit übermittelt.
