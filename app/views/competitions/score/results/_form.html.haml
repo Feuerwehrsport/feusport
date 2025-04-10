@@ -21,16 +21,9 @@
             = f.input :person_tags_excluded, as: :check_boxes, collection: @result.band.person_tags
       %small.text-muted Wenn Kennzeichnungen ausgewählt wurden, können die Ergebnisse entsprechend eingegrenzt werden.
   - else
-    = f.association :assessment, collection: @competition.assessments.sort, hint: 'Es kann mehrere Ergebnisse für eine Wertung geben: Zum Beispiel Finalläufe.'
-    = f.input :forced_name, hint: 'Der Name wird automatisch aus den Wertungen und Kennzeichnungen generiert. Hier kann man ihn überschreiben.', input_html: { data: { name_preview: 1 } }
-    - if !@result.persisted?
-      %fieldset.group.bg-accent2
-        Weitere Einstellungen sind nach dem Anlegen möglich.
-
-    - elsif @result.calculation_method_zweikampf?
-      %fieldset.group
-        = f.association :results, collection: @result.possible_zweikampf_results, as: :check_boxes, hint: 'Hier sollten alle Ergebnislisten ausgewählt werden, die in der Zweikampfwertung beachtet werden sollen. Üblicherweise wird ein Finallauf nicht gewertet.'
-    - else
+    - if @result.multi_result_method_disabled?
+      = f.association :assessment, collection: @competition.assessments.sort, hint: 'Es kann mehrere Ergebnisse für eine Wertung geben: Zum Beispiel Finalläufe.'
+      = f.input :forced_name, hint: 'Der Name wird automatisch aus den Wertungen und Kennzeichnungen generiert. Hier kann man ihn überschreiben.', input_html: { data: { name_preview: 1 } }
       %fieldset.group.row
         .col-lg-6
           = f.input :group_assessment, as: :boolean, hint: 'Eine Mannschaftswertung kann für eine Gesamtwertung wichtig sein.'
@@ -43,6 +36,13 @@
         %legend Berechnung der Ergebnisse
         = f.input :calculation_method, as: :radio_buttons, collection: calculation_method_options
         %small.text-muted Bei einigen Wettkämpfen gewinnt nicht der Schnellste, sondern der Kontinuierlichste.
+    - else
+      %fieldset.group
+        = f.input :image_key, as: :radio_buttons, collection: Score::Result::DISCIPLINES, label_method: ->(l) { discipline_image(l, size: 40) }
+        = f.input :forced_name, hint: 'Wähle einen passenden eindeutigen Namen aus. Z.B. Zweikampf - Frauen'
+      %fieldset.group
+        = f.association :results, collection: @competition.score_results.select(&:multi_result_method_disabled?).sort, as: :check_boxes, hint: 'Bitte wähle alle Ergebnislisten aus, die für die Berechnung herangezogen werden sollen'
+
     %fieldset.group
       %legend Optional
       .row

@@ -4,34 +4,33 @@
 #
 # Table name: score_results
 #
-#  id                     :uuid             not null, primary key
-#  calculation_method     :integer          default("default"), not null
-#  date                   :date
-#  forced_name            :string(100)
-#  group_assessment       :boolean          default(FALSE), not null
-#  group_run_count        :integer          default(8), not null
-#  group_score_count      :integer          default(6), not null
-#  person_tags_excluded   :string           default([]), is an Array
-#  person_tags_included   :string           default([]), is an Array
-#  team_tags_excluded     :string           default([]), is an Array
-#  team_tags_included     :string           default([]), is an Array
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
-#  assessment_id          :uuid             not null
-#  competition_id         :uuid             not null
-#  double_event_result_id :uuid
+#  id                   :uuid             not null, primary key
+#  calculation_method   :integer          default("default"), not null
+#  date                 :date
+#  forced_name          :string(100)
+#  group_assessment     :boolean          default(FALSE), not null
+#  group_run_count      :integer          default(8), not null
+#  group_score_count    :integer          default(6), not null
+#  image_key            :string(10)
+#  multi_result_method  :integer          default("disabled"), not null
+#  person_tags_excluded :string           default([]), is an Array
+#  person_tags_included :string           default([]), is an Array
+#  team_tags_excluded   :string           default([]), is an Array
+#  team_tags_included   :string           default([]), is an Array
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  assessment_id        :uuid
+#  competition_id       :uuid             not null
 #
 # Indexes
 #
-#  index_score_results_on_assessment_id           (assessment_id)
-#  index_score_results_on_competition_id          (competition_id)
-#  index_score_results_on_double_event_result_id  (double_event_result_id)
+#  index_score_results_on_assessment_id   (assessment_id)
+#  index_score_results_on_competition_id  (competition_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (assessment_id => assessments.id)
 #  fk_rails_...  (competition_id => competitions.id)
-#  fk_rails_...  (double_event_result_id => score_results.id)
 #
 require 'rails_helper'
 

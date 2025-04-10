@@ -3,15 +3,15 @@
 module Exports::ScoreResults
   extend ActiveSupport::Concern
   included do
-    delegate :competition, :discipline, to: :result
+    delegate :competition, to: :result
   end
 
-  def build_data_rows(result, discipline, shortcut, export_headers: false, pdf: false)
-    data = [build_data_headline(result, discipline, export_headers:, pdf:)]
+  def build_data_rows(result, shortcut, export_headers: false, pdf: false)
+    data = [build_data_headline(result, export_headers:, pdf:)]
     result.rows.each do |row|
       line = []
       line.push "#{result.place_for_row(row)}."
-      if discipline.single_discipline?
+      if result.single_discipline?
         line.push(row&.entity&.first_name, row&.entity&.last_name)
         if shortcut
           line.push(row&.entity&.team_shortcut_name(row&.assessment_type))
@@ -21,35 +21,30 @@ module Exports::ScoreResults
       else
         line.push(row&.entity&.full_name)
       end
-      if row.is_a? Score::DoubleEventResultRow
-        result.results.each { |inner_result| line.push(row.result_entry_from(inner_result).to_s) }
-        line.push(row.sum_result_entry.to_s)
-      else
+      if result.multi_result_method_disabled?
         result.lists.each do |list|
           entry = row.result_entry_from(list)
           line.push(entry&.target_times_as_data(pdf:)) if pdf && list.separate_target_times?
           line.push(entry&.human_time.to_s)
         end
         line.push(row.best_result_entry&.human_time) unless result.lists.count == 1
+      else
+        result.results.each { |inner_result| line.push(row.result_entry_from(inner_result)&.human_time) }
+        line.push(row.best_result_entry&.human_time)
       end
       data.push(line)
     end
     data
   end
 
-  def build_data_headline(result, discipline, export_headers: false, pdf: false)
+  def build_data_headline(result, export_headers: false, pdf: false)
     header = ['Platz']
-    if discipline.single_discipline?
+    if result.single_discipline?
       header.push('Vorname', 'Nachname', 'Mannschaft')
     else
       header.push('Mannschaft')
     end
-    if result.calculation_method_zweikampf?
-      result.results.each do |sub_result|
-        header.push(sub_result.assessment.discipline.short_name)
-      end
-      header.push('Summe')
-    else
+    if result.multi_result_method_disabled?
       result.lists.each do |list|
         if pdf && list.separate_target_times?
           header.push(content: list.shortcut, colspan: 2)
@@ -58,6 +53,11 @@ module Exports::ScoreResults
         end
       end
       header.push('Bestzeit') unless result.lists.count == 1
+    else
+      result.results.each do |sub_result|
+        header.push(sub_result.assessment.discipline.short_name)
+      end
+      header.push('Ergebnis')
     end
     header
   end

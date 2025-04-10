@@ -74,7 +74,9 @@ de:
         group_assessment: Mannschaftswertung
         group_run_count: Wettkämpfer pro Disziplin
         group_score_count: Wettkämpfer in Wertung
+        image_key: Symbol
         lists: Startlisten
+        multi_result_method: Kombinierte Berechnungsmethode
         name: Name
         person_tags_excluded: Wettkämpfer-Kennzeichnungen (ausschließend)
         person_tags_included: Wettkämpfer-Kennzeichnungen (einschließend)
@@ -110,7 +112,9 @@ de:
           entries:
             one: Ein Starter
             other: "%{count} Starter"
+  multi_result_methods:
+    best: Bester Eintrag
+    sum_of_best: Summe der besten Einträge (Zweikampf)
   score_calculation_methods:
     default: Standard (Bester Lauf in der Wertung)
     sum_of_two: Summe der besten zwei Läufe
-    zweikampf: Zweikampf

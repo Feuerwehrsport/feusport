@@ -1,0 +1,46 @@
+= render 'competitions/header', competition: @competition, sub: "#{resource_class.model_name.human} hinzufügen"
+
+.row.g-4
+  - if params[:multi_result].blank?
+    .col-lg-8
+      = simple_form_for([:competition, resource_instance]) do |f|
+        = card("#{resource_class.model_name.human} hinzufügen") do |c|
+          - c.body do
+            = f.association :assessment, collection: @competition.assessments.sort, hint: 'Es kann mehrere Ergebnisse für eine Wertung geben: Zum Beispiel Finalläufe.'
+            = f.input :forced_name, hint: 'Der Name wird automatisch aus den Wertungen und Kennzeichnungen generiert. Hier kann man ihn überschreiben.', input_html: { data: { name_preview: 1 } }
+
+            %fieldset.group.bg-accent2
+              Weitere Einstellungen sind nach dem Anlegen möglich.
+
+          - c.footer do
+            = f.primary_button :submit
+            = f.cancel_button(competition_score_results_path)
+
+    .col-lg-4
+      = card_body('Mehrere Ergebnisse kombinieren') do
+        %p Falls du mehrere vorhandene Ergebnislisten kombinieren möchtest, um aus den <b>Zeiten</b> ein neues Ergebnis zu machen, kannst du hier eine kombinierte Ergebnisliste anlegen.
+        %p.small.text-muted z.B. Zweikampf oder Bestzeit von DIN und TGL
+        %p= btn_link_to('Kombinierte Liste anlegen', url_for(action: :new, multi_result: true))
+        %p Falls du allerdings die Ergebnislisten anhand von <b>Platzierungen</b> kombinieren möchtest, bist du bei den <b>#{link_to('Gesamtwertungen', competition_score_competition_results_path)}</b> richtig.
+        %p.small.text-muted z.B. Deutschland-Cup
+  - else
+    .col-lg-8
+      = simple_form_for([:competition, resource_instance]) do |f|
+        = hidden_field_tag :multi_result, 'true'
+        = card('Kombiniertes Ergebnis hinzufügen') do |c|
+          - c.body do
+            = f.input :image_key, as: :radio_buttons, collection: Score::Result::DISCIPLINES, label_method: ->(l) { discipline_image(l, size: 40) }
+            = f.association :results, collection: @competition.score_results.select(&:multi_result_method_disabled?).select(&:persisted?).sort, as: :check_boxes, hint: 'Bitte wähle alle Ergebnislisten aus, die für die Berechnung herangezogen werden sollen'
+            = f.input :forced_name, hint: 'Wähle einen passenden eindeutigen Namen aus. Z.B. Zweikampf - Frauen'
+            = f.input :multi_result_method, as: :radio_buttons, collection: multi_result_method_options
+
+            %fieldset.group.bg-accent2
+              Weitere Einstellungen sind nach dem Anlegen möglich.
+
+          - c.footer do
+            = f.primary_button :submit
+            = f.cancel_button(competition_score_results_path)
+
+    .col-lg-4
+      = card_body('Mehrere Ergebnisse kombinieren') do
+        %p Hier kannst du mehrere Ergebnisse miteinander kombinieren. In der neuen Ergebnisliste werden nur Einträge angezeigt, die bei allen ausgewählten Ergebnisse mindestens eine gültige Zeit hatten. Bei Zeitgleichheit (je nach Berechnungsmethode) werden jeweils die zweiten Zeiten verglichen.

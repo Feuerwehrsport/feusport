@@ -8,7 +8,7 @@
   %fieldset.group
     = f.input :result_type, as: :radio_buttons, collection: Score::CompetitionResult.result_types.invert, hint: 'Es gibt unterschiedliche Punkteberechnungen. Probiere es aus, wenn du dir unsicher bist.'
   %fieldset.group
-    = f.association :results, as: :check_boxes, collection: @competition.score_results.no_zweikampf.sort, hint: 'Wähle alle Ergebnislisten aus, die für diese Gesamtwertung genutzt werden sollen.'
+    = f.association :results, as: :check_boxes, collection: @competition.score_results.sort, hint: 'Wähle alle Ergebnislisten aus, die für diese Gesamtwertung genutzt werden sollen.'
 - c.footer do
   = f.primary_button :submit
   = f.cancel_button(competition_score_competition_results_path)

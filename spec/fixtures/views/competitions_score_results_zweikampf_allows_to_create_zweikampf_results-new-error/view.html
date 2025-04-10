@@ -55,7 +55,7 @@ Benutzer
 <div class='container'>
 <h1>MV-Cup</h1>
 <p class='lead m-0 ms-1'>29.02.2024 - Rostock</p>
-<p class='lead m-0 ms-1'>Ergebnisse aktualisieren</p>
+<p class='lead m-0 ms-1'>Ergebnisse hinzufügen</p>
 
 </div>
 </header>
@@ -129,39 +129,32 @@ Erweitert
 </header>
 <div class='container mt-4'>
 <div class='alert-flash'>
-<div class='alert alert-info'>Die Änderungen wurden gespeichert.</div>
+<div class='alert alert-danger'>Bitte überprüfen Sie folgende Fehler:</div>
 </div>
 </div>
 <div class='pb-4 mt-4 container'>
 <div class='row g-4'>
 <div class='col-lg-8'>
-<form class="simple_form edit_score_result" id="edit_score_result_UUID" novalidate="novalidate" action="/2024/mv-cup/score/results/UUID" accept-charset="UTF-8" method="post"><input type="hidden" name="_method" value="patch" autocomplete="off" /><div class='card'>
+<form class="simple_form new_score_result" id="new_score_result" novalidate="novalidate" action="/2024/mv-cup/score/results" accept-charset="UTF-8" method="post"><input type="hidden" name="multi_result" id="multi_result" value="true" autocomplete="off" />
+<div class='card'>
 <div class='card-header p-0'>
 <div class='d-flex justify-content-between'>
-<h4 class='m-0 py-2 ps-3'>Ergebnisse aktualisieren</h4>
+<h4 class='m-0 py-2 ps-3'>Kombiniertes Ergebnis hinzufügen</h4>
 </div>
 </div>
 <div class='card-body'>
-<fieldset class='group'>
 <fieldset class="form-group radio_buttons optional score_result_image_key form-group-valid"><div class="col-form-label pt-0">Symbol</div><input type="hidden" name="score_result[image_key]" value="" autocomplete="off" /><div class="form-check"><input class="form-check-input radio_buttons optional" type="radio" value="la" name="score_result[image_key]" id="score_result_image_key_la" /><label class="form-check-label collection_radio_buttons" for="score_result_image_key_la"><img src="/assets/disciplines/la.svg" width="40" height="40" /></label></div><div class="form-check"><input class="form-check-input radio_buttons optional" type="radio" value="hl" name="score_result[image_key]" id="score_result_image_key_hl" /><label class="form-check-label collection_radio_buttons" for="score_result_image_key_hl"><img src="/assets/disciplines/hl.svg" width="40" height="40" /></label></div><div class="form-check"><input class="form-check-input radio_buttons optional" type="radio" value="hb" name="score_result[image_key]" id="score_result_image_key_hb" /><label class="form-check-label collection_radio_buttons" for="score_result_image_key_hb"><img src="/assets/disciplines/hb.svg" width="40" height="40" /></label></div><div class="form-check"><input class="form-check-input radio_buttons optional" type="radio" value="zk" checked="checked" name="score_result[image_key]" id="score_result_image_key_zk" /><label class="form-check-label collection_radio_buttons" for="score_result_image_key_zk"><img src="/assets/disciplines/zk.svg" width="40" height="40" /></label></div><div class="form-check"><input class="form-check-input radio_buttons optional" type="radio" value="gs" name="score_result[image_key]" id="score_result_image_key_gs" /><label class="form-check-label collection_radio_buttons" for="score_result_image_key_gs"><img src="/assets/disciplines/gs.svg" width="40" height="40" /></label></div><div class="form-check"><input class="form-check-input radio_buttons optional" type="radio" value="fs" name="score_result[image_key]" id="score_result_image_key_fs" /><label class="form-check-label collection_radio_buttons" for="score_result_image_key_fs"><img src="/assets/disciplines/fs.svg" width="40" height="40" /></label></div><div class="form-check"><input class="form-check-input radio_buttons optional" type="radio" value="other" name="score_result[image_key]" id="score_result_image_key_other" /><label class="form-check-label collection_radio_buttons" for="score_result_image_key_other"><img src="/assets/disciplines/other.svg" width="40" height="40" /></label></div></fieldset>
-<div class="form-group string optional score_result_forced_name form-group-valid"><label class="control-label string optional" for="score_result_forced_name">Name</label><input class="form-control string optional" type="text" value="Zweikampf" name="score_result[forced_name]" id="score_result_forced_name" /><small class="form-text text-muted">Wähle einen passenden eindeutigen Namen aus. Z.B. Zweikampf - Frauen</small></div>
-</fieldset>
-<fieldset class='group'>
-<fieldset class="form-group check_boxes optional score_result_results form-group-valid"><div class="col-form-label pt-0">Ergebnislisten</div><input type="hidden" name="score_result[result_ids][]" value="" autocomplete="off" /><div class="form-check"><input class="form-check-input check_boxes optional" type="checkbox" value="UUID" checked="checked" name="score_result[result_ids][]" id="score_result_result_ids_UUID" /><label class="form-check-label collection_check_boxes" for="score_result_result_ids_UUID">100m-Hindernisbahn - Frauen</label></div><div class="form-check"><input class="form-check-input check_boxes optional" type="checkbox" value="UUID" name="score_result[result_ids][]" id="score_result_result_ids_UUID" /><label class="form-check-label collection_check_boxes" for="score_result_result_ids_UUID">Hakenleitersteigen - Frauen</label></div><small class="form-text text-muted">Bitte wähle alle Ergebnislisten aus, die für die Berechnung herangezogen werden sollen</small></fieldset>
-</fieldset>
-<fieldset class='group'>
-<legend>Optional</legend>
-<div class='row'>
-<div class='col-lg-6'>
-<div class="form-group date optional score_result_date"><label class="date optional" for="score_result_date">Datum</label><div class="d-flex flex-row justify-content-between align-items-center"><input class="form-control mx-1 date optional" type="date" name="score_result[date]" id="score_result_date" /></div><small class="form-text text-muted">Mit Angabe dieses Datums kann man das allgemeine Datum des Wettkampfes auf dem PDF überschreiben. Dies ist nützlich, wenn der Wettkampf über mehrer Tage geht.</small></div>
-</div>
-</div>
+<fieldset class="form-group check_boxes optional score_result_results"><div class="col-form-label pt-0">Ergebnislisten</div><input type="hidden" name="score_result[result_ids][]" value="" autocomplete="off" /><div class="form-check"><input class="form-check-input check_boxes optional" type="checkbox" value="UUID" name="score_result[result_ids][]" id="score_result_result_ids_UUID" /><label class="form-check-label collection_check_boxes" for="score_result_result_ids_UUID">100m-Hindernisbahn - Frauen</label></div><div class="form-check"><input class="form-check-input check_boxes optional" type="checkbox" value="UUID" name="score_result[result_ids][]" id="score_result_result_ids_UUID" /><label class="form-check-label collection_check_boxes" for="score_result_result_ids_UUID">Hakenleitersteigen - Frauen</label></div><small class="form-text text-muted">Bitte wähle alle Ergebnislisten aus, die für die Berechnung herangezogen werden sollen</small></fieldset>
+<div class="form-group string optional score_result_forced_name"><label class="control-label string optional" for="score_result_forced_name">Name</label><input class="form-control string optional" type="text" name="score_result[forced_name]" id="score_result_forced_name" /><small class="form-text text-muted">Wähle einen passenden eindeutigen Namen aus. Z.B. Zweikampf - Frauen</small></div>
+<fieldset class="form-group radio_buttons required score_result_multi_result_method form-group-valid"><div class="col-form-label pt-0">Kombinierte Berechnungsmethode <abbr title="required">*</abbr></div><input type="hidden" name="score_result[multi_result_method]" value="" autocomplete="off" /><div class="form-check"><input class="form-check-input radio_buttons required" type="radio" value="sum_of_best" name="score_result[multi_result_method]" id="score_result_multi_result_method_sum_of_best" /><label class="form-check-label collection_radio_buttons" for="score_result_multi_result_method_sum_of_best">Summe der besten Einträge (Zweikampf)</label></div><div class="form-check"><input class="form-check-input radio_buttons required" type="radio" value="best" name="score_result[multi_result_method]" id="score_result_multi_result_method_best" /><label class="form-check-label collection_radio_buttons" for="score_result_multi_result_method_best">Bester Eintrag</label></div></fieldset>
+<fieldset class='group bg-accent2'>
+Weitere Einstellungen sind nach dem Anlegen möglich.
 </fieldset>
 
 </div>
 <div class='card-footer'>
 <div class='d-flex justify-content-between align-items-start'>
-<div><button name="button" type="submit" class="btn btn-primary" data-disable-with="Bitte warten...">Ergebnisse aktualisieren</button>
+<div><button name="button" type="submit" class="btn btn-primary" data-disable-with="Bitte warten...">Ergebnisse erstellen</button>
 <a class="btn btn-secondary" href="/2024/mv-cup/score/results">Abbrechen</a>
 </div>
 </div>
@@ -169,7 +162,17 @@ Erweitert
 </div>
 </form></div>
 <div class='col-lg-4'>
+<div class='card'>
+<div class='card-header p-0'>
+<div class='d-flex justify-content-between'>
+<h4 class='m-0 py-2 ps-3'>Mehrere Ergebnisse kombinieren</h4>
+</div>
+</div>
+<div class='card-body'>
+<p>Hier kannst du mehrere Ergebnisse miteinander kombinieren. In der neuen Ergebnisliste werden nur Einträge angezeigt, die bei allen ausgewählten Ergebnisse mindestens eine gültige Zeit hatten. Bei Zeitgleichheit (je nach Berechnungsmethode) werden jeweils die zweiten Zeiten verglichen.</p>
 
+</div>
+</div>
 </div>
 </div>
 </div>

@@ -142,19 +142,11 @@ Erweitert
 </div>
 </div>
 <div class='card-body'>
-<div class="form-group select required score_result_assessment form-group-invalid"><label class="control-label select required" for="score_result_assessment_id">Wertung <abbr title="required">*</abbr></label><select class="form-select is-invalid select required" aria-invalid="true" name="score_result[assessment_id]" id="score_result_assessment_id"><option value="" label=" "></option>
+<div class="form-group select optional score_result_assessment form-group-invalid"><label class="control-label select optional" for="score_result_assessment_id">Wertung</label><select class="form-select is-invalid select optional" aria-invalid="true" name="score_result[assessment_id]" id="score_result_assessment_id"><option value="" label=" "></option>
 <option value="UUID">Hakenleitersteigen - Frauen</option></select><div class="invalid-feedback">Wertung muss ausgefüllt werden</div><small class="form-text text-muted">Es kann mehrere Ergebnisse für eine Wertung geben: Zum Beispiel Finalläufe.</small></div>
 <div class="form-group string optional score_result_forced_name"><label class="control-label string optional" for="score_result_forced_name">Name</label><input class="form-control string optional" data-name-preview="1" type="text" name="score_result[forced_name]" id="score_result_forced_name" /><small class="form-text text-muted">Der Name wird automatisch aus den Wertungen und Kennzeichnungen generiert. Hier kann man ihn überschreiben.</small></div>
 <fieldset class='group bg-accent2'>
 Weitere Einstellungen sind nach dem Anlegen möglich.
-</fieldset>
-<fieldset class='group'>
-<legend>Optional</legend>
-<div class='row'>
-<div class='col-lg-6'>
-<div class="form-group date optional score_result_date"><label class="date optional" for="score_result_date">Datum</label><div class="d-flex flex-row justify-content-between align-items-center"><input class="form-control mx-1 date optional" type="date" name="score_result[date]" id="score_result_date" /></div><small class="form-text text-muted">Mit Angabe dieses Datums kann man das allgemeine Datum des Wettkampfes auf dem PDF überschreiben. Dies ist nützlich, wenn der Wettkampf über mehrer Tage geht.</small></div>
-</div>
-</div>
 </fieldset>
 
 </div>
@@ -168,7 +160,21 @@ Weitere Einstellungen sind nach dem Anlegen möglich.
 </div>
 </form></div>
 <div class='col-lg-4'>
+<div class='card'>
+<div class='card-header p-0'>
+<div class='d-flex justify-content-between'>
+<h4 class='m-0 py-2 ps-3'>Mehrere Ergebnisse kombinieren</h4>
+</div>
+</div>
+<div class='card-body'>
+<p>Falls du mehrere vorhandene Ergebnislisten kombinieren möchtest, um aus den <b>Zeiten</b> ein neues Ergebnis zu machen, kannst du hier eine kombinierte Ergebnisliste anlegen.</p>
+<p class='small text-muted'>z.B. Zweikampf oder Bestzeit von DIN und TGL</p>
+<p><a class=" btn btn-light btn-sm" href="/2024/mv-cup/score/results/new?multi_result=true">Kombinierte Liste anlegen</a></p>
+<p>Falls du allerdings die Ergebnislisten anhand von <b>Platzierungen</b> kombinieren möchtest, bist du bei den <b><a href="/2024/mv-cup/score/competition_results">Gesamtwertungen</a></b> richtig.</p>
+<p class='small text-muted'>z.B. Deutschland-Cup</p>
 
+</div>
+</div>
 </div>
 </div>
 </div>

@@ -7,7 +7,7 @@ Exports::Pdf::Score::List = Struct.new(:list, :more_columns) do
   delegate :competition, to: :list
 
   def perform
-    pdf_header(export_title, discipline: list.discipline, date: list.date)
+    pdf_header(export_title, discipline_key: list.discipline.key, date: list.date)
 
     lines = show_export_data(list, more_columns:, pdf: true)
     list_track_count = list.track_count

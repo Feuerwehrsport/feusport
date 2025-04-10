@@ -25,12 +25,11 @@
 class Discipline < ApplicationRecord
   include SortableByName
 
-  DISCIPLINES = %w[la hl hb zk gs fs other].freeze
+  DISCIPLINES = %w[la hl hb gs fs other].freeze
   DEFAULT_NAMES = {
     la: 'Löschangriff Nass',
     hl: 'Hakenleitersteigen',
     hb: '100m-Hindernisbahn',
-    zk: 'Zweikampf',
     gs: 'Gruppenstafette',
     fs: '4x100m-Hindernisstaffel',
     other: 'Andere',
@@ -39,7 +38,6 @@ class Discipline < ApplicationRecord
     la: false,
     hl: true,
     hb: true,
-    zk: true,
     gs: false,
     fs: false,
     other: false,
@@ -57,9 +55,5 @@ class Discipline < ApplicationRecord
 
   def destroy_possible?
     assessments.empty?
-  end
-
-  def zweikampf?
-    key == 'zk'
   end
 end

@@ -14,7 +14,7 @@
             .d-grid.gap-2
               = btn_link_to 'Bearbeiten', action: :edit
               = btn_link_to 'Cup-Serie-Zugehörigkeit', action: :edit, form: 'series_assessments'
-              - if @result.band.team_tags.present? || @result.band.person_tags.present?
+              - if @result.band&.team_tags.present? || @result.band&.person_tags.present?
                 = btn_link_to 'Kennzeichungen', action: :edit, form: 'tags'
               = btn_link_to 'Löschen', { action: :destroy }, data: { turbo_method: 'delete', turbo_confirm: 'Ergebnisliste wirklich löschen? Die zugehörigen Startlisten werden verändert!' }
           - if can?(:edit, @result) && @competition.certificates_templates.exists?
@@ -23,12 +23,12 @@
     - if @rows.count > 0
       .col-lg-12
         = card_direct(@result.name) do
-          - if @discipline.single_discipline?
+          - if @result.single_discipline?
             = render 'result_table_single', rows: @rows, places: true
           - else
             = render 'result_table_group', rows: @rows, places: true
 
-      - if @result.group_assessment? && @result.discipline.single_discipline?
+      - if @result.single_group_result?
         .col-lg-12
           = card_direct('Mannschaftswertung') do
             %table.table.table-bordered
@@ -51,10 +51,10 @@
         .alert.alert-info Keine Einträge gefunden
 
 
-    - if @out_of_competition_rows.count > 0
+    - if @out_of_competition_rows.present? && @out_of_competition_rows.count > 0
       .col-lg-12
         = card_direct('Außer der Wertung') do
-          - if @discipline.single_discipline?
+          - if @result.single_discipline?
             = render 'result_table_single', rows: @out_of_competition_rows, places: false
           - else
             = render 'result_table_group', rows: @out_of_competition_rows, places: false

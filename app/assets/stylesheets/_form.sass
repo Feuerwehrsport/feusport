@@ -10,7 +10,7 @@
 .form-group.hidden
   display: none
 
-.form-group.discipline_key
+.form-group.discipline_key, .form-group.score_result_image_key
   .form-check
     display: inline-block
 
@@ -25,7 +25,8 @@
   [type=radio]:checked + label
     outline: 0.2rem solid $primary
 
-
+.form-group label i.fa-square-pen
+  cursor: pointer
 
 .time-types
   border-left: 1px solid $light

@@ -46,21 +46,21 @@ module Exports::Pdf::Base
     }
   end
 
-  def pdf_discipline_image(discipline, width:, at:)
-    pdf.image(Rails.root.join('app', 'assets', 'images', 'disciplines', "#{discipline.key}.png"),
+  def pdf_discipline_image(discipline_key, width:, at:)
+    pdf.image(Rails.root.join('app', 'assets', 'images', 'disciplines', "#{discipline_key}.png"),
               width:, at:)
   end
 
   protected
 
-  def pdf_header(name, discipline: nil, date: nil, force_name: false)
+  def pdf_header(name, discipline_key: nil, date: nil, force_name: false)
     date ||= competition.date
     headline_y = pdf.cursor
     pdf.text(name, align: :center, size: 17)
     pdf.text([competition.name, l(date)].join(' - '), align: :center, size: 15) unless force_name
-    return if discipline.blank?
+    return if discipline_key.blank?
 
-    pdf_discipline_image(discipline, width: 30, at: [10, headline_y])
+    pdf_discipline_image(discipline_key, width: 30, at: [10, headline_y])
     pdf.move_down 10
   end
 

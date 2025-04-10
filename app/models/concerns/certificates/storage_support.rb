@@ -30,11 +30,12 @@ module Certificates::StorageSupport
     when :rank_without_dot
       result.place_for_row(self)
     when :assessment
-      result.assessment&.forced_name.presence || result.assessment&.discipline&.name if result.respond_to?(:assessment)
+      result&.try(:assessment)&.forced_name.presence || result&.try(:assessment)&.discipline&.name.presence ||
+        result&.name
     when :result_name
       result&.name
     when :assessment_with_gender
-      result.assessment&.name if result.respond_to?(:assessment)
+      result&.try(:assessment)&.name.presence || result&.name
     when :gender
       storage_support_band
     when :date

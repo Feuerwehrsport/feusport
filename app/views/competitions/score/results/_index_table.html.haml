@@ -5,7 +5,7 @@
   - resource_collection.sort.each do |result|
     %tr
       %td
-        = discipline_image(result.assessment.discipline.key)
+        = discipline_image(result.discipline_key)
         = result.name
 
       %td.text-end

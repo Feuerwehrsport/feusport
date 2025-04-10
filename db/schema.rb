@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_04_07_112939) do
+ActiveRecord::Schema[7.2].define(version: 2025_04_09_080624) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
@@ -404,6 +404,15 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_07_112939) do
     t.index ["result_id"], name: "index_score_result_lists_on_result_id"
   end
 
+  create_table "score_result_references", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "result_id", null: false
+    t.uuid "multi_result_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["multi_result_id"], name: "index_score_result_references_on_multi_result_id"
+    t.index ["result_id"], name: "index_score_result_references_on_result_id"
+  end
+
   create_table "score_result_series_assessments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "result_id", null: false
     t.bigint "assessment_id", null: false
@@ -417,8 +426,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_07_112939) do
     t.uuid "competition_id", null: false
     t.string "forced_name", limit: 100
     t.boolean "group_assessment", default: false, null: false
-    t.uuid "assessment_id", null: false
-    t.uuid "double_event_result_id"
+    t.uuid "assessment_id"
     t.integer "group_score_count", default: 6, null: false
     t.integer "group_run_count", default: 8, null: false
     t.date "date"
@@ -429,9 +437,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_07_112939) do
     t.string "person_tags_excluded", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "image_key", limit: 10
+    t.integer "multi_result_method", default: 0, null: false
     t.index ["assessment_id"], name: "index_score_results_on_assessment_id"
     t.index ["competition_id"], name: "index_score_results_on_competition_id"
-    t.index ["double_event_result_id"], name: "index_score_results_on_double_event_result_id"
   end
 
   create_table "series_assessments", force: :cascade do |t|
@@ -772,10 +781,11 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_07_112939) do
   add_foreign_key "score_result_list_factories", "score_results", column: "result_id"
   add_foreign_key "score_result_lists", "score_lists", column: "list_id"
   add_foreign_key "score_result_lists", "score_results", column: "result_id"
+  add_foreign_key "score_result_references", "score_results", column: "multi_result_id"
+  add_foreign_key "score_result_references", "score_results", column: "result_id"
   add_foreign_key "score_result_series_assessments", "score_results", column: "result_id"
   add_foreign_key "score_results", "assessments"
   add_foreign_key "score_results", "competitions"
-  add_foreign_key "score_results", "score_results", column: "double_event_result_id"
   add_foreign_key "simple_accesses", "competitions"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_claimed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade

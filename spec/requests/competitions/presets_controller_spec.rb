@@ -99,8 +99,8 @@ RSpec.describe 'competitions/presets' do
                     params: { preset: { selected_bands: ['', 'female', 'male'], selected_disciplines: %w[hl hb zk] } }
               expect(response).to redirect_to "/#{competition.year}/#{competition.slug}"
             end.to change(Band, :count).by(2)
-          end.to change(Discipline, :count).by(3)
-        end.to change(Assessment, :count).by(6)
+          end.to change(Discipline, :count).by(2)
+        end.to change(Assessment, :count).by(4)
       end.to change(Score::Result, :count).by(6)
     end
   end

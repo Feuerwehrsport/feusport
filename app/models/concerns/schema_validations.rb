@@ -4,7 +4,7 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 
-# generated from version 20250407112939
+# generated from version 20250409080624
 
 module SchemaValidations
   extend ActiveSupport::Concern
@@ -494,6 +494,16 @@ module SchemaValidations
       validates_with_filter :updated_at, {:date_time_in_db_range=>{}}
     end
 
+    def dbv_score_result_references_validations(enums: [])
+      belongs_to_presence_validations_for([:result_id, :multi_result_id])
+      validates_with_filter :result_id, {:presence=>{}}
+      validates_with_filter :multi_result_id, {:presence=>{}}
+      validates_with_filter :created_at, {:presence=>{}}
+      validates_with_filter :created_at, {:date_time_in_db_range=>{}}
+      validates_with_filter :updated_at, {:presence=>{}}
+      validates_with_filter :updated_at, {:date_time_in_db_range=>{}}
+    end
+
     def dbv_score_result_series_assessments_validations(enums: [])
       belongs_to_presence_validations_for([:result_id, :assessment_id])
       validates_with_filter :result_id, {:presence=>{}}
@@ -506,11 +516,10 @@ module SchemaValidations
     end
 
     def dbv_score_results_validations(enums: [])
-      belongs_to_presence_validations_for([:competition_id, :assessment_id, :group_score_count, :group_run_count, :calculation_method])
+      belongs_to_presence_validations_for([:competition_id, :group_score_count, :group_run_count, :calculation_method, :multi_result_method])
       validates_with_filter :competition_id, {:presence=>{}}
       validates_with_filter :forced_name, {:length=>{:allow_nil=>true, :maximum=>100}}
       validates_with_filter :group_assessment, {:inclusion=>{:in=>[true, false], :message=>:blank}}
-      validates_with_filter :assessment_id, {:presence=>{}}
       validates_with_filter :group_score_count, {:presence=>{}}
       validates_with_filter :group_score_count, {:numericality=>{:allow_nil=>true, :only_integer=>true, :greater_than_or_equal_to=>-2147483648, :less_than=>2147483648}} unless enums.include?(:group_score_count)
       validates_with_filter :group_run_count, {:presence=>{}}
@@ -522,6 +531,9 @@ module SchemaValidations
       validates_with_filter :created_at, {:date_time_in_db_range=>{}}
       validates_with_filter :updated_at, {:presence=>{}}
       validates_with_filter :updated_at, {:date_time_in_db_range=>{}}
+      validates_with_filter :image_key, {:length=>{:allow_nil=>true, :maximum=>10}}
+      validates_with_filter :multi_result_method, {:presence=>{}}
+      validates_with_filter :multi_result_method, {:numericality=>{:allow_nil=>true, :only_integer=>true, :greater_than_or_equal_to=>-2147483648, :less_than=>2147483648}} unless enums.include?(:multi_result_method)
     end
 
     def dbv_series_assessments_validations(enums: [])

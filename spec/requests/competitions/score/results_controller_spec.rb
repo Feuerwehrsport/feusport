@@ -149,19 +149,27 @@ RSpec.describe 'competitions/score/results' do
     let!(:result_hb) { create(:score_result, competition:, assessment: assessment_hb_female) }
     let!(:result_hl) { create(:score_result, competition:, assessment: assessment_hl_female) }
 
-    let!(:zk) { create(:discipline, :zk, competition:) }
-    let!(:assessment_zk_female) { create(:assessment, competition:, discipline: zk, band: female) }
-
     it 'allows to create zweikampf results' do
       sign_in user
 
+      get "/#{competition.year}/#{competition.slug}/score/results/new?multi_result=true"
+      expect(response).to match_html_fixture.with_affix('new')
+
+      post "/#{competition.year}/#{competition.slug}/score/results",
+           params: { multi_result: 'true', score_result: { image_key: 'zk' } }
+      expect(response).to match_html_fixture.with_affix('new-error').for_status(422)
+
       expect do
         post "/#{competition.year}/#{competition.slug}/score/results",
-             params: { score_result: { assessment_id: assessment_zk_female.id } }
+             params: { multi_result: 'true', score_result: {
+               image_key: 'zk', result_ids: [result_hb.id], forced_name: 'Zweikampf',
+               multi_result_method: 'sum_of_best'
+             } }
       end.to change(Score::Result, :count).by(1)
 
       result = Score::Result.where.not(id: [result_hl.id, result_hb.id]).last
-      expect(result.calculation_method_zweikampf?).to be true
+      expect(result.calculation_method).to eq 'default'
+      expect(result.multi_result_method).to eq 'sum_of_best'
 
       get "/#{competition.year}/#{competition.slug}/score/results/#{result.id}/edit"
       expect(response).to match_html_fixture.with_affix('edit')

@@ -21,7 +21,7 @@ Exports::Xlsx::Score::Result = Struct.new(:result) do
 
   def single_table
     add_worksheet(result.name) do |sheet|
-      build_data_rows(result, discipline, false).each { |row| sheet.add_row(row) }
+      build_data_rows(result, false).each { |row| sheet.add_row(row) }
     end
   end
 

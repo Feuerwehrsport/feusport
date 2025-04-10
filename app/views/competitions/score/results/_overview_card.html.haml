@@ -4,9 +4,10 @@
       %tr
         %th= Score::Result.human_attribute_name :name
         %td= result.name
-      %tr
-        %th= Score::Result.human_attribute_name :assessment
-        %td= result.assessment.name
+      - if result.assessment.present?
+        %tr
+          %th= Score::Result.human_attribute_name :assessment
+          %td= result.assessment.name
       - if result.team_tags_included.present?
         %tr
           %th= Score::Result.human_attribute_name :team_tags_included
@@ -24,15 +25,7 @@
           %th= Score::Result.human_attribute_name :person_tags_excluded
           %td= result.person_tags_excluded.join(', ')
 
-      - if result.calculation_method_zweikampf?
-        %tr
-          %th= Score::Result.human_attribute_name :results
-          %td
-            %table.table.table-condensed
-              - result.results.each do |result|
-                %tr
-                  %td= link_to(result.name, competition_score_result_path(id: result.id))
-      - else
+      - if result.multi_result_method_disabled?
         %tr
           %th= Score::Result.human_attribute_name :group_assessment
           %td
@@ -42,6 +35,17 @@
                 (#{result.group_score_count} von #{result.group_run_count})
             - else
               Nein
+      - else
+        %tr
+          %th= Score::Result.human_attribute_name :multi_result_method
+          %td= t("multi_result_methods.#{result.multi_result_method}")
+        %tr
+          %th= Score::Result.human_attribute_name :results
+          %td
+            %table.table.table-condensed
+              - result.results.each do |result|
+                %tr
+                  %td= link_to(result.name, competition_score_result_path(id: result.id))
       %tr
         %th= Score::Result.human_attribute_name :lists
         %td
@@ -71,7 +75,7 @@
                     = link_to(assessment.to_label, competition_series_assessment_path(id: assessment.id))
 
   - c.actions do |actions|
-    - if result.group_assessment? && result.discipline.single_discipline?
+    - if result.group_assessment? && result.discipline&.single_discipline?
       - actions.link_to 'Mannschaftswertung als PDF', { format: :pdf, only: :group_assessment }, end_icon: :file_pdf, target: '_blank', rel: 'noopener'
       - actions.link_to 'Einzelwertung als PDF', { format: :pdf, only: :single_competitors }, end_icon: :file_pdf, target: '_blank', rel: 'noopener'
       - actions.link_to 'Komplett als PDF', { format: :pdf }, end_icon: :file_pdf, target: '_blank', rel: 'noopener'

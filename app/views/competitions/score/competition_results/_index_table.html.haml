@@ -4,7 +4,7 @@
     %th Mannschaft
     - competition_result.results.each do |result|
       %th{ colspan: 2 }
-        = discipline_image result.assessment.discipline.key
+        = discipline_image result.discipline_key
         = result.assessment.discipline.short_name
     %th.small.sum-points Punkte
   - competition_result.rows.each do |row|

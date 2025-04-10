@@ -52,11 +52,10 @@ class Presets::SingleDisciplines < Presets::Base
 
     zk_result = {}
     if 'zk'.in?(selected_disciplines)
-      zk = competition.disciplines.find_or_create_by(key: :zk, name: Discipline::DEFAULT_NAMES[:zk], short_name: 'zk',
-                                                     single_discipline: true)
       bands.each do |band|
-        zk_assessment = competition.assessments.find_or_create_by!(discipline: zk, band:)
-        zk_result[band] = Score::Result.create!(competition:, assessment: zk_assessment, calculation_method: :zweikampf)
+        zk_result[band] =
+          Score::Result.create!(competition:, multi_result_method: :sum_of_best,
+                                forced_name: "Zweikampf - #{band.name}", image_key: :zk)
       end
     end
 
@@ -65,7 +64,8 @@ class Presets::SingleDisciplines < Presets::Base
                                                      single_discipline: true)
       bands.each do |band|
         hl_assessment = competition.assessments.find_or_create_by!(discipline: hl, band:)
-        competition.score_results.find_or_create_by!(assessment: hl_assessment, double_event_result: zk_result[band])
+        result = competition.score_results.find_or_create_by!(assessment: hl_assessment)
+        zk_result[band].results.push(result) if zk_result[band]
       end
     end
     if 'hb'.in?(selected_disciplines)
@@ -73,7 +73,8 @@ class Presets::SingleDisciplines < Presets::Base
                                                      single_discipline: true)
       bands.each do |band|
         hb_assessment = competition.assessments.find_or_create_by!(discipline: hb, band:)
-        competition.score_results.find_or_create_by!(assessment: hb_assessment, double_event_result: zk_result[band])
+        result = competition.score_results.find_or_create_by!(assessment: hb_assessment)
+        zk_result[band].results.push(result) if zk_result[band]
       end
     end
 

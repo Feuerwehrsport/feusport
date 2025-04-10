@@ -8,7 +8,7 @@
       - band.person_tags.each do |tag|
         %th.small{ style: 'width: 60px' }= tag
 
-      - assessments = Assessment.no_zweikampf.where(band:)
+      - assessments = Assessment.where(band:)
       - assessments.each do |assessment|
         %th.small{ style: 'width: 60px', title: assessment.name }= discipline_image assessment.discipline.key
       %th{ style: 'width: 60px' }

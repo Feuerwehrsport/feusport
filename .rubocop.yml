@@ -613,7 +613,7 @@ Style/ReturnNilInPredicateMethodDefinition:
 Style/SafeNavigation:
   Enabled: false
 Style/SafeNavigationChainLength:
-  Enabled: true
+  Enabled: false
 Style/SelectByRegexp:
   Enabled: true
 Style/SendWithLiteralMethodName:

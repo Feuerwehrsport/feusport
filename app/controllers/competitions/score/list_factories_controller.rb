@@ -66,7 +66,7 @@ class Competitions::Score::ListFactoriesController < CompetitionNestedController
   protected
 
   def assign_disciplines
-    @factories = @competition.disciplines.where(id: @competition.assessments.no_zweikampf.select(:discipline_id))
+    @factories = @competition.disciplines.where(id: @competition.assessments.select(:discipline_id))
                              .sort.map do |discipline|
       Score::ListFactory.new(competition: @competition, discipline:)
     end

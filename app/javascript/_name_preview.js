@@ -1,5 +1,17 @@
 onVisit(function () {
   document.querySelectorAll('input[data-name-preview]').forEach(function (input) {
+    const takeOverBtn = document.createElement('i');
+    takeOverBtn.classList.add('far', 'fa-square-pen');
+    takeOverBtn.title = 'Automatischen Text übernehmen und bearbeiten';
+    const label = input.parentElement.querySelector('label');
+    label.appendChild(document.createTextNode('\u00A0'));
+    label.appendChild(takeOverBtn);
+    takeOverBtn.addEventListener('click', function (event) {
+      event.preventDefault();
+      input.value = input.placeholder;
+      input.focus();
+    });
+
     const form = input.closest('form');
     const change = function () {
       const data = new URLSearchParams();

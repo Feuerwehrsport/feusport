@@ -36,7 +36,6 @@ class Assessment < ApplicationRecord
                               inverse_of: :assessment
   has_many :lists, class_name: 'Score::List', through: :list_assessments, dependent: :restrict_with_error
 
-  scope :no_zweikampf, -> { joins(:discipline).where.not(disciplines: { key: 'zk' }) }
   scope :single_disciplines, -> { joins(:discipline).where(disciplines: { single_discipline: true }) }
 
   auto_strip_attributes :forced_name
@@ -59,7 +58,7 @@ class Assessment < ApplicationRecord
   end
 
   def self.requestable_for_person(band)
-    where(band:).reject { |a| a.discipline.zweikampf? }.sort
+    where(band:).sort
   end
 
   def self.requestable_for_team(band)
