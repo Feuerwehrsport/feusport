@@ -4,5 +4,5 @@ der Nutzer **<%= @actor.name %>** hat dir den Zugang zu dem Wettkampf *<%= @comp
 
 [[Direkt zum Wettkampf]](<%= competition_show_url(@competition.year, @competition.slug) %>)
 
-Sollte diese Aktion nicht korrekt gewesen sein, wende dich bitte direkt an **<%= @user.name %>**.
+Sollte diese Aktion nicht korrekt gewesen sein, wende dich bitte direkt an **<%= @actor.name %>**.
 
