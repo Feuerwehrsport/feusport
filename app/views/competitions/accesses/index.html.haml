@@ -10,6 +10,7 @@
               %th= User.human_attribute_name(:name)
               %th= User.human_attribute_name(:email)
               %th= UserAccess.human_attribute_name(:registration_mail_info)
+              %th
             - resource_collection.sort.each do |access|
               %tr
                 %td= access.user.name
@@ -19,6 +20,10 @@
                     = icon_link_btn("far #{access.registration_mail_info? ? 'fa-square-check' : 'fa-square'}", edit_competition_access_path(id: access.id, registration_mail_info: !access.registration_mail_info))
                   - else
                     .far{ class: access.registration_mail_info? ? 'fa-square-check' : 'fa-square' }
+                %td{ style: 'width: 60px; text-align: center' }
+                  - if access.user != current_user
+                    = link_to(competition_access_path(id: access.id), class: 'btn btn-light btn-sm', data: { turbo_confirm: 'Zugang wirklich entfernen? Der Nutzer wird darüber per E-Mail informiert.', 'turbo-method': :delete }) do
+                      %i.far.fa-trash
       - else
         - c.body do
           .alert.alert-info= t('a.no_entries_found')

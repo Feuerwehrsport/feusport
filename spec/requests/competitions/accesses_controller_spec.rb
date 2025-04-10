@@ -94,6 +94,24 @@ RSpec.describe Competitions::AccessesController do
         expect(flash[:notice]).to eq :deleted
       end.to change(UserAccessRequest, :count).by(-1)
     end
+
+    it 'destoys access' do
+      sign_in user
+
+      access = UserAccess.create(user: other_user, competition:)
+
+      get competition_nested('accesses')
+      expect(response).to be_successful
+
+      expect do
+        expect do
+          # DELETE destroy
+          delete competition_nested("accesses/#{access.id}")
+          expect(response).to redirect_to(competition_nested('accesses'))
+          expect(flash[:notice]).to eq :deleted
+        end.to change(UserAccess, :count).by(-1)
+      end.to have_enqueued_job.with('CompetitionMailer', 'access_deleted', 'deliver_now', any_args)
+    end
   end
 
   context 'when user has friends' do

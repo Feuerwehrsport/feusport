@@ -94,4 +94,20 @@ RSpec.describe CompetitionMailer do
       expect(mail).to match_html_fixture
     end
   end
+
+  describe 'access_deleted' do
+    let(:competition) { create(:competition) }
+    let(:actor) { competition.users.first }
+    let(:user) { create(:user, :other) }
+    let(:mail) { described_class.with(competition:, user:, actor:).access_deleted }
+
+    it 'renders the headers and body' do
+      expect(mail.subject).to eq('Zugang zum Wettkampf entfernt - MV-Cup')
+      expect(mail.header[:to].to_s).to eq 'Other Meier <other@meier.de>'
+      expect(mail.header[:from].to_s).to eq 'Feuerwehrsport <no-reply@feusport.de>'
+      expect(mail.header[:cc].to_s).to eq 'Alfred Meier <alfred@meier.de>'
+      expect(mail.header[:reply_to].to_s).to eq 'Alfred Meier <alfred@meier.de>'
+      expect(mail).to match_html_fixture
+    end
+  end
 end

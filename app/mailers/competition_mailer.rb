@@ -68,4 +68,19 @@ class CompetitionMailer < ApplicationMailer
       subject: "Informationsanfrage zu deinem Wettkampf - #{@competition.name}",
     )
   end
+
+  def access_deleted
+    @competition = @params[:competition]
+    @actor = @params[:actor]
+    @user = @params[:user]
+
+    to = email_address_with_name(@user.email, @user.name)
+    cc = @competition.users.map { |user| email_address_with_name(user.email, user.name) }
+    mail(
+      to:,
+      cc:,
+      reply_to: email_address_with_name(@actor.email, @actor.name),
+      subject: "Zugang zum Wettkampf entfernt - #{@competition.name}",
+    )
+  end
 end

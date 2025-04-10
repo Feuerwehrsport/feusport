@@ -11,4 +11,15 @@ class Competitions::AccessesController < CompetitionNestedController
     end
     redirect_to action: :index
   end
+
+  def destroy
+    if resource_instance.user == current_user
+      redirect_to competition_accesses_path
+    else
+      CompetitionMailer.with(competition: @competition, user: resource_instance.user,
+                             actor: current_user).access_deleted.deliver_later
+      resource_instance.destroy
+      redirect_to competition_accesses_path, notice: :deleted
+    end
+  end
 end
