@@ -6,11 +6,6 @@ class Competitions::Score::ResultsController < CompetitionNestedController
   def show
     send_pdf(Exports::Pdf::Score::Result, args: [@result, params[:only]]) && return
     send_xlsx(Exports::Xlsx::Score::Result, args: [@result]) && return
-
-    @rows = @result.rows
-    @out_of_competition_rows = @result.out_of_competition_rows
-    @discipline = @result.discipline
-    @group_result = Score::GroupResult.new(@result) if @result.group_assessment? && @discipline.single_discipline?
   end
 
   def create

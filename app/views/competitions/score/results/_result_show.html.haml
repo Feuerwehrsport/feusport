@@ -1,0 +1,38 @@
+- if result.rows.count > 0
+  .col-lg-12.score-result-rows-table{ data: { content: 'rows' } }
+    = card_direct(result.name) do
+      - if result.single_discipline?
+        = render 'competitions/score/results/result_table_single', result:, rows: result.rows, places: true
+      - else
+        = render 'competitions/score/results/result_table_group', result:, rows: result.rows, places: true
+
+  - if result.single_group_result?
+    .col-lg-12.score-result-rows-table{ data: { content: 'group-rows' } }
+      = card_direct('Mannschaftswertung') do
+        %table.table.table-bordered
+          %tr
+            %th
+            %th Mannschaft
+            %th Zeit
+          - result.group_result.rows.each do |row|
+            %tr{ class: row_invalid_class(row) }
+              %td #{result.group_result.place_for_row(row)}.
+              %th= row.team.full_name
+              %th= row.result_entry.human_time
+            %tr{ class: row_invalid_class(row) }
+              %td
+              %td{ colspan: 2 }
+                %em= row.rows_in.map(&:display).join(', ')
+                %small= row.rows_out.map(&:display).join(', ')
+- else
+  .col-lg-8
+    .alert.alert-info Keine Einträge gefunden
+
+
+- if result.out_of_competition_rows.present? && result.out_of_competition_rows.count > 0
+  .col-lg-12.score-result-rows-table{ data: { content: 'out-of-competition-rows' } }
+    = card_direct('Außer der Wertung') do
+      - if result.single_discipline?
+        = render 'competitions/score/results/result_table_single', result:, rows: result.out_of_competition_rows, places: false
+      - else
+        = render 'competitions/score/results/result_table_group', result:, rows: result.out_of_competition_rows, places: false

@@ -41,7 +41,7 @@ class Score::ListEntry < ApplicationRecord
   edit_time(:time_right_target)
 
   belongs_to :competition, touch: true
-  belongs_to :list, class_name: 'Score::List', inverse_of: :entries
+  belongs_to :list, class_name: 'Score::List', inverse_of: :entries, touch: true
   belongs_to :entity, polymorphic: true
   belongs_to :assessment
 

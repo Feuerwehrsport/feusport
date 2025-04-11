@@ -2,23 +2,23 @@
   %tr
     - if places
       %th.hide-xs
-    - if @competition.show_bib_numbers?
+    - if result.competition.show_bib_numbers?
       %th.hide-xs Nr.
     %th Name
     %th.hide-xs Mannschaft
-    - if @result.multi_result_method_disabled?
+    - if result.multi_result_method_disabled?
       %th Bestzeit
-      - @result.lists.each do |list|
+      - result.lists.each do |list|
         %th.hide-xs= list.shortcut
     - else
       %th Ergebnis
-      - @result.results.each do |result|
+      - result.results.each do |result|
         %th.hide-xs{ title: result.name }= discipline_image(result.discipline_key)
 
   - rows.each do |row|
     %tr
       - if places
-        %td.hide-xs #{@result.place_for_row(row)}.
+        %td.hide-xs #{result.place_for_row(row)}.
       - if @competition.show_bib_numbers?
         %td.hide-xs= row.entity&.bib_number
       %td
@@ -27,9 +27,9 @@
       %td.hide-xs= row.entity&.team&.shortcut_name
       %td
         %strong= row.best_result_entry.human_time
-      - if @result.multi_result_method_disabled?
-        - @result.lists.each do |list|
+      - if result.multi_result_method_disabled?
+        - result.lists.each do |list|
           %td.hide-xs= row.result_entry_from(list)&.human_time
       - else
-        - @result.results.each do |result|
+        - result.results.each do |result|
           %td.hide-xs{ title: result.name }= row.result_entry_from(result)&.human_time

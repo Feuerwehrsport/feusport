@@ -1,7 +1,7 @@
 = render 'competitions/header', competition: @competition, sub: resource_class.model_name.human(count: :many)
 
 - cache_if(current_user.nil? && simple_access.nil?, [@result, @competition]) do
-  .row.g-4
+  .row.g-4.score-result-channel{ data: { score_result_id: @result.id } }
     .col-lg-8.mb-4
       = render 'overview_card', result: @result
 
@@ -20,41 +20,4 @@
           - if can?(:edit, @result) && @competition.certificates_templates.exists?
             = btn_link_to 'Urkunden', new_competition_certificates_list_path(score_result_id: @result.id)
 
-    - if @rows.count > 0
-      .col-lg-12
-        = card_direct(@result.name) do
-          - if @result.single_discipline?
-            = render 'result_table_single', rows: @rows, places: true
-          - else
-            = render 'result_table_group', rows: @rows, places: true
-
-      - if @result.single_group_result?
-        .col-lg-12
-          = card_direct('Mannschaftswertung') do
-            %table.table.table-bordered
-              %tr
-                %th
-                %th Mannschaft
-                %th Zeit
-              - @group_result.rows.each do |row|
-                %tr{ class: row_invalid_class(row) }
-                  %td #{@group_result.place_for_row(row)}.
-                  %th= row.team.full_name
-                  %th= row.result_entry.human_time
-                %tr{ class: row_invalid_class(row) }
-                  %td
-                  %td{ colspan: 2 }
-                    %em= row.rows_in.map(&:display).join(', ')
-                    %small= row.rows_out.map(&:display).join(', ')
-    - else
-      .col-lg-8
-        .alert.alert-info Keine Einträge gefunden
-
-
-    - if @out_of_competition_rows.present? && @out_of_competition_rows.count > 0
-      .col-lg-12
-        = card_direct('Außer der Wertung') do
-          - if @result.single_discipline?
-            = render 'result_table_single', rows: @out_of_competition_rows, places: false
-          - else
-            = render 'result_table_group', rows: @out_of_competition_rows, places: false
+    = render 'result_show', result: @result

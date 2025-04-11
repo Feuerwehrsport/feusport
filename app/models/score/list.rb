@@ -39,6 +39,10 @@ class Score::List < ApplicationRecord
   default_scope { order(:name) }
   auto_strip_attributes :name, :shortcut
 
+  after_touch do
+    results.each { |result| ScoreResultChannel::Updater.safe_perform_later(result) }
+  end
+
   schema_validations
   validates :track_count, numericality: { greater_than: 0 }
   validates :assessments, :results, same_competition: true
