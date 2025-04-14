@@ -21,11 +21,13 @@ class ScoreResultChannel < ApplicationCable::Channel
     def self.safe_perform_later(result)
       updater = ScoreResultChannel::Updater.set(wait: 0.5.seconds).perform_later(result)
 
-      my_job = SolidQueue::Job.find_by(active_job_id: updater.job_id)
+      arguments = SolidQueue::Job.find_by(active_job_id: updater.job_id)&.arguments&.[]('arguments')
+      return if arguments.nil?
+
       future_jobs = SolidQueue::Job.where(class_name: 'ScoreResultChannel::Updater', finished_at: nil)
                                    .where.not(active_job_id: updater.job_id)
 
-      future_jobs.select { |fj| fj.arguments['arguments'] == my_job.arguments['arguments'] }.each(&:discard)
+      future_jobs.select { |fj| fj.arguments['arguments'] == arguments }.each(&:discard)
     end
   end
 end
