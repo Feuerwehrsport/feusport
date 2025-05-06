@@ -1,9 +1,14 @@
 # frozen_string_literal: true
 
 class Firesport::Series::Team::TglCup < Firesport::Series::Team::LaCup
-  def self.max_points(_round, gender:)
+  def self.max_points(round, gender:)
     if gender.to_sym == :male
-      11
+      case round.year.to_i
+      when 2025 then 9
+      when 2024 then 11
+      else
+        0
+      end
     else
       1
     end
