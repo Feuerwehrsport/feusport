@@ -243,6 +243,8 @@ RSpec/Focus:
   AutoCorrect: false
 RSpec/IdenticalEqualityAssertion:
   Enabled: true
+RSpec/IncludeExamples:
+  Enabled: true
 RSpec/IndexedLet:
   Enabled: false
 RSpec/IsExpectedSpecify:
