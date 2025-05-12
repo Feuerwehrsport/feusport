@@ -2,6 +2,7 @@
   = f.input :name
   = f.input :shortcut, input_html: { maxlength: 8 }
   = f.association :results, collection: @competition.score_results.sort, as: :check_boxes
+  = f.association :assessments, collection: @competition.assessments.sort, as: :check_boxes
 
   %fieldset.group
     %legend Optional

@@ -83,6 +83,7 @@ class Competitions::Score::ListsController < CompetitionNestedController
     params.require(:score_list).permit(:name, :shortcut, :date, :show_multiple_assessments, :hidden,
                                        :show_best_of_run,
                                        result_ids: [],
+                                       assessment_ids: [],
                                        entries_attributes: editable_attributes)
   end
 
