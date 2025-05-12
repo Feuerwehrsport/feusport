@@ -121,7 +121,11 @@ module Exports::ScoreLists
   def append_assessment(list, entry, team_name, pdf:, hint_size: 6)
     if list.show_multiple_assessments? && list.multiple_assessments? && entry.present?
       team_name += if pdf
-                     "<font size='#{hint_size}'> (#{entry&.assessment&.name})</font>"
+                     if entry&.assessment_type == 'out_of_competition'
+                       "<font size='#{hint_size}'><strikethrough> (#{entry&.assessment&.name})</strikethrough></font>"
+                     else
+                       "<font size='#{hint_size}'> (#{entry&.assessment&.name})</font>"
+                     end
                    else
                      " (#{entry&.assessment&.name})"
                    end

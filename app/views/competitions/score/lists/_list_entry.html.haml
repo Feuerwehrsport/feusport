@@ -24,7 +24,11 @@
         = entry&.entity&.full_name
       - if list.show_multiple_assessments? && list.multiple_assessments?
         %br
-        .tiny= entry&.assessment&.name
+        - if entry&.assessment_type == 'out_of_competition'
+          .tiny{ style: 'text-decoration:line-through', title: 'Außer der Wertung' }= entry&.assessment&.name
+        - else
+          .tiny= entry&.assessment&.name
+
   = yield (track == 1)
   - if move
     %td.text-end
