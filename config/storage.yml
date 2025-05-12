@@ -2,13 +2,9 @@ test:
   service: Disk
   root: <%= Rails.root.join("tmp/storage") %>
 
-development:
+local:
   service: Disk
-  root: <%= Rails.root.join("private/storage") %>
-
-production:
-  service: Disk
-  root: /srv/feusport/shared/private/storage
+  root: <%= Rails.env.local? ? Rails.root.join("private/storage") : "/srv/feusport/shared/private/storage" %>
 
 # Use bin/rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 # amazon:
