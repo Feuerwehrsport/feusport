@@ -16,6 +16,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     else
       build_resource(sign_up_params)
       resource.validate
+      resource.errors.add(:base, :invalid)
 
       clean_up_passwords resource
       set_minimum_password_length
