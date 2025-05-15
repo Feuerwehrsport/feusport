@@ -19,11 +19,10 @@ RSpec.describe Firesport::Series::Team::SaPokal do
       expect(described_class.points_for_result(12, nil, nil, gender: 'male')).to eq 0
       expect(described_class.points_for_result(13, nil, nil, gender: 'male')).to eq 0
 
-      expect(described_class.points_for_result(1, nil, nil, gender: 'female')).to eq 4
-      expect(described_class.points_for_result(2, nil, nil, gender: 'female')).to eq 3
-      expect(described_class.points_for_result(3, nil, nil, gender: 'female')).to eq 2
-      expect(described_class.points_for_result(4, nil, nil, gender: 'female')).to eq 1
-      expect(described_class.points_for_result(5, nil, nil, gender: 'female')).to eq 0
+      expect(described_class.points_for_result(1, nil, nil, gender: 'female')).to eq 3
+      expect(described_class.points_for_result(2, nil, nil, gender: 'female')).to eq 2
+      expect(described_class.points_for_result(3, nil, nil, gender: 'female')).to eq 1
+      expect(described_class.points_for_result(4, nil, nil, gender: 'female')).to eq 0
     end
   end
 end
