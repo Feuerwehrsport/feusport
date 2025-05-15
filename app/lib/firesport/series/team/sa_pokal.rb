@@ -2,7 +2,7 @@
 
 class Firesport::Series::Team::SaPokal < Firesport::Series::Team::LaCup
   def self.max_points(_round, gender:)
-    gender.to_sym == :male ? 11 : 4
+    gender.to_sym == :male ? 11 : 3 # für 2025
   end
 
   def calc_participation_count
