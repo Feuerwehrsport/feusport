@@ -57,6 +57,7 @@ class Score::Result < ApplicationRecord
   has_many :result_multi_references, class_name: 'Score::ResultReference', dependent: :destroy,
                                      inverse_of: :multi_result, foreign_key: :multi_result_id
   has_many :results, class_name: 'Score::Result', through: :result_multi_references
+  has_many :result_list_factories, class_name: 'Score::ResultListFactory', dependent: :destroy
 
   delegate :discipline, to: :assessment, allow_nil: true
   delegate :band, to: :assessment, allow_nil: true
