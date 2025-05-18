@@ -19,7 +19,7 @@
     %tr
       - if places
         %td.hide-xs #{result.place_for_row(row)}.
-      - if @competition.show_bib_numbers?
+      - if result.competition.show_bib_numbers?
         %td.hide-xs= row.entity&.bib_number
       %td
         = row.entity.full_name
