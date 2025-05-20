@@ -5,5 +5,6 @@ RailsLogParser.configure do |parser|
     /SolidQueue.* Fail claimed jobs .* job_ids: \[\], process_ids: \[\]/,
     /WebSocket error occurred: Broken pipe/,
     /Ignoring message processed after the WebSocket was closed/,
+    /Discarded ScoreListChannel::Updater/,
   ]
 end
