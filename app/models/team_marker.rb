@@ -25,6 +25,7 @@ class TeamMarker < ApplicationRecord
   enum :value_type, VALUE_TYPES, scopes: false, default: :boolean, prefix: true
 
   belongs_to :competition
+  has_many :team_marker_values, dependent: :destroy
 
   schema_validations
 
