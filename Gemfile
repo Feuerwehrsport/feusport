@@ -73,6 +73,9 @@ group :development, :test do
 
   gem 'simplecov', require: false # test coverage
 
+  gem 'csv' # inspect spreadsheets
+  gem 'roo' # inspect spreadsheets
+
   # audit tools
   gem 'bundler-audit'
   gem 'brakeman'
