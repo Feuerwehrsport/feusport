@@ -59,7 +59,7 @@
 
           - if can?(:edit, @competition)
             - if @competition.date < Date.current && can?(:publish, @competition)
-              = link_to 'Veröffentlichen', new_competition_publishing_path, class: 'btn btn-dark btn-sm'
+              = link_to 'Ergebnisse übertragen', new_competition_publishing_path, class: 'btn btn-dark btn-sm'
 
             = link_to 'Bearbeiten', edit_competition_editing_path, class: 'btn btn-light btn-sm'
             = link_to 'Sichtbarkeit bearbeiten', edit_competition_visibility_path, class: 'btn btn-light btn-sm'

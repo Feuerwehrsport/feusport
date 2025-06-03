@@ -1,12 +1,15 @@
 = render 'competitions/header', competition: @competition, resource_class: nil
 
+- if @competition.date > Date.current
+  .alert.alert-danger Der Wettkampf ist laut deinem angegebenen Datum noch gar nicht gewesen. Bist du dir sicher?
+
 .row.g-4
   .col-md-8
     = simple_form_for(@publishing, url: competition_publishing_path) do |f|
-      = card('Wettkampf veröffentlichen') do |c|
+      = card('Wettkampf und Ergebnisse übertragen') do |c|
         - c.direct do
           .card-body.text-bg-warning
-            Du willst diesen Wettkampf veröffentlichen. Das heißt, dass Startlisten und Ergebnisse auf Feuerwehrsport-Statistik veröffentlicht werden. Du kannst danach keine Änderungen mehr am Wettkampf vornehmen. Bist du dir sicher?
+            Du willst diesen Wettkampf auf Feuerwehrsport-Statistik.de übertragen. Das heißt, dass Startlisten und Ergebnisse auf Feuerwehrsport-Statistik veröffentlicht werden. Du kannst danach keine Änderungen mehr am Wettkampf vornehmen. Bist du dir sicher?
             = f.input :confirm, autofocus: true, as: :boolean, label: 'Ich will alle Daten veröffentlichen und die Auswertung dieses Wettkampfes beenden.'
           .card-body
             = f.input :hint, as: :text, hint: 'Du solltest den Administratoren von Feuerwehrsport-Statistik Hinweise auf besondere Umstände geben. Zum Beispiel, welche Ausschreibung genutzt wurde oder ob die Ziele eine Dosen waren. Es reicht ein kurzer Hinweis: WKO2023 - DIN - Zielgeräte'

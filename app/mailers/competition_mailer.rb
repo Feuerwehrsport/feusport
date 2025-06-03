@@ -53,7 +53,7 @@ class CompetitionMailer < ApplicationMailer
     to = @competition.users.map { |user| email_address_with_name(user.email, user.name) }
     mail(
       to:,
-      subject: "Veröffentliche deinen Wettkampf - #{@competition.name}",
+      subject: "Übertrage die Ergebnisse deines Wettkampfs - #{@competition.name}",
     )
   end
 

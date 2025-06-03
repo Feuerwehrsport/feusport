@@ -27,6 +27,6 @@
         = dropdown.link_to Score::CompetitionResult, competition_score_competition_results_path
         = dropdown.link_to Certificates::Template, competition_certificates_templates_path
         = dropdown.link_to TeamMarker, competition_team_markers_path
-        = dropdown.link_to 'Veröffentlichen', new_competition_publishing_path
+        = dropdown.link_to 'Ergebnisse übertragen', new_competition_publishing_path
         - if can?(:manage, UserAccess)
           = dropdown.link_to UserAccess, competition_accesses_path
