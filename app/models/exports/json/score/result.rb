@@ -7,8 +7,8 @@ Exports::Json::Score::Result = Struct.new(:result) do
   def to_hash
     hash = {
       rows: build_data_rows(result, false, export_headers: true),
-      gender: result.assessment.band.gender,
-      band: result.assessment.band.name,
+      gender: result.assessment&.band&.gender,
+      band: result.assessment&.band&.name,
       discipline: result.discipline_key,
       name: result.name,
     }
