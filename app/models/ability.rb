@@ -18,6 +18,7 @@ class Ability
 
     can(%i[read extend_read], Competition, read_ua)
     can(:manage, Competition, manage_ua)
+    can(:unlock, Competition, { user_accesses: { user_id: user.id } })
 
     can(:read, Document, competition: read_ua)
     can(:manage, Document, competition: manage_ua)

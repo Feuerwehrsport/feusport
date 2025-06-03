@@ -7,6 +7,8 @@ de:
       competitions/publishing:
         confirm: Bestätigung
         hint: Zusätzlichen Hinweise
+      competitions/unlocking:
+        confirm: Bestätigung
   activerecord:
     attributes:
       competition:

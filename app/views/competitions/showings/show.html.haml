@@ -52,6 +52,9 @@
         = render('next_step_card')
       .card-header
         .d-grid.gap-2.col-10.mx-auto
+          - if @competition.locked? && can?(:unlock, @competition)
+            = link_to 'Bearbeitung aktivieren', new_competition_unlocking_path, class: 'btn btn-light btn-sm'
+
           = link_to 'Anfrage stellen', new_competition_information_request_path, class: 'btn btn-light btn-sm'
 
           - if can?(:edit, @competition)

@@ -1,0 +1,13 @@
+= render 'competitions/header', competition: @competition, resource_class: nil
+
+.row.g-4
+  .col-md-8
+    = simple_form_for(@unlocking, url: competition_unlocking_path) do |f|
+      = card('Bearbeitung wieder aktivieren') do |c|
+        - c.direct do
+          .card-body.text-bg-warning
+            Du willst die Bearbeitung zu diesen Wettkampf wieder aktivieren. Sie wurde bestimmt aus gutem Grund abgeschlossen. Bist du dir sicher?
+            = f.input :confirm, autofocus: true, as: :boolean, label: 'Ich will die Bearbeitung wirklich wieder aktivieren.'
+        - c.footer do
+          = f.button :submit, 'Aktivieren', class: 'btn-danger'
+          = link_to 'Abbrechen', competition_show_path, class: 'btn btn-light'

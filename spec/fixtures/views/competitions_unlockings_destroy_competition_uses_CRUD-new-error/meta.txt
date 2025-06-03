@@ -1,0 +1,4 @@
+competitions/unlockings destroy competition uses CRUD-new-error
+
+request
+html
