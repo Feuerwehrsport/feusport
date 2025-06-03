@@ -19,7 +19,6 @@ class Series::Round < ApplicationRecord
   has_many :assessments, class_name: 'Series::Assessment', dependent: :destroy, inverse_of: :round
   has_many :participations, through: :assessments, class_name: 'Series::Participation'
 
-  validates :name, :year, :aggregate_type, presence: true
   schema_validations
 
   default_scope -> { order(year: :desc, name: :asc) }
