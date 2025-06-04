@@ -94,7 +94,7 @@
             = btn_link_to 'Name bearbeiten', { action: :edit }
             = btn_link_to 'Anmeldungshinweise bearbeiten', { action: :edit, form: 'registration_hint' }
             = btn_link_to 'Bedingung für Startliste hinzufügen', new_competition_team_list_restriction_path(team1_id: @team.id)
-            = btn_link_to 'Löschen', { action: :destroy }, data: { turbo_method: 'delete', turbo_confirm: 'Mannschaft wirklich löschen? Alle Zeiten usw. werden auch gelöscht!' }
+            = btn_link_to 'Löschen', new_competition_team_deletion_path
 
   - if can?(:edit, @team) || @team.people.exists?
     .col-lg-12#people-table

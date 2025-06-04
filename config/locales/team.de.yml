@@ -2,9 +2,16 @@
 de:
   activemodel:
     attributes:
+      team_deletion:
+        confirm: Bestätigung
+        delete_people: Wettkämpfer löschen
       team_import:
         band_id: Wertungsgruppe
         import_rows: Namen
+    errors:
+      models:
+        team_deletion:
+          scores_present: 'ist ungültig: Deine Wettkämpfer haben schon Einzelergebnisse erzielt. Du kannst sie nicht automatisch löschen.'
     models:
       team_import: Mannschafts-Import
   activerecord:

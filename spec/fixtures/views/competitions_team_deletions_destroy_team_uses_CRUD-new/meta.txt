@@ -1,0 +1,4 @@
+competitions/team_deletions destroy team uses CRUD-new
+
+request
+html

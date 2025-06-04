@@ -11,7 +11,7 @@ class Competitions::UnlockingsController < CompetitionNestedController
     @unlocking = Competitions::Unlocking.new(competition: @competition)
     @unlocking.assign_attributes(unlocking_params)
     if @unlocking.save
-      redirect_to root_path, notice: :saved
+      redirect_to competition_show_path(slug: @competition.slug, year: @competition.year), notice: :saved
     else
       flash.now[:alert] = :check_errors
       render action: :new, status: :unprocessable_entity

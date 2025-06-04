@@ -67,10 +67,6 @@ RSpec.describe Team do
         "filename*=UTF-8''mannschaften.xlsx",
       )
       expect(response).to have_http_status(:success)
-
-      expect do
-        delete "/#{competition.year}/#{competition.slug}/teams/#{new_id}"
-      end.to change(described_class, :count).by(-1)
     end
   end
 

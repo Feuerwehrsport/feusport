@@ -50,11 +50,6 @@ class Competitions::TeamsController < CompetitionNestedController
     end
   end
 
-  def destroy
-    @team.destroy
-    redirect_to competition_teams_path, notice: :deleted
-  end
-
   protected
 
   def team_params

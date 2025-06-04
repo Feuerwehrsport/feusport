@@ -20,7 +20,7 @@ RSpec.describe 'competitions/unlockings' do
       expect do
         post "/#{competition.year}/#{competition.slug}/unlocking",
              params: { competitions_unlocking: { confirm: '1' } }
-        expect(response).to redirect_to(root_path)
+        expect(response).to redirect_to("/#{competition.year}/#{competition.slug}")
       end.not_to change(Competition, :count)
 
       expect(competition.reload.locked_at).to be_nil

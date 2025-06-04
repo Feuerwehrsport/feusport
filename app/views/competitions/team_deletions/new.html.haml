@@ -1,0 +1,19 @@
+= render 'competitions/header', competition: @competition, resource_class: Team, sub: "Mannschaft: #{@team.full_name}"
+
+.row.g-4
+  .col-md-8
+    = simple_form_for(@team_deletion, url: competition_team_deletion_path) do |f|
+      = card("Mannschaft »#{@team.full_name}« löschen") do |c|
+        - c.direct do
+          - if @team_deletion.people_present?
+            .card-body
+              Zu deiner Mannschaft wurden schon Wettkämpfer hinzugefügt. Wenn du die Mannschaft löscht, haben diese Wettkämpfer keine Mannschaft mehr. Du kannst sie aber stattdessen auch mitlöschen:
+              = f.input :delete_people, as: :boolean, label: 'Wettkämpfer dieser Mannschaft auch löschen'
+
+          - if @team_deletion.scores_present?
+            .card-body.text-bg-warning
+              Zu dieser Mannschaft gibt es schon Startlisteneinträge. Wenn du die Mannschaft löscht, werden auch die Ergebnisse mit Zeiten von dieser Mannschaft gelöscht. Bist du dir sicher?
+              = f.input :confirm, autofocus: true, as: :boolean, label: 'Ich will alle gesammelten Daten zu dieser Mannschaft löschen.'
+        - c.footer do
+          = f.button :submit, 'Löschen', class: 'btn-danger'
+          = link_to 'Abbrechen', competition_team_path(id: @team.id), class: 'btn btn-light'

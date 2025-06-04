@@ -34,9 +34,10 @@ Rails.application.routes.draw do
     resources :information_requests, only: %i[new create]
 
     # top menu
-    resources :teams do
+    resources :teams, only: %i[new create show edit update index] do
       member do
         get :edit_assessment_requests
+        resource :deletion, only: %i[new create], as: :team_deletion, controller: :team_deletions
       end
       collection do
         get :without_statistics_connection

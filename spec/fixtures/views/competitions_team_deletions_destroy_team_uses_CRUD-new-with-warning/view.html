@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
-<title>Mannschaften - MV-Cup - Feuerwehrsport</title>
+<title>MV-Cup - Feuerwehrsport</title>
 <meta content='width=device-width,initial-scale=1' name='viewport'>
 
 
@@ -66,8 +66,8 @@ Benutzer
 <a class="nav-link" href="/2024/mv-cup">Informationen
 </a>
 </div>
-<div class='nav-item active'>
-<a class="nav-link active" aria-current="page" href="/2024/mv-cup/teams">Mannschaften
+<div class='nav-item'>
+<a class="nav-link" href="/2024/mv-cup/teams">Mannschaften
 </a>
 </div>
 <div class='nav-item'>
@@ -125,142 +125,31 @@ Erweitert
 </header>
 <div class='container mt-4'>
 <div class='alert-flash'>
-<div class='alert alert-info'>Die Änderungen wurden gespeichert.</div>
 </div>
 </div>
 <div class='pb-4 mt-4 container'>
 <div class='row g-4'>
-<div class='col-lg-8'>
-<div class='card mb-3'>
+<div class='col-md-8'>
+<form class="simple_form new_team_deletion" id="new_team_deletion" novalidate="novalidate" action="/2024/mv-cup/teams/UUID/deletion" accept-charset="UTF-8" method="post"><div class='card'>
 <div class='card-header p-0'>
 <div class='d-flex justify-content-between'>
-<h4 class='m-0 py-2 ps-3'>Mannschaft: Frauen-Team</h4>
+<h4 class='m-0 py-2 ps-3'>Mannschaft »Frauen-Team« löschen</h4>
 </div>
 </div>
-<table class='table table-condensed'>
-<tr>
-<th>Name</th>
-<td>Frauen-Team</td>
-</tr>
-<tr>
-<th>Name auf der Urkunde</th>
-<td>
-<div class='fa-pull-right'>
-<a class=" btn btn-light btn-sm" href="/2024/mv-cup/teams/UUID/edit?part=certificate_name"><i class="far fa-edit"></i></a>
-</div>
-Frauen-Team
-</td>
-</tr>
-<tr>
-<th>Abkürzung</th>
-<td>Frauen-T</td>
-</tr>
-<tr>
-<th>Nummer</th>
-<td>1</td>
-</tr>
-<tr>
-<th>Wertungsgruppe</th>
-<td>Frauen</td>
-</tr>
-<tr>
-<td colspan='2'>
-<div class='alert alert-success mb-0 d-none' id='fire-sport-connected'>
-<i class='far fa-check me-2'></i>
-Verknüpft mit <strong></strong>
-<a target="_blank" rel="noopener" title="Informationen über diese Mannschaft auf Feuerwehrsport-Statistik.de aufrufen" class="btn btn-sm btn-light ms-2" href="https://feuerwehrsport-statistik.de/teams/"><i class='far fa-arrow-up-right-from-square'></i>
-</a></div>
-<div class='alert alert-warning mb-0' id='fire-sport-not-connected'>
-<i class='far fa-warning me-2'></i>
-Keine Verknüpfung mit einer vorhandenen Mannschaft
+<div class='card-body text-bg-warning'>
+Zu dieser Mannschaft gibt es schon Startlisteneinträge. Wenn du die Mannschaft löscht, werden auch die Ergebnisse mit Zeiten von dieser Mannschaft gelöscht. Bist du dir sicher?
+<fieldset class="form-group boolean optional team_deletion_confirm"><div class="form-check"><input name="team_deletion[confirm]" type="hidden" value="0" autocomplete="off" /><input class="form-check-input boolean optional" autofocus="autofocus" type="checkbox" value="1" name="team_deletion[confirm]" id="team_deletion_confirm" /><label class="form-check-label boolean optional" for="team_deletion_confirm">Ich will alle gesammelten Daten zu dieser Mannschaft löschen.</label></div></fieldset>
 </div>
 
-</td>
-</tr>
-<tr>
-<th>Angereist?</th>
-<td>
-<div class='fa-pull-right'>
-<a class=" btn btn-light btn-sm" href="/2024/mv-cup/teams/UUID/markers/UUID/edit?return_to=team"><i class="far fa-edit"></i></a>
-</div>
-
-</td>
-</tr>
-</table>
-
-</div>
-<div class='card mb-3'>
-<div class='card-header p-0'>
-<div class='d-flex justify-content-between'>
-<h4 class='m-0 py-2 ps-3'>Gewünschte Wertungen</h4>
-<a class="card-primary-action" href="/2024/mv-cup/teams/UUID/edit_assessment_requests">Wertungen bearbeiten
-<i class='far fa-edit'></i>
-</a>
-</div>
-</div>
-<table class='table table-condensed'>
-<tr>
-<th>
-<img src="/assets/disciplines/la.svg" width="20" height="20" />
-Löschangriff Nass - Frauen
-</th>
-<td>
-<i class='far fa-check'></i>
-Mannschaftswertung
-</td>
-</tr>
-<tr>
-<th>
-<img src="/assets/disciplines/la.svg" width="20" height="20" />
-TGL
-</th>
-<td>
-<i class='far fa-check'></i>
-Außer der Wertung
-</td>
-</tr>
-</table>
-
-</div>
-</div>
-<div class='col-lg-4'>
-<div class='card'>
-<div class='card-header p-0'>
-<div class='d-flex justify-content-between'>
-<h4 class='m-0 py-2 ps-3'>Aktionen</h4>
-<a class="card-primary-action" href="/2024/mv-cup/teams">Übersicht
-<i class='far fa-list'></i>
-</a>
-</div>
-</div>
-<div class='card-body'>
-<div class='d-grid gap-2'>
-<a class=" btn btn-light btn-sm" href="/2024/mv-cup/people/new?return_to=team&amp;team=UUID">Wettkämpfer hinzufügen</a>
-<a class=" btn btn-light btn-sm" href="/2024/mv-cup/teams/UUID/edit">Name bearbeiten</a>
-<a class=" btn btn-light btn-sm" href="/2024/mv-cup/teams/UUID/edit?form=registration_hint">Anmeldungshinweise bearbeiten</a>
-<a class=" btn btn-light btn-sm" href="/2024/mv-cup/team_list_restrictions/new?team1_id=UUID">Bedingung für Startliste hinzufügen</a>
-<a class=" btn btn-light btn-sm" href="/2024/mv-cup/teams/UUID/deletion/new">Löschen</a>
-</div>
-
+<div class='card-footer'>
+<div class='d-flex justify-content-between align-items-start'>
+<div><input type="submit" name="commit" value="Löschen" class="btn btn-danger" data-disable-with="Löschen" />
+<a class="btn btn-light" href="/2024/mv-cup/teams/UUID">Abbrechen</a>
 </div>
 </div>
 </div>
-<div class='col-lg-12' id='people-table'>
-<div class='card'>
-<div class='card-header p-0'>
-<div class='d-flex justify-content-between'>
-<h4 class='m-0 py-2 ps-3'>Wettkämpfer</h4>
-<a class="card-primary-action" href="/2024/mv-cup/people/new?return_to=team&amp;team=UUID">Wettkämpfer hinzufügen
-<i class='far fa-square-plus'></i>
-</a>
 </div>
-</div>
-<div class='card-body'>
-<div class='alert alert-info'>Keine Einträge gefunden</div>
-
-</div>
-</div>
-</div>
+</form></div>
 </div>
 </div>
 </body>
