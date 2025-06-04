@@ -26,4 +26,8 @@ class InformationRequest < ApplicationRecord
   belongs_to :user
 
   schema_validations
+
+  def possible?
+    competition.visible? && competition.user_accesses.with_registration_mail_info.exists?
+  end
 end

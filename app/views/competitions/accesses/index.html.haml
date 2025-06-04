@@ -2,6 +2,11 @@
 
 .row.g-4
   .col-lg-7
+    - if resource_collection.with_registration_mail_info.blank?
+      = card("Keine Anfragen möglich", class: "bg-warning mb-3") do |c|
+        - c.body  do
+          Derzeit haben alle Nutzer die Info-Mail abbestellt. Deshalb können keine Anfragen zu diesem Wettkampf gestellt werden. Wenn du also willst, dass die Nutzer Anfragen über diese Webseite zu diesem Wettkampf stellen könnnen, ohne deine private E-Mail-Adresse zu sehen, dann aktiviere das Kästchen »Infomail« für deinen Zugang.
+
     = card(resource_class.model_name.human(count: :many)) do |c|
       - if resource_collection.exists?
         - c.direct do

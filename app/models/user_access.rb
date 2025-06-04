@@ -25,5 +25,7 @@ class UserAccess < ApplicationRecord
   belongs_to :user
   belongs_to :competition, touch: true
 
+  scope :with_registration_mail_info, -> { where(registration_mail_info: true) }
+
   schema_validations
 end

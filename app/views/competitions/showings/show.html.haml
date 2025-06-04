@@ -55,7 +55,8 @@
           - if @competition.locked? && can?(:unlock, @competition)
             = link_to 'Bearbeitung aktivieren', new_competition_unlocking_path, class: 'btn btn-light btn-sm'
 
-          = link_to 'Anfrage stellen', new_competition_information_request_path, class: 'btn btn-light btn-sm'
+          - if InformationRequest.new(competition: @competition).possible?
+            = link_to 'Anfrage stellen', new_competition_information_request_path, class: 'btn btn-light btn-sm'
 
           - if can?(:edit, @competition)
             - if @competition.date < Date.current && can?(:publish, @competition)

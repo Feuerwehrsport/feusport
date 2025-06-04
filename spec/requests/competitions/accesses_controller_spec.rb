@@ -150,4 +150,15 @@ RSpec.describe Competitions::AccessesController do
       expect(UserAccess.pluck(:registration_mail_info)).to eq [true]
     end
   end
+
+  context 'when no InformationRequest possible' do
+    it 'shows a hint' do
+      sign_in user
+
+      UserAccess.update_all(registration_mail_info: false)
+
+      get competition_nested('accesses')
+      expect(response).to match_html_fixture
+    end
+  end
 end

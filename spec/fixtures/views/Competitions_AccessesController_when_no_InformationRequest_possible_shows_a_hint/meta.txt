@@ -1,0 +1,4 @@
+Competitions::AccessesController when no InformationRequest possible shows a hint
+
+request
+html
