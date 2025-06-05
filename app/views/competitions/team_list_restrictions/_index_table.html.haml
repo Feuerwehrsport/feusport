@@ -15,4 +15,4 @@
           %small= restriction.team2.band.name
       %td.text-end
         = btn_link_to(t('a.edit'), edit_competition_team_list_restriction_path(id: restriction.id))
-        = btn_link_to(t('a.delete'), { action: :destroy, id: restriction.id }, data: { turbo_method: 'delete', turbo_confirm: 'Bedingung wirklich löschen?' })
+        = btn_link_to(t('a.delete'), competition_team_list_restriction_path({ action: :destroy, id: restriction.id }), data: { turbo_method: 'delete', turbo_confirm: 'Bedingung wirklich löschen?' })
