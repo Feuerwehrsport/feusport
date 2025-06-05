@@ -23,6 +23,8 @@ class Competitions::TeamDeletionsController < CompetitionNestedController
   end
 
   def team_deletion_params
+    return {} unless params.key?(:team_deletion)
+
     params.require(:team_deletion).permit(:confirm, :delete_people)
   end
 end

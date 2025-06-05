@@ -1,7 +1,7 @@
 {
-  "covered_percent": 91.68245946515056,
+  "covered_percent": 91.6842105263158,
   "files": 216,
-  "total_lines": 4749,
-  "covered_lines": 4354,
+  "total_lines": 4750,
+  "covered_lines": 4355,
   "missed_lines": 395
 }
