@@ -141,6 +141,8 @@ Lint/UselessDefined:
   Enabled: true
 Lint/UselessNumericOperation:
   Enabled: true
+Lint/UselessOr:
+  Enabled: true
 Lint/UselessRescue:
   Enabled: true
 Lint/UselessRuby2Keywords:
@@ -170,6 +172,8 @@ Metrics/PerceivedComplexity:
 Naming/BlockForwarding:
   Enabled: true
 Naming/MethodParameterName:
+  Enabled: false
+Naming/PredicateMethod:
   Enabled: false
 Performance/AncestorsInclude:
   Enabled: true
@@ -498,6 +502,8 @@ Style/Documentation:
   Enabled: false
 Style/EmptyHeredoc:
   Enabled: true
+Style/EmptyStringInsideInterpolation:
+  Enabled: true
 Style/EndlessMethod:
   Enabled: true
 Style/EnvHome:
@@ -581,6 +587,8 @@ Style/QuotedSymbols:
 Style/RedundantArgument:
   Enabled: true
 Style/RedundantArrayConstructor:
+  Enabled: true
+Style/RedundantArrayFlatten:
   Enabled: true
 Style/RedundantConstantBase:
   Enabled: true
