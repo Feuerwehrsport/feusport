@@ -15,6 +15,8 @@ class Competitions::Certificates::ImportsController < CompetitionNestedControlle
   protected
 
   def import_params
+    return {} unless params.key?(:certificates_import)
+
     params.require(:certificates_import).permit(
       :template_id,
     )
