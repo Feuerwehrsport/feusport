@@ -129,4 +129,8 @@ class Competition < ApplicationRecord
   def locked?
     !locked_at.nil?
   end
+
+  def full_name
+    "#{date} #{name}"
+  end
 end

@@ -1,0 +1,27 @@
+= render 'competitions/header', competition: @competition, sub: 'Vorlage wählen', resource_class: Presets::Base
+
+.row.g-4
+  .col-md-8
+    = simple_form_for(@duplication, url: competition_duplication_path, as: :duplication) do |f|
+      = card('Wettkampf als Vorlage wählen') do |c|
+        - c.direct do
+          .card-body
+            %fieldset.group
+              %h4= @duplication.duplicate_from.full_name
+              %ul
+                - [:disciplines, :bands, :assessments, :score_results, :score_competition_results].each do |key|
+                  - collection = @duplication.duplicate_from.public_send(key).to_a.sort_by(&:name)
+                  - next if collection.blank?
+
+                  %li
+                    = collection.count
+                    = collection.first.class.model_name.human(count: collection.count)
+                    %ul
+                      - collection.each do |item|
+                        %li= item.name
+          = f.input :duplicate_from_id, as: :hidden
+          .card-body
+            = f.input :confirm, autofocus: true, as: :boolean, label: 'Ich will diesen Wettkampf als Vorlage wählen.'
+        - c.footer do
+          = f.button :submit, 'Duplizieren', class: 'btn-warning'
+          = link_to 'Abbrechen', competition_presets_path, class: 'btn btn-light'

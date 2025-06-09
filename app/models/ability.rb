@@ -77,6 +77,7 @@ class Ability
     can(:read, FireSportStatistics::Publishing, competition: read_ua)
     can(:manage, Competitions::Publishing, competition: manage_ua)
     can(:manage, Presets::Base) { |preset| can?(:manage, preset.competition) }
+    can(:manage, Competitions::Duplication) { |duplication| can?(:manage, duplication.competition) }
 
     can(%i[create], Team) { |team| team.competition.registration_possible? }
     can(%i[edit_assessment_requests update destroy], Team) do |team|

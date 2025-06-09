@@ -4,6 +4,9 @@ de:
     attributes:
       competitions/deletion:
         confirm: Bestätigung
+      competitions/duplication:
+        confirm: Bestätigung
+        duplicate_from_id: Kopieren von
       competitions/publishing:
         confirm: Bestätigung
         hint: Zusätzlichen Hinweise

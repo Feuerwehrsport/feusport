@@ -1,10 +1,18 @@
 = render 'competitions/header', competition: @competition, sub: 'Vorlage wählen', resource_class: Presets::Base
 
 .row.g-4
-  .col-lg-8
+  .col-lg-6
     = card_direct('Mögliche Vorlagen') do
       %table.table
         - Presets::Base.list.each do |key, preset|
           %tr
             %th= preset.new.name
             %td.text-end= btn_link_to('Ansehen', edit_competition_preset_path(id: key))
+  .col-lg-6
+    = simple_form_for(Competitions::Duplication.new, url: new_competition_duplication_path, as: :duplication, method: 'GET') do |f|
+      = card('Wettkampf als Vorlage wählen') do |c|
+        - c.body do
+          %p Du kannst auch einen vorhandenen Wettkampf als Vorlage wählen. Dafür wähle bitte einen Wettkampf aus. Es werden dann Disziplinen, Wertungen, Wertungsgruppen und Ergebnisse übernommen. Mannschaften, Wettkämpfer und Startlisten bleiben leer.
+          = f.input :duplicate_from_id, as: :select, collection: Competition.accessible_by(current_ability).reorder(:date, :name), label_method: :full_name
+        - c.footer do
+          = f.button :submit, 'Prüfen', class: 'btn-light'

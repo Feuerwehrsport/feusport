@@ -113,50 +113,73 @@ Erweitert
 </header>
 <div class='container mt-4'>
 <div class='alert-flash'>
+<div class='alert alert-danger'>Bitte überprüfen Sie folgende Fehler:</div>
 </div>
 </div>
 <div class='pb-4 mt-4 container'>
 <div class='row g-4'>
-<div class='col-lg-6'>
-<div class='card'>
-<div class='card-header p-0'>
-<div class='d-flex justify-content-between'>
-<h4 class='m-0 py-2 ps-3'>Mögliche Vorlagen</h4>
-</div>
-</div>
-<table class='table'>
-<tr>
-<th>Nichts vorgeben</th>
-<td class='text-end'><a class=" btn btn-light btn-sm" href="/2024/mv-cup/presets/nothing/edit">Ansehen</a></td>
-</tr>
-<tr>
-<th>Löschangriff Nass (LA)</th>
-<td class='text-end'><a class=" btn btn-light btn-sm" href="/2024/mv-cup/presets/fire_attack/edit">Ansehen</a></td>
-</tr>
-<tr>
-<th>Eine oder mehrere Einzeldisziplinen (HL, HB, ZK)</th>
-<td class='text-end'><a class=" btn btn-light btn-sm" href="/2024/mv-cup/presets/single_disciplines/edit">Ansehen</a></td>
-</tr>
-</table>
-
-</div>
-</div>
-<div class='col-lg-6'>
-<form class="simple_form new_duplication" id="new_duplication" novalidate="novalidate" action="/2024/mv-cup/duplication/new" accept-charset="UTF-8" method="get"><div class='card'>
+<div class='col-md-8'>
+<form class="simple_form new_duplication" id="new_duplication" novalidate="novalidate" action="/2024/mv-cup/duplication" accept-charset="UTF-8" method="post"><div class='card'>
 <div class='card-header p-0'>
 <div class='d-flex justify-content-between'>
 <h4 class='m-0 py-2 ps-3'>Wettkampf als Vorlage wählen</h4>
 </div>
 </div>
 <div class='card-body'>
-<p>Du kannst auch einen vorhandenen Wettkampf als Vorlage wählen. Dafür wähle bitte einen Wettkampf aus. Es werden dann Disziplinen, Wertungen, Wertungsgruppen und Ergebnisse übernommen. Mannschaften, Wettkämpfer und Startlisten bleiben leer.</p>
-<div class="form-group select optional duplication_duplicate_from_id"><label class="control-label select optional" for="duplication_duplicate_from_id">Kopieren von</label><select class="form-select select optional" name="duplication[duplicate_from_id]" id="duplication_duplicate_from_id"><option value="" label=" "></option>
-<option value="UUID">2024-02-29 MV-Cup</option></select></div>
-
+<fieldset class='group'>
+<h4>2024-02-29 D-Cup</h4>
+<ul>
+<li>
+2
+Disziplinen
+<ul>
+<li>100m-Hindernisbahn</li>
+<li>Hakenleitersteigen</li>
+</ul>
+</li>
+<li>
+1
+Wertungsgruppe
+<ul>
+<li>Frauen</li>
+</ul>
+</li>
+<li>
+2
+Wertungen
+<ul>
+<li>100m-Hindernisbahn - Frauen</li>
+<li>Hakenleitersteigen - Frauen</li>
+</ul>
+</li>
+<li>
+3
+Ergebnisse
+<ul>
+<li>100m-Hindernisbahn - Frauen</li>
+<li>Hakenleitersteigen - Frauen</li>
+<li>Zweikampf - Frauen</li>
+</ul>
+</li>
+<li>
+1
+Gesamtwertung
+<ul>
+<li>Wettkampf</li>
+</ul>
+</li>
+</ul>
+</fieldset>
 </div>
+<div class="form-group hidden duplication_duplicate_from_id form-group-valid"><input class="form-control hidden" autocomplete="off" type="hidden" value="UUID" name="duplication[duplicate_from_id]" id="duplication_duplicate_from_id" /></div>
+<div class='card-body'>
+<fieldset class="form-group boolean optional duplication_confirm form-group-invalid"><div class="form-check"><input name="duplication[confirm]" type="hidden" value="0" autocomplete="off" /><input class="form-check-input is-invalid boolean optional" autofocus="autofocus" aria-invalid="true" type="checkbox" value="1" name="duplication[confirm]" id="duplication_confirm" /><label class="form-check-label boolean optional" for="duplication_confirm">Ich will diesen Wettkampf als Vorlage wählen.</label><div class="invalid-feedback">Bestätigung muss akzeptiert werden</div></div></fieldset>
+</div>
+
 <div class='card-footer'>
 <div class='d-flex justify-content-between align-items-start'>
-<div><input type="submit" name="commit" value="Prüfen" class="btn btn-light" data-disable-with="Prüfen" />
+<div><input type="submit" name="commit" value="Duplizieren" class="btn btn-warning" data-disable-with="Duplizieren" />
+<a class="btn btn-light" href="/2024/mv-cup/presets">Abbrechen</a>
 </div>
 </div>
 </div>

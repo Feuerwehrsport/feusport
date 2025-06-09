@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     resource :visibility, only: %i[edit update]
     resource :registration, only: %i[edit update]
     resource :deletion, only: %i[new create]
+    resource :duplication, only: %i[new create]
     resource :unlocking, only: %i[new create]
     resources :documents, only: %i[new create edit update destroy]
     get 'dd/:idpart', to: 'documents#download', as: :document_download
