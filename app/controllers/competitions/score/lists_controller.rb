@@ -88,7 +88,7 @@ class Competitions::Score::ListsController < CompetitionNestedController
   end
 
   def not_yet_present_entities
-    if @list.assessments.first.like_fire_relay?
+    if @list.assessments&.first&.like_fire_relay?
       @competition.teams.where(band: @list.assessments.map(&:band)).map do |team|
         TeamRelay.create_next_free_for(team, @list.entries.pluck(:entity_id))
       end
