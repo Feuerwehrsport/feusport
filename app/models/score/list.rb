@@ -61,11 +61,11 @@ class Score::List < ApplicationRecord
   end
 
   def discipline
-    assessments.first.discipline
+    assessments&.first&.discipline
   end
 
   def single_discipline?
-    @single_discipline ||= assessments.first.discipline.single_discipline?
+    @single_discipline ||= discipline&.single_discipline?
   end
 
   def multiple_assessments?

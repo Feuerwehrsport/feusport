@@ -37,6 +37,8 @@ module ApplicationHelper
   end
 
   def discipline_image(discipline, options = {})
+    return if discipline.blank?
+
     options[:size] ||= '20x20'
     image_tag "disciplines/#{discipline}.svg", options
   end

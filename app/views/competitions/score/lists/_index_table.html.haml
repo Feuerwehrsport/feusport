@@ -8,7 +8,7 @@
           - else
             %i.far.fa-eye{ title: 'Öffentlich' }
       %td
-        = discipline_image(list.discipline.key)
+        = discipline_image(list.discipline&.key)
         = list.name
       %td.text-end
         - if can?(:edit, list) || !list.hidden?
