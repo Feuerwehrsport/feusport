@@ -1,7 +1,7 @@
 = render 'competitions/header', competition: @competition, sub: 'Reihenfolge bearbeiten'
 
 .row.g-4
-  .col-lg-8
+  .col-lg-8.order-2.order-lg-1
     = card_direct(@list.name) do
       %table.table.sorted-table{ data: { track_count: @list.track_count } }
         = render 'list_headline', list: @list, times: false, edit: false
@@ -9,9 +9,24 @@
           - score_list_entries(@list, move_modus: true) do |entry, run, track, _best_of_run|
             = render 'list_entry', entry:, run:, track:, list: @list, best_of_run: false, move: true
 
-  .col-lg-4
+  .col-lg-4.order-1.order-lg-2
     = card_body('Hinweise', class: 'mb-3') do
-      %p Einfach die Zeilen in die neue Position ziehen.
+      .mb-2
+        .form-check
+          %label
+            %input.form-check-input{ type: :radio, name: 'modus', value: 'move', checked: true, autocomplete: 'off' }
+            Ziehen
+        .form-check
+          %label
+            %input.form-check-input{ type: :radio, name: 'modus', value: 'swap', autocomplete: 'off' }
+            Startposition tauschen
+        .form-check
+          %label
+            %input.form-check-input{ type: :radio, name: 'modus', value: 'swap-run', autocomplete: 'off' }
+            Lauf tauschen
+      %p.d-none.move-hint Einfach die Zeilen in die neue Position ziehen.
+      %p.d-none.swap-hint Wähle zwei Startpositionen aus. Diese werden dann getauscht.
+      %p.d-none.swap-run-hint Wähle zwei Läufe aus. Diese werden dann mit allen Bahnen getauscht.
       .alert.alert-warning.d-none#pending-changes
         %p Die Veränderungen wurden noch nicht gespeichert.
         .d-grid.gap-2

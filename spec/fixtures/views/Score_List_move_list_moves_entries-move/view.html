@@ -133,7 +133,7 @@ Erweitert
 </div>
 <div class='pb-4 mt-4 container'>
 <div class='row g-4'>
-<div class='col-lg-8'>
+<div class='col-lg-8 order-2 order-lg-1'>
 <div class='card'>
 <div class='card-header p-0'>
 <div class='d-flex justify-content-between'>
@@ -168,11 +168,13 @@ Erweitert
 
 </td>
 
-<td class='text-end'>
-<div class='btn btn-sm btn-light move-up' title='Ganz nach oben'>
+<td class='text-end' style='min-width: 15%'>
+<input autocomplete='off' class='swap-checkbox form-check-input d-none' type='checkbox'>
+<input autocomplete='off' class='swap-run-checkbox form-check-input d-none' data-track-count='2' type='checkbox'>
+<div class='btn btn-sm btn-light move-up d-none' title='Ganz nach oben'>
 <i class='far fa-up'></i>
 </div>
-<div class='btn btn-sm btn-light move-down' title='Ganz nach unten'>
+<div class='btn btn-sm btn-light move-down d-none' title='Ganz nach unten'>
 <i class='far fa-down'></i>
 </div>
 </td>
@@ -188,11 +190,12 @@ Erweitert
 
 </td>
 
-<td class='text-end'>
-<div class='btn btn-sm btn-light move-up' title='Ganz nach oben'>
+<td class='text-end' style='min-width: 15%'>
+<input autocomplete='off' class='swap-checkbox form-check-input d-none' type='checkbox'>
+<div class='btn btn-sm btn-light move-up d-none' title='Ganz nach oben'>
 <i class='far fa-up'></i>
 </div>
-<div class='btn btn-sm btn-light move-down' title='Ganz nach unten'>
+<div class='btn btn-sm btn-light move-down d-none' title='Ganz nach unten'>
 <i class='far fa-down'></i>
 </div>
 </td>
@@ -210,11 +213,13 @@ Erweitert
 
 </td>
 
-<td class='text-end'>
-<div class='btn btn-sm btn-light move-up' title='Ganz nach oben'>
+<td class='text-end' style='min-width: 15%'>
+<input autocomplete='off' class='swap-checkbox form-check-input d-none' type='checkbox'>
+<input autocomplete='off' class='swap-run-checkbox form-check-input d-none' data-track-count='2' type='checkbox'>
+<div class='btn btn-sm btn-light move-up d-none' title='Ganz nach oben'>
 <i class='far fa-up'></i>
 </div>
-<div class='btn btn-sm btn-light move-down' title='Ganz nach unten'>
+<div class='btn btn-sm btn-light move-down d-none' title='Ganz nach unten'>
 <i class='far fa-down'></i>
 </div>
 </td>
@@ -230,11 +235,12 @@ Erweitert
 
 </td>
 
-<td class='text-end'>
-<div class='btn btn-sm btn-light move-up' title='Ganz nach oben'>
+<td class='text-end' style='min-width: 15%'>
+<input autocomplete='off' class='swap-checkbox form-check-input d-none' type='checkbox'>
+<div class='btn btn-sm btn-light move-up d-none' title='Ganz nach oben'>
 <i class='far fa-up'></i>
 </div>
-<div class='btn btn-sm btn-light move-down' title='Ganz nach unten'>
+<div class='btn btn-sm btn-light move-down d-none' title='Ganz nach unten'>
 <i class='far fa-down'></i>
 </div>
 </td>
@@ -252,11 +258,13 @@ Erweitert
 
 </td>
 
-<td class='text-end'>
-<div class='btn btn-sm btn-light move-up' title='Ganz nach oben'>
+<td class='text-end' style='min-width: 15%'>
+<input autocomplete='off' class='swap-checkbox form-check-input d-none' type='checkbox'>
+<input autocomplete='off' class='swap-run-checkbox form-check-input d-none' data-track-count='2' type='checkbox'>
+<div class='btn btn-sm btn-light move-up d-none' title='Ganz nach oben'>
 <i class='far fa-up'></i>
 </div>
-<div class='btn btn-sm btn-light move-down' title='Ganz nach unten'>
+<div class='btn btn-sm btn-light move-down d-none' title='Ganz nach unten'>
 <i class='far fa-down'></i>
 </div>
 </td>
@@ -272,11 +280,12 @@ Erweitert
 
 </td>
 
-<td class='text-end'>
-<div class='btn btn-sm btn-light move-up' title='Ganz nach oben'>
+<td class='text-end' style='min-width: 15%'>
+<input autocomplete='off' class='swap-checkbox form-check-input d-none' type='checkbox'>
+<div class='btn btn-sm btn-light move-up d-none' title='Ganz nach oben'>
 <i class='far fa-up'></i>
 </div>
-<div class='btn btn-sm btn-light move-down' title='Ganz nach unten'>
+<div class='btn btn-sm btn-light move-down d-none' title='Ganz nach unten'>
 <i class='far fa-down'></i>
 </div>
 </td>
@@ -287,7 +296,7 @@ Erweitert
 
 </div>
 </div>
-<div class='col-lg-4'>
+<div class='col-lg-4 order-1 order-lg-2'>
 <div class='card mb-3'>
 <div class='card-header p-0'>
 <div class='d-flex justify-content-between'>
@@ -295,7 +304,29 @@ Erweitert
 </div>
 </div>
 <div class='card-body'>
-<p>Einfach die Zeilen in die neue Position ziehen.</p>
+<div class='mb-2'>
+<div class='form-check'>
+<label>
+<input autocomplete='off' checked class='form-check-input' name='modus' type='radio' value='move'>
+Ziehen
+</label>
+</div>
+<div class='form-check'>
+<label>
+<input autocomplete='off' class='form-check-input' name='modus' type='radio' value='swap'>
+Startposition tauschen
+</label>
+</div>
+<div class='form-check'>
+<label>
+<input autocomplete='off' class='form-check-input' name='modus' type='radio' value='swap-run'>
+Lauf tauschen
+</label>
+</div>
+</div>
+<p class='d-none move-hint'>Einfach die Zeilen in die neue Position ziehen.</p>
+<p class='d-none swap-hint'>Wähle zwei Startpositionen aus. Diese werden dann getauscht.</p>
+<p class='d-none swap-run-hint'>Wähle zwei Läufe aus. Diese werden dann mit allen Bahnen getauscht.</p>
 <div class='alert alert-warning d-none' id='pending-changes'>
 <p>Die Veränderungen wurden noch nicht gespeichert.</p>
 <div class='d-grid gap-2'>

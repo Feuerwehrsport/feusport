@@ -31,10 +31,13 @@
 
   = yield (track == 1)
   - if move
-    %td.text-end
-      .btn.btn-sm.btn-light.move-up{ title: 'Ganz nach oben' }
+    %td.text-end{ style: 'min-width: 15%' }
+      %input.swap-checkbox.form-check-input.d-none{ type: :checkbox, autocomplete: 'off' }
+      - if track == 1
+        %input.swap-run-checkbox.form-check-input.d-none{ type: :checkbox, autocomplete: 'off', data: { track_count: list.track_count } }
+      .btn.btn-sm.btn-light.move-up.d-none{ title: 'Ganz nach oben' }
         %i.far.fa-up
-      .btn.btn-sm.btn-light.move-down{ title: 'Ganz nach unten' }
+      .btn.btn-sm.btn-light.move-down.d-none{ title: 'Ganz nach unten' }
         %i.far.fa-down
 
 - if entry&.errors&.include?(:changed_while_editing)
