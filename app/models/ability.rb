@@ -46,9 +46,8 @@ class Ability
 
     can(:read, Certificates::Template, competition: read_ua)
     can(:manage, Certificates::Template, competition: manage_ua)
-
-    can(:manage, Certificates::List, competition: read_ua)
-    can(:manage, Certificates::Import, competition: read_ua)
+    can(:manage, Certificates::List, competition: manage_ua)
+    can(:manage, Certificates::Import, competition: manage_ua)
 
     can(:read, Score::List, competition: read_ua)
     can(:manage, Score::List, competition: manage_ua)
@@ -113,11 +112,16 @@ class Ability
     can(:manage, Competition, id: simple_access.competition_id)
     can(:manage, Document, competition: { id: simple_access.competition_id })
     can(:manage, Discipline, competition: { id: simple_access.competition_id })
+    can(:manage, TeamListRestriction, competition: { id: simple_access.competition_id })
     can(:manage, Band, competition: { id: simple_access.competition_id })
     can(:manage, Assessment, competition: { id: simple_access.competition_id })
     can(:manage, Team, competition: { id: simple_access.competition_id })
+    can(:manage, TeamMarker, competition: { id: simple_access.competition_id })
+    can(:manage, TeamMarkerValue, competition: { id: simple_access.competition_id })
     can(:manage, Person, competition: { id: simple_access.competition_id })
     can(:manage, Certificates::Template, competition: { id: simple_access.competition_id })
+    can(:manage, Certificates::List, competition: { id: simple_access.competition_id })
+    can(:manage, Certificates::Import, competition: { id: simple_access.competition_id })
     can(:manage, Score::List, competition: { id: simple_access.competition_id })
     can(:manage, Score::ListEntry, competition: { id: simple_access.competition_id })
     can(:manage, Score::Run, competition: { id: simple_access.competition_id })
