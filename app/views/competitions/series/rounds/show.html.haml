@@ -37,6 +37,7 @@
               %th.hide-xs Bestzeit
               %th Punkte
             %tbody
+              = tr_xs_rotate_hint
               - @round.team_assessment_rows(@competition, gender).each do |row|
                 %tr
                   %td.hide-xs= row.rank

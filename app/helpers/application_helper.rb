@@ -77,4 +77,10 @@ module ApplicationHelper
     classes.push('current-competition') if competition.date.in?(@current_dates)
     classes
   end
+
+  def tr_xs_rotate_hint
+    tag.tr(
+      tag.td('Gerät drehen, um mehr Spalten zu sehen', colspan: 100, class: 'xs-rotate-hint'),
+    )
+  end
 end

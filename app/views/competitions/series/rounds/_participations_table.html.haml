@@ -1,6 +1,7 @@
 - free ||= ''
 - if participations.present?
   %table.team_assessments
+    = tr_xs_rotate_hint
     - participations.each do |participation|
       %tr
         %th.hide-xs= participation.assessment.discipline.upcase
