@@ -177,6 +177,9 @@ const changeModus = function () {
 };
 
 onVisit(function () {
+  const saveLink = document.querySelector('#save-link');
+  if (!saveLink) return;
+
   changeModus();
 
   for (let elem of document.querySelectorAll('input[type="radio"][name="modus"]')) {
@@ -188,8 +191,6 @@ onVisit(function () {
 
   bindSortedTable();
 
-  const saveLink = document.querySelector('#save-link');
-  if (!saveLink) return;
   saveLink.addEventListener('click', () => {
     rebuildTable(true);
   });
