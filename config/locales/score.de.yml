@@ -68,6 +68,7 @@ de:
       score/result:
         assessment: Wertung
         assessment_id: Wertung
+        calculation_help: Berechnungshilfe
         calculation_method: Berechnungsmethode
         date: Datum
         forced_name: Name

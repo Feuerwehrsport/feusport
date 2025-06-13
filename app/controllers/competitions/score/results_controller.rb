@@ -45,7 +45,7 @@ class Competitions::Score::ResultsController < CompetitionNestedController
     params.require(:score_result).permit(
       :forced_name, :assessment_id, :group_assessment, :date, :calculation_method,
       :group_score_count, :group_run_count,
-      :image_key, :multi_result_method,
+      :image_key, :multi_result_method, :calculation_help,
       result_ids: [],
       team_tags_included: [],
       team_tags_excluded: [],

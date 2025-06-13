@@ -1,12 +1,12 @@
 = render 'competitions/header', competition: @competition, sub: resource_class.model_name.human(count: :many)
 
 - cache_if(current_user.nil? && simple_access.nil?, @competition) do
-  .row.g-4
+  .row.g-4.mb-4
     .col-lg-8
       = card(resource_class.model_name.human(count: :many)) do |c|
-        - if resource_collection.exists?
+        - if resource_collection.exists?(calculation_help: false)
           - c.direct do
-            = render('index_table', resource_class:, resource_collection:)
+            = render('index_table', resource_class:, resource_collection: resource_collection.where(calculation_help: false))
         - else
           - c.body do
             .alert.alert-info= t('a.no_entries_found')
@@ -14,3 +14,9 @@
         - if can?(:create, resource_class.new(competition: @competition))
           - c.primary_actions do |actions|
             - actions.link_to t('a.add'), { action: :new }, end_icon: :square_plus
+
+  - if resource_collection.exists?(calculation_help: true)
+    .row.g-4
+      .col-lg-8
+        = card_direct('Berechnungshilfen') do
+          = render('index_table', resource_class:, resource_collection: resource_collection.where(calculation_help: true))

@@ -48,6 +48,9 @@
       .row
         .col-lg-6
           = f.input :date, html5: true, hint: 'Mit Angabe dieses Datums kann man das allgemeine Datum des Wettkampfes auf dem PDF überschreiben. Dies ist nützlich, wenn der Wettkampf über mehrer Tage geht.'
+      .row
+        .col-lg-6
+          = f.input :calculation_help, hint: 'Die Liste dient nur als Berechnungshilfe und wird in der Auflistung ganz unten angezeigt.'
 - c.footer do
   = f.primary_button :submit
   = f.cancel_button(competition_score_results_path)

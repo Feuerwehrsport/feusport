@@ -4,7 +4,7 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 
-# generated from version 20250409080624
+# generated from version 20250613071623
 
 module SchemaValidations
   extend ActiveSupport::Concern
@@ -534,6 +534,7 @@ module SchemaValidations
       validates_with_filter :image_key, {:length=>{:allow_nil=>true, :maximum=>10}}
       validates_with_filter :multi_result_method, {:presence=>{}}
       validates_with_filter :multi_result_method, {:numericality=>{:allow_nil=>true, :only_integer=>true, :greater_than_or_equal_to=>-2147483648, :less_than=>2147483648}} unless enums.include?(:multi_result_method)
+      validates_with_filter :calculation_help, {:inclusion=>{:in=>[true, false], :message=>:blank}}
     end
 
     def dbv_series_assessments_validations(enums: [])

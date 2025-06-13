@@ -5,6 +5,7 @@
 # Table name: score_results
 #
 #  id                   :uuid             not null, primary key
+#  calculation_help     :boolean          default(FALSE), not null
 #  calculation_method   :integer          default("default"), not null
 #  date                 :date
 #  forced_name          :string(100)

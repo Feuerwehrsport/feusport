@@ -1,0 +1,4 @@
+competitions/score/results berechnungshilfen allows to create zweikampf results
+
+request
+html

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_04_09_080624) do
+ActiveRecord::Schema[7.2].define(version: 2025_06_13_071623) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
@@ -439,6 +439,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_09_080624) do
     t.datetime "updated_at", null: false
     t.string "image_key", limit: 10
     t.integer "multi_result_method", default: 0, null: false
+    t.boolean "calculation_help", default: false, null: false
     t.index ["assessment_id"], name: "index_score_results_on_assessment_id"
     t.index ["competition_id"], name: "index_score_results_on_competition_id"
   end

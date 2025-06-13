@@ -181,4 +181,15 @@ RSpec.describe 'competitions/score/results' do
       expect(result.reload.results).to contain_exactly(result_hl, result_hb)
     end
   end
+
+  describe 'berechnungshilfen' do
+    let!(:result_hl) { create(:score_result, competition:, assessment: assessment_hl_female, calculation_help: true) }
+
+    it 'allows to create zweikampf results' do
+      sign_in user
+
+      get "/#{competition.year}/#{competition.slug}/score/results"
+      expect(response).to match_html_fixture
+    end
+  end
 end
