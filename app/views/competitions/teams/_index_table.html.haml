@@ -40,3 +40,8 @@
             = icon_link_btn("far #{value&.value_present? ? 'fa-square-check' : 'fa-square'}", edit_competition_team_marker_path(team_id: team.id, id: team_marker.id), class: 'quick-team-marker-change-link', data: { url: edit_competition_team_marker_path(team_id: team.id, id: team_marker.id, output: :modal) })
       %td.text-end
         = btn_link_to(t('a.show'), { action: :show, id: team })
+  - if can?(:manage, @competition) && team_markers.present?
+    %tr
+      %td{ colspan: band.team_tags.count + assessments.count + 1 }
+      %td{ colspan: team_markers.count + 1 }
+        = btn_link_to('Spalten als Block', edit_competition_team_marker_block_values_path(band_id: band.id), title: 'Mannschaftsspalten als Block bearbeiten')

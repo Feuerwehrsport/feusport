@@ -14,5 +14,15 @@ FactoryBot.define do
     competition
     name { 'Angereist?' }
     value_type { 'boolean' }
+
+    trait :date do
+      name { 'Bezahlt?' }
+      value_type { 'date' }
+    end
+
+    trait :string do
+      name { 'Wünsche?' }
+      value_type { 'string' }
+    end
   end
 end

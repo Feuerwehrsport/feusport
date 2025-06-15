@@ -40,6 +40,7 @@ class Ability
     can(:manage, TeamMarker, competition: manage_ua)
 
     can(:manage, TeamMarkerValue, competition: manage_ua)
+    can(:manage, TeamMarkerBlockValue, competition: manage_ua)
 
     can(:read, Person, competition: read_ua)
     can(:manage, Person, competition: manage_ua)
@@ -118,6 +119,7 @@ class Ability
     can(:manage, Team, competition: { id: simple_access.competition_id })
     can(:manage, TeamMarker, competition: { id: simple_access.competition_id })
     can(:manage, TeamMarkerValue, competition: { id: simple_access.competition_id })
+    can(:manage, TeamMarkerBlockValue, competition: { id: simple_access.competition_id })
     can(:manage, Person, competition: { id: simple_access.competition_id })
     can(:manage, Certificates::Template, competition: { id: simple_access.competition_id })
     can(:manage, Certificates::List, competition: { id: simple_access.competition_id })

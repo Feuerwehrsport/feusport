@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
-<title>Mannschaften - MV-Cup - Feuerwehrsport</title>
+<title>MV-Cup - Feuerwehrsport</title>
 <meta content='width=device-width,initial-scale=1' name='viewport'>
 
 
@@ -66,18 +66,6 @@ Benutzer
 <a class="nav-link" href="/2024/mv-cup">Informationen
 </a>
 </div>
-<div class='nav-item active'>
-<a class="nav-link active" aria-current="page" href="/2024/mv-cup/teams">Mannschaften
-</a>
-</div>
-<div class='nav-item'>
-<a class="nav-link" href="/2024/mv-cup/score/lists">Startlisten
-</a>
-</div>
-<div class='nav-item'>
-<a class="nav-link" href="/2024/mv-cup/score/results">Ergebnisse
-</a>
-</div>
 <div class='dropdown nav-item'>
 <a aria-expanded='false' class='nav-link dropdown-toggle' data-bs-toggle='dropdown' href='#' id='navbar-dropdown-menu-link' role='button'>
 Erweitert
@@ -130,73 +118,50 @@ Erweitert
 <div class='pb-4 mt-4 container'>
 <div class='row'>
 <div class='col-lg-12'>
-<div class='alert alert-warning'>
-<p>Zu einigen Mannschaften konnte keine Verknüpfung mit einer vorhandenen Mannschaft gefunden werden.</p>
-<a class=" btn btn-light btn-sm" href="/2024/mv-cup/teams/without_statistics_connection">Mannschaften ansehen</a>
-</div>
-</div>
-</div>
-<div class='row'>
-<div class='col-lg-12'>
+<form class="simple_form edit_team_marker_block_value" id="edit_team_marker_block_value" novalidate="novalidate" action="/2024/mv-cup/team_marker_block_values" accept-charset="UTF-8" method="post"><input type="hidden" name="_method" value="patch" autocomplete="off" /><input type="hidden" name="band_id" id="band_id" value="UUID" autocomplete="off" />
 <div class='card mb-3'>
 <div class='card-header p-0'>
 <div class='d-flex justify-content-between'>
 <h4 class='m-0 py-2 ps-3'>Frauen</h4>
-<a class="card-primary-action" href="/2024/mv-cup/teams/new?band_id=UUID">Hinzufügen
-<i class='far fa-square-plus'></i>
-</a>
 </div>
 </div>
 <table class='table table-bordered'>
 <tr>
 <th>Name</th>
-<th class='small' style='width: 60px'><img title="Löschangriff Nass - Frauen" src="/assets/disciplines/la.svg" width="20" height="20" /></th>
-<td style='width: 60px; text-align: center' title='Angereist?'>
-<abbr title='Angereist?'>An</abbr>
-</td>
-<th style='width: 200px'></th>
+<td style='text-align: center' title='Angereist?'>Angereist?</td>
+<td style='text-align: center' title='Bezahlt?'>Bezahlt?</td>
+<td style='text-align: center' title='Wünsche?'>Wünsche?</td>
 </tr>
 <tr>
+<td>Frauen-Team</td>
 <td>
-new-name
-
+<div class="form-group hidden team_marker_block_value_team_marker_values_team_id form-group-valid"><input class="form-control hidden" autocomplete="off" type="hidden" value="UUID" name="team_marker_block_value[team_marker_values_attributes][0][team_id]" id="team_marker_block_value_team_marker_values_attributes_0_team_id" /></div>
+<div class="form-group hidden team_marker_block_value_team_marker_values_team_marker_id form-group-valid"><input class="form-control hidden" autocomplete="off" type="hidden" value="UUID" name="team_marker_block_value[team_marker_values_attributes][0][team_marker_id]" id="team_marker_block_value_team_marker_values_attributes_0_team_marker_id" /></div>
+<fieldset class="form-group boolean optional team_marker_block_value_team_marker_values_boolean_value"><div class="form-check"><input name="team_marker_block_value[team_marker_values_attributes][0][boolean_value]" type="hidden" value="0" autocomplete="off" /><input class="form-check-input boolean optional" type="checkbox" value="1" name="team_marker_block_value[team_marker_values_attributes][0][boolean_value]" id="team_marker_block_value_team_marker_values_attributes_0_boolean_value" /><label class="form-check-label boolean optional" for="team_marker_block_value_team_marker_values_attributes_0_boolean_value">Ja/Nein</label></div></fieldset>
 </td>
-<td title='Mannschaftswertung'>
-M
+<td>
+<div class="form-group hidden team_marker_block_value_team_marker_values_team_id form-group-valid"><input class="form-control hidden" autocomplete="off" type="hidden" value="UUID" name="team_marker_block_value[team_marker_values_attributes][1][team_id]" id="team_marker_block_value_team_marker_values_attributes_1_team_id" /></div>
+<div class="form-group hidden team_marker_block_value_team_marker_values_team_marker_id form-group-valid"><input class="form-control hidden" autocomplete="off" type="hidden" value="UUID" name="team_marker_block_value[team_marker_values_attributes][1][team_marker_id]" id="team_marker_block_value_team_marker_values_attributes_1_team_marker_id" /></div>
+<div class="form-group date optional team_marker_block_value_team_marker_values_date_value"><label class="date optional" for="team_marker_block_value_team_marker_values_attributes_1_date_value">Datum</label><div class="d-flex flex-row justify-content-between align-items-center"><input class="form-control mx-1 date optional" type="date" name="team_marker_block_value[team_marker_values_attributes][1][date_value]" id="team_marker_block_value_team_marker_values_attributes_1_date_value" /></div></div>
 </td>
-<td style='width: 60px; text-align: center' title=''>
-<a class="quick-team-marker-change-link btn btn-light btn-sm" data-url="/2024/mv-cup/teams/UUID/markers/UUID/edit?output=modal" href="/2024/mv-cup/teams/UUID/markers/UUID/edit"><i class="far fa-square"></i></a>
-</td>
-<td class='text-end'>
-<a class=" btn btn-light btn-sm" href="/2024/mv-cup/teams/UUID">Ansehen</a>
-</td>
-</tr>
-<tr>
-<td colspan='2'></td>
-<td colspan='2'>
-<a title="Mannschaftsspalten als Block bearbeiten" class=" btn btn-light btn-sm" href="/2024/mv-cup/team_marker_block_values/edit?band_id=UUID">Spalten als Block</a>
+<td>
+<div class="form-group hidden team_marker_block_value_team_marker_values_team_id form-group-valid"><input class="form-control hidden" autocomplete="off" type="hidden" value="UUID" name="team_marker_block_value[team_marker_values_attributes][2][team_id]" id="team_marker_block_value_team_marker_values_attributes_2_team_id" /></div>
+<div class="form-group hidden team_marker_block_value_team_marker_values_team_marker_id form-group-valid"><input class="form-control hidden" autocomplete="off" type="hidden" value="UUID" name="team_marker_block_value[team_marker_values_attributes][2][team_marker_id]" id="team_marker_block_value_team_marker_values_attributes_2_team_marker_id" /></div>
+<div class="form-group text optional team_marker_block_value_team_marker_values_string_value"><label class="control-label text optional" for="team_marker_block_value_team_marker_values_attributes_2_string_value">Text</label><textarea class="form-control text optional" name="team_marker_block_value[team_marker_values_attributes][2][string_value]" id="team_marker_block_value_team_marker_values_attributes_2_string_value">
+</textarea></div>
 </td>
 </tr>
 </table>
 
-
 <div class='card-footer'>
 <div class='d-flex justify-content-between align-items-start'>
-<div></div>
-<div>
-<div class='btn-group'>
-<a target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm" href="/2024/mv-cup/teams.pdf">PDF
-<i class='far fa-file-pdf'></i>
-</a>
-<a class="btn btn-outline-secondary btn-sm" href="/2024/mv-cup/teams.xlsx">XLS
-<i class='far fa-file-excel'></i>
-</a>
+<div><button name="button" type="submit" class="btn btn-primary" data-disable-with="Bitte warten...">Werte aktualisieren</button>
+<a class="btn btn-secondary" href="/2024/mv-cup/teams">Abbrechen</a>
 </div>
 </div>
 </div>
 </div>
-</div>
-</div>
+</form></div>
 </div>
 </div>
 </body>

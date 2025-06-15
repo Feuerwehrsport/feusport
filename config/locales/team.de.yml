@@ -14,6 +14,7 @@ de:
           scores_present: 'ist ungültig: Deine Wettkämpfer haben schon Einzelergebnisse erzielt. Du kannst sie nicht automatisch löschen.'
     models:
       team_import: Mannschafts-Import
+      team_marker_block_value: Werte
   activerecord:
     attributes:
       team:
