@@ -340,6 +340,27 @@ RSpec.describe Score::List do
     end
   end
 
+  describe 'edit list entity' do
+    let!(:person_list) { create_score_list(result_hl, person1 => 1234, person2 => :waiting, person3 => :waiting) }
+
+    it 'updates entity' do
+      sign_in user
+
+      get competition_nested("score/lists/#{person_list.id}?edit_index=1")
+      expect(response).to match_html_fixture.with_affix('show-team-with-edit')
+
+      get competition_nested("score/lists/#{person_list.id}/edit_entity/#{person_list.entries.first.id}")
+      expect(response).to match_html_fixture.with_affix('show-edit-dialog')
+
+      patch competition_nested("score/lists/#{person_list.id}"),
+            params: { score_list: { entries_attributes: {
+              '0' => { 'id' => person_list.entries.first.id, 'entity_id' => person2.id },
+            } } }
+
+      expect(person_list.entries.pluck(:entity_id)).to eq [person2.id, person2.id, person3.id]
+    end
+  end
+
   describe 'copy list' do
     let!(:person_list) { create_score_list(result_hl, person1 => 1234, person2 => :waiting, person3 => :waiting) }
 

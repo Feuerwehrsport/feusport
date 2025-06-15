@@ -7,8 +7,13 @@ class Competitions::Score::ListsController < CompetitionNestedController
     @entries = @list.entries.where(id: params[:entry_id])
   end
 
+  def edit_entity
+    @entries = @list.entries.where(id: params[:entry_id])
+    @possible_entities = possible_entities(only_not_present: false)
+  end
+
   def select_entity
-    @not_yet_present_entities = not_yet_present_entities
+    @not_yet_present_entities = possible_entities(only_not_present: params[:all_entities].blank?)
   end
 
   def move
@@ -87,14 +92,14 @@ class Competitions::Score::ListsController < CompetitionNestedController
                                        entries_attributes: editable_attributes)
   end
 
-  def not_yet_present_entities
+  def possible_entities(only_not_present:)
     if @list.assessments&.first&.like_fire_relay?
       @competition.teams.where(band: @list.assessments.map(&:band)).map do |team|
         TeamRelay.create_next_free_for(team, @list.entries.pluck(:entity_id))
       end
     else
       all = @list.discipline_klass.where(competition: @competition)
-      all = all.where.not(id: @list.entries.pluck(:entity_id)) if params[:all_entities].blank?
+      all = all.where.not(id: @list.entries.pluck(:entity_id)) if only_not_present
       all.sort_by(&:full_name)
     end
   end

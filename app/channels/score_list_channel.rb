@@ -20,12 +20,12 @@ class ScoreListChannel < ApplicationCable::Channel
 
           tracks[entry.id] = ApplicationController.render(
             partial: 'competitions/score/lists/list_entry_with_times',
-            locals: { entry:, run:, track:, list:, best_of_run:, editable: false, destroy_index: nil },
+            locals: { entry:, run:, track:, list:, best_of_run:, editable: false, destroy_index: nil, edit_index: nil },
           )
 
           tracks_editable[entry.id] = ApplicationController.render(
             partial: 'competitions/score/lists/list_entry_with_times',
-            locals: { entry:, run:, track:, list:, best_of_run:, editable: true, destroy_index: nil },
+            locals: { entry:, run:, track:, list:, best_of_run:, editable: true, destroy_index: nil, edit_index: nil },
           )
         end
       end

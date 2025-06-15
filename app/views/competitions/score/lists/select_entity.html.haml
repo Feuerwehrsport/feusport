@@ -10,12 +10,12 @@
           - else
             - free_run, free_track = @list.next_free_track
             = f.simple_fields_for :entries, @list.entries.build(run: free_run, track: free_track, entity_type: @list.discipline_klass.name) do |g|
-              = g.association :entity, collection: @not_yet_present_entities, label_method: :full_name_with_band
+              = g.association :entity, collection: @not_yet_present_entities, label_method: :full_name_with_band, autocomplete: 'off'
               = g.input :run, as: :hidden
               = g.input :track, as: :hidden
               = g.input :entity_type, as: :hidden
-              = g.association :assessment, collection: @list.assessments.sort, label: 'Wertung/Gruppe'
-              = g.input :assessment_type, as: :select, collection: AssessmentRequest.assessment_types.keys, label_method: ->(type) { t("assessment_types.#{type}") }
+              = g.association :assessment, collection: @list.assessments.sort, label: 'Wertung/Gruppe', autocomplete: 'off'
+              = g.input :assessment_type, as: :select, collection: AssessmentRequest.assessment_types.keys, label_method: ->(type) { t("assessment_types.#{type}") }, autocomplete: 'off'
 
             Wird in Lauf #{free_run} auf Bahn #{free_track} eingeordnet.
         - c.footer do

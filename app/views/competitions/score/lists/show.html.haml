@@ -9,7 +9,7 @@
             = render 'list_headline', times: true, list: @list, edit: false
             %tbody
               - score_list_entries(@list) do |entry, run, track, best_of_run|
-                = render partial: 'list_entry_with_times', locals: { entry:, run:, track:, list: @list, best_of_run:, editable: can?(:edit, @list), destroy_index: params[:destroy_index] }
+                = render partial: 'list_entry_with_times', locals: { entry:, run:, track:, list: @list, best_of_run:, editable: can?(:edit, @list), destroy_index: params[:destroy_index], edit_index: params[:edit_index] }
         - c.actions do |actions|
           - actions.link_to 'PDF', { format: :pdf }, end_icon: :file_pdf, target: '_blank', rel: 'noopener'
           - actions.link_to 'XLS', { format: :xlsx }, end_icon: :file_excel
@@ -35,9 +35,10 @@
               = btn_link_to 'Zeiten im Block eintragen', { action: :edit_times }
             - if can?(:edit, @list)
               = btn_link_to 'Teilnehmer hinzufügen', { action: :select_entity }, remote: true
-            - if params[:destroy_index]
+            - if params[:destroy_index] || params[:edit_index]
               = btn_link_to 'Zeiten eintragen', { action: :show }
             - else
+              = btn_link_to 'Teilnehmer ändern', { action: :show, edit_index: 1 }
               = btn_link_to 'Teilnehmer entfernen', { action: :show, destroy_index: 1 }
             - if can?(:copy, @list)
               = btn_link_to 'Startliste klonen', copy_list_competition_score_list_factories_path(list_id: @list.id)

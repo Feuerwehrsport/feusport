@@ -1,0 +1,4 @@
+Score::List edit list entity updates entity-show-edit-dialog
+
+request
+html

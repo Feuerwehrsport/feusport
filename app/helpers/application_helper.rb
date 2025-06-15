@@ -45,7 +45,8 @@ module ApplicationHelper
 
   def short_edit_link(path, options = {})
     options[:title] ||= 'Bearbeiten'
-    icon_link_btn('far fa-edit', path, options)
+    fa = options.delete(:fa) || 'edit'
+    icon_link_btn("far fa-#{fa}", path, options)
   end
 
   def short_destroy_link(path, options = {})

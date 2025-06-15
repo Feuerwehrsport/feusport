@@ -55,7 +55,7 @@ Benutzer
 <div class='container'>
 <h1>MV-Cup</h1>
 <p class='lead m-0 ms-1'>29.02.2024 - Rostock</p>
-<p class='lead m-0 ms-1'>Startlisten</p>
+<p class='lead m-0 ms-1'>Teilnehmer ändern</p>
 
 </div>
 </header>
@@ -133,147 +133,33 @@ Erweitert
 </div>
 <div class='pb-4 mt-4 container'>
 <div class='row g-4'>
-<div class='col-lg-8'>
-<div class='card'>
+<div class='col-md-8'>
+<form class="simple_form edit_score_list" id="edit_score_list_UUID" novalidate="novalidate" action="/2024/mv-cup/score/lists/UUID" accept-charset="UTF-8" method="post"><input type="hidden" name="_method" value="patch" autocomplete="off" /><div class='card'>
 <div class='card-header p-0'>
 <div class='d-flex justify-content-between'>
-<h4 class='m-0 py-2 ps-3'>Löschangriff Nass - Frauen - Lauf 1</h4>
-</div>
-</div>
-<table class='table much-data score-list-channel' data-score-list-editable='1' data-score-list-id='UUID'>
-<thead>
-<tr class='small'>
-<th>
-<span class='thead-run'>Lauf</span>
-</th>
-<th>
-<span class='thead-track'>Bahn</span>
-</th>
-<th>Mannschaft</th>
-<th>Zeit</th>
-</tr>
-</thead>
-
-<tbody>
-<tr class='' data-id='UUID'>
-<td class='run'>
-<a id='jump-run-2'></a>
-1
-</td>
-<th class='track'>1</th>
-<td>
-Frauen-Team
-</td>
-<td class='time-col'>
-
-</td>
-<td class='text-end'>
-<a title="Zeiten bearbeiten" class="btn-xs btn btn-light btn-sm" href="/2024/mv-cup/score/lists/UUID/runs/1/edit"><i class="far fa-edit"></i></a>
-</td>
-
-</tr>
-
-<tr class='next-run'>
-<td class='run'>
-</td>
-<th class='track'>2</th>
-<td>
-
-</td>
-<td class='time-col'>
-
-</td>
-<td class='text-end'>
-</td>
-
-</tr>
-
-</tbody>
-</table>
-
-<div class='card-footer'>
-<div class='d-flex justify-content-between align-items-start'>
-<div></div>
-<div>
-<div class='btn-group'>
-<a target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm" href="/2024/mv-cup/score/lists/UUID.pdf">PDF
-<i class='far fa-file-pdf'></i>
-</a>
-<a class="btn btn-outline-secondary btn-sm" href="/2024/mv-cup/score/lists/UUID.xlsx">XLS
-<i class='far fa-file-excel'></i>
-</a>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class='col-lg-4'>
-<div class='card mb-3'>
-<div class='card-header p-0'>
-<div class='d-flex justify-content-between'>
-<h4 class='m-0 py-2 ps-3'>Aktionen</h4>
-<a class="card-primary-action" href="/2024/mv-cup/score/lists">Übersicht
-<i class='far fa-list'></i>
-</a>
+<h4 class='m-0 py-2 ps-3'>Startliste aktualisieren</h4>
 </div>
 </div>
 <div class='card-body'>
-<div class='d-grid gap-2'>
-<a class=" btn btn-light btn-sm" href="/2024/mv-cup/score/lists/UUID/move">Reihenfolge bearbeiten</a>
-<a class=" btn btn-light btn-sm" href="/2024/mv-cup/score/lists/UUID/edit_times">Zeiten im Block eintragen</a>
-<a class=" btn btn-light btn-sm" data-remote="true" href="/2024/mv-cup/score/lists/UUID/select_entity">Teilnehmer hinzufügen</a>
-<a class=" btn btn-light btn-sm" href="/2024/mv-cup/score/lists/UUID?edit_index=1">Teilnehmer ändern</a>
-<a class=" btn btn-light btn-sm" href="/2024/mv-cup/score/lists/UUID?destroy_index=1">Teilnehmer entfernen</a>
-<a class=" btn btn-light btn-sm" href="/2024/mv-cup/score/list_factories/copy_list/UUID">Startliste klonen</a>
-</div>
-
+<div class="form-group select required score_list_entries_entity form-group-valid"><label class="control-label select required" for="score_list_entries_attributes_0_entity_id">Teilnehmer <abbr title="required">*</abbr></label><select class="form-select select required" name="score_list[entries_attributes][0][entity_id]" id="score_list_entries_attributes_0_entity_id"><option selected="selected" value="UUID">Alfred1 Meier1 (Frauen)</option>
+<option value="UUID">Alfred2 Meier2 (Frauen)</option>
+<option value="UUID">Alfred3 Meier3 (Frauen)</option></select></div>
+<div class="form-group select required score_list_entries_assessment form-group-valid"><label class="control-label select required" for="score_list_entries_attributes_0_assessment_id">Wertung/Gruppe <abbr title="required">*</abbr></label><select class="form-select select required" name="score_list[entries_attributes][0][assessment_id]" id="score_list_entries_attributes_0_assessment_id"><option selected="selected" value="UUID">Hakenleitersteigen - Frauen</option></select></div>
+<div class="form-group select required score_list_entries_assessment_type form-group-valid"><label class="control-label select required" for="score_list_entries_attributes_0_assessment_type">Wertung <abbr title="required">*</abbr></label><select class="form-select select required" name="score_list[entries_attributes][0][assessment_type]" id="score_list_entries_attributes_0_assessment_type"><option selected="selected" value="group_competitor">Mannschaftswertung</option>
+<option value="single_competitor">Einzelstarter</option>
+<option value="out_of_competition">Außer der Wertung</option>
+<option value="competitor">Teilnahme</option></select></div>
+<input autocomplete="off" type="hidden" value="UUID" name="score_list[entries_attributes][0][id]" id="score_list_entries_attributes_0_id" />
 </div>
 <div class='card-footer'>
 <div class='d-flex justify-content-between align-items-start'>
-<div></div>
-<div>
-<div class='btn-group'>
-<a target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm" href="/2024/mv-cup/score/lists/UUID.pdf">PDF
-<i class='far fa-file-pdf'></i>
-</a>
-<a target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm" href="/2024/mv-cup/score/lists/UUID.pdf?more_columns=true">PDF für Kampfrichter
-<i class='far fa-file-pdf'></i>
-</a>
+<div><button name="button" type="submit" class="btn btn-primary" data-disable-with="Bitte warten...">Teilnehmer ändern</button>
+<a class="btn btn-secondary" href="/2024/mv-cup/score/lists/UUID">Abbrechen</a>
 </div>
 </div>
 </div>
 </div>
-</div>
-
-<div class='card mb-3'>
-<div class='card-header p-0'>
-<div class='d-flex justify-content-between'>
-<h4 class='m-0 py-2 ps-3'>Allgemein</h4>
-</div>
-</div>
-<div class='card-body'>
-<div class='d-grid gap-2'>
-<a class=" btn btn-light btn-sm" href="/2024/mv-cup/score/lists/UUID/edit">Bearbeiten</a>
-<a data-turbo-method="delete" data-turbo-confirm="Startliste wirklich löschen? Alle bisher eingetragenen Zeiten dieser Liste gehen verloren!" class=" btn btn-light btn-sm" href="/2024/mv-cup/score/lists/UUID">Löschen</a>
-</div>
-
-</div>
-</div>
-<div class='card'>
-<div class='card-header p-0'>
-<div class='d-flex justify-content-between'>
-<h4 class='m-0 py-2 ps-3'>Ergebnisse</h4>
-</div>
-</div>
-<div class='card-body'>
-<div class='d-grid gap-2'>
-<a class=" btn btn-light btn-sm" href="/2024/mv-cup/score/results/UUID">Löschangriff Nass - Frauen</a>
-</div>
-
-</div>
-</div>
-</div>
+</form></div>
 </div>
 </div>
 </body>

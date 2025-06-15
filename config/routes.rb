@@ -66,6 +66,7 @@ Rails.application.routes.draw do
           get :move
           post :move
           get :select_entity
+          get 'edit_entity/:entry_id', action: :edit_entity, as: :edit_entity
           get 'destroy_entity/:entry_id', action: :destroy_entity, as: :destroy_entity
           get :edit_times
         end

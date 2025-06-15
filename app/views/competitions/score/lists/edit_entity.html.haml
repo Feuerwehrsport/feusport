@@ -1,0 +1,14 @@
+= render 'competitions/header', competition: @competition, sub: 'Teilnehmer ändern'
+
+.row.g-4
+  .col-md-8
+    = simple_form_for(@list, url: url_for(controller: controller_path, action: :update)) do |f|
+      = card("#{resource_class.model_name.human} aktualisieren") do |c|
+        - c.body do
+          = f.simple_fields_for(:entries, @entries) do |g|
+            = g.association :entity, collection: @possible_entities, label_method: :full_name_with_band, include_blank: false, autocomplete: 'off'
+            = g.association :assessment, collection: @list.assessments.sort, label: 'Wertung/Gruppe', include_blank: false, autocomplete: 'off'
+            = g.input :assessment_type, as: :select, collection: AssessmentRequest.assessment_types.keys, label_method: ->(type) { t("assessment_types.#{type}") }, include_blank: false, autocomplete: 'off'
+        - c.footer do
+          = f.primary_button :submit, 'Teilnehmer ändern'
+          = f.cancel_button(action: :show)
