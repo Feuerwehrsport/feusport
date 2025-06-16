@@ -60,7 +60,7 @@ class Competition < ApplicationRecord
   has_many :team_list_restrictions, dependent: :destroy
   has_many :information_requests, dependent: :destroy
 
-  scope :current, -> { where(date: (1.month.ago..6.months.from_now)) }
+  scope :current, -> { where(date: (14.days.ago..6.months.from_now)) }
 
   before_validation(on: :create) do
     self.year = date&.year
