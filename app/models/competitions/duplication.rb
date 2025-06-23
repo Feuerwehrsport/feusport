@@ -15,6 +15,8 @@ class Competitions::Duplication
     Competition.transaction do
       disciplines_trans = {}
       duplicate_from.disciplines.each do |discipline|
+        next if discipline.key == 'zk'
+
         new_discipline = competition.disciplines.create!(discipline
           .attributes.except('id', 'competition_id', 'created_at', 'updated_at'))
         disciplines_trans[discipline.id] = new_discipline.id
@@ -31,7 +33,7 @@ class Competitions::Duplication
       duplicate_from.assessments.each do |assessment|
         new_hash = assessment.attributes.except('id', 'competition_id', 'created_at', 'updated_at', 'discipline_id',
                                                 'band_id')
-        new_hash[:discipline_id] = disciplines_trans[assessment.discipline_id]
+        new_hash[:discipline_id] = disciplines_trans[assessment.discipline_id] || next
         new_hash[:band_id] = bands_trans[assessment.band_id]
         new_assessment = competition.assessments.create!(new_hash)
         assessments_trans[assessment.id] = new_assessment.id
