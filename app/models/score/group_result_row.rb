@@ -70,7 +70,7 @@ Score::GroupResultRow = Struct.new(:team, :score_count, :run_count, :result) do
       end
       @rows_in.push(current) if current.present?
     end
-    (score_count + 1..run_count).each do
+    ((score_count + 1)..run_count).each do
       current = queue.shift
       @rows_out.push(current) if current.present?
     end

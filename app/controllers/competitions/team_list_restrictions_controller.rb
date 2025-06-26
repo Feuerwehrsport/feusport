@@ -40,7 +40,7 @@ class Competitions::TeamListRestrictionsController < CompetitionNestedController
 
   def assign_new_resource
     super
-    resource_instance.discipline = @competition.disciplines.first if @competition.disciplines.count == 1
+    resource_instance.discipline = @competition.disciplines.first if @competition.disciplines.one?
     resource_instance.team1 = @competition.teams.find_by(id: params[:team1_id]) if params[:team1_id].present?
   end
 end

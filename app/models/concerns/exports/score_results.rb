@@ -27,7 +27,7 @@ module Exports::ScoreResults
           line.push(entry&.target_times_as_data(pdf:)) if pdf && list.separate_target_times?
           line.push(entry&.human_time.to_s)
         end
-        line.push(row.best_result_entry&.human_time) unless result.lists.count == 1
+        line.push(row.best_result_entry&.human_time) unless result.lists.one?
       else
         result.results.each { |inner_result| line.push(row.result_entry_from(inner_result)&.human_time) }
         line.push(row.best_result_entry&.human_time)
@@ -52,7 +52,7 @@ module Exports::ScoreResults
           header.push(export_headers ? 'time' : list.shortcut)
         end
       end
-      header.push('Bestzeit') unless result.lists.count == 1
+      header.push('Bestzeit') unless result.lists.one?
     else
       result.results.each do |sub_result|
         header.push(sub_result.assessment.discipline.short_name)

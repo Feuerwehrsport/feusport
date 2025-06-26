@@ -29,7 +29,7 @@
         %tr
           %th.px-5{ colspan: 3 }= band.name
         - @person_suggestions.select { |sug| sug.person.band == band }.each do |suggestion|
-          - if suggestion.count > 0
+          - if suggestion.any?
             - suggestion.suggestions.each_with_index do |fss, i|
               %tr
                 - if i == 0

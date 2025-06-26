@@ -12,7 +12,7 @@ class Score::Run
   def initialize(*args)
     super
     @list_entries = @list.entries.where(run: run_number)
-    raise ActiveRecord::RecordNotFound if @list_entries.count.zero?
+    raise ActiveRecord::RecordNotFound if @list_entries.none?
   end
 
   def persisted?

@@ -69,7 +69,7 @@ class Score::List < ApplicationRecord
   end
 
   def multiple_assessments?
-    @multiple_assessments ||= assessments.count > 1
+    @multiple_assessments ||= assessments.many?
   end
 
   def discipline_klass

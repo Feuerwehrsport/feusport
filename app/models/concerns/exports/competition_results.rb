@@ -33,7 +33,7 @@ module Exports::CompetitionResults
 
   def export_title
     parts = ['Gesamtwertung']
-    parts.push(results.first.name) if results.count == 1
+    parts.push(results.first.name) if results.one?
     parts.join(' - ')
   end
 end

@@ -30,6 +30,8 @@ FactoryBot/SyntaxMethods:
   Enabled: true
 Gemspec/AddRuntimeDependency:
   Enabled: true
+Gemspec/AttributeAssignment:
+  Enabled: true
 Gemspec/DeprecatedAttributeAssignment:
   Enabled: true
 Gemspec/DevelopmentDependencies:
@@ -136,6 +138,8 @@ Lint/UnmodifiedReduceAccumulator:
 Lint/UselessAssignment:
   AutoCorrect: false
 Lint/UselessConstantScoping:
+  Enabled: true
+Lint/UselessDefaultValueArgument:
   Enabled: true
 Lint/UselessDefined:
   Enabled: true
@@ -479,6 +483,8 @@ Style/ClassAndModuleChildren:
   - config/boot.rb
   - lib/**/*.rb
 Style/CollectionCompact:
+  Enabled: true
+Style/CollectionQuerying:
   Enabled: true
 Style/CombinableDefined:
   Enabled: true

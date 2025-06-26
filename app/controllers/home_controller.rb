@@ -12,7 +12,7 @@ class HomeController < ApplicationController
                       @competitions.where(year: params[:year].to_i)
                     end
 
-    @current_dates = (Date.current - 3.days..Date.current + 3.days)
+    @current_dates = ((Date.current - 3.days)..(Date.current + 3.days))
   end
 
   def info; end

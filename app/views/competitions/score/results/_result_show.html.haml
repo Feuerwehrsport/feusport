@@ -1,4 +1,4 @@
-- if result.rows.count > 0
+- if result.rows.any?
   .col-lg-12.score-result-rows-table{ data: { content: 'rows' } }
     = card_direct(result.name) do
       - if result.single_discipline?
@@ -29,7 +29,7 @@
     .alert.alert-info Keine Einträge gefunden
 
 
-- if result.out_of_competition_rows.present? && result.out_of_competition_rows.count > 0
+- if result.out_of_competition_rows.present? && result.out_of_competition_rows.any?
   .col-lg-12.score-result-rows-table{ data: { content: 'out-of-competition-rows' } }
     = card_direct('Außer der Wertung') do
       - if result.single_discipline?

@@ -155,7 +155,7 @@ class Score::ListFactory < ApplicationRecord
 
   def default_name
     name.presence || begin
-      main_name = assessments.count == 1 ? assessments.first.name : discipline.name
+      main_name = assessments.one? ? assessments.first.name : discipline.name
       unless discipline.like_fire_relay?
         run = 1
         loop do

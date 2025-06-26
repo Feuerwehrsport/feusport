@@ -56,7 +56,7 @@ class Certificates::List
 
   def result_present
     return if [score_result, competition_result, group_score_result,
-               series_team_round, series_person_assessment].count(&:itself) == 1
+               series_team_round, series_person_assessment].one?(&:itself)
 
     errors.add(:score_result_id, :invalid)
     errors.add(:competition_result_id, :invalid)

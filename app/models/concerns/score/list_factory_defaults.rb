@@ -58,7 +58,7 @@ module Score::ListFactoryDefaults
   protected
 
   def default_main_name
-    @default_main_name ||= assessments.count == 1 ? assessments.first.name : discipline.name
+    @default_main_name ||= assessments.one? ? assessments.first.name : discipline.name
   end
 
   def default_run

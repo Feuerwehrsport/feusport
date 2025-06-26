@@ -21,9 +21,9 @@
                   .far.fa-eye-slash
             .d-flex.flex-row
               - disciplines = competition.disciplines.sort.map(&:key)
-              - if disciplines.count == 0
+              - if disciplines.none?
                 .discipline-icons
-              - elsif disciplines.count == 1
+              - elsif disciplines.one?
                 .discipline-icons.one-discipline
                   %img{ src: image_path("disciplines/#{disciplines[0]}.svg") }
               - else
