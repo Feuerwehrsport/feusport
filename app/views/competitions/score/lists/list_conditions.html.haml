@@ -1,0 +1,15 @@
+= render 'competitions/header', competition: @competition, sub: 'Reihenfolge bearbeiten'
+
+.row.g-4
+  .col-lg-8
+    = card(Score::ListCondition.model_name.human(count: :many), class: 'mb-3') do |c|
+      - if @list.conditions.exists?
+        - c.direct do
+          = render('competitions/score/list_conditions/index_table', resource_class: Score::ListCondition, resource_collection: @list.conditions)
+      - else
+        - c.body do
+          .alert.alert-info= t('a.no_entries_found')
+
+      - if can?(:create, Score::ListCondition.new(list: @list, competition: @competition))
+        - c.primary_actions do |actions|
+          - actions.link_to t('a.add'), new_competition_score_list_condition_path(list_id: @list.id), end_icon: :square_plus

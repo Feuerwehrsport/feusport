@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_06_13_071623) do
+ActiveRecord::Schema[7.2].define(version: 2025_06_26_113556) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
@@ -298,6 +298,27 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_13_071623) do
     t.datetime "updated_at", null: false
     t.index ["assessment_id"], name: "index_score_list_assessments_on_assessment_id"
     t.index ["list_id"], name: "index_score_list_assessments_on_list_id"
+  end
+
+  create_table "score_list_condition_assessments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "condition_id", null: false
+    t.uuid "assessment_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assessment_id"], name: "index_score_list_condition_assessments_on_assessment_id"
+    t.index ["condition_id"], name: "index_score_list_condition_assessments_on_condition_id"
+  end
+
+  create_table "score_list_conditions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "competition_id", null: false
+    t.uuid "list_id"
+    t.uuid "factory_id"
+    t.integer "track", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["competition_id"], name: "index_score_list_conditions_on_competition_id"
+    t.index ["factory_id"], name: "index_score_list_conditions_on_factory_id"
+    t.index ["list_id"], name: "index_score_list_conditions_on_list_id"
   end
 
   create_table "score_list_entries", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -768,6 +789,11 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_13_071623) do
   add_foreign_key "score_competition_results", "competitions"
   add_foreign_key "score_list_assessments", "assessments"
   add_foreign_key "score_list_assessments", "score_lists", column: "list_id"
+  add_foreign_key "score_list_condition_assessments", "assessments"
+  add_foreign_key "score_list_condition_assessments", "score_list_conditions", column: "condition_id"
+  add_foreign_key "score_list_conditions", "competitions"
+  add_foreign_key "score_list_conditions", "score_list_factories", column: "factory_id"
+  add_foreign_key "score_list_conditions", "score_lists", column: "list_id"
   add_foreign_key "score_list_entries", "assessments"
   add_foreign_key "score_list_entries", "competitions"
   add_foreign_key "score_list_entries", "score_lists", column: "list_id"

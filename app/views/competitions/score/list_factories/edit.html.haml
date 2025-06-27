@@ -57,16 +57,24 @@
         - if @list_factory.current_step_number > 5
           = render 'generator_description', generator_class: @list_factory.class
 
-        - if @list_factory.current_step_number > 6
-          - if :before_list.in?(@list_factory.class.generator_params)
-            %tr
-              %th Vorherige Startliste
-              %td= link_to(@list_factory.before_list.name, competition_score_list_path(id: @list_factory.before_list.id))
-          - if :before_result.in?(@list_factory.class.generator_params)
-            %tr
-              %th Vorherige Ergebnisliste
-              %td= link_to(@list_factory.before_result.name, competition_score_result_path(id: @list_factory.before_result.id))
-          - if :best_count.in?(@list_factory.class.generator_params)
-            %tr
-              %th Anzahl auf neuer Liste
-              %td= @list_factory.best_count
+          - if @list_factory.current_step_number > 6
+            - if :before_list.in?(@list_factory.class.generator_params)
+              %tr
+                %th Vorherige Startliste
+                %td= link_to(@list_factory.before_list.name, competition_score_list_path(id: @list_factory.before_list.id))
+            - if :before_result.in?(@list_factory.class.generator_params)
+              %tr
+                %th Vorherige Ergebnisliste
+                %td= link_to(@list_factory.before_result.name, competition_score_result_path(id: @list_factory.before_result.id))
+            - if :best_count.in?(@list_factory.class.generator_params)
+              %tr
+                %th Anzahl auf neuer Liste
+                %td= @list_factory.best_count
+
+          %tr
+            %th= Score::ListCondition.model_name.human(count: :many)
+            %th= btn_link_to t('a.add'), new_competition_score_list_condition_path(list_factory_id: @list_factory.id)
+          %tr
+            %td{ colspan: 2 }
+              - if @list_factory.conditions.exists?
+                = render('competitions/score/list_conditions/index_table', resource_class: Score::ListCondition, resource_collection: @list_factory.conditions)

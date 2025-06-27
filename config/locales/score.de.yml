@@ -19,6 +19,9 @@ de:
         shortcut: Abkürzung
         show_best_of_run: Beste des Laufs anzeigen
         show_multiple_assessments: Zeige Wertungen unter Mannschaft an
+      score/list_condition:
+        assessments: Wertungen
+        track: Bahn
       score/list_entry:
         assessment: Wertung
         assessment_type: Wertung
@@ -43,6 +46,8 @@ de:
         description: Alle Mannschaften werden nach Losreihenfolge angeordnet.
       score/list_factories/simple:
         description: Alle Einzelstarter werden zufällig angeordnet.
+      score/list_factories/track_assessment_dependent:
+        description: Eine Bahn kann abhängig von Wertungen definiert werden.
       score/list_factories/track_bandable:
         description: Eine Bahn kann abhängig von Wertungsgruppen definiert werden.
       score/list_factories/track_change:
@@ -95,11 +100,15 @@ de:
       score/list:
         one: Startliste
         other: Startlisten
+      score/list_condition:
+        one: Bedingung
+        other: Bedingungen
       score/list_factories/best: die x Besten (Finale)
       score/list_factories/fire_relay: Staffellauf mit A, B
       score/list_factories/group_order: Mannschaftsreihenfolge beachten
       score/list_factories/lottery_number: Losnummernreihenfolge beachten
       score/list_factories/simple: Zufällig anordnen
+      score/list_factories/track_assessment_dependent: Bahn abhängig von Wertung
       score/list_factories/track_bandable: Bahn abhängig von Wertungsgruppen
       score/list_factories/track_change: Bahnwechsel
       score/list_factories/track_same: Bahn behalten

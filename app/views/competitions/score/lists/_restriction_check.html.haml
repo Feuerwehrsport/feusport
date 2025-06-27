@@ -1,6 +1,6 @@
 - restriction_check = TeamListRestriction::Check.new(list)
 - unless restriction_check.valid_from_list?(list.entries)
-  = card_direct('Ungültige Bedingungen', class: 'mb-3 text-bg-warning') do
+  = card_direct('Ungültige Mannschaftsbedingungen', class: 'mb-3 text-bg-warning') do
     %table.table.table-condensed.small.table-warning
       - restriction_check.errors.each do |restriction|
         %tr
@@ -15,3 +15,13 @@
               = restriction.team2.full_name
               %br
               %small= restriction.team2.band.name
+
+- condition_check = Score::ListCondition::Check.new(list)
+- unless condition_check.valid?(list.entries)
+  = card_direct('Ungültige Bedingungen', class: 'mb-3 text-bg-warning') do
+    %table.table.table-condensed.small.table-warning
+      - condition_check.errors.each do |entry, condition|
+        %tr
+          %td= entry.run
+          %td= entry.track
+          %td= condition.assessments.map(&:name).join(', ')

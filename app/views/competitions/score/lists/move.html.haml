@@ -32,7 +32,8 @@
         .d-grid.gap-2
           .btn.btn-primary#save-link Jetzt speichern
           = block_link_to 'Abbrechen', { action: :show }
-      .d-grid.gap-2#back-link
-        = block_link_to 'Zurück', { action: :show }
+      .d-grid.gap-2
+        = block_link_to 'Zurück', { action: :show }, { id: 'back-link' }
+        = block_link_to 'Bedingungen', list_conditions_competition_score_list_path
 
     .restriction-check= render 'restriction_check', list: @list

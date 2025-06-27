@@ -1,0 +1,8 @@
+- c.body do
+  = f.input :list_id, as: :hidden
+  = f.input :factory_id, as: :hidden
+  = f.input :track, collection: (1..@list_condition.track_count).to_a, as: :radio_buttons
+  = f.association :assessments, as: :check_boxes, collection: @competition.assessments.sort
+- c.footer do
+  = f.primary_button :submit
+  = f.cancel_button(redirect_url)

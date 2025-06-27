@@ -64,6 +64,8 @@ class Ability
 
     can(:manage, Score::ListFactory, competition: manage_ua)
     can(:manage, Score::ListPrintGenerator, competition: manage_ua)
+    can(:manage, Score::ListCondition, competition: manage_ua)
+
     can(:manage, SimpleAccess, competition: manage_ua)
 
     can(:read, UserAccess, competition: read_ua)
@@ -131,5 +133,6 @@ class Ability
     can(:manage, Score::CompetitionResult, competition: { id: simple_access.competition_id })
     can(:manage, Score::ListFactory, competition: { id: simple_access.competition_id })
     can(:manage, Score::ListPrintGenerator, competition: { id: simple_access.competition_id })
+    can(:manage, Score::ListCondition, competition: { id: simple_access.competition_id })
   end
 end

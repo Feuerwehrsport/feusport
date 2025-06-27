@@ -69,6 +69,8 @@ class Competitions::Score::ListsController < CompetitionNestedController
     redirect_to competition_score_lists_path, notice: :deleted
   end
 
+  def list_conditions; end
+
   protected
 
   def list_params

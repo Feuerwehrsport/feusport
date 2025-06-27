@@ -1,0 +1,12 @@
+%table.table
+  %tr
+    %th= resource_class.human_attribute_name(:track)
+    %th= resource_class.human_attribute_name(:assessments)
+    %th
+  - resource_collection.sort.each do |list_condition|
+    %tr
+      %td= list_condition.track
+      %td= list_condition.assessments.map(&:name).join(', ')
+      %td.text-end
+        = btn_link_to(t('a.edit'), edit_competition_score_list_condition_path(id: list_condition.id))
+        = btn_link_to(t('a.delete'), competition_score_list_condition_path({ action: :destroy, id: list_condition.id }), data: { turbo_method: 'delete', turbo_confirm: 'Bedingung wirklich löschen?' })

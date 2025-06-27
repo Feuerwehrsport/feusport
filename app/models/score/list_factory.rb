@@ -60,6 +60,8 @@ class Score::ListFactory < ApplicationRecord
   has_many :results, through: :result_list_factories
   has_many :list_factory_bands, dependent: :destroy
   has_many :bands, through: :list_factory_bands
+  has_many :conditions, class_name: 'Score::ListCondition', dependent: :destroy, inverse_of: :factory,
+                        foreign_key: :factory_id
 
   default_scope { where.not(status: :create) }
 
@@ -170,10 +172,16 @@ class Score::ListFactory < ApplicationRecord
   end
 
   def list
-    @list ||= Score::List.create!(competition:, name:, shortcut:, assessments:, results:,
-                                  track_count:, hidden:,
-                                  separate_target_times: separate_target_times.nil? ? false : separate_target_times,
-                                  show_best_of_run: show_best_of_run.nil? ? false : show_best_of_run)
+    @list ||= begin
+      list = Score::List.create!(competition:, name:, shortcut:, assessments:, results:,
+                                 track_count:, hidden:,
+                                 separate_target_times: separate_target_times.nil? ? false : separate_target_times,
+                                 show_best_of_run: show_best_of_run.nil? ? false : show_best_of_run)
+      conditions.each do |condition|
+        list.conditions.create!(competition:, track: condition.track, assessment_ids: condition.assessment_ids)
+      end
+      list
+    end
   end
 
   protected

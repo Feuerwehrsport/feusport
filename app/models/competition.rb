@@ -51,6 +51,7 @@ class Competition < ApplicationRecord
   has_many :score_competition_results, dependent: :destroy, class_name: 'Score::CompetitionResult'
   has_many :score_lists, dependent: :destroy, class_name: 'Score::List'
   has_many :score_list_factories, dependent: :destroy, class_name: 'Score::ListFactory'
+  has_many :score_list_conditions, dependent: :destroy, class_name: 'Score::ListCondition'
   has_many :certificates_templates, dependent: :destroy, class_name: 'Certificates::Template'
   has_many :user_access_requests, class_name: 'UserAccessRequest', dependent: :destroy
   has_many :user_accesses, class_name: 'UserAccess', dependent: :destroy

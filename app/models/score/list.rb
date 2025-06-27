@@ -35,6 +35,7 @@ class Score::List < ApplicationRecord
   has_many :results, through: :result_lists
   has_many :entries, -> { order(:run).order(:track) }, class_name: 'Score::ListEntry', dependent: :destroy,
                                                        inverse_of: :list
+  has_many :conditions, class_name: 'Score::ListCondition', dependent: :destroy, inverse_of: :list
 
   default_scope { order(:name) }
   auto_strip_attributes :name, :shortcut

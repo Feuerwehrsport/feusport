@@ -45,6 +45,10 @@ class Score::ListFactories::Simple < Score::ListFactory
     tracks = (1..list.track_count).to_a
     restriction_check = TeamListRestriction::Check.new(self)
 
+    conditions_hash = list.conditions.group_by(&:track).transform_values do |conditions|
+      conditions.flat_map(&:assessment_ids).uniq
+    end
+
     rows = assessment_requests.to_a
 
     stack = nil
@@ -58,7 +62,7 @@ class Score::ListFactories::Simple < Score::ListFactory
               t_rows = rows.dup.shuffle
               t_restriction_check = restriction_check.dup
 
-              thread_stack = try_next_track([], t_rows, tracks, t_restriction_check, 0, 1)
+              thread_stack = try_next_track([], t_rows, tracks, t_restriction_check, 0, 1, conditions_hash)
               if thread_stack
                 stack = thread_stack
                 threads.each { |t| t.kill unless t == Thread.current }
@@ -85,7 +89,7 @@ class Score::ListFactories::Simple < Score::ListFactory
 
   protected
 
-  def try_next_track(stack, rows, tracks, t_restriction_check, track_index, run)
+  def try_next_track(stack, rows, tracks, t_restriction_check, track_index, run, conditions_hash)
     return false unless t_restriction_check.valid_from_factory?(stack)
 
     return stack if rows.empty?
@@ -96,11 +100,23 @@ class Score::ListFactories::Simple < Score::ListFactory
     end
     track = tracks[track_index]
 
-    rows.each_with_index do |entity, index|
+    next_track_rows, this_track_rows = rows.partition do |row|
+      condition_assessment_ids = conditions_hash[track] || next
+      !row.assessment_id.in?(condition_assessment_ids)
+    end
+
+    if this_track_rows.empty?
+      new_stack = try_next_track(stack, rows.dup, tracks, t_restriction_check, track_index + 1, run, conditions_hash)
+      return new_stack unless new_stack == false
+
+      return false
+    end
+
+    this_track_rows.each_with_index do |entity, index|
       stack.push([entity, run, track])
 
-      next_rows = rows.dup.tap { |i| i.delete_at(index) }
-      new_stack = try_next_track(stack, next_rows, tracks, t_restriction_check, track_index + 1, run)
+      next_rows = this_track_rows.dup.tap { |i| i.delete_at(index) } + next_track_rows
+      new_stack = try_next_track(stack, next_rows, tracks, t_restriction_check, track_index + 1, run, conditions_hash)
       return new_stack unless new_stack == false
 
       stack.pop

@@ -4,7 +4,7 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 
-# generated from version 20250613071623
+# generated from version 20250626113556
 
 module SchemaValidations
   extend ActiveSupport::Concern
@@ -372,6 +372,27 @@ module SchemaValidations
       belongs_to_presence_validations_for([:assessment_id, :list_id])
       validates_with_filter :assessment_id, {:presence=>{}}
       validates_with_filter :list_id, {:presence=>{}}
+      validates_with_filter :created_at, {:presence=>{}}
+      validates_with_filter :created_at, {:date_time_in_db_range=>{}}
+      validates_with_filter :updated_at, {:presence=>{}}
+      validates_with_filter :updated_at, {:date_time_in_db_range=>{}}
+    end
+
+    def dbv_score_list_condition_assessments_validations(enums: [])
+      belongs_to_presence_validations_for([:condition_id, :assessment_id])
+      validates_with_filter :condition_id, {:presence=>{}}
+      validates_with_filter :assessment_id, {:presence=>{}}
+      validates_with_filter :created_at, {:presence=>{}}
+      validates_with_filter :created_at, {:date_time_in_db_range=>{}}
+      validates_with_filter :updated_at, {:presence=>{}}
+      validates_with_filter :updated_at, {:date_time_in_db_range=>{}}
+    end
+
+    def dbv_score_list_conditions_validations(enums: [])
+      belongs_to_presence_validations_for([:competition_id, :track])
+      validates_with_filter :competition_id, {:presence=>{}}
+      validates_with_filter :track, {:presence=>{}}
+      validates_with_filter :track, {:numericality=>{:allow_nil=>true, :only_integer=>true, :greater_than_or_equal_to=>-2147483648, :less_than=>2147483648}} unless enums.include?(:track)
       validates_with_filter :created_at, {:presence=>{}}
       validates_with_filter :created_at, {:date_time_in_db_range=>{}}
       validates_with_filter :updated_at, {:presence=>{}}

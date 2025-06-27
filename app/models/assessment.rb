@@ -36,6 +36,7 @@ class Assessment < ApplicationRecord
                               inverse_of: :assessment
   has_many :lists, class_name: 'Score::List', through: :list_assessments, dependent: :restrict_with_error
   has_many :list_factory_assessments, class_name: 'Score::ListFactoryAssessment', dependent: :destroy
+  has_many :list_condition_assessments, class_name: 'Score::ListConditionAssessment', dependent: :destroy
 
   scope :single_disciplines, -> { joins(:discipline).where(disciplines: { single_discipline: true }) }
 

@@ -69,12 +69,14 @@ Rails.application.routes.draw do
           get 'edit_entity/:entry_id', action: :edit_entity, as: :edit_entity
           get 'destroy_entity/:entry_id', action: :destroy_entity, as: :destroy_entity
           get :edit_times
+          get :list_conditions
         end
         resources :runs, only: %i[edit update], param: :run
       end
       resources :results
       resources :competition_results
       resources :list_print_generators, only: %i[index new show edit update destroy]
+      resources :list_conditions, only: %i[new create edit update destroy]
     end
 
     namespace :series do
