@@ -38,6 +38,16 @@ class Score::ListCondition < ApplicationRecord
   validates :list, presence: true, if: -> { factory.blank? }
   validates :list, :factory, same_competition: true
 
+  def self.useful?(list_or_factory)
+    conditions = list_or_factory.conditions.to_a
+    return true if conditions.empty?
+    return false if conditions.count != list_or_factory.track_count
+    return false if conditions.map(&:track).uniq.count != conditions.count
+    return false if (list_or_factory.assessment_ids - conditions.map(&:assessment_ids).flatten.uniq).present?
+
+    true
+  end
+
   def track_count
     (factory || list)&.track_count || 100
   end

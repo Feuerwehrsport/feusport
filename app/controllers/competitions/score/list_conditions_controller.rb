@@ -2,7 +2,7 @@
 
 class Competitions::Score::ListConditionsController < CompetitionNestedController
   default_resource resource_class: Score::ListCondition, through_association: :score_list_conditions
-  helper_method :redirect_url
+  helper_method :redirect_url, :possible_assessments
 
   def create
     @list_condition.assign_attributes(list_condition_params)
@@ -43,6 +43,10 @@ class Competitions::Score::ListConditionsController < CompetitionNestedControlle
     return if params[:list_factory_id].blank?
 
     resource_instance.factory = @competition.score_list_factories.find(params[:list_factory_id])
+  end
+
+  def possible_assessments
+    (@list_condition&.factory || @competition).assessments.sort
   end
 
   def redirect_to_index(notice:)

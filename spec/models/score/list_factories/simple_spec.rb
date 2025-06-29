@@ -71,5 +71,25 @@ RSpec.describe Score::ListFactories::Simple do
         expect { factory.perform }.to change(Score::ListEntry, :count).by(5)
       end
     end
+
+    context 'when conditions given' do
+      let(:assessment2) { create(:assessment, competition:, discipline:, band:) }
+
+      it 'create list entries' do
+        factory.update!(assessments: [assessment, assessment2])
+        factory.conditions.create!(competition:, track: 1, assessments: [assessment])
+        factory.conditions.create!(competition:, track: 2, assessments: [assessment2])
+
+        create_list(:person, 2, :with_team).each { |person| person.requests.create!(assessment: assessment2) }
+
+        new_list = factory.list
+        expect { factory.perform }.to change(Score::ListEntry, :count).by(7)
+
+        expect(new_list.entries.count).to eq(7)
+
+        expect(new_list.entries.where(assessment:).pluck(:track).uniq).to eq [1]
+        expect(new_list.entries.where(assessment: assessment2).pluck(:track).uniq).to eq [2]
+      end
+    end
   end
 end

@@ -1,14 +1,10 @@
-- if @list_condition.list.present?
-  = card(@list_condition.list.name, class: 'mb-3') do |c|
-    - c.primary_actions do |actions|
-      - actions.link_to 'Zurück', redirect_url, end_icon: :list
-    - c.body do
-      = @list_condition.list.inspect
-
-- if @list_condition.factory.present?
-  = card('Startliste erstellen', class: 'mb-3') do |c|
-    - c.primary_actions do |actions|
-      - actions.link_to 'Zurück', redirect_url, end_icon: :list
-    - c.body do
-      %h4= @list_condition.factory.name
-      %p Mit Bedingungen kannst du festlegen, dass eine Bahn nur von bestimmten Wertungsgruppen genutzt werden darf. Das braucht man, wenn du zum Beispiel unterschiedliche Hindernisse oder Abmessungen auf den Bahnen hast.
+= card('Startliste erstellen', class: 'mb-3') do |c|
+  - c.primary_actions do |actions|
+    - actions.link_to 'Zurück', redirect_url, end_icon: :list
+  - c.body do
+    %h4
+      - if @list_condition.list.present?
+        = @list_condition.list.name
+      - if @list_condition.factory.present?
+        = @list_condition.factory.name
+    %p Mit Bedingungen kannst du festlegen, dass eine Bahn nur von bestimmten Wertungsgruppen genutzt werden darf. Das braucht man, wenn du zum Beispiel unterschiedliche Hindernisse oder Abmessungen auf den Bahnen hast.

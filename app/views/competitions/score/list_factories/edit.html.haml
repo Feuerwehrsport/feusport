@@ -74,6 +74,10 @@
           %tr
             %th= Score::ListCondition.model_name.human(count: :many)
             %th= btn_link_to t('a.add'), new_competition_score_list_condition_path(list_factory_id: @list_factory.id)
+          - unless Score::ListCondition.useful?(@list_factory)
+            %tr
+              %th.bg-warning Eventuell falsch konfiguriert
+              %td.bg-warning Um sinnvolle Ergebnisse zu erhalten, sollte man für jede Bahn genau eine Bedingung mit eventuell mehreren Wertungen definieren. Alle Wertungen müssen einmal vorkommen.
           %tr
             %td{ colspan: 2 }
               - if @list_factory.conditions.exists?

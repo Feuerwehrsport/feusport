@@ -78,6 +78,8 @@ class Score::ListFactories::Simple < Score::ListFactory
       break unless stack.nil?
 
       restriction_check.softer_mode += 1
+
+      return false if restriction_check.softer_mode > 10 # something went wrong
     end
 
     transaction do
@@ -98,6 +100,9 @@ class Score::ListFactories::Simple < Score::ListFactory
       run += 1
       track_index = 0
     end
+
+    return false if run > 1000 # something went wrong
+
     track = tracks[track_index]
 
     next_track_rows, this_track_rows = rows.partition do |row|

@@ -279,6 +279,24 @@ RSpec.describe Score::List do
     end
   end
 
+  describe 'interacts with conditions' do
+    let!(:person_list) { create_score_list(result_hl, person1 => :waiting) }
+    let!(:cond) { Score::ListCondition.create!(competition:, list: person_list, track: 1, assessments: [assessment_female]) }
+
+    it 'shows condition warning' do
+      sign_in user
+
+      get competition_nested("score/lists/#{person_list.id}")
+      expect(response).to match_html_fixture.with_affix('list-with-warning')
+
+      get competition_nested("score/lists/#{person_list.id}/list_conditions")
+      expect(response).to match_html_fixture.with_affix('index-conditions')
+
+      get competition_nested("score/list_conditions/#{cond.id}/edit")
+      expect(response).to match_html_fixture.with_affix('condition-edit')
+    end
+  end
+
   describe 'add to list' do
     let!(:person_list) { create_score_list(result_hl, person1 => :waiting) }
 

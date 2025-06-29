@@ -1,4 +1,4 @@
-= render 'competitions/header', competition: @competition, sub: 'Reihenfolge bearbeiten'
+= render 'competitions/header', competition: @competition, sub: 'Bedingungen bearbeiten'
 
 .row.g-4
   .col-lg-8
@@ -13,3 +13,11 @@
       - if can?(:create, Score::ListCondition.new(list: @list, competition: @competition))
         - c.primary_actions do |actions|
           - actions.link_to t('a.add'), new_competition_score_list_condition_path(list_id: @list.id), end_icon: :square_plus
+
+  .col-lg-4
+    = card('Startliste', class: 'mb-3') do |c|
+      - c.primary_actions do |actions|
+        - actions.link_to 'Zurück', competition_score_list_path(id: @list.id), end_icon: :list
+      - c.body do
+        %h4= @list.name
+        %p Mit Bedingungen kannst du festlegen, dass eine Bahn nur von bestimmten Wertungsgruppen genutzt werden darf. Das braucht man, wenn du zum Beispiel unterschiedliche Hindernisse oder Abmessungen auf den Bahnen hast.

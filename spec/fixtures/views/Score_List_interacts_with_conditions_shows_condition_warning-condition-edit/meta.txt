@@ -1,0 +1,4 @@
+Score::List interacts with conditions shows condition warning-condition-edit
+
+request
+html

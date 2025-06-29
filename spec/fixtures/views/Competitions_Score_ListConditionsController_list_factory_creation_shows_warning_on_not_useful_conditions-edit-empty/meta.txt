@@ -1,0 +1,4 @@
+Competitions::Score::ListConditionsController list factory creation shows warning on not useful conditions-edit-empty
+
+request
+html
