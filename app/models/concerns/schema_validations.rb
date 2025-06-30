@@ -4,7 +4,7 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 
-# generated from version 20250626113556
+# generated from version 20250630053426
 
 module SchemaValidations
   extend ActiveSupport::Concern
@@ -450,16 +450,6 @@ module SchemaValidations
       belongs_to_presence_validations_for([:list_factory_id, :assessment_id])
       validates_with_filter :list_factory_id, {:presence=>{}}
       validates_with_filter :assessment_id, {:presence=>{}}
-      validates_with_filter :created_at, {:presence=>{}}
-      validates_with_filter :created_at, {:date_time_in_db_range=>{}}
-      validates_with_filter :updated_at, {:presence=>{}}
-      validates_with_filter :updated_at, {:date_time_in_db_range=>{}}
-    end
-
-    def dbv_score_list_factory_bands_validations(enums: [])
-      belongs_to_presence_validations_for([:list_factory_id, :band_id])
-      validates_with_filter :list_factory_id, {:presence=>{}}
-      validates_with_filter :band_id, {:presence=>{}}
       validates_with_filter :created_at, {:presence=>{}}
       validates_with_filter :created_at, {:date_time_in_db_range=>{}}
       validates_with_filter :updated_at, {:presence=>{}}

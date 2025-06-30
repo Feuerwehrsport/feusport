@@ -35,9 +35,6 @@ class Band < ApplicationRecord
   has_many :assessments, class_name: 'Assessment', dependent: :restrict_with_error
   has_many :teams, dependent: :restrict_with_error
   has_many :people, dependent: :restrict_with_error
-  has_many :score_list_factory_bands, class_name: 'Score::ListFactoryBand', dependent: :destroy
-  has_many :score_list_factories, class_name: 'Score::ListFactory', through: :score_list_factory_bands,
-                                  source: :list_factory
 
   acts_as_list
   auto_strip_attributes :name

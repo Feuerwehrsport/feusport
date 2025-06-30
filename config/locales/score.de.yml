@@ -48,15 +48,12 @@ de:
         description: Alle Einzelstarter werden zufällig angeordnet.
       score/list_factories/track_assessment_dependent:
         description: Eine Bahn kann abhängig von Wertungen definiert werden.
-      score/list_factories/track_bandable:
-        description: Eine Bahn kann abhängig von Wertungsgruppen definiert werden.
       score/list_factories/track_change:
         description: Die Bahn wird gegenüber einer vorherigen Liste getauscht.
       score/list_factories/track_same:
         description: Die Bahn wird gegenüber einer vorherigen Liste behalten.
       score/list_factory:
         assessments: Wertungen
-        bands: Wertungsgruppen
         before_list: Vorherige Liste
         before_result: Ergebnisliste
         best_count: Anzahl der Finalisten auf der neuen Liste (X)
@@ -109,7 +106,6 @@ de:
       score/list_factories/lottery_number: Losnummernreihenfolge beachten
       score/list_factories/simple: Zufällig anordnen
       score/list_factories/track_assessment_dependent: Bahn abhängig von Wertung
-      score/list_factories/track_bandable: Bahn abhängig von Wertungsgruppen
       score/list_factories/track_change: Bahnwechsel
       score/list_factories/track_same: Bahn behalten
       score/list_print_generator: Mehrere Startlisten drucken

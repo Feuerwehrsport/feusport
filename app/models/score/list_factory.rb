@@ -47,7 +47,6 @@ class Score::ListFactory < ApplicationRecord
     'Score::ListFactories::FireRelay',
     'Score::ListFactories::TrackChange',
     'Score::ListFactories::TrackSame',
-    'Score::ListFactories::TrackBandable',
   ].freeze
 
   belongs_to :competition, touch: true
@@ -58,8 +57,6 @@ class Score::ListFactory < ApplicationRecord
   has_many :assessments, through: :list_factory_assessments
   has_many :result_list_factories, dependent: :destroy
   has_many :results, through: :result_list_factories
-  has_many :list_factory_bands, dependent: :destroy
-  has_many :bands, through: :list_factory_bands
   has_many :conditions, class_name: 'Score::ListCondition', dependent: :destroy, inverse_of: :factory,
                         foreign_key: :factory_id
 
@@ -78,7 +75,7 @@ class Score::ListFactory < ApplicationRecord
   validates :track_count, numericality: { only_integer: true, graeter_than: 0 }, if: -> { step_reached?(:results) }
   validates :results, presence: true, if: -> { step_reached?(:generator) }
   validate :type_valid, if: -> { step_reached?(:generator_params) }
-  validates :discipline, :before_list, :before_result, :assessments, :results, :bands, same_competition: true
+  validates :discipline, :before_list, :before_result, :assessments, :results, same_competition: true
 
   attr_writer :next_step
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_06_26_113556) do
+ActiveRecord::Schema[7.2].define(version: 2025_06_30_053426) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
@@ -373,15 +373,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_26_113556) do
     t.datetime "updated_at", null: false
     t.index ["assessment_id"], name: "index_score_list_factory_assessments_on_assessment_id"
     t.index ["list_factory_id"], name: "index_score_list_factory_assessments_on_list_factory_id"
-  end
-
-  create_table "score_list_factory_bands", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "list_factory_id", null: false
-    t.uuid "band_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["band_id"], name: "index_score_list_factory_bands_on_band_id"
-    t.index ["list_factory_id"], name: "index_score_list_factory_bands_on_list_factory_id"
   end
 
   create_table "score_list_print_generators", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -800,8 +791,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_26_113556) do
   add_foreign_key "score_list_factories", "competitions"
   add_foreign_key "score_list_factory_assessments", "assessments"
   add_foreign_key "score_list_factory_assessments", "score_list_factories", column: "list_factory_id"
-  add_foreign_key "score_list_factory_bands", "bands"
-  add_foreign_key "score_list_factory_bands", "score_list_factories", column: "list_factory_id"
   add_foreign_key "score_list_print_generators", "competitions"
   add_foreign_key "score_lists", "competitions"
   add_foreign_key "score_result_list_factories", "score_list_factories", column: "list_factory_id"
