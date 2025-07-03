@@ -15,7 +15,7 @@
   - resource_collection.each do |team|
     %tr
       %td
-        - if can?(:edit, team) && team.users.include?(current_user)
+        - if can?(:sub_edit, team) && team.users.include?(current_user)
           .far.fa-edit
         - if can?(:manage, team) && team.users.exists?
           .far.fa-id-card{ title: "Angemeldet durch #{team.users.map(&:name).join(', ')}" }

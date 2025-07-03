@@ -17,7 +17,7 @@ class Competitions::RegistrationsController < CompetitionNestedController
 
   def competition_params
     params.require(:competition).permit(
-      :registration_open, :registration_open_until
+      :registration_open, :registration_open_until, :change_people_until
     )
   end
 end

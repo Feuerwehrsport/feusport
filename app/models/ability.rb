@@ -88,8 +88,11 @@ class Ability
     can(:manage, Competitions::Duplication) { |duplication| can?(:manage, duplication.competition) }
 
     can(%i[create], Team) { |team| team.competition.registration_possible? }
-    can(%i[edit_assessment_requests update destroy], Team) do |team|
+    can(%i[edit sub_edit assessment_requests update destroy], Team) do |team|
       team.users.include?(user) && team.competition.registration_possible?
+    end
+    can(%i[sub_edit], Team) do |team|
+      team.users.include?(user) && team.competition.change_people_possible?
     end
 
     can(:manage, UserTeamAccess) { |access| can?(:update, access.team) }
@@ -98,12 +101,17 @@ class Ability
     end
 
     can(%i[create], Person) do |person|
-      (person.team.nil? || person.team.users.include?(user)) &&
+      (
+        (person.team.nil? || person.team.users.include?(user)) &&
         person.competition.registration_possible?
+      ) || (
+        person.team.present? && person.team.users.include?(user) &&
+        person.competition.change_people_possible?
+      )
     end
     can(%i[edit_assessment_requests update destroy], Person) do |person|
       (person.users.include?(user) || person.team&.users&.include?(user)) &&
-        person.competition.registration_possible?
+        (person.competition.registration_possible? || person.competition.change_people_possible?)
     end
   end
 

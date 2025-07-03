@@ -87,13 +87,15 @@ class Competition < ApplicationRecord
     next unless date_changed?
 
     self.registration_open_until = [date - 1.day, registration_open_until].compact_blank.min
+    self.change_people_until = [date - 1.day, change_people_until].compact_blank.min if change_people_until.present?
   end
 
   auto_strip_attributes :name, :place, :slug, :description, :flyer_headline, :flyer_content
   before_validation { self.slug = slug.to_s.parameterize }
   schema_validations
   validates :registration_open_until, presence: true, if: -> { registration_open == 'open' }
-  validates :registration_open_until, comparison: { less_than_or_equal_to: :date }, allow_nil: true
+  validates :registration_open_until, :change_people_until,
+            comparison: { less_than_or_equal_to: :date }, allow_nil: true
 
   after_touch do
     FireSportStatistics::Person.dummies.delete_all
@@ -127,6 +129,15 @@ class Competition < ApplicationRecord
     return false if registration_open_until.nil?
 
     registration_open_until.end_of_day > Time.current
+  end
+
+  def change_people_possible?
+    return false if locked?
+    return false unless registration_open_open?
+    return false unless visible?
+    return false if change_people_until.nil?
+
+    change_people_until.end_of_day > Time.current
   end
 
   def locked?

@@ -8,7 +8,7 @@
       - assessments = Assessment.requestable_for_person(resource_collection.first.band)
       - assessments.each do |assessment|
         %th{ title: assessment.name }= discipline_image assessment.discipline.key
-      - if can?(:edit, @team)
+      - if can_sub_edit_team?
         %th
   %tbody
     - resource_collection.each do |person|
@@ -20,13 +20,13 @@
           - request = person.request_for(assessment)
           - if request.present?
             %td{ title: "#{assessment.name}: #{request.type}" }
-              - if can?(:edit, @team)
+              - if can_sub_edit_team?
                 = quick_assessment_change_link(person, assessment)
               = person_short_type(request)
           - else
             %td
-              - if can?(:edit, @team)
+              - if can_sub_edit_team?
                 = quick_assessment_change_link(person, assessment)
-        - if can?(:edit, @team)
+        - if can_sub_edit_team?
           %td
             = short_edit_link edit_assessment_requests_competition_person_path(id: person.id, return_to: 'team'), title: 'Wertungen bearbeiten'

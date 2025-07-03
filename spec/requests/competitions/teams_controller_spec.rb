@@ -202,6 +202,42 @@ RSpec.describe Team do
         expect(response).to match_html_fixture.with_affix('show-with-hint')
       end.to have_enqueued_job.with('CompetitionMailer', 'registration_team', 'deliver_now', any_args)
     end
+
+    context 'when only change_people possible' do
+      let!(:team) { create(:team, band:, competition:, user_team_accesses: [user_team_access]) }
+      let(:user_team_access) { UserTeamAccess.new(competition:, user: other_user) }
+
+      it 'can create and update team people' do
+        competition.update!(registration_open_until: Date.yesterday, registration_open: 'open', visible: true)
+
+        sign_in other_user
+
+        get competition_nested
+        expect(response).to match_html_fixture.with_affix('without-hint')
+
+        competition.update!(change_people_until: Date.current)
+
+        get competition_nested
+        expect(response).to match_html_fixture.with_affix('with-hint')
+
+        get competition_nested("teams/#{team.id}")
+        expect(response).to match_html_fixture.with_affix('subedit-team')
+
+        post competition_nested('people?return_to=team'),
+             params: { band_id: band.id,
+                       person: { first_name: 'first-name', last_name: 'last-name', team_id: team.id } }
+
+        expect(response).to redirect_to(competition_nested("teams/#{team.id}?jump_to=people-table"))
+
+        person = Person.last
+
+        patch competition_nested("people/#{person.id}?return_to=team"),
+              params: { person: { first_name: 'new-name' } }
+        expect(response).to redirect_to(competition_nested("teams/#{team.id}?jump_to=people-table"))
+
+        expect(person.reload.first_name).to eq 'new-name'
+      end
+    end
   end
 
   context 'when firesport_statistics is not connected' do

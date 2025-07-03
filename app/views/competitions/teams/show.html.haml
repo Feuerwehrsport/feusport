@@ -100,10 +100,10 @@
             = btn_link_to 'Verwalter', competition_team_accesses_path(team_id: @team.id)
             = btn_link_to 'Löschen', new_competition_team_deletion_path
 
-  - if can?(:edit, @team) || @team.people.exists?
+  - if can_sub_edit_team? || @team.people.exists?
     .col-lg-12#people-table
       = card(Team.human_attribute_name(:people)) do |c|
-        - if can?(:edit, @team)
+        - if can_sub_edit_team?
           - c.primary_actions do |actions|
             - actions.link_to 'Wettkämpfer hinzufügen', new_competition_person_path(team: @team, return_to: 'team'), end_icon: :square_plus
         - if @team.people.exists?

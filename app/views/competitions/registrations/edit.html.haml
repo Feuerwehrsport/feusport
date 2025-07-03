@@ -7,6 +7,7 @@
         - c.body do
           = f.input :registration_open, as: :radio_buttons, collection: Competition::REGISTRATION_OPEN.map { |k, _v| [t("competitions.registration_open.#{k}"), k] }
           = f.input :registration_open_until, html5: true
+          = f.input :change_people_until, html5: true
         - c.footer do
           = f.primary_button :submit
           = f.cancel_button(competition_show_path)

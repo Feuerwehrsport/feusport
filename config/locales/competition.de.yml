@@ -15,6 +15,7 @@ de:
   activerecord:
     attributes:
       competition:
+        change_people_until: Wettkämper ändern bis einschließlich
         date: Datum
         description: Beschreibung
         flyer_content: Flyer-Inhalt
@@ -40,6 +41,7 @@ de:
   simple_form:
     hints:
       competition:
+        change_people_until: Angemeldete Mannschaften dürfen bis zu diesem Datum nur noch ihre Wettkämpfer verändern, auch wenn das Datum nach dem »Anmeldung offen«-Datum liegt
         date: Sollte sich der Wettkampf über mehrere Tage erstrecken, gib den Haupttag an. Weiteres musst du in der Beschreibung ergänzen.
         lottery_numbers: Mit Losnummern kann die Reihenfolge der Mannschaften vorgegeben werden. Die Losnummern können dann bei den Mannschaften eingegeben werden, so wie außerhalb des Systems gezogen wurden.
         name: Gib einen kurzen Namen an. Das Datum erscheint extra und braucht nicht im Namen auftauchen.

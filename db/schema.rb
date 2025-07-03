@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_07_03_161141) do
+ActiveRecord::Schema[7.2].define(version: 2025_07_03_203250) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
@@ -137,6 +137,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_07_03_161141) do
     t.datetime "updated_at", null: false
     t.datetime "locked_at"
     t.uuid "wko_id"
+    t.date "change_people_until"
     t.index ["date"], name: "index_competitions_on_date"
     t.index ["wko_id"], name: "index_competitions_on_wko_id"
     t.index ["year", "slug"], name: "index_competitions_on_year_and_slug", unique: true

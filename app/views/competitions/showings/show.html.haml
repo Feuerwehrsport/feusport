@@ -47,7 +47,12 @@
               = link_to 'Mannschaft anmelden', new_competition_team_path, class: 'btn btn-light btn-sm'
               - if @competition.disciplines.single_disciplines.exists?
                 = link_to 'Einzelstarter anmelden', new_competition_person_path, class: 'btn btn-light btn-sm'
-
+      - elsif current_user && @competition.change_people_until.present?
+        .card-header.text-bg-info
+          .d-grid.gap-2.col-10.mx-auto
+            .text-center
+              .far.fa-id-card
+              Änderung der Wettkämpfer bis #{l(@competition.change_people_until)} möglich
       - if can?(:edit, @competition)
         = render('next_step_card')
       .card-header

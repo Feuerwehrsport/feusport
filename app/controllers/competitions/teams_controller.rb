@@ -52,6 +52,11 @@ class Competitions::TeamsController < CompetitionNestedController
 
   protected
 
+  def can_sub_edit_team?
+    @can_sub_edit_team ||= can?(:sub_edit, @team)
+  end
+  helper_method :can_sub_edit_team?
+
   def team_params
     return {} unless params.key?(:team)
 

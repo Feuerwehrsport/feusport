@@ -2,6 +2,7 @@
 
 class Competitions::PeopleController < CompetitionNestedController
   default_resource
+  skip_authorize_resource :person, only: %i[new create]
 
   def index
     @without_statistics_id = @people.where(fire_sport_statistics_person_id: nil)
@@ -68,7 +69,7 @@ class Competitions::PeopleController < CompetitionNestedController
   protected
 
   def team_from_param
-    @team_from_param ||= @competition.teams.find_by(id: params[:team])
+    @team_from_param ||= @competition.teams.find_by(id: params[:team].presence || person_params[:team_id])
   end
 
   def person_params
@@ -101,5 +102,6 @@ class Competitions::PeopleController < CompetitionNestedController
       "Mannschaftsleiter: #{current_user.name}\n" \
       "E-Mail-Adresse: #{current_user.email}\n" \
       "Telefonnummer: #{current_user.phone_number}\n"
+    authorize!(:create, resource_instance)
   end
 end
