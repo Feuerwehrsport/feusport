@@ -15,10 +15,10 @@
   - resource_collection.each do |team|
     %tr
       %td
-        - if can?(:edit, team) && team.applicant == current_user
+        - if can?(:edit, team) && team.users.include?(current_user)
           .far.fa-edit
-        - if can?(:manage, team) && team.applicant.present?
-          .far.fa-id-card{ title: "Angemeldet durch #{team.applicant.name}" }
+        - if can?(:manage, team) && team.users.exists?
+          .far.fa-id-card{ title: "Angemeldet durch #{team.users.map(&:name).join(', ')}" }
         = team.full_name
         = team_badge(team&.fire_sport_statistics_team, team.band.gender)
       - band.team_tags.each do |tag|

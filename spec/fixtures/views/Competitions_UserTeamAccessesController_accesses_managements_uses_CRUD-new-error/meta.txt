@@ -1,0 +1,4 @@
+Competitions::UserTeamAccessesController accesses managements uses CRUD-new-error
+
+request
+html

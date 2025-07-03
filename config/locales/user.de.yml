@@ -22,6 +22,10 @@ de:
         drop_myself: Eigenen Zugang löschen
         email: E-Mail-Adresse
         text: E-Mail-Text
+      user_team_access_request:
+        created_at: Erstellt am
+        email: E-Mail-Adresse
+        text: E-Mail-Text
     models:
       simple_access:
         one: Gastzugang
@@ -35,6 +39,12 @@ de:
       user_access_request:
         one: Zugangsanfrage
         other: Zugangsanfragen
+      user_team_access:
+        one: Verwalter
+        other: Verwalter
+      user_team_access_request:
+        one: Verwalteranfrage
+        other: Verwalteranfragen
   simple_form:
     hints:
       user:
@@ -48,6 +58,14 @@ de:
       Hallo%{name},
 
       ich habe bei feusport.de einen neuen Wettkampf für dich angelegt. Wenn du auf den nachfolgenden Link klickst, kannst du die Kontrolle über den Wettkampf übernehmen.
+      Viele Grüße
+
+      %{current}
+  user_team_access_requests:
+    example_text: |
+      Hallo%{name},
+
+      ich habe bei feusport.de die Mannschaft »%{team_name}« für dich angelegt. Wenn du auf den nachfolgenden Link klickst, kannst du die Kontrolle über die Mannschaft übernehmen.
       Viele Grüße
 
       %{current}

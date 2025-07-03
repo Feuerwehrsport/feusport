@@ -1,0 +1,1 @@
+Der Nutzer *<%= @user.name %>* hat deine Verwalteranfrage angenommen und sich mit der Mannschaft *[<%= @team.team.full_name %>](<%= competition_team_url(@competition.year, @competition.slug, @team.id) %>)* beim Wettkampf *[<%= @competition.name %>](<%= competition_show_url(@competition.year, @competition.slug) %>)* verbunden.

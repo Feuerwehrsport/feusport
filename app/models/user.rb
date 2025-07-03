@@ -47,8 +47,14 @@ class User < ApplicationRecord
                                   inverse_of: :sender
   has_many :user_accesses, class_name: 'UserAccess', dependent: :destroy
   has_many :competitions, through: :user_accesses
-  has_many :teams, class_name: 'Team', dependent: :nullify, foreign_key: :applicant_id, inverse_of: :applicant
-  has_many :people, class_name: 'Person', dependent: :nullify, foreign_key: :applicant_id, inverse_of: :applicant
+  has_many :user_team_access_requests, class_name: 'UserTeamAccessRequest', dependent: :destroy,
+                                       foreign_key: :sender_id, inverse_of: :sender
+  has_many :user_team_accesses, class_name: 'UserTeamAccess', dependent: :destroy
+  has_many :teams, through: :user_team_accesses
+
+  has_many :user_person_accesses, class_name: 'UserPersonAccess', dependent: :destroy
+  has_many :people, through: :user_person_accesses
+
   has_many :information_requests, dependent: :destroy
 
   auto_strip_attributes :name, :email, :phone_number
@@ -56,7 +62,9 @@ class User < ApplicationRecord
   schema_validations
 
   def friends
-    User.where(id: UserAccess.where(competition_id: competition_ids).select(:user_id)).where.not(id:).order(:name)
+    user_ids = UserAccess.where(competition_id: competition_ids).pluck(:user_id) +
+               UserTeamAccess.where(team_id: user_team_accesses.select(:team_id)).pluck(:user_id)
+    User.where(id: user_ids).where.not(id:).order(:name)
   end
 
   def send_devise_notification(notification, *)

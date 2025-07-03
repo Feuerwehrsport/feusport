@@ -15,7 +15,6 @@
 #  tags                          :string           default([]), is an Array
 #  created_at                    :datetime         not null
 #  updated_at                    :datetime         not null
-#  applicant_id                  :uuid
 #  band_id                       :uuid             not null
 #  competition_id                :uuid             not null
 #  fire_sport_statistics_team_id :integer
@@ -29,7 +28,6 @@
 #
 # Foreign Keys
 #
-#  fk_rails_...  (applicant_id => users.id)
 #  fk_rails_...  (band_id => bands.id)
 #  fk_rails_...  (competition_id => competitions.id)
 #
@@ -39,7 +37,6 @@ class Team < ApplicationRecord
   belongs_to :competition, touch: true
   belongs_to :band
   belongs_to :fire_sport_statistics_team, class_name: 'FireSportStatistics::Team'
-  belongs_to :applicant, class_name: 'User'
   has_many :people, dependent: :nullify
   has_many :requests, class_name: 'AssessmentRequest', as: :entity, dependent: :destroy, inverse_of: :entity
   has_many :list_entries, class_name: 'Score::ListEntry', as: :entity, dependent: :destroy, inverse_of: :entity
@@ -50,6 +47,8 @@ class Team < ApplicationRecord
                                      foreign_key: :team1_id
   has_many :team2_list_restrictions, class_name: 'TeamListRestriction', dependent: :destroy, inverse_of: :team2,
                                      foreign_key: :team2_id
+  has_many :user_team_accesses, class_name: 'UserTeamAccess', dependent: :destroy
+  has_many :users, class_name: 'User', through: :user_team_accesses
 
   schema_validations
   validates :number, numericality: { greater_than: 0 }

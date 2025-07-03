@@ -68,6 +68,21 @@ RSpec.describe Team do
       )
       expect(response).to have_http_status(:success)
     end
+
+    context 'when no request is created' do
+      before { assessment.destroy }
+
+      it 'redirects to show page' do
+        sign_in user
+
+        expect do
+          post "/#{competition.year}/#{competition.slug}/teams",
+               params: { band_id: band.id, team: { name: 'new-name', shortcut: 'new-n', number: '1' } }
+        end.to change(described_class, :count).by(1)
+        team = described_class.last
+        expect(response).to redirect_to competition_nested("teams/#{team.id}")
+      end
+    end
   end
 
   describe 'with fss team' do

@@ -27,7 +27,7 @@ class Competitions::PeopleController < CompetitionNestedController
   def create
     @person.assign_attributes(person_params)
     if @person.save
-      CompetitionMailer.with(person: @person).registration_person.deliver_later if @person.applicant.present?
+      CompetitionMailer.with(person: @person).registration_person.deliver_later if @person.users.exists?
 
       if params[:return_to] == 'team'
         redirect_to competition_team_path(id: @person.team_id, jump_to: 'people-table'), notice: :saved
@@ -96,7 +96,7 @@ class Competitions::PeopleController < CompetitionNestedController
     return if can?(:manage, @competition)
     return if can?(:edit, resource_instance.team)
 
-    resource_instance.applicant = current_user
+    resource_instance.user_person_accesses.build(user: current_user, competition: @competition)
     resource_instance.registration_hint =
       "Mannschaftsleiter: #{current_user.name}\n" \
       "E-Mail-Adresse: #{current_user.email}\n" \

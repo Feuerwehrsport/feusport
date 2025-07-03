@@ -111,6 +111,15 @@ RSpec.describe Competitions::AccessesController do
           expect(flash[:notice]).to eq :deleted
         end.to change(UserAccess, :count).by(-1)
       end.to have_enqueued_job.with('CompetitionMailer', 'access_deleted', 'deliver_now', any_args)
+
+      # try to delete own access
+      access = UserAccess.create(user:, competition:)
+
+      expect do
+        # DELETE destroy
+        delete competition_nested("accesses/#{access.id}")
+        expect(response).to redirect_to(competition_nested('accesses'))
+      end.not_to change(UserAccess, :count)
     end
   end
 

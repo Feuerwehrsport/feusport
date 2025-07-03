@@ -13,7 +13,8 @@ RSpec.describe TeamDeletion do
     let(:assessment_la) { create(:assessment, competition:, discipline: la, band:) }
     let(:result_la) { create(:score_result, competition:, assessment: assessment_la) }
 
-    let(:team) { create(:team, competition:, band:, applicant: competition.users.first) }
+    let(:user_team_access) { UserTeamAccess.new(user: competition.users.first, competition:) }
+    let(:team) { create(:team, competition:, band:, user_team_accesses: [user_team_access]) }
     let(:person) { create(:person, competition:, band:, team:) }
 
     let(:deletion) { described_class.new(competition:, team:) }
@@ -49,7 +50,7 @@ RSpec.describe TeamDeletion do
       let!(:list_hl) { create_score_list(result_hl, person => 1912) }
 
       it 'fails' do
-        expect(Person.first.applicant).to be_nil
+        expect(Person.first.users).to be_empty
 
         deletion.delete_people = true
         expect(deletion).not_to be_valid
@@ -63,7 +64,7 @@ RSpec.describe TeamDeletion do
           end.not_to change(Person, :count)
         end.to change(Team, :count).by(-1)
 
-        expect(Person.first.applicant).not_to be_nil
+        expect(Person.first.users).not_to be_empty
       end
     end
 

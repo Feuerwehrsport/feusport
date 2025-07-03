@@ -44,6 +44,10 @@ Rails.application.routes.draw do
         get :without_statistics_connection
       end
       resources :markers, only: %i[edit update], controller: :team_marker_values
+      resources :accesses, only: %i[index destroy], controller: :user_team_accesses
+      resources :access_requests, only: %i[new create destroy], controller: :user_team_access_requests do
+        member { get :connect }
+      end
     end
     resources :team_markers, only: %i[new create index edit update destroy]
     resource :team_marker_block_values, only: %i[edit update]

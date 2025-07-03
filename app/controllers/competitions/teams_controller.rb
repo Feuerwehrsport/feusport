@@ -19,7 +19,7 @@ class Competitions::TeamsController < CompetitionNestedController
   def create
     @team.assign_attributes(team_params)
     if @team.save
-      CompetitionMailer.with(team: @team).registration_team.deliver_later if @team.applicant.present?
+      CompetitionMailer.with(team: @team).registration_team.deliver_later if @team.users.exists?
 
       if @team.requests.present?
         redirect_to edit_assessment_requests_competition_team_path(id: @team.id), notice: :saved
@@ -69,7 +69,7 @@ class Competitions::TeamsController < CompetitionNestedController
     self.resource_instance = resource_class.new(competition: @competition, band:)
     return if can?(:manage, @competition)
 
-    resource_instance.applicant = current_user
+    resource_instance.user_team_accesses.build(user: current_user, competition: @competition)
     resource_instance.registration_hint =
       "Mannschaftsleiter: #{current_user.name}\n" \
       "E-Mail-Adresse: #{current_user.email}\n" \

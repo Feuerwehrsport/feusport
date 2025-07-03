@@ -1,0 +1,44 @@
+= render 'competitions/header', competition: @competition, sub: "Mannschaft: #{@team.full_name}"
+
+.row.g-4
+  .col-lg-7
+    = card(resource_class.model_name.human(count: :many)) do |c|
+      - if resource_collection.present?
+        - c.direct do
+          %table.table
+            %tr
+              %th= User.human_attribute_name(:name)
+              %th= User.human_attribute_name(:email)
+              %th
+            - resource_collection.sort.each do |access|
+              %tr
+                %td= access.user.name
+                %td= access.user.email
+                %td{ style: 'width: 60px; text-align: center' }
+                  - if access.user != current_user
+                    = link_to(competition_access_path(id: access.id), class: 'btn btn-light btn-sm', data: { turbo_confirm: 'Zugang wirklich entfernen? Der Nutzer wird darüber per E-Mail informiert.', 'turbo-method': :delete }) do
+                      %i.far.fa-trash
+      - else
+        - c.body do
+          .alert.alert-info= t('a.no_entries_found')
+
+      - if can?(:create, UserTeamAccessRequest.new(competition: @competition, team: @team))
+        - c.primary_actions do |actions|
+          - actions.link_to t('a.add'), new_competition_team_access_request_path, end_icon: :square_plus
+
+  - if @competition.user_team_access_requests.present?
+    .col-lg-8
+      = card(UserTeamAccessRequest.model_name.human(count: :many)) do |c|
+        - c.direct do
+          %table.table
+            %tr
+              %th= UserTeamAccessRequest.human_attribute_name(:created_at)
+              %th= UserTeamAccessRequest.human_attribute_name(:email)
+              %th
+            - @competition.user_team_access_requests.sort.each do |req|
+              %tr
+                %td= l(req.created_at)
+                %td= req.email
+                %td
+                  = link_to(competition_team_access_request_path(id: req.id), class: 'btn btn-light btn-sm', data: { turbo_confirm: 'Anfrage wirklich entfernen?', 'turbo-method': :delete }) do
+                    %i.far.fa-trash

@@ -53,6 +53,10 @@ de:
       team_marker_value:
         one: Wert
         other: Werte
+  simple_form:
+    hints:
+      team:
+        registration_hint: Diese Hinweise/Notizen sind nur für schreibberechtigte Nutzer zu sehen.
   team_list_restriction:
     restrictions:
       after: Lauf nach

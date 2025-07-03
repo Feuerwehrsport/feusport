@@ -13,7 +13,6 @@
 #  tags                            :string           default([]), is an Array
 #  created_at                      :datetime         not null
 #  updated_at                      :datetime         not null
-#  applicant_id                    :uuid
 #  band_id                         :uuid             not null
 #  competition_id                  :uuid
 #  fire_sport_statistics_person_id :integer
@@ -28,7 +27,6 @@
 #
 # Foreign Keys
 #
-#  fk_rails_...  (applicant_id => users.id)
 #  fk_rails_...  (band_id => bands.id)
 #  fk_rails_...  (competition_id => competitions.id)
 #  fk_rails_...  (team_id => teams.id)

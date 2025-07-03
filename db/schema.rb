@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_06_30_053426) do
+ActiveRecord::Schema[7.2].define(version: 2025_07_03_161141) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
@@ -263,7 +263,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_30_053426) do
     t.integer "fire_sport_statistics_person_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "applicant_id"
     t.text "registration_hint"
     t.index ["band_id"], name: "index_people_on_band_id"
     t.index ["competition_id"], name: "index_people_on_competition_id"
@@ -686,7 +685,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_30_053426) do
     t.integer "fire_sport_statistics_team_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "applicant_id"
     t.text "registration_hint"
     t.string "certificate_name"
     t.index ["band_id"], name: "index_teams_on_band_id"
@@ -715,6 +713,44 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_30_053426) do
     t.boolean "registration_mail_info", default: true, null: false
     t.index ["competition_id"], name: "index_user_accesses_on_competition_id"
     t.index ["user_id"], name: "index_user_accesses_on_user_id"
+  end
+
+  create_table "user_person_accesses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "competition_id", null: false
+    t.uuid "user_id", null: false
+    t.uuid "person_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["competition_id"], name: "index_user_person_accesses_on_competition_id"
+    t.index ["person_id"], name: "index_user_person_accesses_on_person_id"
+    t.index ["user_id", "person_id", "competition_id"], name: "idx_on_user_id_person_id_competition_id_1f5885f0fe", unique: true
+    t.index ["user_id"], name: "index_user_person_accesses_on_user_id"
+  end
+
+  create_table "user_team_access_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "competition_id", null: false
+    t.uuid "team_id", null: false
+    t.uuid "sender_id", null: false
+    t.string "email", limit: 200, null: false
+    t.text "text", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["competition_id"], name: "index_user_team_access_requests_on_competition_id"
+    t.index ["sender_id"], name: "index_user_team_access_requests_on_sender_id"
+    t.index ["team_id", "competition_id", "email"], name: "idx_on_team_id_competition_id_email_8c8e6a5a48", unique: true
+    t.index ["team_id"], name: "index_user_team_access_requests_on_team_id"
+  end
+
+  create_table "user_team_accesses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "competition_id", null: false
+    t.uuid "user_id", null: false
+    t.uuid "team_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["competition_id"], name: "index_user_team_accesses_on_competition_id"
+    t.index ["team_id"], name: "index_user_team_accesses_on_team_id"
+    t.index ["user_id", "team_id", "competition_id"], name: "idx_on_user_id_team_id_competition_id_ea2c8b8bde", unique: true
+    t.index ["user_id"], name: "index_user_team_accesses_on_user_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -774,7 +810,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_30_053426) do
   add_foreign_key "people", "bands"
   add_foreign_key "people", "competitions"
   add_foreign_key "people", "teams"
-  add_foreign_key "people", "users", column: "applicant_id"
   add_foreign_key "score_competition_result_references", "score_competition_results", column: "competition_result_id"
   add_foreign_key "score_competition_result_references", "score_results", column: "result_id"
   add_foreign_key "score_competition_results", "competitions"
@@ -819,9 +854,17 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_30_053426) do
   add_foreign_key "team_relays", "teams"
   add_foreign_key "teams", "bands"
   add_foreign_key "teams", "competitions"
-  add_foreign_key "teams", "users", column: "applicant_id"
   add_foreign_key "user_access_requests", "competitions"
   add_foreign_key "user_access_requests", "users", column: "sender_id"
   add_foreign_key "user_accesses", "competitions"
   add_foreign_key "user_accesses", "users"
+  add_foreign_key "user_person_accesses", "competitions"
+  add_foreign_key "user_person_accesses", "people"
+  add_foreign_key "user_person_accesses", "users"
+  add_foreign_key "user_team_access_requests", "competitions"
+  add_foreign_key "user_team_access_requests", "teams"
+  add_foreign_key "user_team_access_requests", "users", column: "sender_id"
+  add_foreign_key "user_team_accesses", "competitions"
+  add_foreign_key "user_team_accesses", "teams"
+  add_foreign_key "user_team_accesses", "users"
 end

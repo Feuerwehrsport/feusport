@@ -12,6 +12,7 @@ class Ability
     can(:visit, :disseminator)
 
     can(:connect, UserAccessRequest)
+    can(:connect, UserTeamAccessRequest)
 
     read_ua = { user_accesses: { user_id: user.id } }
     manage_ua = { user_accesses: { user_id: user.id }, locked_at: nil }
@@ -41,6 +42,11 @@ class Ability
 
     can(:manage, TeamMarkerValue, competition: manage_ua)
     can(:manage, TeamMarkerBlockValue, competition: manage_ua)
+
+    can(:read, UserTeamAccess, competition: read_ua)
+    can(:manage, UserTeamAccess, competition: manage_ua)
+    can(:read, UserTeamAccessRequest, competition: read_ua)
+    can(:manage, UserTeamAccessRequest, competition: manage_ua)
 
     can(:read, Person, competition: read_ua)
     can(:manage, Person, competition: manage_ua)
@@ -83,15 +89,20 @@ class Ability
 
     can(%i[create], Team) { |team| team.competition.registration_possible? }
     can(%i[edit_assessment_requests update destroy], Team) do |team|
-      team.applicant == user && team.competition.registration_possible?
+      team.users.include?(user) && team.competition.registration_possible?
+    end
+
+    can(:manage, UserTeamAccess) { |access| can?(:update, access.team) }
+    can(%i[create destroy], UserTeamAccessRequest) do |access|
+      access.team.blank? || can?(:update, access.team)
     end
 
     can(%i[create], Person) do |person|
-      (person.team.nil? || person.team.applicant == user) &&
+      (person.team.nil? || person.team.users.include?(user)) &&
         person.competition.registration_possible?
     end
     can(%i[edit_assessment_requests update destroy], Person) do |person|
-      (person.applicant == user || person.team&.applicant == user) &&
+      (person.users.include?(user) || person.team&.users&.include?(user)) &&
         person.competition.registration_possible?
     end
   end

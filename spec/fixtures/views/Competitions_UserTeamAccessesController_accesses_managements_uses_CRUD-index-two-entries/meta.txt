@@ -1,0 +1,4 @@
+Competitions::UserTeamAccessesController accesses managements uses CRUD-index-two-entries
+
+request
+html

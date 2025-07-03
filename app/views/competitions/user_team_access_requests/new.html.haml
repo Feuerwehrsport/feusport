@@ -1,0 +1,21 @@
+= render 'competitions/header', competition: @competition, sub: "#{resource_class.model_name.human} hinzufügen"
+
+.row.g-4
+  .col-lg-8
+    = simple_form_for([:competition, resource_instance], url: competition_team_access_requests_path) do |f|
+      = card('Neuen Zugang anlegen') do |c|
+        - c.body do
+          = f.input :email, autofocus: true
+          = f.input :text, input_html: { rows: 10 }
+        - c.footer do
+          = f.primary_button :submit
+          = f.cancel_button(competition_team_accesses_path)
+
+  - if @possible_friends.present?
+    .col-lg-4
+      = card_direct('Bekannte Kontakte') do
+        %table.table
+          - @possible_friends.each do |friend|
+            %tr
+              %td= friend.name
+              %td.text-end= link_to('Auswählen', new_competition_team_access_request_path(friend_id: friend.id), class: 'btn btn-light btn-sm')

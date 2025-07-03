@@ -31,10 +31,10 @@
             = render('connected', person: @person, remove: false)
 
         - if can?(:edit, @person)
-          - if @person.applicant.present?
+          - if @person.users.exists?
             %tr
               %th Angemeldet durch
-              %td= @person.applicant.name
+              %td= @person.users.map(&:name).join(', ')
           - if @person.registration_hint.present?
             %tr
               %th

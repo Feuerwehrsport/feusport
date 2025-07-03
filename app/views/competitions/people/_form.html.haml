@@ -50,12 +50,12 @@
     = render('connected', person: @person, remove: true)
     %small.form-text.text-muted Eine Verknüpfung ist bei Wettkampfserien wichtig, um vorhanden Ergebnisse zu nutzen.
 
-    - if @person.applicant.present?
-      %fieldset.group
+    %fieldset.group
+      - if @person.users.exists?
         .col-md-6
           %strong Angemeldet durch:
-          = @person.applicant.name
-        = f.input :registration_hint, input_html: { rows: 4 }
+          = @person.users.map(&:name).join(', ')
+      = f.input :registration_hint, input_html: { rows: 4 }
 
 - c.footer do
   = f.primary_button :submit

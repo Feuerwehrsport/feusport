@@ -13,7 +13,6 @@
 #  tags                            :string           default([]), is an Array
 #  created_at                      :datetime         not null
 #  updated_at                      :datetime         not null
-#  applicant_id                    :uuid
 #  band_id                         :uuid             not null
 #  competition_id                  :uuid
 #  fire_sport_statistics_person_id :integer
@@ -28,7 +27,6 @@
 #
 # Foreign Keys
 #
-#  fk_rails_...  (applicant_id => users.id)
 #  fk_rails_...  (band_id => bands.id)
 #  fk_rails_...  (competition_id => competitions.id)
 #  fk_rails_...  (team_id => teams.id)
@@ -40,10 +38,11 @@ class Person < ApplicationRecord
   belongs_to :band
   belongs_to :team
   belongs_to :fire_sport_statistics_person, class_name: 'FireSportStatistics::Person', inverse_of: :person
-  belongs_to :applicant, class_name: 'User'
   has_many :requests, class_name: 'AssessmentRequest', as: :entity, dependent: :destroy, inverse_of: :entity
   has_many :list_entries, class_name: 'Score::ListEntry', as: :entity, dependent: :destroy, inverse_of: :entity
   has_many :requested_assessments, through: :requests, source: :assessment
+  has_many :user_person_accesses, class_name: 'UserPersonAccess', dependent: :destroy
+  has_many :users, class_name: 'User', through: :user_person_accesses
 
   auto_strip_attributes :first_name, :last_name, :bib_number, :registration_hint
 
@@ -98,11 +97,6 @@ class Person < ApplicationRecord
   end
 
   private
-
-  def strip_names
-    self.last_name = last_name.try(:strip)
-    self.first_name = first_name.try(:strip)
-  end
 
   def validate_team_band
     return if team.blank? || team.band == band

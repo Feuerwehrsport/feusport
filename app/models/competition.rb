@@ -55,6 +55,8 @@ class Competition < ApplicationRecord
   has_many :certificates_templates, dependent: :destroy, class_name: 'Certificates::Template'
   has_many :user_access_requests, class_name: 'UserAccessRequest', dependent: :destroy
   has_many :user_accesses, class_name: 'UserAccess', dependent: :destroy
+  has_many :user_team_accesses, class_name: 'UserTeamAccess', dependent: :destroy
+  has_many :user_team_access_requests, class_name: 'UserTeamAccessRequest', dependent: :destroy
   has_many :users, through: :user_accesses
   has_many :score_list_print_generators, class_name: 'Score::ListPrintGenerator', dependent: :destroy
   has_many :simple_accesses, class_name: 'SimpleAccess', dependent: :destroy

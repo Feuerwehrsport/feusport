@@ -4,7 +4,7 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 
-# generated from version 20250630053426
+# generated from version 20250703161141
 
 module SchemaValidations
   extend ActiveSupport::Concern
@@ -871,6 +871,48 @@ module SchemaValidations
       validates_with_filter :updated_at, {:presence=>{}}
       validates_with_filter :updated_at, {:date_time_in_db_range=>{}}
       validates_with_filter :registration_mail_info, {:inclusion=>{:in=>[true, false], :message=>:blank}}
+    end
+
+    def dbv_user_person_accesses_validations(enums: [])
+      belongs_to_presence_validations_for([:competition_id, :user_id, :person_id])
+      belongs_to_uniqueness_validations_for([["user_id", "person_id", "competition_id"]])
+      uniqueness_validations_for([["user_id", "person_id", "competition_id"]])
+      validates_with_filter :competition_id, {:presence=>{}}
+      validates_with_filter :user_id, {:presence=>{}}
+      validates_with_filter :person_id, {:presence=>{}}
+      validates_with_filter :created_at, {:presence=>{}}
+      validates_with_filter :created_at, {:date_time_in_db_range=>{}}
+      validates_with_filter :updated_at, {:presence=>{}}
+      validates_with_filter :updated_at, {:date_time_in_db_range=>{}}
+    end
+
+    def dbv_user_team_access_requests_validations(enums: [])
+      belongs_to_presence_validations_for([:competition_id, :team_id, :sender_id])
+      belongs_to_uniqueness_validations_for([["team_id", "competition_id", "email"]])
+      uniqueness_validations_for([["team_id", "competition_id", "email"]])
+      validates_with_filter :competition_id, {:presence=>{}}
+      validates_with_filter :team_id, {:presence=>{}}
+      validates_with_filter :sender_id, {:presence=>{}}
+      validates_with_filter :email, {:presence=>{}}
+      validates_with_filter :email, {:length=>{:allow_nil=>true, :maximum=>200}}
+      validates_with_filter :text, {:presence=>{}}
+      validates_with_filter :created_at, {:presence=>{}}
+      validates_with_filter :created_at, {:date_time_in_db_range=>{}}
+      validates_with_filter :updated_at, {:presence=>{}}
+      validates_with_filter :updated_at, {:date_time_in_db_range=>{}}
+    end
+
+    def dbv_user_team_accesses_validations(enums: [])
+      belongs_to_presence_validations_for([:competition_id, :user_id, :team_id])
+      belongs_to_uniqueness_validations_for([["user_id", "team_id", "competition_id"]])
+      uniqueness_validations_for([["user_id", "team_id", "competition_id"]])
+      validates_with_filter :competition_id, {:presence=>{}}
+      validates_with_filter :user_id, {:presence=>{}}
+      validates_with_filter :team_id, {:presence=>{}}
+      validates_with_filter :created_at, {:presence=>{}}
+      validates_with_filter :created_at, {:date_time_in_db_range=>{}}
+      validates_with_filter :updated_at, {:presence=>{}}
+      validates_with_filter :updated_at, {:date_time_in_db_range=>{}}
     end
 
     def dbv_users_validations(enums: [])

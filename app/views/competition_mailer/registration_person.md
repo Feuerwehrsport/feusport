@@ -4,7 +4,7 @@ zu deinem Wettkampf *<%= @competition.name %>* am *<%= I18n.l(@competition.date)
 
 Name: **<%= @person.full_name %>**
 Wertungsgruppe: **<%= @person.band.name %>**
-Angemeldet durch: **<%= @person.applicant.name %>**
+Angemeldet durch: **<%= @person.users.map(&:name).join(', ') %>**
 
 Anmeldungshinweise:
 <%= @person.registration_hint %>

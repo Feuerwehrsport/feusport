@@ -1,0 +1,4 @@
+CompetitionMailer user_team_access_request renders the headers and body
+
+mailer
+html

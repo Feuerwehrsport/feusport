@@ -14,3 +14,7 @@ de:
         team: Mannschaft
     models:
       person: Wettkämpfer
+  simple_form:
+    hints:
+      person:
+        registration_hint: Diese Hinweise/Notizen sind nur für schreibberechtigte Nutzer zu sehen.

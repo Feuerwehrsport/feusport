@@ -5,7 +5,7 @@ zu deinem Wettkampf *<%= @competition.name %>* am *<%= I18n.l(@competition.date)
 Name: **<%= @team.full_name %>**
 Abkürzung: **<%= @team.shortcut %>**
 Wertungsgruppe: **<%= @team.band.name %>**
-Angemeldet durch: **<%= @team.applicant.name %>**
+Angemeldet durch: **<%= @team.users.map(&:name).join(', ') %>**
 
 Anmeldungshinweise:
 <%= @team.registration_hint %>

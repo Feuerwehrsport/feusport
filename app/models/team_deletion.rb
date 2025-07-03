@@ -23,9 +23,11 @@ class TeamDeletion
     Team.transaction do
       if delete_people
         @team.people.destroy_all
-      elsif people_present? && @team.applicant.present?
+      elsif people_present? && @team.users.exists?
         @team.people.each do |person|
-          person.applicant ||= @team.applicant
+          @team.users.each do |user|
+            person.user_person_accesses.build(user:, competition:)
+          end
           person.save
         end
       end
