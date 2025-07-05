@@ -203,10 +203,10 @@ class Score::Result < ApplicationRecord
   end
 
   def clean_tags
-    self.team_tags_included = (team_tags_included || []).select { |tag| tag.in?(band.team_tags) }
-    self.team_tags_excluded = (team_tags_excluded || []).select { |tag| tag.in?(band.team_tags) }
-    self.person_tags_included = (person_tags_included || []).select { |tag| tag.in?(band.person_tags) }
-    self.person_tags_excluded = (person_tags_excluded || []).select { |tag| tag.in?(band.person_tags) }
+    self.team_tags_included = (team_tags_included || []).select { |tag| tag.in?(band&.team_tags || []) }
+    self.team_tags_excluded = (team_tags_excluded || []).select { |tag| tag.in?(band&.team_tags || []) }
+    self.person_tags_included = (person_tags_included || []).select { |tag| tag.in?(band&.person_tags || []) }
+    self.person_tags_excluded = (person_tags_excluded || []).select { |tag| tag.in?(band&.person_tags || []) }
   end
 
   def useless_team_tags
