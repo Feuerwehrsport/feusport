@@ -16,7 +16,7 @@
             %th Zeit
           - result.group_result.rows.each do |row|
             %tr{ class: row_invalid_class(row) }
-              %td #{result.group_result.place_for_row(row)}.
+              %td #{row.place}.
               %th= row.team.full_name
               %th= row.result_entry.human_time
             %tr{ class: row_invalid_class(row) }

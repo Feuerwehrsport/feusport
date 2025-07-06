@@ -20,7 +20,7 @@
   - rows.each do |row|
     %tr
       - if places
-        %td.hide-xs #{result.place_for_row(row)}.
+        %td.hide-xs #{row.place}.
       %td
         = row.entity.full_name
         = team_badge(row.entity&.fire_sport_statistics_team, row.entity.band.gender)

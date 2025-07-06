@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Score::ResultRow = Struct.new(:entity, :result) do
-  include Certificates::StorageSupport
+  include Score::ResultRowSupport
   attr_reader :list_entries
 
   delegate :calculation_method, :competition, to: :result

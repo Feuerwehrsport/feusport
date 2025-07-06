@@ -22,13 +22,13 @@ module Certificates::StorageSupport
         result_entry.human_time.tr('N', '-').gsub(Firesport::INVALID_STRING, '-').delete('s').strip
       end
     when :rank
-      "#{result.place_for_row(self)}."
+      "#{place}."
     when :rank_with_rank
-      "#{result.place_for_row(self)}. Platz"
+      "#{place}. Platz"
     when :rank_with_rank2
-      "den #{result.place_for_row(self)}. Platz"
+      "den #{place}. Platz"
     when :rank_without_dot
-      result.place_for_row(self)
+      place
     when :assessment
       result&.try(:assessment)&.forced_name.presence || result&.try(:assessment)&.discipline&.name.presence ||
         result&.name

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Score::CompetitionResultRow = Struct.new(:result, :team) do
-  include Certificates::StorageSupport
+  include Score::ResultRowSupport
   delegate :competition, to: :result
   attr_reader :assessment_results
 

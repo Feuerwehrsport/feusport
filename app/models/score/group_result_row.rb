@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Score::GroupResultRow = Struct.new(:team, :score_count, :run_count, :result) do
-  include Certificates::StorageSupport
+  include Score::ResultRowSupport
   delegate :competition, to: :result
 
   def entity

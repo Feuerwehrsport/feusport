@@ -10,7 +10,7 @@ module Exports::ScoreResults
     data = [build_data_headline(result, export_headers:, pdf:)]
     result.rows.each do |row|
       line = []
-      line.push "#{result.place_for_row(row)}."
+      line.push "#{row.place}."
       if result.single_discipline?
         line.push(row&.entity&.first_name, row&.entity&.last_name)
         if shortcut
@@ -65,7 +65,7 @@ module Exports::ScoreResults
   def build_group_data_rows(result)
     data = [%w[Platz Name Summe]]
     result.group_result.rows.each do |row|
-      data.push ["#{result.group_result.place_for_row(row)}.", row.team.full_name, row.result_entry.human_time]
+      data.push ["#{row.place}.", row.team.full_name, row.result_entry.human_time]
     end
     data
   end

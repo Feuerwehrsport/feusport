@@ -17,7 +17,7 @@ module Exports::CompetitionResults
     all_rows = competition_result.rows
     all_rows.each do |row|
       current = [
-        "#{competition_result.place_for_row(row)}.",
+        "#{row.place}.",
         row.team.full_name,
       ]
       competition_result.results.each do |result|

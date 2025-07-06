@@ -9,7 +9,7 @@
     %th.small.sum-points Punkte
   - competition_result.rows.each do |row|
     %tr
-      %td.sum-points #{competition_result.place_for_row(row)}.
+      %td.sum-points #{row.place}.
       %td= row.team.full_name
       - competition_result.results.each do |result|
         - assessment_result = row.assessment_result_from(result)
