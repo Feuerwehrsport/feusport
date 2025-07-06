@@ -23,26 +23,42 @@ RSpec.describe 'Score::DoubleEventResult' do
     let(:person2) { create(:person, :generated, competition:, band:) }
     let(:person3) { create(:person, :generated, competition:, band:) }
     let(:person4) { create(:person, :generated, competition:, band:) }
+    let(:person5) { create(:person, :generated, competition:, band:) }
 
     context 'when entries given' do
-      let!(:list1) { create_score_list(result_hb, person1 => 1912, person2 => 2020, person3 => 2040, person4 => nil) }
-      let!(:list2) { create_score_list(result_hl, person1 => 2020, person2 => 1911, person3 => 3030, person4 => 1999) }
+      let!(:list_hb1) do
+        create_score_list(result_hb, person1 => 1912, person2 => 2020, person3 => 2040, person4 => nil, person5 => 2021)
+      end
+      let!(:list_hb2) do
+        create_score_list(result_hb, person1 => 1913, person2 => 2021, person3 => 2041, person4 => nil, person5 => 2300)
+      end
+      let!(:list_hl1) do
+        create_score_list(result_hl, person1 => 2020, person2 => 1912, person3 => 3030, person4 => 1999,
+                                     person5 => 1910)
+      end
+      let!(:list_hl2) do
+        create_score_list(result_hl, person1 => 2021, person2 => 1911, person3 => 3031, person4 => 1998,
+                                     person5 => 2400)
+      end
 
       context 'when method is sum_of_best' do
         let(:multi_result_method) { :sum_of_best }
 
         it 'return results in correct order' do
           rows = result_zk.rows
-          expect(rows.count).to eq 3
+          expect(rows.count).to eq 4
 
-          expect(rows.first.best_result_entry.time).to eq 3931
-          expect(rows.first.entity).to eq person2
+          expect(rows[0].best_result_entry.time).to eq 3931
+          expect(rows[0].entity).to eq person2
 
-          expect(rows.second.best_result_entry.time).to eq 3932
-          expect(rows.second.entity).to eq person1
+          expect(rows[1].best_result_entry.time).to eq 3931
+          expect(rows[1].entity).to eq person5
 
-          expect(rows.third.best_result_entry.time).to eq 5070
-          expect(rows.third.entity).to eq person3
+          expect(rows[2].best_result_entry.time).to eq 3932
+          expect(rows[2].entity).to eq person1
+
+          expect(rows[3].best_result_entry.time).to eq 5070
+          expect(rows[3].entity).to eq person3
         end
       end
 
@@ -51,19 +67,22 @@ RSpec.describe 'Score::DoubleEventResult' do
 
         it 'return results in correct order' do
           rows = result_zk.rows
-          expect(rows.count).to eq 4
+          expect(rows.count).to eq 5
 
-          expect(rows.first.best_result_entry.time).to eq 1911
-          expect(rows.first.entity).to eq person2
+          expect(rows[0].best_result_entry.time).to eq 1910
+          expect(rows[0].entity).to eq person5
 
-          expect(rows.second.best_result_entry.time).to eq 1912
-          expect(rows.second.entity).to eq person1
+          expect(rows[1].best_result_entry.time).to eq 1911
+          expect(rows[1].entity).to eq person2
 
-          expect(rows.third.best_result_entry.time).to eq 1999
-          expect(rows.third.entity).to eq person4
+          expect(rows[2].best_result_entry.time).to eq 1912
+          expect(rows[2].entity).to eq person1
 
-          expect(rows.fourth.best_result_entry.time).to eq 2040
-          expect(rows.fourth.entity).to eq person3
+          expect(rows[3].best_result_entry.time).to eq 1998
+          expect(rows[3].entity).to eq person4
+
+          expect(rows[4].best_result_entry.time).to eq 2040
+          expect(rows[4].entity).to eq person3
         end
       end
 
@@ -94,14 +113,34 @@ RSpec.describe 'Score::DoubleEventResult' do
             },
             {
               team_name: '',
+              person_name: person5.full_name,
+              person_bib_number: '',
+              time_long: '39,31 Sekunden',
+              time_short: '39,31 s',
+              time_without_seconds: '39,31',
+              rank: '2.',
+              rank_with_rank: '2. Platz',
+              rank_without_dot: '2',
+              assessment: 'Zweikampf - Frauen',
+              assessment_with_gender: 'Zweikampf - Frauen',
+              result_name: 'Zweikampf - Frauen',
+              date: '29.02.2024',
+              place: 'Rostock',
+              competition_name: 'MV-Cup',
+              points: '',
+              points_with_points: '',
+              text: 'foo',
+            },
+            {
+              team_name: '',
               person_name: person1.full_name,
               person_bib_number: '',
               time_long: '39,32 Sekunden',
               time_short: '39,32 s',
               time_without_seconds: '39,32',
-              rank: '2.',
-              rank_with_rank: '2. Platz',
-              rank_without_dot: '2',
+              rank: '3.',
+              rank_with_rank: '3. Platz',
+              rank_without_dot: '3',
               assessment: 'Zweikampf - Frauen',
               assessment_with_gender: 'Zweikampf - Frauen',
               result_name: 'Zweikampf - Frauen',
@@ -119,9 +158,9 @@ RSpec.describe 'Score::DoubleEventResult' do
               time_long: '50,70 Sekunden',
               time_short: '50,70 s',
               time_without_seconds: '50,70',
-              rank: '3.',
-              rank_with_rank: '3. Platz',
-              rank_without_dot: '3',
+              rank: '4.',
+              rank_with_rank: '4. Platz',
+              rank_without_dot: '4',
               assessment: 'Zweikampf - Frauen',
               assessment_with_gender: 'Zweikampf - Frauen',
               result_name: 'Zweikampf - Frauen',
