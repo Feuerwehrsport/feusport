@@ -33,7 +33,7 @@ class Competitions::UserTeamAccessRequestsController < CompetitionNestedControll
     else
       @user_team_access_request.connect(current_user)
       CompetitionMailer.with(sender: @user_team_access_request.sender, user: current_user,
-                             competition: @user_team_access_request.competition)
+                             competition: @user_team_access_request.competition, team: @user_team_access_request.team)
                        .user_team_access_request_connected.deliver_later
       redirect_to competition_team_path(id: @team.id), notice: 'Du wurdest erfolgreich mit dieser Mannschaft verbunden.'
     end

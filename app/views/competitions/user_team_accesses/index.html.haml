@@ -16,7 +16,7 @@
                 %td= access.user.email
                 %td{ style: 'width: 60px; text-align: center' }
                   - if access.user != current_user
-                    = link_to(competition_access_path(id: access.id), class: 'btn btn-light btn-sm', data: { turbo_confirm: 'Zugang wirklich entfernen? Der Nutzer wird darüber per E-Mail informiert.', 'turbo-method': :delete }) do
+                    = link_to(competition_team_access_path(id: access.id), class: 'btn btn-light btn-sm', data: { turbo_confirm: 'Zugang wirklich entfernen? Der Nutzer wird darüber per E-Mail informiert.', 'turbo-method': :delete }) do
                       %i.far.fa-trash
       - else
         - c.body do
