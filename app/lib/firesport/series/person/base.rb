@@ -5,10 +5,6 @@ Firesport::Series::Person::Base = Struct.new(:round, :entity) do
 
   include Certificates::StorageSupport
 
-  def self.honor_rank
-    3
-  end
-
   def self.max_points(*)
     30
   end

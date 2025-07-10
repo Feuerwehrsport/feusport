@@ -5,10 +5,6 @@ Firesport::Series::Team::Base = Struct.new(:round, :team, :team_number) do
 
   include Certificates::StorageSupport
 
-  def self.honor_rank
-    3
-  end
-
   def self.points_for_result(rank, _time, round, gender:, double_rank_count: 0)
     [max_points(round, gender:) + 1 - rank - double_rank_count, 0].max
   end

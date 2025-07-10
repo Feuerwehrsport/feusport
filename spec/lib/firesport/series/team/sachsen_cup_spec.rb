@@ -19,4 +19,16 @@ RSpec.describe Firesport::Series::Team::SachsenCup do
       expect(described_class.points_for_result(12, nil, nil, gender: nil)).to eq 0
     end
   end
+
+  describe 'compare' do
+    it 'sorts' do
+      h = {
+        a: [[11, 1000], [11, 1000], [10, 1000]],
+        b: [[7, 1000], [8, 900], [10, 1000]],
+        c: [[8, 1000], [9, 800], [9, 1000]],
+        d: [[10, 1000], [10, 700], [10, 1000]],
+      }
+      expect(generate_series_team_participations(h).sort.map(&:team)).to eq %i[a d c b]
+    end
+  end
 end

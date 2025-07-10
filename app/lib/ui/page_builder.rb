@@ -34,12 +34,4 @@ Ui::PageBuilder = Struct.new(:options, :view, :block) do
     parts << title
     parts.compact_blank.join(' - ')
   end
-
-  private
-
-  def to_string(something)
-    return something.model_name.human(count: :many) if something.is_a?(Class) && something.respond_to?(:model_name)
-
-    something
-  end
 end
