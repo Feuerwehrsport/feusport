@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_07_03_203250) do
+ActiveRecord::Schema[7.2].define(version: 2025_07_13_145623) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
@@ -395,6 +395,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_07_03_203250) do
     t.boolean "show_best_of_run", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "starting_time"
     t.index ["competition_id"], name: "index_score_lists_on_competition_id"
   end
 

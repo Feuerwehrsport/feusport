@@ -5,6 +5,7 @@
 # Table name: competitions
 #
 #  id                      :uuid             not null, primary key
+#  change_people_until     :date
 #  date                    :date             not null
 #  description             :text
 #  flyer_content           :text

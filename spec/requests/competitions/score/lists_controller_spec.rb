@@ -484,4 +484,48 @@ RSpec.describe Score::List do
       expect(response).to have_http_status(:success)
     end
   end
+
+  describe 'uses date and starting_time' do
+    let!(:person_list) do
+      create(:score_list, competition:, results: [], assessments: [], name: 'Lauf 1')
+    end
+
+    it 'edits and shows' do
+      sign_in user
+
+      get competition_nested("score/lists/#{person_list.id}/edit")
+      patch competition_nested("score/lists/#{person_list.id}"),
+            params: {
+              score_list: {
+                date: '2024-01-29',
+              },
+            }
+      follow_redirect!
+
+      get competition_nested('score/lists')
+      expect(response).to match_html_fixture.with_affix('with-date')
+
+      patch competition_nested("score/lists/#{person_list.id}"),
+            params: {
+              score_list: {
+                starting_time_string: '13:09',
+              },
+            }
+      follow_redirect!
+
+      get competition_nested('score/lists')
+      expect(response).to match_html_fixture.with_affix('with-date-and-time')
+
+      patch competition_nested("score/lists/#{person_list.id}"),
+            params: {
+              score_list: {
+                date: '',
+              },
+            }
+      follow_redirect!
+
+      get competition_nested('score/lists')
+      expect(response).to match_html_fixture.with_affix('with-time')
+    end
+  end
 end

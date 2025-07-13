@@ -12,6 +12,7 @@
 #  shortcut                  :string(50)       default(""), not null
 #  show_best_of_run          :boolean          default(FALSE), not null
 #  show_multiple_assessments :boolean          default(TRUE), not null
+#  starting_time             :datetime
 #  track_count               :integer          default(2), not null
 #  created_at                :datetime         not null
 #  updated_at                :datetime         not null
@@ -80,6 +81,35 @@ class Score::List < ApplicationRecord
       TeamRelay
     else
       Team
+    end
+  end
+
+  def date=(new_date)
+    super
+    self.starting_time_string = starting_time_string
+  end
+
+  def starting_time_string=(string)
+    if string.blank?
+      self.starting_time = nil
+    else
+      relevant_date = date || competition.date
+      hour, minute = string.split(':')
+      self.starting_time = Time.zone.local(
+        relevant_date.year, relevant_date.month, relevant_date.day, hour.to_i, minute.to_i
+      )
+    end
+  end
+
+  def starting_time_string
+    starting_time&.strftime('%H:%M')
+  end
+
+  def showing_starting_time
+    if starting_time.present?
+      I18n.l(starting_time)
+    elsif date.present?
+      I18n.l(date)
     end
   end
 

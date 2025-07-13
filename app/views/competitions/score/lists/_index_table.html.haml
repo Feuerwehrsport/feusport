@@ -10,6 +10,8 @@
       %td
         = discipline_image(list.discipline&.key)
         = list.name
+      %td.hide-xs
+        = list.showing_starting_time
       %td.text-end
         - if can?(:edit, list) || !list.hidden?
           = btn_link_to(t('a.show'), competition_score_list_path(id: list.id))

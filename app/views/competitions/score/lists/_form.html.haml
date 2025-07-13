@@ -13,6 +13,7 @@
         = f.input :show_best_of_run, hint: 'Hilft bei der Entscheidung, wer Schläuche messen soll.'
       .col-md-6
         = f.input :date, html5: true, hint: 'Mit Angabe dieses Datums kann man das allgemeine Datum des Wettkampfes auf dem PDF überschreiben. Dies ist nützlich, wenn der Wettkampf über mehrer Tage geht.'
+        = f.input :starting_time_string, hint: 'Mit Angabe der Startzeit kann man dem Publikum signalisieren, wann es weiter geht. Es ist aber auch für die Berechnung bei Zeitgleichheit wichtig.', input_html: { type: 'time', step: '60' }
 - c.footer do
   = f.primary_button :submit
   = f.cancel_button(competition_score_results_path)

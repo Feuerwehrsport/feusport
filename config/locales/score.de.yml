@@ -19,6 +19,7 @@ de:
         shortcut: Abkürzung
         show_best_of_run: Beste des Laufs anzeigen
         show_multiple_assessments: Zeige Wertungen unter Mannschaft an
+        starting_time_string: Startzeit
       score/list_condition:
         assessments: Wertungen
         track: Bahn
