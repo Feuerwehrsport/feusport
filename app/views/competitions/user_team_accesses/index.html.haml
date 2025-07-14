@@ -26,7 +26,7 @@
         - c.primary_actions do |actions|
           - actions.link_to t('a.add'), new_competition_team_access_request_path, end_icon: :square_plus
 
-  - if @competition.user_team_access_requests.present?
+  - if @competition.user_team_access_requests.where(team: @team).present?
     .col-lg-8
       = card(UserTeamAccessRequest.model_name.human(count: :many)) do |c|
         - c.direct do
@@ -35,7 +35,7 @@
               %th= UserTeamAccessRequest.human_attribute_name(:created_at)
               %th= UserTeamAccessRequest.human_attribute_name(:email)
               %th
-            - @competition.user_team_access_requests.sort.each do |req|
+            - @competition.user_team_access_requests.where(team: @team).sort.each do |req|
               %tr
                 %td= l(req.created_at)
                 %td= req.email
