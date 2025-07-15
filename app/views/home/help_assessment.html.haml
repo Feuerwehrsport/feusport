@@ -1,0 +1,152 @@
+- content_for :page_header do
+  = page_title('Hilfe zur Bewertung')
+  %p.lead.mb-0 Hier erfährst du, wie die Bewertung zustande kommt.
+= render 'home/help_header'
+
+.row.g-4
+  .col-lg-12
+    = card_body('Erläuterung') do
+      %p Jede Ergebnisliste kann aus einer oder mehreren Startlisten bestehen. Die Startlisten haben dann entsprechend die gleiche Wertung und Disziplin. Wenn zwei Mannschaften bei einem Wettkampf die gleiche Leistung abliefern, ist in der #{link_to("WKO 2023", wko_path("2023"))} der Punkt 9 relevant. Nachfolgend wird für die einzelnen Punkte die Berechnung im System gezeigt:
+
+  .col-lg-6
+    = card_body('Zeitgleichheit bei der 100m-Hindernislauf und Hakenleitersteigen') do
+      .float-end
+        = discipline_image("hb")
+        = discipline_image("hl")
+      %p In folgender Reihenfolge berechnet das System die Platzierung:
+      %ol
+        %li Vergleich der Bestzeiten
+        %li Vergleich der zweitbesten Zeiten (usw.)
+        %li Anzahl gültiger Versuche
+        %li Bei weiterer Gleichheit: Wettkämpfer landen sie auf dem letzten Platz
+
+  .col-lg-6
+    = card_body('Erläuterung') do
+      %p Für gleiche Leistung beim 100m-Hindernislauf und dem Hakenleitersteigen ist in der #{link_to("WKO 2023", wko_path("2023"))} der Punkt 9.2 relevant.
+      %figure
+        %blockquote.blockquote
+          %p Die Wettkämpfer jeder Wettkampfmannschaft dürfen in der Regel je zwei Läufe machen, von denen der bessere gewertet wird. Ist nur ein Versuch gültig, geht dieser in die Wertung ein. Sind beide Versuche ungültig wird der Wettkämpfer am Ende des Starterfeldes platziert. [...]
+          %p Bei Zeitgleichheit zweier oder mehrerer Wettkämpfer beim besseren Lauf entscheidet die bessere Zeit im schlechteren Versuch über die bessere Platzierung. Hat einer der Wettkämpfer nur einen erfolgreichen Versuch aufzuweisen, ist diesem der zeitgleiche Wettkämpfer mit zwei erfolgreichen Versuchen vorzuziehen. Sind bei zwei oder mehreren Wettkämpfern auch die schlechteren Versuche zeitgleich, so werden diese auf dem gleichen Rang platziert.
+          %p [...]
+        %figcaption.blockquote-footer Quelle: WKO 2023, Punkt 9.2
+
+  .col-lg-6
+    = card_body('Zeitgleichheit beim Zweikampf') do
+      .float-end
+        = discipline_image("zk")
+      %p In folgender Reihenfolge berechnet das System die Platzierung:
+      %ol
+        %li Vergleich der Bestzeiten
+        %li Vergleich der zweitbesten Zeiten (usw.)
+        %li Anzahl gültiger Versuche
+        %li Bei weiterer Gleichheit: Wettkämpfer landen sie auf dem letzten Platz
+
+  .col-lg-6
+    = card_body('Erläuterung') do
+      %p Für gleiche Leistung beim Zweikampf ist in der #{link_to("WKO 2023", wko_path("2023"))} der Punkt 9.2 relevant.
+      %figure
+        %blockquote.blockquote
+          %p Die Zweikampfzeiten ergeben sich aus der Addition der Bestzeiten des jeweiligen Wettkämpfers in den Disziplinen 100 m-Hindernislauf und Hakenleitersteigen. Ist ein Wettkämpfer in einer dieser beiden Disziplinen nicht gestartet, wird er im Zweikampf nicht gewertet.
+          %p Bei Zeitgleichheit zweier oder mehrerer Wettkämpfer entscheidet die bessere Gesamtzeit der zweiten Versuche über die bessere Platzierung. Sind auch diese Zeiten gleich, der werden die Wettkämpfer auf dem gleichen Rang platziert.
+          %p Ergebnisse aus Finalläufen werden im Zweikampf nicht berücksichtigt.
+        %figcaption.blockquote-footer Quelle: WKO 2023, Punkt 9.2
+
+  .col-lg-6
+    = card_body('Zeitgleichheit bei Mannschaftswertungen in den Einzeldisziplinen') do
+      .float-end
+        = discipline_image("hb")
+        = discipline_image("hl")
+      %p In folgender Reihenfolge berechnet das System die Platzierung:
+      %ol
+        %li Vergleich der Bestzeiten der besten x Wettkämpfer
+        %li Vergleich der zweitbesten Zeiten (der x Wettkämpfer mit den Bestezeiten) (usw.)
+        %li Bei jeder Iteration wird die Mannschaft mit mehr gültigen Versuchen bevorzugt.
+        %li Bei gleichen Anzahl gültigen Versuchen wird die Summe der übrigen Zeiten herangezogen
+
+  .col-lg-6
+    = card_body('Erläuterung') do
+      %p Für gleiche Leistung bei Mannschaftswertungen in den Einzeldisziplinen ist in der #{link_to("WKO 2023", wko_path("2023"))} der Punkt 9.3 relevant.
+      %figure
+        %blockquote.blockquote
+          %p Von jeder Wettkampfmannschaft wird die ausgeschriebene Anzahl von Zeiten der besten Wettkämpfer für die Mannschaftswertung addiert. In die Mannschaftswertungen gehen die Ergebnisse eventuell ausgeschriebener Finalläufe nicht ein.
+          %p Erreichen zwei oder mehrere Wettkampfmannschaften in dieser Disziplin die gleiche Zeitsumme, so entscheidet die bessere Zeitsumme aus den schlechteren Versuchen der gleichen Wettkämpfer. Haben einer oder mehrere dieser Wettkämpfer nur einen erfolgreichen Versuch aufzuweisen, ist bei Zeitgleichheit bei den besseren Versuchen jener Wettkampfmannschaft der Vorrang zu geben, von der mehr der Wettkämpfer zwei erfolgreiche Versuche aufzuweisen haben.
+          %p Falls nicht mindestens die für die Mannschaftswertung ausgeschriebene Anzahl von Wettkämpfern wenigstens einen erfolgreichen Lauf haben, wird diese Wettkampfmannschaft in der Mannschaftswertung dieser Disziplin hinter die Mannschaften mit genügend gültigen Läufen platziert. Haben mehrere Mannschaften nicht genügend gültigen Zeiten, so entscheidet bei gleicher Anzahl gewerteter Zeiten die niedrigste Zeitsumme dieser über die bessere Platzierung.
+        %figcaption.blockquote-footer Quelle: WKO 2023, Punkt 9.3
+
+  .col-lg-6
+    = card_body('Zeitgleichheit bei der Feuerwehrhindernisstaffel 4x100m') do
+      .float-end
+        = discipline_image("fs")
+      %p In folgender Reihenfolge berechnet das System die Platzierung:
+      %ol
+        %li Vergleich der Bestzeiten
+        %li Haben beide Mannschaften ausschließlich ungültige Versuche, landen sie auf dem letzten Platz
+        %li Bei weiterer Gleichheit: frühere Startzeit (frühere Laufnummer und kleinere Bahnnummer)
+
+  .col-lg-6
+    = card_body('Erläuterung') do
+      %p Für gleiche Leistung bei der Feuerwehrhindernisstaffel ist in der #{link_to("WKO 2023", wko_path("2023"))} der Punkt 9.4 und 9.6 relevant.
+      %figure
+        %blockquote.blockquote
+          %p [...]
+          %p Bei Zeitgleichheit zweier oder mehrerer Staffeln wird in der Disziplinwertung diejenige auf den besseren Platz gesetzt, die früher gestartet ist und somit das Ergebnis zuerst erreichte.
+        %figcaption.blockquote-footer Quelle: WKO 2023, Punkt 9.4
+
+  .col-lg-6
+    = card_body('Zeitgleichheit beim Löschangriff und Gruppenstafette') do
+      .float-end
+        = discipline_image("la")
+        = discipline_image("gs")
+      %p In folgender Reihenfolge berechnet das System die Platzierung:
+      %ol
+        %li Vergleich der Bestzeiten
+        %li Vergleich der zweitbesten Zeiten (usw.)
+        %li Anzahl gültiger Versuche
+        %li Haben beide Mannschaften ausschließlich ungültige Versuche, landen sie auf dem letzten Platz
+        %li Bei weiterer Gleichheit: frühere Startzeit (frühere Laufnummer und kleinere Bahnnummer)
+
+  .col-lg-6
+    = card_body('Erläuterung') do
+      %p Für gleiche Leistung beim Löschangriff oder der Gruppenstafette ist in der #{link_to("WKO 2023", wko_path("2023"))} der Punkt 9.5 und 9.6 relevant.
+      %figure
+        %blockquote.blockquote
+          %p Die erreichte Zeit im Löschangriff ist für die Platzierung maßgebend.
+          %p Der Veranstalter kann zwei Versuche je Wettkampfmannschaft ausschreiben, von denen dann der bessere gewertet wird.
+          %p Erreichen zwei oder mehrere Wettkampfmannschaften die gleiche Zeit in ihrem besten Versuch, wird bei der Durchführung von zwei Läufen zur Ermittlung der besseren Platzierung die Zeit des anderen Laufes der Mannschaft mit einbezogen.
+          %p Wird nur ein Lauf durchgeführt, entscheidet bei Zeitgleichheit die frühere Startzeit und somit das früher erreichte Ergebnis über die besser Platzierung.
+        %figcaption.blockquote-footer Quelle: WKO 2023, Punkt 9.5
+
+  .col-lg-6
+    = card_body('Zeit- oder Punktgleichheit bei der Gesamtmannschaftswertung') do
+      .float-end
+        = discipline_image("hb")
+        = discipline_image("hl")
+        = discipline_image("fs")
+        = discipline_image("la")
+        = discipline_image("gs")
+      %p In folgender Reihenfolge berechnet das System die Platzierung:
+      %ol
+        %li Plätze werden zu Negativpunkten
+        %li Bei gleicher Punktzahl entscheidet die Bestzeit im Löschangriff
+        %li Ist auch diese gleich, werden die Mannschaften gleich platziert
+
+      %p Bei der Berechung der Platzierung gibt es Änderungen bei der Staffelreihenfolge:
+      %ol
+        %li Vergleich der Bestzeiten einer Mannschaft
+        %li Vergleich der zweitbesten Zeiten (usw.)
+        %li Bei weiterer Gleichheit: Mannschaften landen sie auf dem letzten Platz
+
+  .col-lg-6
+    = card_body('Erläuterung') do
+      %p Für gleiche Leistung bei der Gesamtmannschaftswertung ist in der #{link_to("WKO 2023", wko_path("2023"))} der Punkt 9.6 relevant.
+      %figure
+        %blockquote.blockquote
+          %p Zur Gesamtwertung der Mannschaften aus allen Disziplinen werden die Ränge, welche die Wettkampfmannschaften in den Mannschaftswertungen der vier einzelnen Disziplinen bei den Männern bzw. der fünf einzelnen Disziplinen bei den Frauen erreicht haben, zusammengezählt.
+          %p Bei Punktgleichheit entscheidet das bessere Ergebnis in der Disziplin Löschangriff. Herrscht auch hier Zeitgleichheit, werden die betreffenden Wettkampfmannschaften auf dem gleichen Rang platziert.
+          %p Die Mannschaft mit der geringsten Punktzahl ist Gewinner des Wettkampfes.
+          %p Die Zweikampfwertung wird in die Gesamtwertung nicht einbezogen.
+          %p In der Disziplin Feuerwehrhindernisstaffel 4x100m wird zur Ermittlung der Punktzahl für die Gesamtmannschaftswertung nur das Ergebnis der besser platzierten Staffeln einbezogen.
+          %p Bei Zeitgleichheit von zwei oder mehreren besseren Staffeln einer Mannschaft entscheidet das bessere Ergebnis der zweiten Staffel dieser Wettkampfmannschaft über die bessere Platzierung. Tritt auch hier Zeitgleichheit auf, werden die betreffenden Wettkampfmannschaften auf dem gleichen Rang platziert.
+          %p Beendet keine der beiden Staffeln einer Wettkampfmannschaft erfolgreich diese Disziplin, wird die betreffende Wettkampfmannschaft auf dem letzten Rang platziert. Bei mehreren auf dem letzten Rang gesetzten Wettkampfmannschaften ist die Rangzahl gleich der Zahl der angetretenen Wettkampfmannschaften.
+          %p Gleiches gilt bei ungültigen Ergebnissen im Löschangriff und in der Gruppenstafette.
+        %figcaption.blockquote-footer Quelle: WKO 2023, Punkt 9.6

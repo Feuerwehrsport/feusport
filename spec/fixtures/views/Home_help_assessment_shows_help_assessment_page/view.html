@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+<title>Wertung - Feuerwehrsport</title>
+<meta content='width=device-width,initial-scale=1' name='viewport'>
+
+
+<link rel="stylesheet" href="/assets/application.css" data-turbo-track="reload" />
+<script src="/assets/application.js" data-turbo-track="reload" defer="defer"></script>
+<link href='/assets/favicon.png' rel='icon' type='image/png'>
+</head>
+<body>
+<nav class='navbar navbar-expand-lg navbar-dark bg-accent1'>
+<div class='container'>
+<a class='navbar-brand' href='/' title='Startseite'>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 118.768 63.584"><path style="opacity:1;fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal" d="M300.963 438.191V676.51h134.892V438.19Zm37.654 10.72c1.208 0 10.278 3.737 15.729 6.482 17.06 8.588 31.878 22.142 36.004 32.93 3.755 9.82 1.252 20.302-6.998 29.306-2.158 2.354-8.192 8.023-13.41 12.598-18.208 15.96-23.791 25.714-23.717 41.43.039 8.242 1.67 14.101 6.08 21.818 1.529 2.676 2.596 4.846 2.37 4.822-2.249-.243-10.457-4.302-15.163-7.498-4.746-3.223-13.006-12.052-15.87-16.961-6.453-11.065-7.742-25.648-3.484-39.436.68-2.203 3.246-8.566 5.7-14.14 2.453-5.574 5.346-12.619 6.431-15.655l1.973-5.52 1.629 3.009c2.447 4.515 4.366 11.08 4.802 16.435l.389 4.782 3.455-3.456c3.909-3.907 6.364-8.514 8.293-15.566 1.93-7.054 1.89-20.303-.082-27.754-2.483-9.38-8.157-20.727-12.793-25.586-1.07-1.122-1.672-2.04-1.338-2.04zm67.14 54.777c1.084.018 8.336 10.533 11.32 16.484 5.179 10.332 6.158 14.695 6.21 27.627.039 9.514-.115 11.182-1.426 15.355-4.94 15.731-16.354 28.117-30.873 33.502-7.5 2.782-7.164 2.845-8.529-1.625-1.597-5.231-1.613-15.565-.027-20.863 1.533-5.13 6.464-14.768 11.802-23.07 8.425-13.103 11.27-19.93 12.493-29.98.553-4.55.493-6.622-.323-11.35-.549-3.182-.878-5.903-.732-6.05a.114.114 0 0 1 .086-.03z" transform="matrix(.26458 0 0 .26458 -38.091 -115.674)"/><path style="opacity:1;fill-opacity:1;stroke:none;stroke-width:.09827963;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" d="M38.356 134.406h35.688v44.569H38.356zM120.906 134.406h35.688v44.569h-35.688z" transform="translate(-38.091 -115.674)"/></svg>
+</a>
+<button aria-controls='navbar-supported-content' aria-expanded='false' aria-label='Menü anzeigen' class='navbar-toggler' data-bs-target='#navbar-supported-content' data-bs-toggle='collapse' type='button'>
+<span class='navbar-toggler-icon'></span>
+</button>
+<div class='collapse navbar-collapse' id='navbar-supported-content'>
+<ul class='navbar-nav me-auto mb-2 mb-lg-0'>
+<li class='nav-item'>
+<a class="nav-link" href="/competitions/creations/new">Wettkampf anlegen</a>
+</li>
+<li class='nav-item'>
+<a class="nav-link" href="/help">Hilfe</a>
+</li>
+<li class='nav-item'>
+<a class="nav-link" href="/info">Über feusport.de</a>
+</li>
+<li class='nav-item'>
+<a class="nav-link" href="/users/sign_in">Anmelden</a>
+</li>
+</ul>
+</div>
+
+</div>
+</nav>
+<header class='page-header'>
+<div class='container'>
+<h1>Hilfe zur Bewertung</h1>
+<p class='lead mb-0'>Hier erfährst du, wie die Bewertung zustande kommt.</p>
+<h1></h1>
+
+</div>
+</header>
+<header class='page-tabs'>
+<div class='container'>
+<div class='nav nav-pills nav-tabs-responsive'>
+<div class='nav-item'>
+<a class="nav-link" href="/help">Hilfe
+</a>
+</div>
+<div class='nav-item active'>
+<a class="nav-link active" aria-current="page" href="/help_assessment">Wertung
+</a>
+</div>
+<div class='nav-item'>
+<a class="nav-link" href="/disseminators">Multiplikatoren
+</a>
+</div>
+
+</div>
+
+</div>
+</header>
+<div class='container mt-4'>
+<div class='alert-flash'>
+</div>
+</div>
+<div class='pb-4 mt-4 container'>
+<div class='row g-4'>
+<div class='col-lg-12'>
+<div class='card'>
+<div class='card-header p-0'>
+<div class='d-flex justify-content-between'>
+<h4 class='m-0 py-2 ps-3'>Erläuterung</h4>
+</div>
+</div>
+<div class='card-body'>
+<p>Jede Ergebnisliste kann aus einer oder mehreren Startlisten bestehen. Die Startlisten haben dann entsprechend die gleiche Wertung und Disziplin. Wenn zwei Mannschaften bei einem Wettkampf die gleiche Leistung abliefern, ist in der <a href="/wko/2023">WKO 2023</a> der Punkt 9 relevant. Nachfolgend wird für die einzelnen Punkte die Berechnung im System gezeigt:</p>
+
+</div>
+</div>
+</div>
+<div class='col-lg-6'>
+<div class='card'>
+<div class='card-header p-0'>
+<div class='d-flex justify-content-between'>
+<h4 class='m-0 py-2 ps-3'>Zeitgleichheit bei der 100m-Hindernislauf und Hakenleitersteigen</h4>
+</div>
+</div>
+<div class='card-body'>
+<div class='float-end'>
+<img src="/assets/disciplines/hb.svg" width="20" height="20" />
+<img src="/assets/disciplines/hl.svg" width="20" height="20" />
+</div>
+<p>In folgender Reihenfolge berechnet das System die Platzierung:</p>
+<ol>
+<li>Vergleich der Bestzeiten</li>
+<li>Vergleich der zweitbesten Zeiten (usw.)</li>
+<li>Anzahl gültiger Versuche</li>
+<li>Bei weiterer Gleichheit: Wettkämpfer landen sie auf dem letzten Platz</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class='col-lg-6'>
+<div class='card'>
+<div class='card-header p-0'>
+<div class='d-flex justify-content-between'>
+<h4 class='m-0 py-2 ps-3'>Erläuterung</h4>
+</div>
+</div>
+<div class='card-body'>
+<p>Für gleiche Leistung beim 100m-Hindernislauf und dem Hakenleitersteigen ist in der <a href="/wko/2023">WKO 2023</a> der Punkt 9.2 relevant.</p>
+<figure>
+<blockquote class='blockquote'>
+<p>Die Wettkämpfer jeder Wettkampfmannschaft dürfen in der Regel je zwei Läufe machen, von denen der bessere gewertet wird. Ist nur ein Versuch gültig, geht dieser in die Wertung ein. Sind beide Versuche ungültig wird der Wettkämpfer am Ende des Starterfeldes platziert. [...]</p>
+<p>Bei Zeitgleichheit zweier oder mehrerer Wettkämpfer beim besseren Lauf entscheidet die bessere Zeit im schlechteren Versuch über die bessere Platzierung. Hat einer der Wettkämpfer nur einen erfolgreichen Versuch aufzuweisen, ist diesem der zeitgleiche Wettkämpfer mit zwei erfolgreichen Versuchen vorzuziehen. Sind bei zwei oder mehreren Wettkämpfern auch die schlechteren Versuche zeitgleich, so werden diese auf dem gleichen Rang platziert.</p>
+<p>[...]</p>
+</blockquote>
+<figcaption class='blockquote-footer'>Quelle: WKO 2023, Punkt 9.2</figcaption>
+</figure>
+
+</div>
+</div>
+</div>
+<div class='col-lg-6'>
+<div class='card'>
+<div class='card-header p-0'>
+<div class='d-flex justify-content-between'>
+<h4 class='m-0 py-2 ps-3'>Zeitgleichheit beim Zweikampf</h4>
+</div>
+</div>
+<div class='card-body'>
+<div class='float-end'>
+<img src="/assets/disciplines/zk.svg" width="20" height="20" />
+</div>
+<p>In folgender Reihenfolge berechnet das System die Platzierung:</p>
+<ol>
+<li>Vergleich der Bestzeiten</li>
+<li>Vergleich der zweitbesten Zeiten (usw.)</li>
+<li>Anzahl gültiger Versuche</li>
+<li>Bei weiterer Gleichheit: Wettkämpfer landen sie auf dem letzten Platz</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class='col-lg-6'>
+<div class='card'>
+<div class='card-header p-0'>
+<div class='d-flex justify-content-between'>
+<h4 class='m-0 py-2 ps-3'>Erläuterung</h4>
+</div>
+</div>
+<div class='card-body'>
+<p>Für gleiche Leistung beim Zweikampf ist in der <a href="/wko/2023">WKO 2023</a> der Punkt 9.2 relevant.</p>
+<figure>
+<blockquote class='blockquote'>
+<p>Die Zweikampfzeiten ergeben sich aus der Addition der Bestzeiten des jeweiligen Wettkämpfers in den Disziplinen 100 m-Hindernislauf und Hakenleitersteigen. Ist ein Wettkämpfer in einer dieser beiden Disziplinen nicht gestartet, wird er im Zweikampf nicht gewertet.</p>
+<p>Bei Zeitgleichheit zweier oder mehrerer Wettkämpfer entscheidet die bessere Gesamtzeit der zweiten Versuche über die bessere Platzierung. Sind auch diese Zeiten gleich, der werden die Wettkämpfer auf dem gleichen Rang platziert.</p>
+<p>Ergebnisse aus Finalläufen werden im Zweikampf nicht berücksichtigt.</p>
+</blockquote>
+<figcaption class='blockquote-footer'>Quelle: WKO 2023, Punkt 9.2</figcaption>
+</figure>
+
+</div>
+</div>
+</div>
+<div class='col-lg-6'>
+<div class='card'>
+<div class='card-header p-0'>
+<div class='d-flex justify-content-between'>
+<h4 class='m-0 py-2 ps-3'>Zeitgleichheit bei Mannschaftswertungen in den Einzeldisziplinen</h4>
+</div>
+</div>
+<div class='card-body'>
+<div class='float-end'>
+<img src="/assets/disciplines/hb.svg" width="20" height="20" />
+<img src="/assets/disciplines/hl.svg" width="20" height="20" />
+</div>
+<p>In folgender Reihenfolge berechnet das System die Platzierung:</p>
+<ol>
+<li>Vergleich der Bestzeiten der besten x Wettkämpfer</li>
+<li>Vergleich der zweitbesten Zeiten (der x Wettkämpfer mit den Bestezeiten) (usw.)</li>
+<li>Bei jeder Iteration wird die Mannschaft mit mehr gültigen Versuchen bevorzugt.</li>
+<li>Bei gleichen Anzahl gültigen Versuchen wird die Summe der übrigen Zeiten herangezogen</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class='col-lg-6'>
+<div class='card'>
+<div class='card-header p-0'>
+<div class='d-flex justify-content-between'>
+<h4 class='m-0 py-2 ps-3'>Erläuterung</h4>
+</div>
+</div>
+<div class='card-body'>
+<p>Für gleiche Leistung bei Mannschaftswertungen in den Einzeldisziplinen ist in der <a href="/wko/2023">WKO 2023</a> der Punkt 9.3 relevant.</p>
+<figure>
+<blockquote class='blockquote'>
+<p>Von jeder Wettkampfmannschaft wird die ausgeschriebene Anzahl von Zeiten der besten Wettkämpfer für die Mannschaftswertung addiert. In die Mannschaftswertungen gehen die Ergebnisse eventuell ausgeschriebener Finalläufe nicht ein.</p>
+<p>Erreichen zwei oder mehrere Wettkampfmannschaften in dieser Disziplin die gleiche Zeitsumme, so entscheidet die bessere Zeitsumme aus den schlechteren Versuchen der gleichen Wettkämpfer. Haben einer oder mehrere dieser Wettkämpfer nur einen erfolgreichen Versuch aufzuweisen, ist bei Zeitgleichheit bei den besseren Versuchen jener Wettkampfmannschaft der Vorrang zu geben, von der mehr der Wettkämpfer zwei erfolgreiche Versuche aufzuweisen haben.</p>
+<p>Falls nicht mindestens die für die Mannschaftswertung ausgeschriebene Anzahl von Wettkämpfern wenigstens einen erfolgreichen Lauf haben, wird diese Wettkampfmannschaft in der Mannschaftswertung dieser Disziplin hinter die Mannschaften mit genügend gültigen Läufen platziert. Haben mehrere Mannschaften nicht genügend gültigen Zeiten, so entscheidet bei gleicher Anzahl gewerteter Zeiten die niedrigste Zeitsumme dieser über die bessere Platzierung.</p>
+</blockquote>
+<figcaption class='blockquote-footer'>Quelle: WKO 2023, Punkt 9.3</figcaption>
+</figure>
+
+</div>
+</div>
+</div>
+<div class='col-lg-6'>
+<div class='card'>
+<div class='card-header p-0'>
+<div class='d-flex justify-content-between'>
+<h4 class='m-0 py-2 ps-3'>Zeitgleichheit bei der Feuerwehrhindernisstaffel 4x100m</h4>
+</div>
+</div>
+<div class='card-body'>
+<div class='float-end'>
+<img src="/assets/disciplines/fs.svg" width="20" height="20" />
+</div>
+<p>In folgender Reihenfolge berechnet das System die Platzierung:</p>
+<ol>
+<li>Vergleich der Bestzeiten</li>
+<li>Haben beide Mannschaften ausschließlich ungültige Versuche, landen sie auf dem letzten Platz</li>
+<li>Bei weiterer Gleichheit: frühere Startzeit (frühere Laufnummer und kleinere Bahnnummer)</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class='col-lg-6'>
+<div class='card'>
+<div class='card-header p-0'>
+<div class='d-flex justify-content-between'>
+<h4 class='m-0 py-2 ps-3'>Erläuterung</h4>
+</div>
+</div>
+<div class='card-body'>
+<p>Für gleiche Leistung bei der Feuerwehrhindernisstaffel ist in der <a href="/wko/2023">WKO 2023</a> der Punkt 9.4 und 9.6 relevant.</p>
+<figure>
+<blockquote class='blockquote'>
+<p>[...]</p>
+<p>Bei Zeitgleichheit zweier oder mehrerer Staffeln wird in der Disziplinwertung diejenige auf den besseren Platz gesetzt, die früher gestartet ist und somit das Ergebnis zuerst erreichte.</p>
+</blockquote>
+<figcaption class='blockquote-footer'>Quelle: WKO 2023, Punkt 9.4</figcaption>
+</figure>
+
+</div>
+</div>
+</div>
+<div class='col-lg-6'>
+<div class='card'>
+<div class='card-header p-0'>
+<div class='d-flex justify-content-between'>
+<h4 class='m-0 py-2 ps-3'>Zeitgleichheit beim Löschangriff und Gruppenstafette</h4>
+</div>
+</div>
+<div class='card-body'>
+<div class='float-end'>
+<img src="/assets/disciplines/la.svg" width="20" height="20" />
+<img src="/assets/disciplines/gs.svg" width="20" height="20" />
+</div>
+<p>In folgender Reihenfolge berechnet das System die Platzierung:</p>
+<ol>
+<li>Vergleich der Bestzeiten</li>
+<li>Vergleich der zweitbesten Zeiten (usw.)</li>
+<li>Anzahl gültiger Versuche</li>
+<li>Haben beide Mannschaften ausschließlich ungültige Versuche, landen sie auf dem letzten Platz</li>
+<li>Bei weiterer Gleichheit: frühere Startzeit (frühere Laufnummer und kleinere Bahnnummer)</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class='col-lg-6'>
+<div class='card'>
+<div class='card-header p-0'>
+<div class='d-flex justify-content-between'>
+<h4 class='m-0 py-2 ps-3'>Erläuterung</h4>
+</div>
+</div>
+<div class='card-body'>
+<p>Für gleiche Leistung beim Löschangriff oder der Gruppenstafette ist in der <a href="/wko/2023">WKO 2023</a> der Punkt 9.5 und 9.6 relevant.</p>
+<figure>
+<blockquote class='blockquote'>
+<p>Die erreichte Zeit im Löschangriff ist für die Platzierung maßgebend.</p>
+<p>Der Veranstalter kann zwei Versuche je Wettkampfmannschaft ausschreiben, von denen dann der bessere gewertet wird.</p>
+<p>Erreichen zwei oder mehrere Wettkampfmannschaften die gleiche Zeit in ihrem besten Versuch, wird bei der Durchführung von zwei Läufen zur Ermittlung der besseren Platzierung die Zeit des anderen Laufes der Mannschaft mit einbezogen.</p>
+<p>Wird nur ein Lauf durchgeführt, entscheidet bei Zeitgleichheit die frühere Startzeit und somit das früher erreichte Ergebnis über die besser Platzierung.</p>
+</blockquote>
+<figcaption class='blockquote-footer'>Quelle: WKO 2023, Punkt 9.5</figcaption>
+</figure>
+
+</div>
+</div>
+</div>
+<div class='col-lg-6'>
+<div class='card'>
+<div class='card-header p-0'>
+<div class='d-flex justify-content-between'>
+<h4 class='m-0 py-2 ps-3'>Zeit- oder Punktgleichheit bei der Gesamtmannschaftswertung</h4>
+</div>
+</div>
+<div class='card-body'>
+<div class='float-end'>
+<img src="/assets/disciplines/hb.svg" width="20" height="20" />
+<img src="/assets/disciplines/hl.svg" width="20" height="20" />
+<img src="/assets/disciplines/fs.svg" width="20" height="20" />
+<img src="/assets/disciplines/la.svg" width="20" height="20" />
+<img src="/assets/disciplines/gs.svg" width="20" height="20" />
+</div>
+<p>In folgender Reihenfolge berechnet das System die Platzierung:</p>
+<ol>
+<li>Plätze werden zu Negativpunkten</li>
+<li>Bei gleicher Punktzahl entscheidet die Bestzeit im Löschangriff</li>
+<li>Ist auch diese gleich, werden die Mannschaften gleich platziert</li>
+</ol>
+<p>Bei der Berechung der Platzierung gibt es Änderungen bei der Staffelreihenfolge:</p>
+<ol>
+<li>Vergleich der Bestzeiten einer Mannschaft</li>
+<li>Vergleich der zweitbesten Zeiten (usw.)</li>
+<li>Bei weiterer Gleichheit: Mannschaften landen sie auf dem letzten Platz</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class='col-lg-6'>
+<div class='card'>
+<div class='card-header p-0'>
+<div class='d-flex justify-content-between'>
+<h4 class='m-0 py-2 ps-3'>Erläuterung</h4>
+</div>
+</div>
+<div class='card-body'>
+<p>Für gleiche Leistung bei der Gesamtmannschaftswertung ist in der <a href="/wko/2023">WKO 2023</a> der Punkt 9.6 relevant.</p>
+<figure>
+<blockquote class='blockquote'>
+<p>Zur Gesamtwertung der Mannschaften aus allen Disziplinen werden die Ränge, welche die Wettkampfmannschaften in den Mannschaftswertungen der vier einzelnen Disziplinen bei den Männern bzw. der fünf einzelnen Disziplinen bei den Frauen erreicht haben, zusammengezählt.</p>
+<p>Bei Punktgleichheit entscheidet das bessere Ergebnis in der Disziplin Löschangriff. Herrscht auch hier Zeitgleichheit, werden die betreffenden Wettkampfmannschaften auf dem gleichen Rang platziert.</p>
+<p>Die Mannschaft mit der geringsten Punktzahl ist Gewinner des Wettkampfes.</p>
+<p>Die Zweikampfwertung wird in die Gesamtwertung nicht einbezogen.</p>
+<p>In der Disziplin Feuerwehrhindernisstaffel 4x100m wird zur Ermittlung der Punktzahl für die Gesamtmannschaftswertung nur das Ergebnis der besser platzierten Staffeln einbezogen.</p>
+<p>Bei Zeitgleichheit von zwei oder mehreren besseren Staffeln einer Mannschaft entscheidet das bessere Ergebnis der zweiten Staffel dieser Wettkampfmannschaft über die bessere Platzierung. Tritt auch hier Zeitgleichheit auf, werden die betreffenden Wettkampfmannschaften auf dem gleichen Rang platziert.</p>
+<p>Beendet keine der beiden Staffeln einer Wettkampfmannschaft erfolgreich diese Disziplin, wird die betreffende Wettkampfmannschaft auf dem letzten Rang platziert. Bei mehreren auf dem letzten Rang gesetzten Wettkampfmannschaften ist die Rangzahl gleich der Zahl der angetretenen Wettkampfmannschaften.</p>
+<p>Gleiches gilt bei ungültigen Ergebnissen im Löschangriff und in der Gruppenstafette.</p>
+</blockquote>
+<figcaption class='blockquote-footer'>Quelle: WKO 2023, Punkt 9.6</figcaption>
+</figure>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

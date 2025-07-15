@@ -17,6 +17,7 @@ class HomeController < ApplicationController
 
   def info; end
   def help; end
+  def help_assessment; end
 
   def changelogs
     @changelogs = Changelog.reorder(date: :desc)
