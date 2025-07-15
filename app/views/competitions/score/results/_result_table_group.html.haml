@@ -1,7 +1,7 @@
 %table.table.table-bordered
   %tr
     - if places
-      %th.hide-xs
+      %th
     %th Mannschaft
     - if result.multi_result_method_disabled?
       %th Bestzeit
@@ -20,7 +20,7 @@
   - rows.each do |row|
     %tr
       - if places
-        %td.hide-xs #{row.place}.
+        %td #{row.place}.
       %td
         = row.entity.full_name
         = team_badge(row.entity&.fire_sport_statistics_team, row.entity.band.gender)

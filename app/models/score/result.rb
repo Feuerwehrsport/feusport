@@ -112,6 +112,10 @@ class Score::Result < ApplicationRecord
     @rows ||= generate_rows.sort
   end
 
+  def starting_time_required?
+    rows.any?(&:starting_time_required?)
+  end
+
   def out_of_competition_rows
     generate_rows if @out_of_competition_rows.nil?
     @out_of_competition_rows

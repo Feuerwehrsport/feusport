@@ -1,0 +1,4 @@
+competitions/score/results starting_time is required shows a warning
+
+request
+html

@@ -289,21 +289,143 @@ RSpec.describe Score::Result do
       end
     end
 
-    context 'when entries similar' do
-      let!(:list1) { create_score_list(result, person1 => 1912, person2 => 1912) }
-      let!(:list2) { create_score_list(result, person2 => 1913) }
+    context 'when result is a single_discipline' do
+      context 'when entries all invalid' do
+        let!(:list1) { create_score_list(result, person1 => nil, person2 => nil) }
+        let!(:list2) { create_score_list(result, person1 => nil, person2 => nil) }
 
-      it 'return results in correct order' do
-        rows = result.rows
-        expect(rows.count).to eq 2
+        it 'get the same place' do
+          rows = result.rows
+          expect(rows.first <=> rows.second).to eq 0
 
-        expect(rows.first.entity).to eq person2
-        expect(rows.first.result_entry_from(list1).time).to eq 1912
-        expect(rows.first.result_entry_from(list2).time).to eq 1913
+          # starting time is ignored
+          list1.update!(starting_time_string: '00:00')
+          list2.update!(starting_time_string: '01:00')
 
-        expect(rows.second.entity).to eq person1
-        expect(rows.second.result_entry_from(list1).time).to eq 1912
-        expect(rows.second.result_entry_from(list2)).to be_nil
+          rows = described_class.find(result.id).rows
+          expect(rows.first <=> rows.second).to eq 0
+        end
+      end
+
+      context 'when first entries similar' do
+        let!(:list1) { create_score_list(result, person1 => 1912, person2 => 1912) }
+        let!(:list2) { create_score_list(result, person2 => 1913) }
+
+        it 'return results in correct order' do
+          rows = result.rows
+          expect(rows.count).to eq 2
+
+          expect(rows.first.entity).to eq person2
+          expect(rows.first.result_entry_from(list1).time).to eq 1912
+          expect(rows.first.result_entry_from(list2).time).to eq 1913
+
+          expect(rows.second.entity).to eq person1
+          expect(rows.second.result_entry_from(list1).time).to eq 1912
+          expect(rows.second.result_entry_from(list2)).to be_nil
+        end
+      end
+
+      context 'when all entries similar' do
+        let!(:list1) { create_score_list(result, person1 => 1912, person2 => 1913) }
+        let!(:list2) { create_score_list(result, person1 => 1913, person2 => 1912) }
+
+        it 'return results in correct order' do
+          rows = result.rows
+          expect(rows.count).to eq 2
+          expect(rows.first <=> rows.second).to eq 0
+
+          # starting time is ignored
+          list1.update!(starting_time_string: '00:00')
+          list2.update!(starting_time_string: '01:00')
+
+          rows = described_class.find(result.id).rows
+          expect(rows.first <=> rows.second).to eq 0
+        end
+      end
+    end
+
+    context 'when result is a group_discipline' do
+      let(:la) { create(:discipline, :la, competition:) }
+      let(:assessment) { create(:assessment, competition:, band:, discipline: la) }
+      let(:result) { create(:score_result, competition:, assessment:) }
+      let(:team1) { create(:team, competition:, band:) }
+      let(:team2) { create(:team, competition:, band:) }
+
+      context 'when entries all invalid' do
+        let!(:list1) { create_score_list(result, team1 => nil, team2 => nil) }
+        let!(:list2) { create_score_list(result, team1 => nil, team2 => nil) }
+
+        it 'get the same place' do
+          rows = result.rows
+          expect(rows.first <=> rows.second).to eq 0
+
+          # starting time is ignored
+          list1.update!(starting_time_string: '00:00')
+          list2.update!(starting_time_string: '01:00')
+
+          rows = described_class.find(result.id).rows
+          expect(rows.first <=> rows.second).to eq 0
+        end
+      end
+
+      context 'when first entries similar' do
+        let!(:list1) { create_score_list(result, team1 => 1912, team2 => 1912) }
+        let!(:list2) { create_score_list(result, team2 => 1913) }
+
+        it 'return results in correct order' do
+          rows = result.rows
+          expect(rows.count).to eq 2
+
+          expect(rows.first.entity).to eq team2
+          expect(rows.first.result_entry_from(list1).time).to eq 1912
+          expect(rows.first.result_entry_from(list2).time).to eq 1913
+
+          expect(rows.second.entity).to eq team1
+          expect(rows.second.result_entry_from(list1).time).to eq 1912
+          expect(rows.second.result_entry_from(list2)).to be_nil
+        end
+      end
+
+      context 'when all entries similar' do
+        let!(:list1) { create_score_list(result, team1 => 1912, team2 => 1913) }
+        let!(:list2) { create_score_list(result, team1 => 1913, team2 => 1912) }
+
+        it 'return results in correct order' do
+          rows = result.rows
+          expect(rows.count).to eq 2
+          expect(rows.first <=> rows.second).to eq 0
+
+          # starting time is used
+          list1.update!(starting_time_string: '00:00')
+          list2.update!(starting_time_string: '01:00')
+
+          rows = described_class.find(result.id).rows
+          expect(rows.first <=> rows.second).to eq(-1)
+
+          expect(rows.first.entity).to eq team1
+          expect(rows.first.result_entry_from(list1).time).to eq 1912
+          expect(rows.first.result_entry_from(list2).time).to eq 1913
+
+          expect(rows.second.entity).to eq team2
+          expect(rows.second.result_entry_from(list1).time).to eq 1913
+          expect(rows.second.result_entry_from(list2).time).to eq 1912
+        end
+      end
+
+      context 'when all entries similar in same list' do
+        let!(:list1) { create_score_list(result, team1 => 1912, team2 => 1912) }
+
+        it 'return results in correct order' do
+          rows = result.rows
+          expect(rows.count).to eq 2
+          expect(rows.first <=> rows.second).to eq(-1)
+
+          expect(rows.first.entity).to eq team1
+          expect(rows.first.result_entry_from(list1).time).to eq 1912
+
+          expect(rows.second.entity).to eq team2
+          expect(rows.second.result_entry_from(list1).time).to eq 1912
+        end
       end
     end
   end

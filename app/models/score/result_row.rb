@@ -4,7 +4,7 @@ Score::ResultRow = Struct.new(:entity, :result) do
   include Score::ResultRowSupport
   attr_reader :list_entries
 
-  delegate :calculation_method, :competition, to: :result
+  delegate :calculation_method, :competition, :single_discipline?, to: :result
 
   def add_list(list_entry)
     @list_entries ||= []
@@ -47,6 +47,10 @@ Score::ResultRow = Struct.new(:entity, :result) do
     true
   end
 
+  def starting_time_required?
+    @starting_time_required == true
+  end
+
   def display
     "#{entity.full_name} (#{result_entry.long_human_time})"
   end
@@ -63,13 +67,47 @@ Score::ResultRow = Struct.new(:entity, :result) do
       end
     else
       both = [result_entries, other.result_entries].map(&:count)
+
+      # für die Mindestanzahl der Versuche durchgehen
       (0..(both.min - 1)).each do |i|
         compare = result_entries[i] <=> other.result_entries[i]
-        next if compare.zero?
+        next if compare.zero? # nächster Versuch, da dieser gleich
 
-        return compare
+        return compare # Einer war besser
       end
-      both.last <=> both.first
+
+      # Jetzt sind alle Versuche gleich
+
+      # Wer hat mehr Versuche?
+      compare = both.last <=> both.first
+      return compare unless compare.zero?
+
+      # Die gleiche Anzahl der Versuche
+
+      # Beide alle Versuche ungültig?
+      return 0 unless result_entries[0].result_valid? # dann beide gleich schlecht
+
+      # Einzeldisziplin => Gleichstand
+      return 0 if single_discipline?
+
+      # Gruppendisziplin => Wer war zuerst dran
+
+      # Wenn die gleiche Liste, dann anhand der Startposition
+      if result_entries[0].list == other.result_entries[0].list
+        position = result_entries[0].track * result_entries[0].run
+        other_position = other.result_entries[0].track * other.result_entries[0].run
+        return position <=> other_position
+      end
+
+      # Ansonsten die zeitliche Reihenfolge der Liste
+      starting_time = result_entries[0].list.starting_time
+      other_starting_time = other.result_entries[0].list.starting_time
+      if starting_time.nil? || other_starting_time.nil?
+        @starting_time_required = true
+        0
+      else
+        starting_time <=> other_starting_time
+      end
     end
   end
 end

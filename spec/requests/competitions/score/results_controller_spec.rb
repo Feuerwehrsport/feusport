@@ -192,4 +192,28 @@ RSpec.describe 'competitions/score/results' do
       expect(response).to match_html_fixture
     end
   end
+
+  describe 'starting_time is required' do
+    let(:la) { create(:discipline, :la, competition:) }
+    let(:assessment) { create(:assessment, competition:, band: female, discipline: la) }
+    let(:result) { create(:score_result, competition:, assessment:) }
+    let(:team1) { create(:team, competition:, band: female) }
+    let(:team2) { create(:team, competition:, band: female) }
+
+    let!(:list1) { create_score_list(result, team1 => 1912, team2 => 1913) }
+    let!(:list2) { create_score_list(result, team1 => 1913, team2 => 1912) }
+
+    it 'shows a warning' do
+      sign_in user
+
+      get competition_nested("score/results/#{result.id}")
+      expect(response).to match_html_fixture.with_affix('with-warning')
+
+      list1.update!(starting_time_string: '00:00')
+      list2.update!(starting_time_string: '01:00')
+
+      get competition_nested("score/results/#{result.id}")
+      expect(response).to match_html_fixture.with_affix('without-warning')
+    end
+  end
 end

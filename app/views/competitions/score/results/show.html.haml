@@ -7,7 +7,7 @@
 
     - if can?(:edit, @result)
       .col-lg-4
-        = card(t('a.actions')) do |c|
+        = card(t('a.actions'), class: 'mb-3') do |c|
           - c.primary_actions do |actions|
             - actions.link_to 'Übersicht', { action: :index }, end_icon: :list
           - c.body do
@@ -19,5 +19,14 @@
               = btn_link_to 'Löschen', { action: :destroy }, data: { turbo_method: 'delete', turbo_confirm: 'Ergebnisliste wirklich löschen? Die zugehörigen Startlisten werden verändert!' }
           - if can?(:edit, @result) && @competition.certificates_templates.exists?
             = btn_link_to 'Urkunden', new_competition_certificates_list_path(score_result_id: @result.id)
+
+        - if @result.starting_time_required?
+          = card('Startzeit benötigt', class: 'mb-3 text-bg-warning') do |c|
+            - c.body do
+              %p Zwei Mannschaften haben die gleiche Zeit erreicht. Um eine Bewertung vornehmen zu können, musst du die verwendeten Startlisten in eine zeitliche Abfolge bringen.
+              .d-grid.gap-2
+                = btn_link_to('Hilfe', help_assessment_path)
+                - @result.lists.each do |list|
+                  = btn_link_to("#{list.name} bearbeiten", edit_competition_score_list_path(id: list.id))
 
     = render 'result_show', result: @result
