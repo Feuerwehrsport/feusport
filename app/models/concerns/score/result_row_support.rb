@@ -15,4 +15,8 @@ module Score::ResultRowSupport
   def place=(new_place)
     @place = new_place
   end
+
+  def starting_time_required?
+    false
+  end
 end

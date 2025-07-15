@@ -1,25 +1,25 @@
 # frozen_string_literal: true
 
-Score::MultiResultRow = Struct.new(:entity, :result) do
+class Score::MultiResultRow
   include Score::ResultRowSupport
-  delegate :competition, to: :result
-  attr_reader :result_rows
+
+  attr_reader :entity, :result, :result_rows
+
+  delegate :competition, :results, to: :result
+
+  def initialize(entity, result)
+    @entity = entity
+    @result = result
+    @result_rows = []
+  end
 
   def add_result_row(result_row)
-    @result_rows ||= []
     @result_rows.push(result_row)
+    @sorted_result_rows = nil
   end
 
   def best_result_entry
     @best_result_entry ||= Score::ResultEntry.new(time_with_valid_calculation: calculate)
-  end
-
-  def calculate(position: 0)
-    times = result_rows.map { |row| (row.result_entries[position] || Score::ResultEntry.invalid).compare_time }
-    return times.sum if result.multi_result_method_sum_of_best?
-    return times.min if result.multi_result_method_best?
-
-    Score::ResultEntry.invalid.compare_time
   end
 
   def assessment_type
@@ -27,7 +27,7 @@ Score::MultiResultRow = Struct.new(:entity, :result) do
   end
 
   def valid?
-    true
+    best_result_entry.result_valid?
   end
 
   def result_entry
@@ -35,42 +35,34 @@ Score::MultiResultRow = Struct.new(:entity, :result) do
   end
 
   def result_entry_from(result, position: 0)
-    entries = result_rows.find { |row| row.result == result }&.result_entries || []
+    entries = sorted_result_rows.find { |row| row.result == result }&.result_entries || []
     entries[position]
   end
 
   def <=>(other)
     compare = best_result_entry <=> other.best_result_entry
-    return compare if compare != 0
+    return compare unless compare.zero?
 
-    both = [
-      result_rows.map { |rr| rr.result_entries.count }.min,
-      other.result_rows.map { |rr| rr.result_entries.count }.min,
-    ]
-    (1..(both.max - 1)).each do |i|
-      compare = calculate(position: i) <=> other.calculate(position: i)
+    i = -1
+    loop do
+      i += 1
+      return 0 if i > 100 # to ensure
+
+      time = calculate(position: i)
+      other_time = other.calculate(position: i)
+
+      return 0 if time == Firesport::INVALID_TIME && other_time == Firesport::INVALID_TIME
+
+      compare = time <=> other_time
       next if compare.zero?
 
       return compare
     end
-    both.last <=> both.first
-  end
-
-  def result_rows
-    @result_rows.presence || []
   end
 
   protected
 
-  def climbing_hook_ladder_time
-    time_by_discipline('hl')
-  end
-
-  def obstacle_course_time
-    time_by_discipline('hb')
-  end
-
-  def time_by_discipline(discipline_key)
-    result_rows.find { |row| row.result.discipline.key == discipline_key }&.best_result_entry
+  def sorted_result_rows
+    @sorted_result_rows ||= result_rows.sort
   end
 end

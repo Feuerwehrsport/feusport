@@ -162,23 +162,22 @@ class Score::Result < ApplicationRecord
   end
 
   def generate_multi_rows
+    @out_of_competition_rows = []
+
+    if multi_result_method_sum_of_best?
+      result_row_class = Score::MultiResultSumOfBestRow
+    elsif multi_result_method_best?
+      result_row_class = Score::MultiResultBestRow
+    end
+
     rows = {}
     results.each do |result|
-      result.rows.select(&:valid?).each do |result_row|
-        if rows[result_row.entity.id].nil?
-          rows[result_row.entity.id] = Score::MultiResultRow.new(result_row.entity, self)
-        end
+      result.rows.each do |result_row|
+        rows[result_row.entity.id] ||= result_row_class.new(result_row.entity, self)
         rows[result_row.entity.id].add_result_row(result_row)
       end
     end
-    @out_of_competition_rows = []
-    if multi_result_method_sum_of_best?
-      rows.values.select { |row| row.result_rows.count == results.count }
-    elsif multi_result_method_best?
-      rows.values
-    else
-      []
-    end
+    result_row_class.select(rows.values)
   end
 
   def group_result

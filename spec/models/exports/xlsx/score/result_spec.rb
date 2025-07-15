@@ -82,6 +82,7 @@ RSpec.describe Exports::Xlsx::Score::Result do
               ['1.', 'Alfred2', 'Meier2', nil, '20,20', '19,11', '39,31'],
               ['2.', 'Alfred1', 'Meier1', nil, '19,12', '20,20', '39,32'],
               ['3.', 'Alfred3', 'Meier3', nil, '20,40', '30,30', '50,70'],
+              ['4.', 'Alfred4', 'Meier4', nil, 'o.W.', '19,99', 'o.W.'],
             ],
           )
           expect(export.filename).to eq 'zweikampf-frauen.xlsx'
