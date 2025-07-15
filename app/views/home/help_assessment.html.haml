@@ -6,13 +6,13 @@
 .row.g-4
   .col-lg-12
     = card_body('Erläuterung') do
-      %p Jede Ergebnisliste kann aus einer oder mehreren Startlisten bestehen. Die Startlisten haben dann entsprechend die gleiche Wertung und Disziplin. Wenn zwei Mannschaften bei einem Wettkampf die gleiche Leistung abliefern, ist in der #{link_to("WKO 2023", wko_path("2023"))} der Punkt 9 relevant. Nachfolgend wird für die einzelnen Punkte die Berechnung im System gezeigt:
+      %p Jede Ergebnisliste kann aus einer oder mehreren Startlisten bestehen. Die Startlisten haben dann entsprechend die gleiche Wertung und Disziplin. Wenn zwei Mannschaften bei einem Wettkampf die gleiche Leistung abliefern, ist in der #{link_to('WKO 2023', wko_path('2023'))} der Punkt 9 relevant. Nachfolgend wird für die einzelnen Punkte die Berechnung im System gezeigt:
 
   .col-lg-6
     = card_body('Zeitgleichheit bei der 100m-Hindernislauf und Hakenleitersteigen') do
       .float-end
-        = discipline_image("hb")
-        = discipline_image("hl")
+        = discipline_image('hb')
+        = discipline_image('hl')
       %p In folgender Reihenfolge berechnet das System die Platzierung:
       %ol
         %li Vergleich der Bestzeiten
@@ -22,7 +22,7 @@
 
   .col-lg-6
     = card_body('Erläuterung') do
-      %p Für gleiche Leistung beim 100m-Hindernislauf und dem Hakenleitersteigen ist in der #{link_to("WKO 2023", wko_path("2023"))} der Punkt 9.2 relevant.
+      %p Für gleiche Leistung beim 100m-Hindernislauf und dem Hakenleitersteigen ist in der #{link_to('WKO 2023', wko_path('2023'))} der Punkt 9.2 relevant.
       %figure
         %blockquote.blockquote
           %p Die Wettkämpfer jeder Wettkampfmannschaft dürfen in der Regel je zwei Läufe machen, von denen der bessere gewertet wird. Ist nur ein Versuch gültig, geht dieser in die Wertung ein. Sind beide Versuche ungültig wird der Wettkämpfer am Ende des Starterfeldes platziert. [...]
@@ -33,7 +33,7 @@
   .col-lg-6
     = card_body('Zeitgleichheit beim Zweikampf') do
       .float-end
-        = discipline_image("zk")
+        = discipline_image('zk')
       %p In folgender Reihenfolge berechnet das System die Platzierung:
       %ol
         %li Vergleich der Bestzeiten
@@ -43,7 +43,7 @@
 
   .col-lg-6
     = card_body('Erläuterung') do
-      %p Für gleiche Leistung beim Zweikampf ist in der #{link_to("WKO 2023", wko_path("2023"))} der Punkt 9.2 relevant.
+      %p Für gleiche Leistung beim Zweikampf ist in der #{link_to('WKO 2023', wko_path('2023'))} der Punkt 9.2 relevant.
       %figure
         %blockquote.blockquote
           %p Die Zweikampfzeiten ergeben sich aus der Addition der Bestzeiten des jeweiligen Wettkämpfers in den Disziplinen 100 m-Hindernislauf und Hakenleitersteigen. Ist ein Wettkämpfer in einer dieser beiden Disziplinen nicht gestartet, wird er im Zweikampf nicht gewertet.
@@ -54,8 +54,8 @@
   .col-lg-6
     = card_body('Zeitgleichheit bei Mannschaftswertungen in den Einzeldisziplinen') do
       .float-end
-        = discipline_image("hb")
-        = discipline_image("hl")
+        = discipline_image('hb')
+        = discipline_image('hl')
       %p In folgender Reihenfolge berechnet das System die Platzierung:
       %ol
         %li Vergleich der Bestzeiten der besten x Wettkämpfer
@@ -65,7 +65,7 @@
 
   .col-lg-6
     = card_body('Erläuterung') do
-      %p Für gleiche Leistung bei Mannschaftswertungen in den Einzeldisziplinen ist in der #{link_to("WKO 2023", wko_path("2023"))} der Punkt 9.3 relevant.
+      %p Für gleiche Leistung bei Mannschaftswertungen in den Einzeldisziplinen ist in der #{link_to('WKO 2023', wko_path('2023'))} der Punkt 9.3 relevant.
       %figure
         %blockquote.blockquote
           %p Von jeder Wettkampfmannschaft wird die ausgeschriebene Anzahl von Zeiten der besten Wettkämpfer für die Mannschaftswertung addiert. In die Mannschaftswertungen gehen die Ergebnisse eventuell ausgeschriebener Finalläufe nicht ein.
@@ -76,7 +76,7 @@
   .col-lg-6
     = card_body('Zeitgleichheit bei der Feuerwehrhindernisstaffel 4x100m') do
       .float-end
-        = discipline_image("fs")
+        = discipline_image('fs')
       %p In folgender Reihenfolge berechnet das System die Platzierung:
       %ol
         %li Vergleich der Bestzeiten
@@ -85,7 +85,7 @@
 
   .col-lg-6
     = card_body('Erläuterung') do
-      %p Für gleiche Leistung bei der Feuerwehrhindernisstaffel ist in der #{link_to("WKO 2023", wko_path("2023"))} der Punkt 9.4 und 9.6 relevant.
+      %p Für gleiche Leistung bei der Feuerwehrhindernisstaffel ist in der #{link_to('WKO 2023', wko_path('2023'))} der Punkt 9.4 und 9.6 relevant.
       %figure
         %blockquote.blockquote
           %p [...]
@@ -95,8 +95,8 @@
   .col-lg-6
     = card_body('Zeitgleichheit beim Löschangriff und Gruppenstafette') do
       .float-end
-        = discipline_image("la")
-        = discipline_image("gs")
+        = discipline_image('la')
+        = discipline_image('gs')
       %p In folgender Reihenfolge berechnet das System die Platzierung:
       %ol
         %li Vergleich der Bestzeiten
@@ -107,7 +107,7 @@
 
   .col-lg-6
     = card_body('Erläuterung') do
-      %p Für gleiche Leistung beim Löschangriff oder der Gruppenstafette ist in der #{link_to("WKO 2023", wko_path("2023"))} der Punkt 9.5 und 9.6 relevant.
+      %p Für gleiche Leistung beim Löschangriff oder der Gruppenstafette ist in der #{link_to('WKO 2023', wko_path('2023'))} der Punkt 9.5 und 9.6 relevant.
       %figure
         %blockquote.blockquote
           %p Die erreichte Zeit im Löschangriff ist für die Platzierung maßgebend.
@@ -119,11 +119,11 @@
   .col-lg-6
     = card_body('Zeit- oder Punktgleichheit bei der Gesamtmannschaftswertung') do
       .float-end
-        = discipline_image("hb")
-        = discipline_image("hl")
-        = discipline_image("fs")
-        = discipline_image("la")
-        = discipline_image("gs")
+        = discipline_image('hb')
+        = discipline_image('hl')
+        = discipline_image('fs')
+        = discipline_image('la')
+        = discipline_image('gs')
       %p In folgender Reihenfolge berechnet das System die Platzierung:
       %ol
         %li Plätze werden zu Negativpunkten
@@ -138,7 +138,7 @@
 
   .col-lg-6
     = card_body('Erläuterung') do
-      %p Für gleiche Leistung bei der Gesamtmannschaftswertung ist in der #{link_to("WKO 2023", wko_path("2023"))} der Punkt 9.6 relevant.
+      %p Für gleiche Leistung bei der Gesamtmannschaftswertung ist in der #{link_to('WKO 2023', wko_path('2023'))} der Punkt 9.6 relevant.
       %figure
         %blockquote.blockquote
           %p Zur Gesamtwertung der Mannschaften aus allen Disziplinen werden die Ränge, welche die Wettkampfmannschaften in den Mannschaftswertungen der vier einzelnen Disziplinen bei den Männern bzw. der fünf einzelnen Disziplinen bei den Frauen erreicht haben, zusammengezählt.
