@@ -26,6 +26,10 @@ Score::MultiResultRow = Struct.new(:entity, :result) do
     nil
   end
 
+  def valid?
+    true
+  end
+
   def result_entry
     best_result_entry
   end

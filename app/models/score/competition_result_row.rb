@@ -32,6 +32,10 @@ Score::CompetitionResultRow = Struct.new(:result, :team) do
     team
   end
 
+  def valid?
+    true
+  end
+
   private
 
   def dcup_compare(other)

@@ -8,6 +8,11 @@ module Score::ResultRowSupport
   end
 
   def place
-    @place ||= result.place_for_row(self)
+    result.add_places if @place.nil?
+    @place
+  end
+
+  def place=(new_place)
+    @place = new_place
   end
 end
