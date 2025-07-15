@@ -19,7 +19,7 @@ de:
           has_one: Datensatz kann nicht gelöscht werden, da ein abhängiger %{record}-Datensatz existiert.
         year_not_valid: hat ein ungültiges Jahr
   alerts:
-    check_errors: 'Bitte überprüfen Sie folgende Fehler:'
+    check_errors: 'Bitte überprüfe folgende Fehler:'
     deleted: Der Eintrag wurde gelöscht.
     saved: Die Änderungen wurden gespeichert.
   assessment_types:
@@ -172,7 +172,7 @@ de:
         one: hat die falsche Länge (muss genau 1 Zeichen haben)
         other: hat die falsche Länge (muss genau %{count} Zeichen haben)
     template:
-      body: 'Bitte überprüfen Sie die folgenden Felder:'
+      body: 'Bitte überprüfe die folgenden Felder:'
       header:
         one: 'Konnte %{model} nicht speichern: ein Fehler.'
         other: 'Konnte %{model} nicht speichern: %{count} Fehler.'

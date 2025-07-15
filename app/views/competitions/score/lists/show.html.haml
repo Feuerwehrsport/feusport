@@ -20,7 +20,7 @@
     - if can?(:edit, @list)
       - if @list.hidden?
         = card_body('Versteckt', class: 'mb-3 text-bg-warning') do
-          %p Die Startliste ist derzeit noch versteckt. Bitte geben Sie diese nach der Kontrolle frei.
+          %p Die Startliste ist derzeit noch versteckt. Bitte gebe diese nach der Kontrolle frei.
           - if can?(:edit, @list)
             = btn_link_to 'Bearbeiten', { action: :edit }
 

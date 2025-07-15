@@ -12,7 +12,7 @@ const insertFileLink = function (editor, files) {
   const cardFooter = div('card-footer');
   const hint = document.createElement('p');
   hint.classList.add('small', 'text-muted');
-  hint.innerText = 'Sie müssen zuerst Dokumente zu diesem Wettkampf hinzufügen. Danach können Sie diese hier Auswählen und somit direkt in der Beschreibung einen Link setzen.';
+  hint.innerText = 'Du musst zuerst Dokumente zu diesem Wettkampf hinzufügen. Danach kannst du diese hier Auswählen und somit direkt in der Beschreibung einen Link setzen.';
 
   cardFooter.append(hint);
   const cancel = div('btn btn-light btn-sm', 'Abbrechen');
