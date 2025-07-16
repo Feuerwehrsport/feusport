@@ -88,7 +88,7 @@ class Ability
     can(:manage, Competitions::Duplication) { |duplication| can?(:manage, duplication.competition) }
 
     can(%i[create], Team) { |team| team.competition.registration_possible? }
-    can(%i[edit sub_edit assessment_requests update destroy], Team) do |team|
+    can(%i[edit sub_edit edit_assessment_requests update destroy], Team) do |team|
       team.users.include?(user) && team.competition.registration_possible?
     end
     can(%i[sub_edit], Team) do |team|
