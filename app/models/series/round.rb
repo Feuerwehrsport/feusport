@@ -123,7 +123,7 @@ class Series::Round < ApplicationRecord
       cup  = Series::Cup.find_or_create_today!(self, competition)
       next unless cup.in?(showable_cups(competition))
 
-      rows = result.discipline.single_discipline? ? Score::GroupResult.new(result).rows : result.group_result_rows
+      rows = result.group_result.rows
 
       convert_result_rows(rows, gender) do |row, time, points, rank|
         participation = Series::TeamParticipation.new(

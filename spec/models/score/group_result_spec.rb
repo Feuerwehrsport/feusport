@@ -18,17 +18,16 @@ RSpec.describe Score::GroupResult do
   let!(:team1) { create(:team, competition:, band:) }
   let!(:team1_person1) { create(:person, :generated, competition:, band:, team: team1) }
   let!(:team1_person2) { create(:person, :generated, competition:, band:, team: team1) }
-  let!(:team1_a) { TeamRelay.find_or_create_by!(team: team1, number: 1) }
+
   let!(:team2) { create(:team, competition:, band:) }
   let!(:team2_person1) { create(:person, :generated, competition:, band:, team: team2) }
   let!(:team2_person2) { create(:person, :generated, competition:, band:, team: team2) }
   let!(:team2_person3) { create(:person, :generated, competition:, band:, team: team2) }
-  let!(:team2_a) { TeamRelay.find_or_create_by!(team: team2, number: 1) }
+
   let!(:team3) { create(:team, competition:, band:) }
   let!(:team3_person1) { create(:person, :generated, competition:, band:, team: team3) }
   let!(:team3_person2) { create(:person, :generated, competition:, band:, team: team3) }
-  let!(:team3_a) { TeamRelay.find_or_create_by!(team: team3, number: 1) }
-  let!(:team3_b) { TeamRelay.find_or_create_by!(team: team3, number: 2) }
+
   let!(:team4) { create(:team, competition:, band:) }
   let!(:team4_person1) { create(:person, :generated, competition:, band:, team: team4) }
   let!(:list_hl) do
@@ -43,29 +42,33 @@ RSpec.describe Score::GroupResult do
     it 'calculates correct results' do
       rows = result_hl.group_result.rows
 
-      expect(rows.first.team).to eq team1
-      expect(rows.first.result_entry.time).to eq 3850
-      expect(rows.first.rows_in.count).to eq 2
-      expect(rows.first.rows_out.count).to eq 0
-      expect(rows.first.competition_result_valid?).to be true
+      expect(rows[0].team).to eq team1
+      expect(rows[0].place).to eq 1
+      expect(rows[0].result_entry.time).to eq 3850
+      expect(rows[0].rows_in.count).to eq 2
+      expect(rows[0].rows_out.count).to eq 0
+      expect(rows[0].competition_result_valid?).to be true
 
-      expect(rows.second.team).to eq team2
-      expect(rows.second.result_entry.time).to eq 3899
-      expect(rows.second.rows_in.count).to eq 2
-      expect(rows.second.rows_out.count).to eq 1
-      expect(rows.second.competition_result_valid?).to be true
+      expect(rows[1].team).to eq team2
+      expect(rows[1].place).to eq 2
+      expect(rows[1].result_entry.time).to eq 3899
+      expect(rows[1].rows_in.count).to eq 2
+      expect(rows[1].rows_out.count).to eq 1
+      expect(rows[1].competition_result_valid?).to be true
 
-      expect(rows.third.team).to eq team3
-      expect(rows.third.result_entry.time).to be_nil
-      expect(rows.third.rows_in.count).to eq 2
-      expect(rows.third.rows_out.count).to eq 0
-      expect(rows.third.competition_result_valid?).to be true
+      expect(rows[2].team).to eq team3
+      expect(rows[2].place).to eq 3
+      expect(rows[2].result_entry.time).to eq Firesport::INVALID_TIME
+      expect(rows[2].rows_in.count).to eq 2
+      expect(rows[2].rows_out.count).to eq 0
+      expect(rows[2].competition_result_valid?).to be true
 
-      expect(rows.fourth.team).to eq team4
-      expect(rows.fourth.result_entry.time).to be_nil
-      expect(rows.fourth.rows_in.count).to eq 0
-      expect(rows.fourth.rows_out.count).to eq 0
-      expect(rows.fourth.competition_result_valid?).to be false
+      expect(rows[3].team).to eq team4
+      expect(rows[3].place).to eq 4
+      expect(rows[3].result_entry.time).to eq Firesport::INVALID_TIME
+      expect(rows[3].rows_in.count).to eq 1
+      expect(rows[3].rows_out.count).to eq 0
+      expect(rows[3].competition_result_valid?).to be false
     end
   end
 
@@ -131,10 +134,10 @@ RSpec.describe Score::GroupResult do
           time_without_seconds: '-',
           time_very_long: 'mit einer ungültigen Zeit',
           time_other_long: 'belegte mit einer ungültigen Zeit',
-          rank: '4.',
-          rank_with_rank: '4. Platz',
-          rank_with_rank2: 'den 4. Platz',
-          rank_without_dot: '4',
+          rank: '3.',
+          rank_with_rank: '3. Platz',
+          rank_with_rank2: 'den 3. Platz',
+          rank_without_dot: '3',
           assessment: 'Hakenleitersteigen',
           assessment_with_gender: 'Hakenleitersteigen - Frauen',
           gender: 'Frauen',

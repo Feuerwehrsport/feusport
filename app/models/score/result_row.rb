@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-Score::ResultRow = Struct.new(:entity, :result) do
+Score::ResultRow = Struct.new(:entity, :result, :group_result) do
   include Score::ResultRowSupport
   attr_reader :list_entries
 
-  delegate :calculation_method, :competition, :single_discipline?, to: :result
+  delegate :calculation_method, :competition, :single_discipline?, :like_fire_relay?, to: :result
 
   def add_list(list_entry)
     @list_entries ||= []
@@ -41,10 +41,6 @@ Score::ResultRow = Struct.new(:entity, :result) do
 
   def valid?
     @valid ||= result_entries.any?(&:result_valid?)
-  end
-
-  def competition_result_valid?
-    true
   end
 
   def starting_time_required?
@@ -90,13 +86,14 @@ Score::ResultRow = Struct.new(:entity, :result) do
       # Einzeldisziplin => Gleichstand
       return 0 if single_discipline?
 
+      # Staffel und Gesamtwertung => Gleichstand
+      return 0 if group_result && like_fire_relay?
+
       # Gruppendisziplin => Wer war zuerst dran
 
       # Wenn die gleiche Liste, dann anhand der Startposition
       if result_entries[0].list == other.result_entries[0].list
-        position = result_entries[0].track * result_entries[0].run
-        other_position = other.result_entries[0].track * other.result_entries[0].run
-        return position <=> other_position
+        return result_entries[0].matrix_index <=> other.result_entries[0].matrix_index
       end
 
       # Ansonsten die zeitliche Reihenfolge der Liste

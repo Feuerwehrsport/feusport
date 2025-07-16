@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Score::Resultable
-  def add_places
+  def add_places(rows)
     valids, invalids = rows.partition(&:valid?)
 
     place = 1
@@ -20,7 +20,12 @@ module Score::Resultable
       place_before = row
     end
 
+    normal_invalids, complete_invalids = invalids.partition(&:competition_result_valid?)
+
     last_place = rows.count
-    invalids.each { |row| row.place = last_place }
+    complete_invalids.each { |row| row.place = last_place }
+    last_place -= complete_invalids.count
+    normal_invalids.each { |row| row.place = last_place }
+    rows
   end
 end

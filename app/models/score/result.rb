@@ -104,12 +104,20 @@ class Score::Result < ApplicationRecord
     end
   end
 
+  def like_fire_relay?
+    if multi_result_method_disabled?
+      discipline&.like_fire_relay?
+    else
+      results.map(&:discipline).all?(&:like_fire_relay?)
+    end
+  end
+
   def single_group_result?
     group_assessment? && single_discipline?
   end
 
   def rows(*)
-    @rows ||= generate_rows.sort
+    @rows ||= add_places(generate_rows.sort)
   end
 
   def starting_time_required?
@@ -119,10 +127,6 @@ class Score::Result < ApplicationRecord
   def out_of_competition_rows
     generate_rows if @out_of_competition_rows.nil?
     @out_of_competition_rows
-  end
-
-  def group_result_rows
-    @group_result_rows ||= generate_rows(group_result: true).sort
   end
 
   def person_tags
@@ -148,11 +152,11 @@ class Score::Result < ApplicationRecord
 
         if list_entry.out_of_competition?
           if out_of_competition_rows[entity.id].nil?
-            out_of_competition_rows[entity.id] = Score::ResultRow.new(entity, self)
+            out_of_competition_rows[entity.id] = Score::ResultRow.new(entity, self, false)
           end
           out_of_competition_rows[entity.id].add_list(list_entry)
         else
-          rows[entity.id] = Score::ResultRow.new(entity, self) if rows[entity.id].nil?
+          rows[entity.id] = Score::ResultRow.new(entity, self, group_result) if rows[entity.id].nil?
           rows[entity.id].add_list(list_entry)
         end
       end

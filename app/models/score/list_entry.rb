@@ -103,6 +103,10 @@ class Score::ListEntry < ApplicationRecord
     "#{run.to_s.rjust(3, '0')}-#{track.to_s.rjust(3, '0')}"
   end
 
+  def matrix_index
+    (run * track_count) + track
+  end
+
   def overview
     "#{list.name}; #{entity.full_name}: #{long_human_time}"
   end

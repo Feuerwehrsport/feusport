@@ -3,10 +3,14 @@
 Score::GroupResult = Struct.new(:result) do
   include Score::Resultable
 
-  delegate :competition, :assessment, :name, to: :result
+  delegate :competition, :assessment, :name, :single_discipline?, to: :result
 
   def rows(*)
-    @rows ||= calculated_rows.sort
+    @rows ||= if single_discipline?
+                add_places(calculated_rows.sort)
+              else
+                add_places(result.generate_rows(group_result: true).sort)
+              end
   end
 
   def calculated_rows
@@ -16,13 +20,12 @@ Score::GroupResult = Struct.new(:result) do
 
     result.rows.each do |result_row|
       next unless result_row.list_entries.first.group_competitor?
-      next if result_row.entity.team.nil?
 
-      if team_scores[result_row.entity.team].nil?
-        team_scores[result_row.entity.team] =
-          Score::GroupResultRow.new(result_row.entity.team, score_count, run_count, self)
-      end
-      team_scores[result_row.entity.team].add_result_row(result_row)
+      team = result_row.entity.team
+      next if team.nil?
+
+      team_scores[team.id] ||= Score::GroupResultRow.new(team, score_count, run_count, self)
+      team_scores[team.id].add_result_row(result_row)
     end
     team_scores.values.sort
   end

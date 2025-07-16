@@ -40,7 +40,7 @@ class Score::CompetitionResult < ApplicationRecord
   validates :results, same_competition: true
 
   def rows(*)
-    @rows ||= result_type.present? ? send(result_type) : []
+    @rows ||= result_type.present? ? add_places(send(result_type)) : []
   end
 
   def self.result_types
@@ -54,12 +54,7 @@ class Score::CompetitionResult < ApplicationRecord
 
   def for_results
     results.each do |result|
-      discipline = result.assessment.discipline
-      result_rows = if discipline.single_discipline?
-                      Score::GroupResult.new(result).rows
-                    else
-                      result.group_result_rows
-                    end
+      result_rows = result.group_result.rows
 
       ranks = {}
       result_rows.each do |row|
@@ -95,9 +90,9 @@ class Score::CompetitionResult < ApplicationRecord
 
   def places_to_points
     teams = {}
-    for_results do |result, result_rows, ranks|
+    for_results do |result, result_rows, _ranks|
       result_rows.each do |row|
-        points = ranks[row]
+        points = row.place
         assessment_result = AssessmentResult.new(points, result, row.result_entry, row.entity, row)
         teams[row.entity.id] ||= Score::CompetitionResultRow.new(self, row.entity)
         teams[row.entity.id].add_assessment_result(assessment_result)
