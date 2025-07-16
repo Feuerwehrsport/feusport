@@ -440,5 +440,116 @@ RSpec.describe Score::Result do
         end
       end
     end
+
+    context 'when result is a fire relay' do
+      let(:fs) { create(:discipline, :fs, competition:) }
+      let(:assessment) { create(:assessment, competition:, band:, discipline: fs) }
+      let(:result) { create(:score_result, competition:, assessment:) }
+      let(:team1) { create(:team, competition:, band:) }
+      let(:team1_a) { TeamRelay.create!(team: team1, number: 1) }
+      let(:team1_b) { TeamRelay.create!(team: team1, number: 2) }
+      let(:team2) { create(:team, competition:, band:) }
+      let(:team2_a) { TeamRelay.create!(team: team2, number: 1) }
+      let(:team2_b) { TeamRelay.create!(team: team2, number: 2) }
+
+      context 'when entries all invalid' do
+        let!(:list1) { create_score_list(result, team1_a => nil, team1_b => nil, team2_a => nil, team2_b => nil) }
+        let!(:list2) { create_score_list(result, team1_a => nil, team1_b => nil, team2_a => nil, team2_b => nil) }
+
+        it 'get the same place' do
+          rows = result.rows
+          expect(rows.first <=> rows.second).to eq 0
+          expect(rows.first.place).to eq 4
+          expect(rows.second.place).to eq 4
+
+          # starting time is ignored
+          list1.update!(starting_time_string: '00:00')
+          list2.update!(starting_time_string: '01:00')
+
+          rows = described_class.find(result.id).rows
+          expect(rows.first <=> rows.second).to eq 0
+          expect(rows.first.place).to eq 4
+          expect(rows.second.place).to eq 4
+        end
+      end
+
+      context 'when first entries similar' do
+        let!(:list1) { create_score_list(result, team1_a => 1, team1_b => 2, team2_a => 3, team2_b => 4) }
+        let!(:list2) { create_score_list(result, team1_a => nil, team1_b => 2, team2_a => 2, team2_b => nil) }
+
+        it 'return results in correct order' do
+          rows = result.rows
+          expect(rows.count).to eq 4
+
+          expect(rows[0].entity).to eq team1_a
+          expect(rows[0].place).to eq 1
+          expect(rows[0].result_entry_from(list1).time).to eq 1
+          expect(rows[0].result_entry_from(list2).time).to be_nil
+
+          expect(rows[1].entity).to eq team1_b
+          expect(rows[1].place).to eq 2
+          expect(rows[1].result_entry_from(list1).time).to eq 2
+          expect(rows[1].result_entry_from(list2).time).to eq 2
+
+          expect(rows[2].entity).to eq team2_a
+          expect(rows[2].place).to eq 3
+          expect(rows[2].result_entry_from(list1).time).to eq 3
+          expect(rows[2].result_entry_from(list2).time).to eq 2
+
+          expect(rows[3].entity).to eq team2_b
+          expect(rows[3].place).to eq 4
+          expect(rows[3].result_entry_from(list1).time).to eq 4
+          expect(rows[3].result_entry_from(list2).time).to be_nil
+        end
+      end
+
+      context 'when all entries similar' do
+        let!(:list1) { create_score_list(result, team1_a => 1, team1_b => nil) }
+        let!(:list2) { create_score_list(result, team1_a => nil, team1_b => 1) }
+
+        it 'return results in correct order' do
+          rows = result.rows
+          expect(rows.count).to eq 2
+          expect(rows.first <=> rows.second).to eq 0
+          expect(rows.first.place).to eq 1
+          expect(rows.second.place).to eq 1
+
+          # starting time is used
+          list1.update!(starting_time_string: '00:00')
+          list2.update!(starting_time_string: '01:00')
+
+          rows = described_class.find(result.id).rows
+          expect(rows.first <=> rows.second).to eq(-1)
+
+          expect(rows.first.entity).to eq team1_a
+          expect(rows.first.place).to eq 1
+          expect(rows.first.result_entry_from(list1).time).to eq 1
+          expect(rows.first.result_entry_from(list2).time).to be_nil
+
+          expect(rows.second.entity).to eq team1_b
+          expect(rows.second.place).to eq 2
+          expect(rows.second.result_entry_from(list1).time).to be_nil
+          expect(rows.second.result_entry_from(list2).time).to eq 1
+        end
+      end
+
+      context 'when all entries similar in same list' do
+        let!(:list1) { create_score_list(result, team1_a => 1, team1_b => 1) }
+
+        it 'return results in correct order' do
+          rows = result.rows
+          expect(rows.count).to eq 2
+          expect(rows.first <=> rows.second).to eq(-1)
+
+          expect(rows.first.entity).to eq team1_a
+          expect(rows.first.place).to eq 1
+          expect(rows.first.result_entry_from(list1).time).to eq 1
+
+          expect(rows.second.entity).to eq team1_b
+          expect(rows.second.place).to eq 2
+          expect(rows.second.result_entry_from(list1).time).to eq 1
+        end
+      end
+    end
   end
 end
