@@ -62,6 +62,7 @@ class Competitions::TeamsController < CompetitionNestedController
 
     params.require(:team).permit(
       :name, :shortcut, :number, :band_id, :fire_sport_statistics_team_id, :registration_hint, :certificate_name,
+      :lottery_number,
       tags: [],
       requests_attributes: %i[assessment_type relay_count _destroy assessment_id id]
     )

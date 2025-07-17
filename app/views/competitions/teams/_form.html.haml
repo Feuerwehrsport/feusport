@@ -16,8 +16,11 @@
         %table.table.table-hover.table-condensed
       = f.input :shortcut, input_html: { maxlength: 12 }, hint: 'Keine Nummern im Namen angeben!'
       = f.input :number, hint: 'Die Nummer wird erst angezeigt, wenn es mehrere Mannschaften mit gleichen Namen gibt.'
-      - if @team.band.team_tags.present?
-        = f.input :tags, as: :check_boxes, collection: @team.band.team_tags
+      .row
+        - if @team.band.team_tags.present?
+          .col-md-6= f.input :tags, as: :check_boxes, collection: @team.band.team_tags
+        - if @competition.lottery_numbers?
+          .col-md-6= f.input :lottery_number
       = f.hidden_field :fire_sport_statistics_team_id, data: { name: @team.fire_sport_statistics_team&.name }
 
       .mb-0.mt-3 Verknüpfung
