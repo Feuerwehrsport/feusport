@@ -5,4 +5,4 @@
   = f.input :team_tag_names, hint: 'Werte mit Komma abtrennen, z.B.: BB-Cup, Ü40'
 - c.footer do
   = f.primary_button :submit
-  = f.cancel_button(competition_bands_path)
+  = f.cancel_button(@band.persisted? ? competition_band_path(id: @band.id) : competition_bands_path)

@@ -6,4 +6,4 @@
   = f.input :like_fire_relay
 - c.footer do
   = f.primary_button :submit
-  = f.cancel_button(competition_disciplines_path)
+  = f.cancel_button(@discipline.persisted? ? competition_discipline_path(id: @discipline.id) : competition_disciplines_path)

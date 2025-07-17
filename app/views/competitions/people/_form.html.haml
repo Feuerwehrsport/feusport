@@ -59,4 +59,4 @@
 
 - c.footer do
   = f.primary_button :submit
-  = f.cancel_button(competition_people_path)
+  = f.cancel_button(@person.persisted? ? competition_person_path(id: @person.id) : competition_people_path)

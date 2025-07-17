@@ -16,4 +16,4 @@
         = f.input :starting_time_string, hint: 'Mit Angabe der Startzeit kann man dem Publikum signalisieren, wann es weiter geht. Es ist aber auch für die Berechnung bei Zeitgleichheit wichtig.', input_html: { type: 'time', step: '60' }
 - c.footer do
   = f.primary_button :submit
-  = f.cancel_button(competition_score_results_path)
+  = f.cancel_button(@list.persisted? ? competition_score_list_path(id: @list.id) : competition_score_lists_path)

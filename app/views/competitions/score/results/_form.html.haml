@@ -53,4 +53,4 @@
           = f.input :calculation_help, hint: 'Die Liste dient nur als Berechnungshilfe und wird in der Auflistung ganz unten angezeigt.'
 - c.footer do
   = f.primary_button :submit
-  = f.cancel_button(competition_score_results_path)
+  = f.cancel_button(@result.persisted? ? competition_score_result_path(id: @result.id) : competition_score_results_path)
