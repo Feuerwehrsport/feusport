@@ -28,7 +28,7 @@ class Competitions::Certificates::ImportsController < CompetitionNestedControlle
 
     @selectable_templates = Certificates::Template.where(id: my_template_ids + other_template_ids)
                                                   .includes(:competition)
-                                                  .reorder('competitions.date' => :desc)
+                                                  .reorder('competitions.date' => :desc, 'competitions.name' => :asc)
     @certificates_import = Certificates::Import.new(competition: @competition,
                                                     selectable_templates: @selectable_templates)
     authorize!(:show, @certificates_import)
