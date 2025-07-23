@@ -98,10 +98,11 @@ class Competitions::PeopleController < CompetitionNestedController
     return if can?(:edit, resource_instance.team)
 
     resource_instance.user_person_accesses.build(user: current_user, competition: @competition)
+    authorize!(:create, resource_instance)
+
     resource_instance.registration_hint =
       "Mannschaftsleiter: #{current_user.name}\n" \
       "E-Mail-Adresse: #{current_user.email}\n" \
       "Telefonnummer: #{current_user.phone_number}\n"
-    authorize!(:create, resource_instance)
   end
 end
