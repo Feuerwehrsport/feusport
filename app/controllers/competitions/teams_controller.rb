@@ -8,6 +8,10 @@ class Competitions::TeamsController < CompetitionNestedController
     send_xlsx(Exports::Xlsx::Teams) { [@competition, can?(:manage, @competition)] }
   end
 
+  def show
+    @list_entries = @team.list_entries + @team.team_relays.map(&:list_entries).flatten
+  end
+
   def without_statistics_connection
     @team_suggestions = @teams.where(fire_sport_statistics_team_id: nil).map do |team|
       FireSportStatistics::TeamSuggestion.new(team)

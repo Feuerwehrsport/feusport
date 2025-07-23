@@ -113,7 +113,7 @@
           - c.body do
             .alert.alert-info= t('a.no_entries_found')
 
-  - if @team.list_entries.exists?
+  - if @list_entries.present?
     .col-lg-12
       = card_direct('Startlisten') do
         %table.table.table-bordered.table-hover
@@ -123,7 +123,7 @@
               %th Lauf
               %th Bahn
           %tbody
-            - @team.list_entries.sort_by { |entry| entry.list.name }.each do |entry|
+            - @list_entries.sort_by { |entry| entry.list.name }.each do |entry|
               - next if entry.list.hidden?
 
               %tr
