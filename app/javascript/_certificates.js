@@ -13,7 +13,7 @@ onVisit(function () {
     config = JSON.parse(boundary.dataset.config);
 
     const backgroundSrc = boundary.dataset.background;
-    if (backgroundSrc) boundary.style.backgroundImage = 'url(' + backgroundSrc + ')';
+    if (backgroundSrc) boundary.style.backgroundImage = 'url("' + backgroundSrc + '")';
 
     document.querySelectorAll('.certificates_template_text_fields_key').forEach(function (textField) {
       const id = textField.querySelector('input').id;
