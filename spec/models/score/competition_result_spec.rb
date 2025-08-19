@@ -208,7 +208,7 @@ RSpec.describe Score::CompetitionResult do
 
   describe 'some export features' do
     it 'renders PDF' do
-      pdf = Exports::Pdf::Score::CompetitionResults.perform([competition_result])
+      pdf = Exports::Pdf::Score::CompetitionResults.perform(competition, [competition_result])
       expect(pdf.bytestream).to start_with '%PDF-1.3'
       expect(pdf.bytestream).to end_with "%%EOF\n"
     end

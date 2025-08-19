@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-Exports::Xlsx::Score::CompetitionResults = Struct.new(:results) do
+Exports::Xlsx::Score::CompetitionResults = Struct.new(:competition, :results) do
   include Exports::Xlsx::Base
   include Exports::CompetitionResults
 

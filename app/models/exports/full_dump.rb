@@ -13,7 +13,7 @@ class Exports::FullDump
 
     return unless competition.score_competition_results.exists?
 
-    add_file('Score::CompetitionResults', [competition.score_competition_results])
+    add_file('Score::CompetitionResults', [competition, competition.score_competition_results])
   end
 
   def to_export_hash

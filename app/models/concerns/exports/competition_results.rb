@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 module Exports::CompetitionResults
-  def competition
-    results.first.competition
-  end
-
   def table_data(competition_result)
     header = %w[Platz Mannschaft]
     competition_result.results.each do |result|
