@@ -53,6 +53,19 @@ class TeamListRestriction < ApplicationRecord
     I18n.t("team_list_restriction.restrictions.#{restriction}")
   end
 
+  def <=>(other)
+    sort_by_name = team1.full_name <=> other.team1.full_name
+    return sort_by_name unless sort_by_name == 0
+
+    sort_by_name = team2.full_name <=> other.team2.full_name
+    return sort_by_name unless sort_by_name == 0
+
+    sort_by_restriction = restriction <=> other.restriction
+    return sort_by_restriction unless sort_by_restriction == 0
+
+    to_key <=> other.to_key
+  end
+
   def list_entries_valid?(entries, softer_mode)
     team1_runs = entries.select { |e| e[0] == team1_id }.map(&:second)
     return true if team1_runs.empty?
