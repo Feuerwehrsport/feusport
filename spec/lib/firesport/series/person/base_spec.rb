@@ -23,7 +23,7 @@ RSpec.describe Firesport::Series::Person::Base do
           rank_with_rank: '1. Platz',
           rank_with_rank2: 'den 1. Platz',
           rank_without_dot: '1',
-          assessment: 'D-Cup',
+          assessment: '',
           assessment_with_gender: '',
           gender: '',
           result_name: 'D-Cup',

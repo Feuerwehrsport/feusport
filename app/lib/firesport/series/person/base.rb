@@ -81,7 +81,9 @@ Firesport::Series::Person::Base = Struct.new(:round, :entity) do
       "den #{rank}. Platz"
     when :rank_without_dot
       rank.to_s
-    when :assessment, :result_name
+    when :assessment
+      participations.first&.assessment&.name
+    when :result_name
       round.name
     else
       super
