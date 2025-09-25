@@ -9,11 +9,15 @@
         = btn_link_to('Wettkämpfer ansehen', without_statistics_connection_competition_people_path)
 
 - @competition.bands.sort.each do |band|
+  - people = resource_collection.where(band:).sort
   = card(band.name, class: 'mb-3') do |c|
-    - c.body do
-      - if resource_collection.exists?(band:)
-        = render('index_table', resource_class:, resource_collection: resource_collection.where(band:).sort, band:)
-      - else
+    - if people.count > 0
+      - c.direct do
+        = render('index_table', resource_class:, resource_collection: people, band:)
+      - c.footer do
+        %small= "#{people.count} #{Person.model_name.human(count: people.count)}"
+    - else
+      - c.body do
         .alert.alert-info= t('a.no_entries_found')
 
     - if can?(:create, resource_class.new(competition: @competition, band:))

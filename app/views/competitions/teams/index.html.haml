@@ -11,10 +11,13 @@
 .row
   .col-lg-12
     - @competition.bands.sort.each do |band|
+      - teams = resource_collection.where(band:).sort
       = card(band.name, class: 'mb-3') do |c|
-        - if resource_collection.exists?(band:)
+        - if teams.count > 0
           - c.direct do
-            = render('index_table', resource_class:, resource_collection: resource_collection.where(band:).sort, band:, assessments: Assessment.requestable_for_team(band))
+            = render('index_table', resource_class:, resource_collection: teams, band:, assessments: Assessment.requestable_for_team(band))
+          - c.footer do
+            %small= "#{teams.count} #{Team.model_name.human(count: teams.count)}"
         - else
           - c.body do
             .alert.alert-info= t('a.no_entries_found')
