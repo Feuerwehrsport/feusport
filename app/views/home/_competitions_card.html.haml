@@ -1,37 +1,36 @@
-- if competitions.exists?
-  - grouped_competitions = competitions.reorder(:date, :name).group_by(&:year_and_month)
-  .card
-    - grouped_competitions.each_value do |competitions|
-      - sample = competitions.first
-      .card-header{ class: competitions == grouped_competitions.values.first ? 'mt-0' : 'mt-4' }
-        %h4.mb-0
-          #{l(sample.date, format: '%B')} #{sample.date.year}
+- grouped_competitions = competitions.reorder(:date, :name).includes(:disciplines).group_by(&:year_and_month)
+.card
+  - grouped_competitions.each_value do |competitions|
+    - sample = competitions.first
+    .card-header{ class: competitions == grouped_competitions.values.first ? 'mt-0' : 'mt-4' }
+      %h4.mb-0
+        #{l(sample.date, format: '%B')} #{sample.date.year}
 
-      .list-group.list-group-flush
-        - competitions.each do |competition|
-          = link_to(competition_path(competition), class: home_competition_classes(competition)) do
-            - if can?(:extend_read, competition)
-              .float-end
-                - if competition.locked?
-                  .far.fa-lock
-                - elsif can?(:edit, competition)
-                  .far.fa-edit
-                - unless competition.visible?
-                  %br
-                  .far.fa-eye-slash
-            .d-flex.flex-row
-              - disciplines = competition.disciplines.sort.map(&:key)
-              - if disciplines.none?
-                .discipline-icons
-              - elsif disciplines.one?
-                .discipline-icons.one-discipline
-                  %img{ src: image_path("disciplines/#{disciplines[0]}.svg") }
-              - else
-                .discipline-icons.four-discipline
-                  - disciplines.first(4).each do |discipline|
-                    %img{ src: image_path("disciplines/#{discipline}.svg") }
-              .ms-3
-                %h6.mb-0= competition.name
-                .mt-0
-                  %small= l(competition.date)
-                  %small= competition.place
+    .list-group.list-group-flush
+      - competitions.each do |competition|
+        = link_to(competition_path(competition), class: home_competition_classes(competition)) do
+          - if can?(:extend_read, competition)
+            .float-end
+              - if competition.locked?
+                .far.fa-lock
+              - elsif can?(:edit, competition)
+                .far.fa-edit
+              - unless competition.visible?
+                %br
+                .far.fa-eye-slash
+          .d-flex.flex-row
+            - disciplines = competition.disciplines.sort.map(&:key)
+            - if disciplines.none?
+              .discipline-icons
+            - elsif disciplines.one?
+              .discipline-icons.one-discipline
+                %img{ src: image_path("disciplines/#{disciplines[0]}.svg") }
+            - else
+              .discipline-icons.four-discipline
+                - disciplines.first(4).each do |discipline|
+                  %img{ src: image_path("disciplines/#{discipline}.svg") }
+            .ms-3
+              %h6.mb-0= competition.name
+              .mt-0
+                %small= l(competition.date)
+                %small= competition.place
