@@ -11,11 +11,11 @@
 - @competition.bands.sort.each do |band|
   - people = resource_collection.where(band:).sort
   = card(band.name, class: 'mb-3') do |c|
-    - if people.count > 0
+    - if people.any?
       - c.direct do
         = render('index_table', resource_class:, resource_collection: people, band:)
       - c.footer do
-        %small= "#{people.count} #{Person.model_name.human(count: people.count)}"
+        %small #{people.count} #{Person.model_name.human(count: people.count)}
     - else
       - c.body do
         .alert.alert-info= t('a.no_entries_found')
