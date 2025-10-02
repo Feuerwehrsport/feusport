@@ -36,7 +36,9 @@ class Certificates::List
   end
 
   def series_person_assessment
-    @series_person_assessment ||= Series::Assessment.find_by(id: series_person_assessment_id)
+    return @series_person_assessment if defined?(@series_person_assessment)
+
+    @series_person_assessment = Series::Assessment.find_by(id: series_person_assessment_id)
   end
 
   def result

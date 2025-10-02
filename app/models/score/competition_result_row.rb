@@ -2,6 +2,7 @@
 
 Score::CompetitionResultRow = Struct.new(:result, :team) do
   include Score::ResultRowSupport
+
   delegate :competition, to: :result
   attr_reader :assessment_results
 

@@ -2,6 +2,7 @@
 
 module Taggable
   extend ActiveSupport::Concern
+
   included do
     before_validation :clean_tags
   end

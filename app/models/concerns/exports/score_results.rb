@@ -2,6 +2,7 @@
 
 module Exports::ScoreResults
   extend ActiveSupport::Concern
+
   included do
     delegate :competition, to: :result
   end

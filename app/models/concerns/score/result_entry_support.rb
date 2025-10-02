@@ -2,6 +2,7 @@
 
 module Score::ResultEntrySupport
   extend ActiveSupport::Concern
+
   ENTRY_STATUS = %i[waiting valid invalid no_run].freeze
 
   class_methods do

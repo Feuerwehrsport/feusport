@@ -67,6 +67,8 @@ class Competitions::Duplication
   end
 
   def duplicate_from
-    @duplicate_from ||= Competition.find_by(id: duplicate_from_id)
+    return @duplicate_from if defined?(@duplicate_from)
+
+    @duplicate_from = Competition.find_by(id: duplicate_from_id)
   end
 end

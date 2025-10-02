@@ -69,7 +69,9 @@ class Competitions::PeopleController < CompetitionNestedController
   protected
 
   def team_from_param
-    @team_from_param ||= @competition.teams.find_by(id: params[:team].presence || person_params[:team_id])
+    return @team_from_param if defined?(@team_from_param)
+
+    @team_from_param = @competition.teams.find_by(id: params[:team].presence || person_params[:team_id])
   end
 
   def person_params

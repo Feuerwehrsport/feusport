@@ -6,6 +6,7 @@ RSpec.describe Score::ResultEntrySupport do
   let(:result_entry_class) do
     Class.new do
       include Score::ResultEntrySupport
+
       attr_accessor :time, :result_type
     end
   end

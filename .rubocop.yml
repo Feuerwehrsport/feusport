@@ -38,6 +38,8 @@ Gemspec/DevelopmentDependencies:
   Enabled: true
 Gemspec/RequireMFA:
   Enabled: true
+Layout/EmptyLinesAfterModuleInclusion:
+  Enabled: true
 Layout/LineContinuationLeadingSpace:
   Enabled: true
 Layout/LineContinuationSpacing:
@@ -363,6 +365,8 @@ Rails/ExpandedDateRange:
   Enabled: true
 Rails/FindById:
   Enabled: true
+Rails/FindByOrAssignmentMemoization:
+  Enabled: true
 Rails/FreezeTime:
   Enabled: true
 Rails/HelperInstanceVariable:
@@ -388,6 +392,8 @@ Rails/MigrationClassName:
 Rails/MultipleRoutePaths:
   Enabled: true
 Rails/NegateInclude:
+  Enabled: true
+Rails/OrderArguments:
   Enabled: true
 Rails/Output:
   AutoCorrect: false
@@ -471,6 +477,8 @@ Style/AmbiguousEndlessMethodDefinition:
 Style/ArgumentsForwarding:
   Enabled: true
 Style/ArrayIntersect:
+  Enabled: true
+Style/ArrayIntersectWithSingleElement:
   Enabled: true
 Style/AsciiComments:
   Enabled: false

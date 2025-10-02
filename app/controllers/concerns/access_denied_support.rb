@@ -2,6 +2,7 @@
 
 module AccessDeniedSupport
   extend ActiveSupport::Concern
+
   included do
     rescue_from CanCan::AccessDenied do |exception|
       if Rails.env.development?

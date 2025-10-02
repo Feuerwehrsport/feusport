@@ -20,6 +20,7 @@
 #
 class Score::ListPrintGenerator < ApplicationRecord
   include SortableByName
+
   belongs_to :competition, touch: true
 
   schema_validations

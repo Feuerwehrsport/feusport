@@ -2,6 +2,7 @@
 
 Score::ResultRow = Struct.new(:entity, :result, :group_result) do
   include Score::ResultRowSupport
+
   attr_reader :list_entries
 
   delegate :calculation_method, :competition, :single_discipline?, :like_fire_relay?, to: :result
