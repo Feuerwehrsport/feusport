@@ -20,6 +20,8 @@ class Competitions::Publishing
   end
 
   class ReminderJob < ApplicationJob
+    discard_on ActiveJob::DeserializationError
+
     def perform
       competitions.find_each do |competition|
         CompetitionMailer.with(competition:).publishing_reminder.deliver_later
