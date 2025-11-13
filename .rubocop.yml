@@ -259,6 +259,8 @@ RSpec/IndexedLet:
   Enabled: false
 RSpec/IsExpectedSpecify:
   Enabled: true
+RSpec/LeakyLocalVariable:
+  Enabled: true
 RSpec/LetSetup:
   Enabled: false
 RSpec/MatchArray:
@@ -310,6 +312,8 @@ RSpec/VerifiedDoubleReference:
 RSpecRails/AvoidSetupHook:
   Enabled: true
 RSpecRails/HaveHttpStatus:
+  Enabled: true
+RSpecRails/HttpStatusNameConsistency:
   Enabled: true
 RSpecRails/InferredSpecType:
   Enabled: true

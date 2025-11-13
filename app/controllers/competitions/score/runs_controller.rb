@@ -11,7 +11,7 @@ class Competitions::Score::RunsController < CompetitionNestedController
       redirect_to competition_score_list_path(id: params[:list_id], jump_to: "jump-run-#{params[:run]}")
     else
       flash.now[:alert] = :check_errors
-      render action: :edit, status: :unprocessable_entity
+      render action: :edit, status: :unprocessable_content
     end
   end
 

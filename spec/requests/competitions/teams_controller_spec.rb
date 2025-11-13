@@ -44,7 +44,7 @@ RSpec.describe Team do
 
       patch "/#{competition.year}/#{competition.slug}/teams/#{new_id}",
             params: { team: { name: 'new-name', shortcut: '', number: '1' } }
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
 
       patch "/#{competition.year}/#{competition.slug}/teams/#{new_id}",
             params: { team: { name: 'new-name', shortcut: 'short', number: '1' } }
@@ -175,7 +175,7 @@ RSpec.describe Team do
                 'assessment_type' => '',
               },
             } } }
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
     end
   end
 

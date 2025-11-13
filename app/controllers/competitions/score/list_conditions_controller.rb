@@ -10,7 +10,7 @@ class Competitions::Score::ListConditionsController < CompetitionNestedControlle
       redirect_to_index notice: :saved
     else
       flash.now[:alert] = :check_errors
-      render action: :new, status: :unprocessable_entity
+      render action: :new, status: :unprocessable_content
     end
   end
 
@@ -20,7 +20,7 @@ class Competitions::Score::ListConditionsController < CompetitionNestedControlle
       redirect_to_index notice: :saved
     else
       flash.now[:alert] = :check_errors
-      render action: :edit, status: :unprocessable_entity
+      render action: :edit, status: :unprocessable_content
     end
   end
 

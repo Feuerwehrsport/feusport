@@ -17,7 +17,7 @@ class Competitions::SimpleAccessLoginsController < CompetitionNestedController
       @simple_access.errors.add(:password, :invalid)
 
       flash.now[:alert] = :check_errors
-      render action: :new, status: :unprocessable_entity
+      render action: :new, status: :unprocessable_content
     end
   end
 

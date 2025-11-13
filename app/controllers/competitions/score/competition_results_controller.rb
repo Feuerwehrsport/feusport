@@ -21,7 +21,7 @@ class Competitions::Score::CompetitionResultsController < CompetitionNestedContr
       redirect_to competition_score_competition_results_path, notice: :saved
     else
       flash.now[:alert] = :check_errors
-      render action: :new, status: :unprocessable_entity
+      render action: :new, status: :unprocessable_content
     end
   end
 
@@ -31,7 +31,7 @@ class Competitions::Score::CompetitionResultsController < CompetitionNestedContr
       redirect_to competition_score_competition_results_path, notice: :saved
     else
       flash.now[:alert] = :check_errors
-      render action: :edit, status: :unprocessable_entity
+      render action: :edit, status: :unprocessable_content
     end
   end
 

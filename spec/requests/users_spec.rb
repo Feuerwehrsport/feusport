@@ -17,7 +17,7 @@ RSpec.describe User do
     context 'when credentials are wrong' do
       it 'signs in' do
         post '/users/sign_in', params: { user: { email: 'alfred@meier.de', password: 'wrong' } }
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
       end
     end
 

@@ -45,7 +45,7 @@ RSpec.describe 'People' do
 
       patch "/#{competition.year}/#{competition.slug}/people/#{new_id}",
             params: { person: { first_name: '' } }
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
 
       patch "/#{competition.year}/#{competition.slug}/people/#{new_id}",
             params: { person: { first_name: 'new-name' } }

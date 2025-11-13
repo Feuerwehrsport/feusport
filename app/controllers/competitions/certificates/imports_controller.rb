@@ -8,7 +8,7 @@ class Competitions::Certificates::ImportsController < CompetitionNestedControlle
       redirect_to competition_certificates_template_path(id: @certificates_import.duplicate.id), notice: :saved
     else
       flash.now[:alert] = :check_errors
-      render action: :new, status: :unprocessable_entity
+      render action: :new, status: :unprocessable_content
     end
   end
 

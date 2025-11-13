@@ -46,7 +46,7 @@ class Competitions::Score::ListPrintGeneratorsController < CompetitionNestedCont
       redirect_to competition_score_list_print_generators_path, notice: :saved
     else
       flash.now[:alert] = :check_errors
-      render action: :edit, status: :unprocessable_entity
+      render action: :edit, status: :unprocessable_content
     end
   end
 

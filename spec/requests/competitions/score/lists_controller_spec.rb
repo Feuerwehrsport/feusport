@@ -167,7 +167,7 @@ RSpec.describe Score::List do
 
       patch "/#{competition.year}/#{competition.slug}/score/lists/#{person_list.id}",
             params: { score_list: { name: '' } }
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
 
       patch "/#{competition.year}/#{competition.slug}/score/lists/#{person_list.id}",
             params: { score_list: { name: 'new name' } }

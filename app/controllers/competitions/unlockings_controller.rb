@@ -14,7 +14,7 @@ class Competitions::UnlockingsController < CompetitionNestedController
       redirect_to competition_show_path(slug: @competition.slug, year: @competition.year), notice: :saved
     else
       flash.now[:alert] = :check_errors
-      render action: :new, status: :unprocessable_entity
+      render action: :new, status: :unprocessable_content
     end
   end
 

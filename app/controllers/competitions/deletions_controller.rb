@@ -12,7 +12,7 @@ class Competitions::DeletionsController < CompetitionNestedController
       redirect_to root_path, notice: :deleted
     else
       flash.now[:alert] = :check_errors
-      render action: :new, status: :unprocessable_entity
+      render action: :new, status: :unprocessable_content
     end
   end
 

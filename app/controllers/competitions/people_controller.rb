@@ -37,7 +37,7 @@ class Competitions::PeopleController < CompetitionNestedController
       end
     else
       flash.now[:alert] = :check_errors
-      render action: :new, status: :unprocessable_entity
+      render action: :new, status: :unprocessable_content
     end
   end
 
@@ -54,9 +54,9 @@ class Competitions::PeopleController < CompetitionNestedController
     else
       flash.now[:alert] = :check_errors
       if params[:form] == 'edit_assessment_requests'
-        render action: :edit_assessment_requests, status: :unprocessable_entity
+        render action: :edit_assessment_requests, status: :unprocessable_content
       else
-        render action: :edit, status: :unprocessable_entity
+        render action: :edit, status: :unprocessable_content
       end
     end
   end

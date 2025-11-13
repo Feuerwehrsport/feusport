@@ -19,7 +19,7 @@ class Competitions::TeamMarkerValuesController < CompetitionNestedController
       end
     else
       flash.now[:alert] = :check_errors
-      render action: :edit, status: :unprocessable_entity
+      render action: :edit, status: :unprocessable_content
     end
   end
 

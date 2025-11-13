@@ -55,11 +55,11 @@ class Competitions::Score::ListsController < CompetitionNestedController
       if @list.entries.reject(&:persisted?).present?
         params[:all_entities] = true
         select_entity
-        render action: :select_entity, status: :unprocessable_entity
+        render action: :select_entity, status: :unprocessable_content
       elsif list_params[:entries_attributes].present?
-        render action: :edit_times, status: :unprocessable_entity
+        render action: :edit_times, status: :unprocessable_content
       else
-        render action: :edit, status: :unprocessable_entity
+        render action: :edit, status: :unprocessable_content
       end
     end
   end

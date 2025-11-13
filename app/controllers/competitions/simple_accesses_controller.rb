@@ -10,7 +10,7 @@ class Competitions::SimpleAccessesController < CompetitionNestedController
       redirect_to competition_accesses_path, notice: :saved
     else
       flash.now[:alert] = :check_errors
-      render action: :new, status: :unprocessable_entity
+      render action: :new, status: :unprocessable_content
     end
   end
 
