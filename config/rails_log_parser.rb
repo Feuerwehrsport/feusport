@@ -7,5 +7,6 @@ RailsLogParser.configure do |parser|
     /Ignoring message processed after the WebSocket was closed/,
     /"command"=>"unsubscribe"/,
     /Discarded ScoreListChannel::Updater/,
+    /Rack::Multipart::EmptyContentError/,
   ]
 end
