@@ -375,6 +375,8 @@ Rails/FreezeTime:
   Enabled: true
 Rails/HelperInstanceVariable:
   Enabled: false
+Rails/HttpStatusNameConsistency:
+  Enabled: true
 Rails/I18nLazyLookup:
   Enabled: true
 Rails/I18nLocaleAssignment:
@@ -412,6 +414,8 @@ Rails/PluckInWhere:
   Enabled: true
 Rails/RakeEnvironment:
   Enabled: false
+Rails/RedirectBackOrTo:
+  Enabled: true
 Rails/RedundantActiveRecordAllMethod:
   Enabled: true
 Rails/RedundantPresenceValidationOnBelongsTo:
@@ -580,6 +584,8 @@ Style/MinMaxComparison:
 Style/MixinUsage:
   Exclude:
   - bin/**/*
+Style/ModuleMemberExistenceCheck:
+  Enabled: true
 Style/MultilineInPatternThen:
   Enabled: true
 Style/NegatedIfElseCondition:
