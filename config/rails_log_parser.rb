@@ -8,5 +8,6 @@ RailsLogParser.configure do |parser|
     /"command"=>"unsubscribe"/,
     /Discarded ScoreListChannel::Updater/,
     /Rack::Multipart::EmptyContentError/,
+    /ActionController::BadRequest/,
   ]
 end
