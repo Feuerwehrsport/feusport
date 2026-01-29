@@ -20,24 +20,24 @@ class EmailHtmlRenderer < Redcarpet::Render::HTML
       content = content[1...-1]
       style = 'background-color: #c84b47; font-size: 16px; text-decoration: none; padding: 8px 10px; ' \
               'color: #ffffff; display: inline-block; miso-padding-alt: 0;'
-      <<-BUTTON_CODE.squish
-      <table border="0" cellpadding="0" cellspacing="0" align="center">
-        <tbody>
-          <tr>
-            <td align="center" style="padding: 10px 0;">
-              <a href="#{link}" class="btn-link" style="#{style}" bgcolor="#c84b47">
-                  <!--[if mso]>
-                  <i style="letter-spacing: 23px; mso-font-width: -100%; mso-text-raise: 27pt;">&nbsp;</i>
-                  <![endif]-->
-                  <span style="mso-text-raise: 14pt;">#{content}</span>
-                  <!--[if mso]>
-                  <i style="letter-spacing: 23px; mso-font-width: -100%;">&nbsp;</i>
-                  <![endif]-->
-              </a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <<~BUTTON_CODE.squish
+        <table border="0" cellpadding="0" cellspacing="0" align="center">
+          <tbody>
+            <tr>
+              <td align="center" style="padding: 10px 0;">
+                <a href="#{link}" class="btn-link" style="#{style}" bgcolor="#c84b47">
+                    <!--[if mso]>
+                    <i style="letter-spacing: 23px; mso-font-width: -100%; mso-text-raise: 27pt;">&nbsp;</i>
+                    <![endif]-->
+                    <span style="mso-text-raise: 14pt;">#{content}</span>
+                    <!--[if mso]>
+                    <i style="letter-spacing: 23px; mso-font-width: -100%;">&nbsp;</i>
+                    <![endif]-->
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       BUTTON_CODE
     else
       %(<a href="#{link}" title="#{title}">#{content}</a>)

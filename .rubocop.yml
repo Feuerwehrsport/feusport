@@ -9,7 +9,7 @@ AllCops:
   - private/**/*
   - app/models/concerns/schema_validations.rb
   TargetRailsVersion: 7.2
-  TargetRubyVersion: 3.3.7
+  TargetRubyVersion: 3.3.10
 Bundler/OrderedGems:
   Enabled: false
 FactoryBot/AssociationStyle:
@@ -522,6 +522,8 @@ Style/DocumentDynamicEvalDefinition:
   Enabled: true
 Style/Documentation:
   Enabled: false
+Style/EmptyClassDefinition:
+  Enabled: true
 Style/EmptyHeredoc:
   Enabled: true
 Style/EmptyStringInsideInterpolation:
@@ -590,6 +592,8 @@ Style/MultilineInPatternThen:
   Enabled: true
 Style/NegatedIfElseCondition:
   Enabled: true
+Style/NegativeArrayIndex:
+  Enabled: true
 Style/NestedFileDirname:
   Enabled: true
 Style/NilLambda:
@@ -643,6 +647,8 @@ Style/RedundantSelfAssignmentBranch:
 Style/RedundantStringEscape:
   Enabled: true
 Style/ReturnNilInPredicateMethodDefinition:
+  Enabled: true
+Style/ReverseFind:
   Enabled: true
 Style/SafeNavigation:
   Enabled: false
