@@ -24,7 +24,7 @@ class Series::Round < ApplicationRecord
   default_scope -> { order(year: :desc, name: :asc) }
   scope :exists_for, ->(competition) do
     where(id: competition.score_results.joins(result_series_assessments: { assessment: :round })
-      .select(Series::Round.arel_table[:id]))
+              .select(Series::Round.arel_table[:id]))
   end
 
   class GenderWrapper

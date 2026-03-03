@@ -7,8 +7,8 @@ module Exports::Xlsx::Base
   extend ActiveSupport::Concern
 
   class_methods do
-    def perform(*args)
-      instance = new(*args)
+    def perform(*)
+      instance = new(*)
       instance.perform
       instance
     end

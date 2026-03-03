@@ -13,7 +13,7 @@ class FireSportStatistics::SuggestionsController < ApplicationController
 
     render json: suggestions.to_json(
       only: %i[id first_name last_name gender],
-      include: [teams: { only: [:short] }],
+      include: [{ teams: { only: [:short] } }],
     )
   end
 

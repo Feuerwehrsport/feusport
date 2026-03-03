@@ -9,7 +9,7 @@ AllCops:
   - private/**/*
   - app/models/concerns/schema_validations.rb
   TargetRailsVersion: 7.2
-  TargetRubyVersion: 3.3.10
+  TargetRubyVersion: 3.4.8
 Bundler/OrderedGems:
   Enabled: false
 FactoryBot/AssociationStyle:
@@ -68,6 +68,8 @@ Lint/ConstantOverwrittenInRescue:
 Lint/ConstantReassignment:
   Enabled: true
 Lint/CopDirectiveSyntax:
+  Enabled: true
+Lint/DataDefineOverride:
   Enabled: true
 Lint/DeprecatedConstants:
   Enabled: true
@@ -136,6 +138,8 @@ Lint/UnescapedBracketInRegexp:
 Lint/UnexpectedBlockArity:
   Enabled: true
 Lint/UnmodifiedReduceAccumulator:
+  Enabled: true
+Lint/UnreachablePatternBranch:
   Enabled: true
 Lint/UselessAssignment:
   AutoCorrect: false
@@ -540,6 +544,8 @@ Style/FileEmpty:
   Enabled: true
 Style/FileNull:
   Enabled: true
+Style/FileOpen:
+  Enabled: true
 Style/FileRead:
   Enabled: true
 Style/FileTouch:
@@ -577,6 +583,8 @@ Style/MapCompactWithConditionalBlock:
   Enabled: true
 Style/MapIntoArray:
   Enabled: true
+Style/MapJoin:
+  Enabled: true
 Style/MapToHash:
   Enabled: true
 Style/MapToSet:
@@ -606,11 +614,21 @@ Style/NumericPredicate:
   Enabled: false
 Style/ObjectThen:
   Enabled: true
+Style/OneClassPerFile:
+  Enabled: true
+  Exclude:
+  - config/initializers/**/*
 Style/OpenStructUse:
   Enabled: true
 Style/OperatorMethodCall:
   Enabled: true
+Style/PartitionInsteadOfDoubleSelect:
+  Enabled: true
+Style/PredicateWithKind:
+  Enabled: true
 Style/QuotedSymbols:
+  Enabled: true
+Style/ReduceToHash:
   Enabled: true
 Style/RedundantArgument:
   Enabled: true
@@ -638,6 +656,8 @@ Style/RedundantInterpolationUnfreeze:
   Enabled: true
 Style/RedundantLineContinuation:
   Enabled: true
+Style/RedundantMinMaxBy:
+  Enabled: true
 Style/RedundantRegexpArgument:
   Enabled: true
 Style/RedundantRegexpConstructor:
@@ -645,6 +665,8 @@ Style/RedundantRegexpConstructor:
 Style/RedundantSelfAssignmentBranch:
   Enabled: true
 Style/RedundantStringEscape:
+  Enabled: true
+Style/RedundantStructKeywordInit:
   Enabled: true
 Style/ReturnNilInPredicateMethodDefinition:
   Enabled: true
@@ -654,6 +676,10 @@ Style/SafeNavigation:
   Enabled: false
 Style/SafeNavigationChainLength:
   Enabled: false
+Style/SelectByKind:
+  Enabled: true
+Style/SelectByRange:
+  Enabled: true
 Style/SelectByRegexp:
   Enabled: true
 Style/SendWithLiteralMethodName:
@@ -667,6 +693,8 @@ Style/SuperArguments:
 Style/SuperWithArgsParentheses:
   Enabled: true
 Style/SwapValues:
+  Enabled: true
+Style/TallyMethod:
   Enabled: true
 Style/TrailingCommaInArguments:
   EnforcedStyleForMultiline: comma

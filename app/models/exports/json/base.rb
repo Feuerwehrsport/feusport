@@ -5,8 +5,8 @@ module Exports::Json::Base
   extend ActiveSupport::Concern
 
   class_methods do
-    def perform(*args)
-      new(*args)
+    def perform(*)
+      new(*)
     end
   end
 

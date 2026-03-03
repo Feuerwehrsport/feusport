@@ -5,8 +5,8 @@ module Exports::Pdf::Base
   extend ActiveSupport::Concern
 
   class_methods do
-    def perform(*args)
-      instance = new(*args)
+    def perform(*)
+      instance = new(*)
       instance.unicode_perform
       instance
     end

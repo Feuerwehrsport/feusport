@@ -42,7 +42,7 @@ class Score::ListPrintGenerator < ApplicationRecord
   end
 
   def name
-    print_list_extended.select { |i| i.is_a?(Score::List) }.map(&:name).join(', ')
+    print_list_extended.grep(Score::List).map(&:name).join(', ')
   end
 
   protected

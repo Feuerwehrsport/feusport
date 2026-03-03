@@ -6,11 +6,11 @@ module CardHelper
     render('card', card:)
   end
 
-  def card_body(headline = nil, options = {}, &block)
-    card(headline, options) { |c| c.body(&block) }
+  def card_body(headline = nil, options = {}, &)
+    card(headline, options) { |c| c.body(&) }
   end
 
-  def card_direct(headline = nil, options = {}, &block)
-    card(headline, options) { |c| c.direct(&block) }
+  def card_direct(headline = nil, options = {}, &)
+    card(headline, options) { |c| c.direct(&) }
   end
 end
