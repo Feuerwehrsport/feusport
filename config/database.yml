@@ -5,6 +5,7 @@ default: &default
   database: feusport
   username: feusport
   password: feusport
+  pool: 40
 
 development:
   <<: *default
