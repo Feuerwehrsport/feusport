@@ -69,12 +69,15 @@
             %ul
               - result.series_team_round_keys.each do |round_key|
                 - config = Series::AssessmentConfig.find_by_round_key(round_key, :team)
-                - if config
-                  %li= link_to("Mannschaftswertung: #{config.round_full_name}", competition_series_rounds_path(id: config.round.id))
+                - next unless config
+
+                %li= link_to("Mannschaftswertung: #{config.round_full_name}", competition_series_rounds_path(id: config.round.id))
+
               - result.series_person_round_keys.each do |round_key|
                 - config = Series::AssessmentConfig.find_by_round_key(round_key, :person)
-                - if config
-                  %li= link_to(config.round_full_name, competition_series_person_assessment_path(id: config.round_key))
+                - next unless config
+
+                %li= link_to(config.round_full_name, competition_series_person_assessment_path(id: config.round_key))
 
   - c.actions do |actions|
     - if result.group_assessment? && result.discipline&.single_discipline?
