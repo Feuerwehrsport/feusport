@@ -85,7 +85,8 @@ de:
         person_tags_excluded: Wettkämpfer-Kennzeichnungen (ausschließend)
         person_tags_included: Wettkämpfer-Kennzeichnungen (einschließend)
         results: Ergebnislisten
-        series_assessments: Wertungen
+        series_person_round_keys: Einzelwertungen
+        series_team_round_keys: Mannschaftswertungen
         team_tags_excluded: Mannschafts-Kennzeichnungen (ausschließend)
         team_tags_included: Mannschafts-Kennzeichnungen (einschließend)
     errors:
