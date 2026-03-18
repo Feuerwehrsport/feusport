@@ -4,24 +4,26 @@
 #
 # Table name: score_results
 #
-#  id                   :uuid             not null, primary key
-#  calculation_help     :boolean          default(FALSE), not null
-#  calculation_method   :integer          default("default"), not null
-#  date                 :date
-#  forced_name          :string(100)
-#  group_assessment     :boolean          default(FALSE), not null
-#  group_run_count      :integer          default(8), not null
-#  group_score_count    :integer          default(6), not null
-#  image_key            :string(10)
-#  multi_result_method  :integer          default("disabled"), not null
-#  person_tags_excluded :string           default([]), is an Array
-#  person_tags_included :string           default([]), is an Array
-#  team_tags_excluded   :string           default([]), is an Array
-#  team_tags_included   :string           default([]), is an Array
-#  created_at           :datetime         not null
-#  updated_at           :datetime         not null
-#  assessment_id        :uuid
-#  competition_id       :uuid             not null
+#  id                       :uuid             not null, primary key
+#  calculation_help         :boolean          default(FALSE), not null
+#  calculation_method       :integer          default("default"), not null
+#  date                     :date
+#  forced_name              :string(100)
+#  group_assessment         :boolean          default(FALSE), not null
+#  group_run_count          :integer          default(8), not null
+#  group_score_count        :integer          default(6), not null
+#  image_key                :string(10)
+#  multi_result_method      :integer          default("disabled"), not null
+#  person_tags_excluded     :string           default([]), is an Array
+#  person_tags_included     :string           default([]), is an Array
+#  series_person_round_keys :string           default([]), is an Array
+#  series_team_round_keys   :string           default([]), is an Array
+#  team_tags_excluded       :string           default([]), is an Array
+#  team_tags_included       :string           default([]), is an Array
+#  created_at               :datetime         not null
+#  updated_at               :datetime         not null
+#  assessment_id            :uuid
+#  competition_id           :uuid             not null
 #
 # Indexes
 #
@@ -48,10 +50,6 @@ class Score::Result < ApplicationRecord
   belongs_to :assessment, inverse_of: :results
   has_many :result_lists, dependent: :destroy, inverse_of: :result
   has_many :lists, through: :result_lists
-  has_many :result_series_assessments, class_name: 'Score::ResultSeriesAssessment', dependent: :destroy,
-                                       inverse_of: :result
-  has_many :series_assessments, through: :result_series_assessments, source: :assessment,
-                                class_name: 'Series::Assessment'
   has_many :competition_result_references, class_name: 'Score::CompetitionResultReference', dependent: :destroy
   has_many :competition_results, class_name: 'Score::CompetitionResult', through: :competition_result_references
   has_many :result_references, class_name: 'Score::ResultReference', dependent: :destroy, inverse_of: :result
@@ -60,6 +58,7 @@ class Score::Result < ApplicationRecord
   has_many :results, class_name: 'Score::Result', through: :result_multi_references
   has_many :result_list_factories, class_name: 'Score::ResultListFactory', dependent: :destroy
 
+  delegate :year, to: :competition
   delegate :discipline, to: :assessment, allow_nil: true
   delegate :band, to: :assessment, allow_nil: true
 
@@ -77,6 +76,9 @@ class Score::Result < ApplicationRecord
   validates :assessment, presence: true, if: :multi_result_method_disabled?
   validates :image_key, presence: true, unless: :multi_result_method_disabled?
 
+  after_destroy :assign_series_if_needed
+  after_save :assign_series_if_needed
+
   def name
     @name ||= forced_name.presence || generated_name
   end
@@ -89,11 +91,12 @@ class Score::Result < ApplicationRecord
     [assessment&.name, tags_included, tags_excluded].compact_blank.join(' - ')
   end
 
-  def possible_series_assessments
-    series = Series::Assessment.where(discipline: discipline_key)
-                               .year(Date.current.year)
-    series = series.gender(assessment.band.gender) if assessment&.band.present?
-    series
+  def possible_series_team_round_keys
+    Series::Round.possible_series_round_keys(:team, with_round_keys: series_team_round_keys, discipline_key:, year:)
+  end
+
+  def possible_series_person_round_keys
+    Series::Round.possible_series_round_keys(:person, with_round_keys: series_person_round_keys, discipline_key:, year:)
   end
 
   def single_discipline?
@@ -237,5 +240,12 @@ class Score::Result < ApplicationRecord
     return if before_discipline == discipline
 
     errors.add(:assessment, :discipline_changed)
+  end
+
+  def assign_series_if_needed
+    if attribute_previously_changed?(:series_person_round_keys) ||
+       attribute_previously_changed?(:series_team_round_keys)
+      competition.assign_series!
+    end
   end
 end

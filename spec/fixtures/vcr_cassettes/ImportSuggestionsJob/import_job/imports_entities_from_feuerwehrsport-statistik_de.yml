@@ -18,15 +18,38 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
       Content-Type:
       - application/json; charset=utf-8
-      ontent-Length:
-      - '540'
+      Vary:
+      - Accept
+      Etag:
+      - W/"8e331aa72525e6eb3ca522df0832b0e5"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - b57d51c8-ee94-44b9-9f82-adf8528c15d7
+      X-Runtime:
+      - '0.009076'
+      Server-Timing:
+      - start_processing.action_controller;dur=0.01, sql.active_record;dur=0.63, instantiation.active_record;dur=0.04,
+        render.active_model_serializers;dur=0.43, process_action.action_controller;dur=4.18
+      Content-Length:
+      - '1589'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJzdWNjZXNzIjp0cnVlLCJsb2dpbiI6ZmFsc2UsInBlb3BsZSI6W3siaWQiOjE4NCwibGFzdF9uYW1lIjoiR2VobGVydCIsImZpcnN0X25hbWUiOiJUb20iLCJnZW5kZXIiOiJtYWxlIiwibmF0aW9uX2lkIjoxLCJnZW5kZXJfdHJhbnNsYXRlZCI6Im3DpG5ubGljaCIsImJlc3Rfc2NvcmVzIjp7InBiIjp7ImhiIjpbMTY1NSwiMjAuMDcuMjAyMiAtIENlbGplLCBDVElGIl0sImhsIjpbMTM2NCwiMjUuMDkuMjAyMyAtIFZhcm5hLCBQb2thbGxhdWYgKE9kZXNzb3MgQ3VwKSJdLCJ6ayI6WzMwMjMsIjIwLjA3LjIwMjIgLSBDZWxqZSwgQ1RJRiJdfSwic2IiOnsiaGIiOlsxNjc0LCIyMy4wNS4yMDI0IC0gT3N0cm93aWVjIMWad2nEmXRva3J6eXNraSwgUG9rYWxsYXVmIl0sImhsIjpbMTQwNCwiMjMuMDUuMjAyNCAtIE9zdHJvd2llYyDFmndpxJl0b2tyenlza2ksIFBva2FsbGF1ZiJdLCJ6ayI6WzMwNzgsIjIzLjA1LjIwMjQgLSBPc3Ryb3dpZWMgxZp3acSZdG9rcnp5c2tpLCBQb2thbGxhdWYiXX19fV0sImNvbGxlY3Rpb25fbmFtZSI6InBlb3BsZSJ9
-  recorded_at: Fri, 14 Jun 2024 12:20:59 GMT
+        eyJzdWNjZXNzIjp0cnVlLCJsb2dpbiI6ZmFsc2UsInBlb3BsZSI6W3siaWQiOjI5NSwibGFzdF9uYW1lIjoiRXNjaG1lbnQiLCJmaXJzdF9uYW1lIjoiUm9iZXJ0IiwiZ2VuZGVyIjoibWFsZSIsIm5hdGlvbl9pZCI6MSwiZ2VuZGVyX3RyYW5zbGF0ZWQiOiJtw6RubmxpY2giLCJiZXN0X3Njb3JlcyI6eyJwYiI6eyJoYiI6WzE5MjAsIjA4LjA3LjIwMjMgLSBMZXRzY2hpbiwgRC1DdXAgKDMuIERldXRzY2hsYW5kLUN1cCkiXSwiaGwiOlsxNzI3LCIwMy4wOC4yMDI0IC0gT3N0c2VlYmFkIE5pZW5oYWdlbiwgTVYtQ3VwIChNVi1IaW5kZXJuaXMtIHVuZCAtU3RlaWdlcmN1cCkiXSwiemsiOlszNjk2LCIyNC4wOC4yMDE5IC0gTHVkd2lnc2x1c3QsIExhbmRlc2F1c3NjaGVpZCAoTGFuZGVzbWVpc3RlcnNjaGFmdGVuIE1lY2tsZW5idXJnLVZvcnBvbW1lcm4pIl19LCJzYiI6eyJoYiI6bnVsbCwiaGwiOm51bGwsInprIjpudWxsfX19LHsiaWQiOjE4NCwibGFzdF9uYW1lIjoiR2VobGVydCIsImZpcnN0X25hbWUiOiJUb20iLCJnZW5kZXIiOiJtYWxlIiwibmF0aW9uX2lkIjoxLCJnZW5kZXJfdHJhbnNsYXRlZCI6Im3DpG5ubGljaCIsImJlc3Rfc2NvcmVzIjp7InBiIjp7ImhiIjpbMTY1NSwiMjAuMDcuMjAyMiAtIENlbGplLCBDVElGIl0sImhsIjpbMTMzNCwiMzAuMDcuMjAyNSAtIFRvcmdhdSwgRE0gKERldXRzY2hlIE1laXN0ZXJzY2hhZnQpIl0sInprIjpbMzAyMywiMjAuMDcuMjAyMiAtIENlbGplLCBDVElGIl19LCJzYiI6eyJoYiI6bnVsbCwiaGwiOm51bGwsInprIjpudWxsfX19LHsiaWQiOjI3MSwibGFzdF9uYW1lIjoiTGltYmFjaCIsImZpcnN0X25hbWUiOiJHZW9yZyIsImdlbmRlciI6Im1hbGUiLCJuYXRpb25faWQiOjEsImdlbmRlcl90cmFuc2xhdGVkIjoibcOkbm5saWNoIiwiYmVzdF9zY29yZXMiOnsicGIiOnsiaGIiOlsxNzk2LCIyOC4wNS4yMDE2IC0gRG9iZXJsdWctS2lyY2hoYWluLCBELUN1cCJdLCJobCI6WzE2MzQsIjA3LjA2LjIwMTQgLSBDaGFybG90dGVudGhhbCwgTVYtQ3VwICgyMC4gUGZpbmdzdHBva2FsKSJdLCJ6ayI6WzM0OTcsIjI0LjA4LjIwMTkgLSBMdWR3aWdzbHVzdCwgTGFuZGVzYXVzc2NoZWlkIChMYW5kZXNtZWlzdGVyc2NoYWZ0ZW4gTWVja2xlbmJ1cmctVm9ycG9tbWVybikiXX0sInNiIjp7ImhiIjpudWxsLCJobCI6WzE5OTIsIjI0LjAxLjIwMjYgLSBUcmlic2VlcywgTmV1amFocnNzdGVpZ2VuIChOZXVqYWhyc3N0ZWlnZW4gMjAyNikiXSwiemsiOm51bGx9fX0seyJpZCI6OTIsImxhc3RfbmFtZSI6Ik5ldWJhdWVyIiwiZmlyc3RfbmFtZSI6IlNlYmFzdGlhbiIsImdlbmRlciI6Im1hbGUiLCJuYXRpb25faWQiOjEsImdlbmRlcl90cmFuc2xhdGVkIjoibcOkbm5saWNoIiwiYmVzdF9zY29yZXMiOnsicGIiOnsiaGIiOlsxNjk5LCIyNS4wNy4yMDEyIC0gQ290dGJ1cywgRE0iXSwiaGwiOlsxNTM4LCIxOS4xMC4yMDEyIC0gQW50YWx5YSAoVFIpLCBXTSJdLCJ6ayI6WzMyODEsIjE5LjEwLjIwMTIgLSBBbnRhbHlhIChUUiksIFdNIl19LCJzYiI6eyJoYiI6bnVsbCwiaGwiOm51bGwsInprIjpudWxsfX19XSwiY29sbGVjdGlvbl9uYW1lIjoicGVvcGxlIn0=
+  recorded_at: Wed, 18 Mar 2026 10:37:12 GMT
 - request:
     method: get
     uri: https://feuerwehrsport-statistik.de/api/teams
@@ -45,15 +68,38 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
       Content-Type:
       - application/json; charset=utf-8
+      Vary:
+      - Accept
+      Etag:
+      - W/"70e03c0c234892ef32694ecd430990e8"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 7d5bc227-e99c-4b4c-acc0-71890f4e1386
+      X-Runtime:
+      - '0.009546'
+      Server-Timing:
+      - start_processing.action_controller;dur=0.01, sql.active_record;dur=0.67, instantiation.active_record;dur=0.05,
+        render.active_model_serializers;dur=0.94, process_action.action_controller;dur=4.82
       Content-Length:
-      - '1833'
+      - '2387'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJzdWNjZXNzIjp0cnVlLCJsb2dpbiI6ZmFsc2UsInRlYW1zIjpbeyJpZCI6MTcwMCwibmFtZSI6IkJGIENvdHRidXMiLCJzaG9ydGN1dCI6IkNvdHRidXMiLCJzdGF0dXMiOiJmaXJlX3N0YXRpb24iLCJsYXRpdHVkZSI6IjUxLjc1Njc0NDciLCJsb25naXR1ZGUiOiIxNC4zMzU3MzA3Iiwic3RhdGUiOiJCQiIsInRpbGVfcGF0aCI6bnVsbH0seyJpZCI6MTksIm5hbWUiOiJGRiBCdXJrZXJzZG9yZiIsInNob3J0Y3V0IjoiQnVya2Vyc2RvcmYiLCJzdGF0dXMiOiJmaXJlX3N0YXRpb24iLCJsYXRpdHVkZSI6IjUwLjk0NzYxMjc4NzgiLCJsb25naXR1ZGUiOiIxMi4zOTc3Mjc5NjYzIiwic3RhdGUiOiJUSCIsInRpbGVfcGF0aCI6bnVsbH0seyJpZCI6NjcsIm5hbWUiOiJGRiBDb3R0YnVzIiwic2hvcnRjdXQiOiJDb3R0YnVzIiwic3RhdHVzIjoiZmlyZV9zdGF0aW9uIiwibGF0aXR1ZGUiOiI1MS43NjA2Mzc4IiwibG9uZ2l0dWRlIjoiMTQuMzMzOTM2NSIsInN0YXRlIjoiQkIiLCJ0aWxlX3BhdGgiOm51bGx9LHsiaWQiOjM1OCwibmFtZSI6IkZpcmVzcG9ydCBHZXJtYW55Iiwic2hvcnRjdXQiOiJGaXJlc3BvcnQgR0VSIiwic3RhdHVzIjoidGVhbSIsImxhdGl0dWRlIjoiNTEuOTI4OTU4NTA4NyIsImxvbmdpdHVkZSI6IjEyLjU5MTcyNjc3OTkiLCJzdGF0ZSI6IlNUIiwidGlsZV9wYXRoIjpudWxsfSx7ImlkIjo1NDYsIm5hbWUiOiJLQSBBbHRlbmJ1cmdlciBMYW5kIiwic2hvcnRjdXQiOiJBbHRlbmJ1cmdlciBMYW5kIiwic3RhdHVzIjoidGVhbSIsImxhdGl0dWRlIjoiNTAuOTU3NDg1NTUiLCJsb25naXR1ZGUiOiIxMi4zMDg1MDU1Mzk4Iiwic3RhdGUiOiJUSCIsInRpbGVfcGF0aCI6bnVsbH0seyJpZCI6MjcsIm5hbWUiOiJLQSBIaWxkYnVyZ2hhdXNlbiIsInNob3J0Y3V0IjoiSGlsZGJ1cmdoYXVzZW4iLCJzdGF0dXMiOiJ0ZWFtIiwibGF0aXR1ZGUiOiI1MC40MjY2Nzg1IiwibG9uZ2l0dWRlIjoiMTAuNzI5Njk5MiIsInN0YXRlIjoiVEgiLCJ0aWxlX3BhdGgiOm51bGx9LHsiaWQiOjE4NjksIm5hbWUiOiJUZWFtIEJyYW5kZW5idXJnIiwic2hvcnRjdXQiOiJCcmFuZGVuYnVyZyIsInN0YXR1cyI6InRlYW0iLCJsYXRpdHVkZSI6IjUyLjMzNTMzOTA3MTkiLCJsb25naXR1ZGUiOiIxMy44NjQ3NDYwOTM4Iiwic3RhdGUiOiJCQiIsInRpbGVfcGF0aCI6bnVsbH0seyJpZCI6NjEsIm5hbWUiOiJUZWFtIERldXRzY2hsYW5kIiwic2hvcnRjdXQiOiJEZXV0c2NobGFuZCIsInN0YXR1cyI6InRlYW0iLCJsYXRpdHVkZSI6IjUxLjA4MzQxOTYiLCJsb25naXR1ZGUiOiIxMC40MjM0NDY5Iiwic3RhdGUiOiJERSIsInRpbGVfcGF0aCI6bnVsbH0seyJpZCI6MywibmFtZSI6IlRlYW0gTGF1c2l0eiIsInNob3J0Y3V0IjoiVGVhbSBMYXVzaXR6Iiwic3RhdHVzIjoidGVhbSIsImxhdGl0dWRlIjoiNTEuMzcxNzgwMzc1OSIsImxvbmdpdHVkZSI6IjE0LjMyNjE3MTg3NSIsInN0YXRlIjoiQkIiLCJ0aWxlX3BhdGgiOm51bGx9LHsiaWQiOjE1LCJuYW1lIjoiVGVhbSBaZXVsZW5yb2RhIiwic2hvcnRjdXQiOiJaZXVsZW5yb2RhIiwic3RhdHVzIjoidGVhbSIsImxhdGl0dWRlIjoiNTAuNjQ1NDMzMDc2NCIsImxvbmdpdHVkZSI6IjExLjk4NTIyNTY3NzUiLCJzdGF0ZSI6IlRIIiwidGlsZV9wYXRoIjpudWxsfSx7ImlkIjoxMSwibmFtZSI6IlRow7xyaW5nZW4tQXVzd2FobCIsInNob3J0Y3V0IjoiVGjDvHJpbmdlbiIsInN0YXR1cyI6InRlYW0iLCJsYXRpdHVkZSI6IjUwLjczMzMxNjMiLCJsb25naXR1ZGUiOiIxMS4wNzQ3OTA1Iiwic3RhdGUiOiJUSCIsInRpbGVfcGF0aCI6bnVsbH1dLCJjb2xsZWN0aW9uX25hbWUiOiJ0ZWFtcyJ9
-  recorded_at: Fri, 14 Jun 2024 12:20:59 GMT
+        eyJzdWNjZXNzIjp0cnVlLCJsb2dpbiI6ZmFsc2UsInRlYW1zIjpbeyJpZCI6NDYsIm5hbWUiOiJGRiBDaGFybG90dGVudGhhbCIsInNob3J0Y3V0IjoiQ2hhcmxvdHRlbnRoYWwiLCJzdGF0dXMiOiJmaXJlX3N0YXRpb24iLCJsYXRpdHVkZSI6IjUzLjY4NTE3ODk5NDgiLCJsb25naXR1ZGUiOiIxMi4yNjY4ODQ0NDYxIiwic3RhdGUiOiJNViIsInRpbGVfcGF0aCI6bnVsbCwiYmVzdF9zY29yZXMiOnsibWFsZSI6eyJkaW4iOnsicGIiOlsyNDQ4LCIyMy4wNi4yMDE4IC0gR8O8c3Ryb3csIEtyZWlzYXVzc2NoZWlkIChMYW5ka3JlaXMgUm9zdG9jaykiXSwic2IiOm51bGx9LCJ0Z2wiOnsicGIiOm51bGwsInNiIjpudWxsfX0sImZlbWFsZSI6eyJkaW4iOnsicGIiOlsyNjMzLCIwMS4wNy4yMDIzIC0gR25vaWVuLCBLcmVpc2F1c3NjaGVpZCAoTEsgTFJPKSJdLCJzYiI6bnVsbH0sInRnbCI6eyJwYiI6bnVsbCwic2IiOm51bGx9fX19LHsiaWQiOjE1NSwibmFtZSI6IkZGIEtsZWluIFJhZGRlbiIsInNob3J0Y3V0IjoiS2xlaW4gUmFkZGVuIiwic3RhdHVzIjoiZmlyZV9zdGF0aW9uIiwibGF0aXR1ZGUiOiI1MS44NzA1Nzc4IiwibG9uZ2l0dWRlIjoiMTMuODc4NDMxIiwic3RhdGUiOiJCQiIsInRpbGVfcGF0aCI6bnVsbCwiYmVzdF9zY29yZXMiOnsibWFsZSI6eyJkaW4iOnsicGIiOlsxOTc2LCIyNi4wOC4yMDE3IC0gU2Nod2FuZWJlY2ssIFBva2FsbGF1ZiAoMjEuIFBva2FsbGF1ZikiXSwic2IiOm51bGx9LCJ0Z2wiOnsicGIiOlsyMDkzLCIwNy4wNy4yMDE4IC0gWmVsbGEsIFBva2FsbGF1ZiAoNC4gTGF1ZiBUR0wtQ3VwKSJdLCJzYiI6bnVsbH19LCJmZW1hbGUiOnsiZGluIjp7InBiIjpbMzQxNSwiMjguMDcuMjAwNyAtIFdpbGxtZXJzZG9yZi1TdMO2YnJpdHosIFBva2FsbGF1ZiAoMTIuIFBva2Fsd2V0dGthbXBmIC0gMy4gV2FuZGVycG9rYWwpIl0sInNiIjpudWxsfSwidGdsIjp7InBiIjpudWxsLCJzYiI6bnVsbH19fX0seyJpZCI6MzI5LCJuYW1lIjoiRkYgV2lsbG1lcnNkb3JmLVN0w7Zicml0eiIsInNob3J0Y3V0IjoiV2lsbG1lcnNkb3JmLVN0w7Zicml0eiIsInN0YXR1cyI6ImZpcmVfc3RhdGlvbiIsImxhdGl0dWRlIjoiNTEuODUxMjYxNDU0IiwibG9uZ2l0dWRlIjoiMTMuNzIyMjY3MTUwOSIsInN0YXRlIjoiQkIiLCJ0aWxlX3BhdGgiOm51bGwsImJlc3Rfc2NvcmVzIjp7Im1hbGUiOnsiZGluIjp7InBiIjpbMjA1OSwiMjkuMDguMjAxNSAtIFNjaHdhbmViZWNrLCBCQi1DdXAiXSwic2IiOm51bGx9LCJ0Z2wiOnsicGIiOlsyMDc4LCIwNi4xMC4yMDE4IC0gR2Vuc2NobWFyLCBQb2thbGxhdWYgKDkuIFN1cGVyY3VwIHVuZCAyMi4gT2RlcnBva2FsKSJdLCJzYiI6bnVsbH19LCJmZW1hbGUiOnsiZGluIjp7InBiIjpbMzYxOSwiMDIuMTAuMjAxMCAtIE1lcnpkb3JmLCBQb2thbGxhdWYgKDEwLiBGbHV0bGljaHRwb2thbGxhdWYpIl0sInNiIjpudWxsfSwidGdsIjp7InBiIjpudWxsLCJzYiI6bnVsbH19fX0seyJpZCI6MywibmFtZSI6IlRlYW0gTGF1c2l0eiIsInNob3J0Y3V0IjoiVGVhbSBMYXVzaXR6Iiwic3RhdHVzIjoidGVhbSIsImxhdGl0dWRlIjoiNTEuMzcxNzgwMzc1OSIsImxvbmdpdHVkZSI6IjE0LjMyNjE3MTg3NSIsInN0YXRlIjoiQkIiLCJ0aWxlX3BhdGgiOm51bGwsImJlc3Rfc2NvcmVzIjp7Im1hbGUiOnsiZGluIjp7InBiIjpbMjIxMiwiMjMuMDcuMjAxNiAtIFdpbGxtZXJzZG9yZi1TdMO2YnJpdHosIFBva2FsbGF1ZiAoMTIuIFdhbmRlcnBva2FsbGF1ZikiXSwic2IiOm51bGx9LCJ0Z2wiOnsicGIiOlszNDkyLCIyMy4wNy4yMDE2IC0gV2lsbG1lcnNkb3JmLVN0w7Zicml0eiwgUG9rYWxsYXVmICgxMi4gV2FuZGVycG9rYWxsYXVmKSJdLCJzYiI6bnVsbH19LCJmZW1hbGUiOnsiZGluIjp7InBiIjpbMjQ3NiwiMjkuMDYuMjAxOSAtIE5hcnNkb3JmLCBELUN1cCJdLCJzYiI6bnVsbH0sInRnbCI6eyJwYiI6bnVsbCwic2IiOm51bGx9fX19LHsiaWQiOjIsIm5hbWUiOiJUZWFtIE1lY2tsZW5idXJnLVZvcnBvbW1lcm4iLCJzaG9ydGN1dCI6IlRlYW0gTVYiLCJzdGF0dXMiOiJ0ZWFtIiwibGF0aXR1ZGUiOiI1My42ODUxNTY3NTYzIiwibG9uZ2l0dWRlIjoiMTIuMjY2OTAwNTM5NCIsInN0YXRlIjoiTVYiLCJ0aWxlX3BhdGgiOm51bGwsImJlc3Rfc2NvcmVzIjp7Im1hbGUiOnsiZGluIjp7InBiIjpbMjI2MywiMTYuMDYuMjAxOCAtIERvYmVybHVnLUtpcmNoaGFpbiwgRC1DdXAiXSwic2IiOm51bGx9LCJ0Z2wiOnsicGIiOm51bGwsInNiIjpudWxsfX0sImZlbWFsZSI6eyJkaW4iOnsicGIiOlsyNDk4LCIyNS4wNy4yMDEyIC0gQ290dGJ1cywgRE0iXSwic2IiOm51bGx9LCJ0Z2wiOnsicGIiOm51bGwsInNiIjpudWxsfX19fV0sImNvbGxlY3Rpb25fbmFtZSI6InRlYW1zIn0=
+  recorded_at: Wed, 18 Mar 2026 10:37:12 GMT
 - request:
     method: get
     uri: https://feuerwehrsport-statistik.de/api/team_members
@@ -72,14 +118,37 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
       Content-Type:
       - application/json; charset=utf-8
+      Vary:
+      - Accept
+      Etag:
+      - W/"00fd29eb898dd537fff48ebc3fc37968"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - de39d669-51ed-4559-bc64-331730cc143a
+      X-Runtime:
+      - '0.010030'
+      Server-Timing:
+      - start_processing.action_controller;dur=0.01, sql.active_record;dur=0.83, instantiation.active_record;dur=0.05,
+        render.active_model_serializers;dur=0.16, process_action.action_controller;dur=4.52
       Content-Length:
-      - '426'
+      - '229'
     body:
       encoding: UTF-8
-      string: '{"success":true,"login":false,"team_members":[{"person_id":184,"team_id":27},{"person_id":184,"team_id":19},{"person_id":184,"team_id":546},{"person_id":184,"team_id":1869},{"person_id":184,"team_id":67},{"person_id":184,"team_id":1700},{"person_id":184,"team_id":3},{"person_id":184,"team_id":61},{"person_id":184,"team_id":15},{"person_id":184,"team_id":358},{"person_id":184,"team_id":11}],"collection_name":"team_members"}'
-  recorded_at: Fri, 14 Jun 2024 12:20:59 GMT
+      string: '{"success":true,"login":false,"team_members":[{"person_id":271,"team_id":2},{"person_id":184,"team_id":3},{"person_id":92,"team_id":46},{"person_id":295,"team_id":2},{"person_id":92,"team_id":2}],"collection_name":"team_members"}'
+  recorded_at: Wed, 18 Mar 2026 10:37:12 GMT
 - request:
     method: get
     uri: https://feuerwehrsport-statistik.de/api/team_spellings
@@ -98,15 +167,38 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
       Content-Type:
       - application/json; charset=utf-8
+      Vary:
+      - Accept
+      Etag:
+      - W/"c904cfd15efa3c2f8086bbd92ff67e29"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - e8b9018f-1dc8-4389-b80a-7dd5bb484ad1
+      X-Runtime:
+      - '0.010377'
+      Server-Timing:
+      - start_processing.action_controller;dur=0.01, sql.active_record;dur=0.60, instantiation.active_record;dur=0.08,
+        render.active_model_serializers;dur=0.43, process_action.action_controller;dur=4.82
       Content-Length:
-      - '555'
+      - '1333'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJzdWNjZXNzIjp0cnVlLCJsb2dpbiI6ZmFsc2UsInRlYW1fc3BlbGxpbmdzIjpbeyJ0ZWFtX2lkIjozLCJuYW1lIjoiVGVhbSBMYXVzaXR6Iiwic2hvcnRjdXQiOiJMYXVzaXR6In0seyJ0ZWFtX2lkIjoxNSwibmFtZSI6IlRTViBaZXVsZW5yb2RhIiwic2hvcnRjdXQiOiJaZXVsZW5yb2RhIn0seyJ0ZWFtX2lkIjoxMSwibmFtZSI6IlRow7xyaW5nZW4gQXVzd2FobCIsInNob3J0Y3V0IjoiVGjDvHJpbmdlbiBBdXN3YWhsIn0seyJ0ZWFtX2lkIjoxMSwibmFtZSI6IkZGIFRow7xyaW5nZW5hdXN3YWhsIiwic2hvcnRjdXQiOiJUaMO8cmluZ2VuYXVzd2FobCJ9LHsidGVhbV9pZCI6MTEsIm5hbWUiOiJGRiBUaMO8cmluZ2VuIC0gQXVzd2FobCIsInNob3J0Y3V0IjoiVGjDvHJpbmdlbiAtIEF1c3dhaGwifSx7InRlYW1faWQiOjM1OCwibmFtZSI6IlRlYW0gRmlyc2Vwb3J0Iiwic2hvcnRjdXQiOiJGaXJzZXBvcnQifSx7InRlYW1faWQiOjE4NjksIm5hbWUiOiJGRiBUZWFtIEJCIDEiLCJzaG9ydGN1dCI6IkJCIn1dLCJjb2xsZWN0aW9uX25hbWUiOiJ0ZWFtX3NwZWxsaW5ncyJ9
-  recorded_at: Fri, 14 Jun 2024 12:20:59 GMT
+        eyJzdWNjZXNzIjp0cnVlLCJsb2dpbiI6ZmFsc2UsInRlYW1fc3BlbGxpbmdzIjpbeyJ0ZWFtX2lkIjozLCJuYW1lIjoiVGVhbSBMYXVzaXR6Iiwic2hvcnRjdXQiOiJMYXVzaXR6In0seyJ0ZWFtX2lkIjoyLCJuYW1lIjoiVGVhbSBNZWNrbC4tVm9ycC4iLCJzaG9ydGN1dCI6Ik1lY2tsLi1Wb3JwLiJ9LHsidGVhbV9pZCI6MiwibmFtZSI6IlRlYW0gTVYiLCJzaG9ydGN1dCI6Ik1WIn0seyJ0ZWFtX2lkIjoyLCJuYW1lIjoiRkYgVGVhbSBNZWNrbC4tVm9ycC4iLCJzaG9ydGN1dCI6IlRlYW0gTWVja2wuLVZvcnAuIn0seyJ0ZWFtX2lkIjozMjksIm5hbWUiOiJGRiBXaWxsbWVyc2RvcmYvU3Ryw7ZiaXR6Iiwic2hvcnRjdXQiOiJXaWxsbWVyc2RvcmYvU3Ryw7ZiaXR6In0seyJ0ZWFtX2lkIjozMjksIm5hbWUiOiJGRiBXaWxsbWVyc2RvcmYgLyBTdMO2YnJpdHoiLCJzaG9ydGN1dCI6IldpbGxtZXJzZG9yZiAvIFN0w7Zicml0eiJ9LHsidGVhbV9pZCI6MzI5LCJuYW1lIjoiRkYgV2lsbG1lcnNkb3JmIC8gU3TDtmJyaXR6Iiwic2hvcnRjdXQiOiJXaWxsbWVyc2RvcmYgLyBTdMO2YnJpdHoifSx7InRlYW1faWQiOjIsIm5hbWUiOiJGRiBNZWNrbGVuYnVyZy1Wb3Jwb21tZXJuIiwic2hvcnRjdXQiOiJNZWNrbGVuYnVyZy1Wb3Jwb21tZXJuIn0seyJ0ZWFtX2lkIjozMjksIm5hbWUiOiJGRiBXaWxsbWVyc2RvcmYgU3TDtmJyaXR6Iiwic2hvcnRjdXQiOiJXaWxsbWVyc2RvcmYgU3TDtmJyaXR6In0seyJ0ZWFtX2lkIjozMjksIm5hbWUiOiJGRiBXaWxsbWVyc2RvcmYg4oCTIFN0w7Zicml0eiIsInNob3J0Y3V0IjoiV2lsbG1lcnNkb3JmIOKAkyBTdMO2YnJpdHoifSx7InRlYW1faWQiOjMyOSwibmFtZSI6IkZGIFdpbGxtZXJzZG9yZi0gU3TDtmJyaXR6Iiwic2hvcnRjdXQiOiJXaWxsbWVyc2RvcmYtIFN0w7Zicml0eiJ9LHsidGVhbV9pZCI6MzI5LCJuYW1lIjoiRkYgV2lsbG1lcnNkb3JmL1N0w7Zicml0eiIsInNob3J0Y3V0IjoiV2lsbG1lcnNkb3JmL1N0w7Zicml0eiJ9LHsidGVhbV9pZCI6MzI5LCJuYW1lIjoiRkYgV2lsbG1lcnNkb3JmIC0gU3TDtmJyaXR6Iiwic2hvcnRjdXQiOiJXaWxsbWVyc2RvcmYgLSBTdMO2YnJpdHoifSx7InRlYW1faWQiOjIsIm5hbWUiOiJUZWFtIE0tViIsInNob3J0Y3V0IjoiTS1WIn0seyJ0ZWFtX2lkIjo0NiwibmFtZSI6IkZGIENoYXJsb3R0ZW50aCIsInNob3J0Y3V0IjoiQ2hhcmxvdHRlbnRoIn0seyJ0ZWFtX2lkIjozMjksIm5hbWUiOiJGRiBXaWxtZXJzZG9yZi1TdMO2YnJpdHoiLCJzaG9ydGN1dCI6IldpbG1lcnNkb3JmLVN0w7Zicml0eiJ9XSwiY29sbGVjdGlvbl9uYW1lIjoidGVhbV9zcGVsbGluZ3MifQ==
+  recorded_at: Wed, 18 Mar 2026 10:37:12 GMT
 - request:
     method: get
     uri: https://feuerwehrsport-statistik.de/api/person_spellings
@@ -125,15 +217,38 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
       Content-Type:
       - application/json; charset=utf-8
+      Vary:
+      - Accept
+      Etag:
+      - W/"9ad0271d45f08877a44ad4a345147688"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 919e5c09-1355-4110-a7db-9bb02bd55eca
+      X-Runtime:
+      - '0.009005'
+      Server-Timing:
+      - start_processing.action_controller;dur=0.01, sql.active_record;dur=0.50, instantiation.active_record;dur=0.03,
+        render.active_model_serializers;dur=0.23, process_action.action_controller;dur=4.33
       Content-Length:
-      - '210'
+      - '212'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJzdWNjZXNzIjp0cnVlLCJsb2dpbiI6ZmFsc2UsInBlcnNvbl9zcGVsbGluZ3MiOlt7InBlcnNvbl9pZCI6MTg0LCJmaXJzdF9uYW1lIjoiVG9tbSIsImxhc3RfbmFtZSI6IkdlaGwiLCJnZW5kZXIiOiJtYWxlIiwib2ZmaWNpYWwiOmZhbHNlLCJnZW5kZXJfdHJhbnNsYXRlZCI6Im3DpG5ubGljaCJ9XSwiY29sbGVjdGlvbl9uYW1lIjoicGVyc29uX3NwZWxsaW5ncyJ9
-  recorded_at: Fri, 14 Jun 2024 12:20:59 GMT
+        eyJzdWNjZXNzIjp0cnVlLCJsb2dpbiI6ZmFsc2UsInBlcnNvbl9zcGVsbGluZ3MiOlt7InBlcnNvbl9pZCI6MjcxLCJmaXJzdF9uYW1lIjoiQWxmcmVkIiwibGFzdF9uYW1lIjoiTWVpZXIiLCJnZW5kZXIiOiJtYWxlIiwib2ZmaWNpYWwiOnRydWUsImdlbmRlcl90cmFuc2xhdGVkIjoibcOkbm5saWNoIn1dLCJjb2xsZWN0aW9uX25hbWUiOiJwZXJzb25fc3BlbGxpbmdzIn0=
+  recorded_at: Wed, 18 Mar 2026 10:37:12 GMT
 - request:
     method: get
     uri: https://feuerwehrsport-statistik.de/api/series/rounds
@@ -152,14 +267,38 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
       Content-Type:
       - application/json; charset=utf-8
+      Vary:
+      - Accept
+      Etag:
+      - W/"9b8110def1471078b6d850128a685ba2"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - ca34aa26-a6f6-4ab8-bb32-43135c74c340
+      X-Runtime:
+      - '0.029505'
+      Server-Timing:
+      - start_processing.action_controller;dur=0.02, sql.active_record;dur=2.02, instantiation.active_record;dur=0.24,
+        render.active_model_serializers;dur=1.03, process_action.action_controller;dur=15.64
       Content-Length:
-      - '508'
+      - '2065'
     body:
-      encoding: UTF-8
-      string: '{"success":true,"login":false,"series_rounds":[{"id":87,"name":"D-Cup","year":2023,"aggregate_type":"DCup","full_cup_count":4,"official":true},{"id":45,"name":"Extra-Liga","year":2017,"aggregate_type":"ExtraLiga","full_cup_count":6,"official":true},{"id":44,"name":"MV-Hinderniscup","year":2017,"aggregate_type":"MVHindernisCup","full_cup_count":4,"official":true},{"id":27,"name":"BB-Cup","year":2015,"aggregate_type":"BrandenburgCup","full_cup_count":4,"official":false}],"collection_name":"series_rounds"}'
-  recorded_at: Fri, 14 Jun 2024 12:20:59 GMT
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJzdWNjZXNzIjp0cnVlLCJsb2dpbiI6ZmFsc2UsInNlcmllc19yb3VuZHMiOlt7ImlkIjo4NywibmFtZSI6IkQtQ3VwIiwieWVhciI6MjAyMywiZnVsbF9jdXBfY291bnQiOjQsIm9mZmljaWFsIjp0cnVlLCJ0ZWFtX2Fzc2Vzc21lbnRzX2NvbmZpZ3MiOlt7ImtleSI6Im1hbGUiLCJuYW1lIjoiTcOkbm5lciIsImRpc2NpcGxpbmVzIjpbImxhIiwiZnMiLCJoYiIsImhsIl0sInNob3dfY29sdW1ucyI6WyJiZXN0X3RpbWUiLCJhbGxfcG9pbnRzIl0sInJhbmtpbmdfbG9naWMiOlsiYWxsX3BvaW50cyIsImJlc3RfdGltZSJdLCJwb2ludHNfZm9yX3JhbmsiOltdLCJtaW5fcGFydGljaXBhdGlvbnNfY291bnQiOjIsImNhbGNfcGFydGljaXBhdGlvbnNfY291bnQiOjR9XSwicGVyc29uX2Fzc2Vzc21lbnRzX2NvbmZpZ3MiOlt7ImtleSI6Im1hbGUtaGIiLCJuYW1lIjoiSGluZGVybmlzYmFobiAtIE3DpG5uZXIiLCJkaXNjaXBsaW5lcyI6WyJoYiJdLCJzaG93X2NvbHVtbnMiOlsic3VtX3RpbWUiLCJwYXJ0aWNpcGF0aW9uX2NvdW50IiwicG9pbnRzIl0sInJhbmtpbmdfbG9naWMiOlsicG9pbnRzIiwicGFydGljaXBhdGlvbl9jb3VudCIsInN1bV90aW1lIl0sInBvaW50c19mb3JfcmFuayI6W10sIm1pbl9wYXJ0aWNpcGF0aW9uc19jb3VudCI6MSwiY2FsY19wYXJ0aWNpcGF0aW9uc19jb3VudCI6NH0seyJrZXkiOiJtYWxlLWhsIiwibmFtZSI6Ikhha2VubGVpdGVyc3RlaWdlbiAtICBNw6RubmVyIiwiZGlzY2lwbGluZXMiOlsiaGwiXSwic2hvd19jb2x1bW5zIjpbInN1bV90aW1lIiwicGFydGljaXBhdGlvbl9jb3VudCIsInBvaW50cyJdLCJyYW5raW5nX2xvZ2ljIjpbInBvaW50cyIsInBhcnRpY2lwYXRpb25fY291bnQiLCJzdW1fdGltZSJdLCJwb2ludHNfZm9yX3JhbmsiOltdLCJtaW5fcGFydGljaXBhdGlvbnNfY291bnQiOjEsImNhbGNfcGFydGljaXBhdGlvbnNfY291bnQiOjR9LHsia2V5IjoibWFsZS16ayIsIm5hbWUiOiJad2Vpa2FtcGYgLSBNw6RubmVyIiwiZGlzY2lwbGluZXMiOlsiemsiXSwic2hvd19jb2x1bW5zIjpbInN1bV90aW1lIiwicGFydGljaXBhdGlvbl9jb3VudCIsInBvaW50cyJdLCJyYW5raW5nX2xvZ2ljIjpbInBvaW50cyIsInBhcnRpY2lwYXRpb25fY291bnQiLCJzdW1fdGltZSJdLCJwb2ludHNfZm9yX3JhbmsiOltdLCJtaW5fcGFydGljaXBhdGlvbnNfY291bnQiOjEsImNhbGNfcGFydGljaXBhdGlvbnNfY291bnQiOjR9XX0seyJpZCI6NDQsIm5hbWUiOiJNVi1IaW5kZXJuaXNjdXAiLCJ5ZWFyIjoyMDE3LCJmdWxsX2N1cF9jb3VudCI6NCwib2ZmaWNpYWwiOnRydWUsInRlYW1fYXNzZXNzbWVudHNfY29uZmlncyI6W10sInBlcnNvbl9hc3Nlc3NtZW50c19jb25maWdzIjpbeyJrZXkiOiJtYWxlLWhiIiwibmFtZSI6Ik3DpG5uZXIiLCJkaXNjaXBsaW5lcyI6WyJoYiJdLCJyYW5raW5nX2xvZ2ljIjpbInBhcnRpY2lwYXRpb25fY291bnQiLCJwb2ludHMiLCJzdW1fdGltZSIsImJlc3RfdGltZSJdLCJwb2ludHNfZm9yX3JhbmsiOlsyMCwxOSwxOCwxNywxNiwxNSwxNCwxMywxMiwxMSwxMCw5LDgsNyw2LDUsNCwzLDIsMV0sIm1pbl9wYXJ0aWNpcGF0aW9uc19jb3VudCI6MiwiY2FsY19wYXJ0aWNpcGF0aW9uc19jb3VudCI6M31dfSx7ImlkIjoyNywibmFtZSI6IkJCLUN1cCIsInllYXIiOjIwMTUsImZ1bGxfY3VwX2NvdW50Ijo0LCJvZmZpY2lhbCI6ZmFsc2UsInRlYW1fYXNzZXNzbWVudHNfY29uZmlncyI6W3sia2V5IjoibWFsZSIsIm5hbWUiOiJNw6RubmVyIiwiZGlzY2lwbGluZXMiOlsibGEiXSwicmFua2luZ19sb2dpYyI6WyJwb2ludHMiLCJwYXJ0aWNpcGF0aW9uX2NvdW50Il0sInBvaW50c19mb3JfcmFuayI6W10sImhvbm9yX3JhbmtpbmdfbG9naWMiOlsicG9pbnRzIiwicGFydGljaXBhdGlvbl9jb3VudCIsImJlc3RfcmFuayIsImJlc3RfcmFua19jb3VudCJdLCJtaW5fcGFydGljaXBhdGlvbnNfY291bnQiOjMsImNhbGNfcGFydGljaXBhdGlvbnNfY291bnQiOjR9XSwicGVyc29uX2Fzc2Vzc21lbnRzX2NvbmZpZ3MiOltdfV0sImNvbGxlY3Rpb25fbmFtZSI6InNlcmllc19yb3VuZHMifQ==
+  recorded_at: Wed, 18 Mar 2026 10:37:12 GMT
 - request:
     method: get
     uri: https://feuerwehrsport-statistik.de/api/series/cups
@@ -178,20 +317,41 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
       Content-Type:
       - application/json; charset=utf-8
+      Vary:
+      - Accept
+      Etag:
+      - W/"aca4d342ec90e00b9808216c10051cc4"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - b32a628c-fb23-4c83-b636-d7fb4c3e6ac5
+      X-Runtime:
+      - '0.030671'
+      Server-Timing:
+      - start_processing.action_controller;dur=0.01, sql.active_record;dur=3.50, instantiation.active_record;dur=0.45,
+        render.active_model_serializers;dur=20.26, process_action.action_controller;dur=24.94
       Content-Length:
-      - '1682'
+      - '696'
     body:
       encoding: UTF-8
-      string: '{"success":true,"login":false,"series_cups":[{"id":96,"competition_id":722,"round_id":27,"date":"2015-05-09","place":"Neuendorf"},{"id":99,"competition_id":746,"round_id":27,"date":"2015-06-13","place":"Gehren"},{"id":102,"competition_id":877,"round_id":27,"date":"2015-06-20","place":"Neschholz"},{"id":105,"competition_id":873,"round_id":27,"date":"2015-08-29","place":"Schwanebeck"},{"id":390,"competition_id":1182,"round_id":44,"date":"2017-03-25","place":"Rostock"},{"id":393,"competition_id":1186,"round_id":45,"date":"2017-04-29","place":"Nudersdorf"},{"id":399,"competition_id":1187,"round_id":44,"date":"2017-05-06","place":"Ostseebad
-        Nienhagen"},{"id":404,"competition_id":1187,"round_id":45,"date":"2017-05-06","place":"Ostseebad
-        Nienhagen"},{"id":417,"competition_id":1192,"round_id":45,"date":"2017-05-20","place":"Charlottenthal"},{"id":423,"competition_id":1198,"round_id":45,"date":"2017-06-10","place":"Techentin"},{"id":456,"competition_id":1217,"round_id":45,"date":"2017-08-12","place":"Charlottenthal"},{"id":459,"competition_id":1217,"round_id":44,"date":"2017-08-12","place":"Charlottenthal"},{"id":465,"competition_id":1218,"round_id":45,"date":"2017-08-19","place":"Taura"},{"id":501,"competition_id":1230,"round_id":44,"date":"2017-09-16","place":"Ostseebad
-        Nienhagen"},{"id":1090,"competition_id":2114,"round_id":87,"date":"2023-04-29","place":"Nudersdorf"},{"id":1097,"competition_id":2117,"round_id":87,"date":"2023-05-13","place":"Charlottenthal"},{"id":1117,"competition_id":2126,"round_id":87,"date":"2023-07-08","place":"Letschin"},{"id":1138,"competition_id":2132,"round_id":87,"date":"2023-08-12","place":"Taura"}],"collection_name":"series_cups"}'
-  recorded_at: Fri, 14 Jun 2024 12:20:59 GMT
+      string: '{"success":true,"login":false,"series_cups":[{"id":96,"competition_id":722,"round_id":27,"date":"2015-05-09","place":"Neuendorf"},{"id":99,"competition_id":746,"round_id":27,"date":"2015-06-13","place":"Gehren"},{"id":390,"competition_id":1182,"round_id":44,"date":"2017-03-25","place":"Rostock"},{"id":399,"competition_id":1187,"round_id":44,"date":"2017-05-06","place":"Ostseebad
+        Nienhagen"},{"id":1090,"competition_id":2114,"round_id":87,"date":"2023-04-29","place":"Nudersdorf"},{"id":1097,"competition_id":2117,"round_id":87,"date":"2023-05-13","place":"Charlottenthal"},{"id":1117,"competition_id":2126,"round_id":87,"date":"2023-07-08","place":"Letschin"}],"collection_name":"series_cups"}'
+  recorded_at: Wed, 18 Mar 2026 10:37:12 GMT
 - request:
     method: get
-    uri: https://feuerwehrsport-statistik.de/api/series/assessments
+    uri: https://feuerwehrsport-statistik.de/api/series/team_assessments
     body:
       encoding: US-ASCII
       string: ''
@@ -207,18 +367,41 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
       Content-Type:
       - application/json; charset=utf-8
+      Vary:
+      - Accept
+      Etag:
+      - W/"ed33054780e914789e11856c73f46efd"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 64731f3c-959c-4891-9790-f4e2a763fe07
+      X-Runtime:
+      - '0.013291'
+      Server-Timing:
+      - start_processing.action_controller;dur=0.01, sql.active_record;dur=0.92, instantiation.active_record;dur=0.14,
+        render.active_model_serializers;dur=4.97, process_action.action_controller;dur=8.56
       Content-Length:
-      - '2931'
+      - '471'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJzdWNjZXNzIjp0cnVlLCJsb2dpbiI6ZmFsc2UsInNlcmllc19hc3Nlc3NtZW50cyI6W3siaWQiOjE1MiwiZ2VuZGVyIjoiZmVtYWxlIiwibmFtZSI6IkzDtnNjaGFuZ3JpZmYgbmFzcyAtIHdlaWJsaWNoIiwiZGlzY2lwbGluZSI6ImxhIiwicm91bmRfaWQiOjI3LCJ0eXBlIjoiU2VyaWVzOjpUZWFtQXNzZXNzbWVudCIsImdlbmRlcl90cmFuc2xhdGVkIjoid2VpYmxpY2giLCJyZWFsX25hbWUiOiIifSx7ImlkIjo1MjcsImdlbmRlciI6Im1hbGUiLCJuYW1lIjoiSGluZGVybmlzYmFobiAtIG3DpG5ubGljaCIsImRpc2NpcGxpbmUiOiJoYiIsInJvdW5kX2lkIjo0NCwidHlwZSI6IlNlcmllczo6UGVyc29uQXNzZXNzbWVudCIsImdlbmRlcl90cmFuc2xhdGVkIjoibcOkbm5saWNoIiwicmVhbF9uYW1lIjoiIn0seyJpZCI6NTM0LCJnZW5kZXIiOiJtYWxlIiwibmFtZSI6Ikhha2VubGVpdGVyc3RlaWdlbiAtIG3DpG5ubGljaCIsImRpc2NpcGxpbmUiOiJobCIsInJvdW5kX2lkIjo0NSwidHlwZSI6IlNlcmllczo6UGVyc29uQXNzZXNzbWVudCIsImdlbmRlcl90cmFuc2xhdGVkIjoibcOkbm5saWNoIiwicmVhbF9uYW1lIjoiIn0seyJpZCI6NTM3LCJnZW5kZXIiOiJtYWxlIiwibmFtZSI6IkhpbmRlcm5pc2JhaG4gLSBtw6RubmxpY2giLCJkaXNjaXBsaW5lIjoiaGIiLCJyb3VuZF9pZCI6NDUsInR5cGUiOiJTZXJpZXM6OlBlcnNvbkFzc2Vzc21lbnQiLCJnZW5kZXJfdHJhbnNsYXRlZCI6Im3DpG5ubGljaCIsInJlYWxfbmFtZSI6IiJ9LHsiaWQiOjExODEsImdlbmRlciI6Im1hbGUiLCJuYW1lIjoiSGFrZW5sZWl0ZXJzdGVpZ2VuIC0gbcOkbm5saWNoIiwiZGlzY2lwbGluZSI6ImhsIiwicm91bmRfaWQiOjg3LCJ0eXBlIjoiU2VyaWVzOjpQZXJzb25Bc3Nlc3NtZW50IiwiZ2VuZGVyX3RyYW5zbGF0ZWQiOiJtw6RubmxpY2giLCJyZWFsX25hbWUiOiIifSx7ImlkIjoxMTg0LCJnZW5kZXIiOiJmZW1hbGUiLCJuYW1lIjoiTMO2c2NoYW5ncmlmZiBuYXNzIC0gd2VpYmxpY2giLCJkaXNjaXBsaW5lIjoibGEiLCJyb3VuZF9pZCI6ODcsInR5cGUiOiJTZXJpZXM6OlRlYW1Bc3Nlc3NtZW50IiwiZ2VuZGVyX3RyYW5zbGF0ZWQiOiJ3ZWlibGljaCIsInJlYWxfbmFtZSI6IiJ9LHsiaWQiOjExODUsImdlbmRlciI6Im1hbGUiLCJuYW1lIjoiTMO2c2NoYW5ncmlmZiBuYXNzIC0gbcOkbm5saWNoIiwiZGlzY2lwbGluZSI6ImxhIiwicm91bmRfaWQiOjg3LCJ0eXBlIjoiU2VyaWVzOjpUZWFtQXNzZXNzbWVudCIsImdlbmRlcl90cmFuc2xhdGVkIjoibcOkbm5saWNoIiwicmVhbF9uYW1lIjoiIn0seyJpZCI6MTE4NiwiZ2VuZGVyIjoiZmVtYWxlIiwibmFtZSI6IkdydXBwZW5zdGFmZXR0ZSAtIHdlaWJsaWNoIiwiZGlzY2lwbGluZSI6ImdzIiwicm91bmRfaWQiOjg3LCJ0eXBlIjoiU2VyaWVzOjpUZWFtQXNzZXNzbWVudCIsImdlbmRlcl90cmFuc2xhdGVkIjoid2VpYmxpY2giLCJyZWFsX25hbWUiOiIifSx7ImlkIjoxMTg3LCJnZW5kZXIiOiJmZW1hbGUiLCJuYW1lIjoiSGFrZW5sZWl0ZXJzdGVpZ2VuIC0gd2VpYmxpY2giLCJkaXNjaXBsaW5lIjoiaGwiLCJyb3VuZF9pZCI6ODcsInR5cGUiOiJTZXJpZXM6OlRlYW1Bc3Nlc3NtZW50IiwiZ2VuZGVyX3RyYW5zbGF0ZWQiOiJ3ZWlibGljaCIsInJlYWxfbmFtZSI6IiJ9LHsiaWQiOjExODgsImdlbmRlciI6Im1hbGUiLCJuYW1lIjoiSGFrZW5sZWl0ZXJzdGVpZ2VuIC0gbcOkbm5saWNoIiwiZGlzY2lwbGluZSI6ImhsIiwicm91bmRfaWQiOjg3LCJ0eXBlIjoiU2VyaWVzOjpUZWFtQXNzZXNzbWVudCIsImdlbmRlcl90cmFuc2xhdGVkIjoibcOkbm5saWNoIiwicmVhbF9uYW1lIjoiIn0seyJpZCI6MTIzMywiZ2VuZGVyIjoibWFsZSIsIm5hbWUiOiJIaW5kZXJuaXNiYWhuIC0gbcOkbm5saWNoIiwiZGlzY2lwbGluZSI6ImhiIiwicm91bmRfaWQiOjg3LCJ0eXBlIjoiU2VyaWVzOjpQZXJzb25Bc3Nlc3NtZW50IiwiZ2VuZGVyX3RyYW5zbGF0ZWQiOiJtw6RubmxpY2giLCJyZWFsX25hbWUiOiIifSx7ImlkIjoxMjM3LCJnZW5kZXIiOiJtYWxlIiwibmFtZSI6Ilp3ZWlrYW1wZiAtIG3DpG5ubGljaCIsImRpc2NpcGxpbmUiOiJ6ayIsInJvdW5kX2lkIjo4NywidHlwZSI6IlNlcmllczo6UGVyc29uQXNzZXNzbWVudCIsImdlbmRlcl90cmFuc2xhdGVkIjoibcOkbm5saWNoIiwicmVhbF9uYW1lIjoiIn0seyJpZCI6MTI0MSwiZ2VuZGVyIjoibWFsZSIsIm5hbWUiOiJIaW5kZXJuaXNiYWhuIC0gbcOkbm5saWNoIiwiZGlzY2lwbGluZSI6ImhiIiwicm91bmRfaWQiOjg3LCJ0eXBlIjoiU2VyaWVzOjpUZWFtQXNzZXNzbWVudCIsImdlbmRlcl90cmFuc2xhdGVkIjoibcOkbm5saWNoIiwicmVhbF9uYW1lIjoiIn0seyJpZCI6MTI0MiwiZ2VuZGVyIjoiZmVtYWxlIiwibmFtZSI6IkhpbmRlcm5pc2JhaG4gZmxhY2ggLSB3ZWlibGljaCIsImRpc2NpcGxpbmUiOiJodyIsInJvdW5kX2lkIjo4NywidHlwZSI6IlNlcmllczo6VGVhbUFzc2Vzc21lbnQiLCJnZW5kZXJfdHJhbnNsYXRlZCI6IndlaWJsaWNoIiwicmVhbF9uYW1lIjoiIn0seyJpZCI6MTI3MSwiZ2VuZGVyIjoiZmVtYWxlIiwibmFtZSI6IkZldWVyd2VocnN0YWZldHRlIC0gd2VpYmxpY2giLCJkaXNjaXBsaW5lIjoiZnMiLCJyb3VuZF9pZCI6ODcsInR5cGUiOiJTZXJpZXM6OlRlYW1Bc3Nlc3NtZW50IiwiZ2VuZGVyX3RyYW5zbGF0ZWQiOiJ3ZWlibGljaCIsInJlYWxfbmFtZSI6IiJ9LHsiaWQiOjEyNzIsImdlbmRlciI6Im1hbGUiLCJuYW1lIjoiRmV1ZXJ3ZWhyc3RhZmV0dGUgLSBtw6RubmxpY2giLCJkaXNjaXBsaW5lIjoiZnMiLCJyb3VuZF9pZCI6ODcsInR5cGUiOiJTZXJpZXM6OlRlYW1Bc3Nlc3NtZW50IiwiZ2VuZGVyX3RyYW5zbGF0ZWQiOiJtw6RubmxpY2giLCJyZWFsX25hbWUiOiIifV0sImNvbGxlY3Rpb25fbmFtZSI6InNlcmllc19hc3Nlc3NtZW50cyJ9
-  recorded_at: Fri, 14 Jun 2024 12:20:59 GMT
+        eyJzdWNjZXNzIjp0cnVlLCJsb2dpbiI6ZmFsc2UsInNlcmllc190ZWFtX2Fzc2Vzc21lbnRzIjpbeyJpZCI6MTUzLCJrZXkiOiJtYWxlIiwiZGlzY2lwbGluZSI6ImxhIiwicm91bmRfaWQiOjI3LCJuYW1lIjoiTcOkbm5lciJ9LHsiaWQiOjExODUsImtleSI6Im1hbGUiLCJkaXNjaXBsaW5lIjoibGEiLCJyb3VuZF9pZCI6ODcsIm5hbWUiOiJNw6RubmVyIn0seyJpZCI6MTE4OCwia2V5IjoibWFsZSIsImRpc2NpcGxpbmUiOiJobCIsInJvdW5kX2lkIjo4NywibmFtZSI6Ik3DpG5uZXIifSx7ImlkIjoxMjQxLCJrZXkiOiJtYWxlIiwiZGlzY2lwbGluZSI6ImhiIiwicm91bmRfaWQiOjg3LCJuYW1lIjoiTcOkbm5lciJ9LHsiaWQiOjEyNzIsImtleSI6Im1hbGUiLCJkaXNjaXBsaW5lIjoiZnMiLCJyb3VuZF9pZCI6ODcsIm5hbWUiOiJNw6RubmVyIn1dLCJjb2xsZWN0aW9uX25hbWUiOiJzZXJpZXNfdGVhbV9hc3Nlc3NtZW50cyJ9
+  recorded_at: Wed, 18 Mar 2026 10:37:12 GMT
 - request:
     method: get
-    uri: https://feuerwehrsport-statistik.de/api/series/participations
+    uri: https://feuerwehrsport-statistik.de/api/series/team_participations
     body:
       encoding: US-ASCII
       string: ''
@@ -234,12 +417,133 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
       Content-Type:
       - application/json; charset=utf-8
+      Vary:
+      - Accept
+      Etag:
+      - W/"f90d98056488c639ffc82939e7bcd633"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - b13d9f4a-67f2-44c6-b332-bf61c21b31c9
+      X-Runtime:
+      - '0.009740'
+      Server-Timing:
+      - start_processing.action_controller;dur=0.01, sql.active_record;dur=0.57, instantiation.active_record;dur=0.10,
+        render.active_model_serializers;dur=0.98, process_action.action_controller;dur=5.01
       Content-Length:
-      - '15062'
+      - '3431'
     body:
       encoding: UTF-8
-      string: '{"success":true,"login":false,"series_participations":[{"id":9357,"points":3,"rank":8,"time":3370,"second_time":"33,70","assessment_id":152,"cup_id":96,"type":"Series::TeamParticipation","team_id":1869,"team_number":1,"person_id":null,"participation_type":"team"},{"id":25075,"points":20,"rank":1,"time":1728,"second_time":"17,28","assessment_id":527,"cup_id":390,"type":"Series::PersonParticipation","team_id":null,"team_number":null,"person_id":184,"participation_type":"person"},{"id":25168,"points":1533,"rank":3,"time":1533,"second_time":"15,33","assessment_id":534,"cup_id":393,"type":"Series::PersonParticipation","team_id":null,"team_number":null,"person_id":184,"participation_type":"person"},{"id":25980,"points":2251,"rank":36,"time":2251,"second_time":"22,51","assessment_id":537,"cup_id":417,"type":"Series::PersonParticipation","team_id":null,"team_number":null,"person_id":184,"participation_type":"person"},{"id":26033,"points":1486,"rank":1,"time":1486,"second_time":"14,86","assessment_id":534,"cup_id":417,"type":"Series::PersonParticipation","team_id":null,"team_number":null,"person_id":184,"participation_type":"person"},{"id":27245,"points":1971,"rank":18,"time":1971,"second_time":"19,71","assessment_id":534,"cup_id":465,"type":"Series::PersonParticipation","team_id":null,"team_number":null,"person_id":184,"participation_type":"person"},{"id":27295,"points":1805,"rank":4,"time":1805,"second_time":"18,05","assessment_id":537,"cup_id":465,"type":"Series::PersonParticipation","team_id":null,"team_number":null,"person_id":184,"participation_type":"person"},{"id":52381,"points":30,"rank":1,"time":1717,"second_time":"17,17","assessment_id":1233,"cup_id":1097,"type":"Series::PersonParticipation","team_id":null,"team_number":null,"person_id":184,"participation_type":"person"},{"id":52508,"points":30,"rank":1,"time":1437,"second_time":"14,37","assessment_id":1181,"cup_id":1097,"type":"Series::PersonParticipation","team_id":null,"team_number":null,"person_id":184,"participation_type":"person"},{"id":52561,"points":30,"rank":1,"time":3154,"second_time":"31,54","assessment_id":1237,"cup_id":1097,"type":"Series::PersonParticipation","team_id":null,"team_number":null,"person_id":184,"participation_type":"person"},{"id":52642,"points":10,"rank":1,"time":2642,"second_time":"26,42","assessment_id":1184,"cup_id":1097,"type":"Series::TeamParticipation","team_id":1869,"team_number":1,"person_id":null,"participation_type":"team"},{"id":52644,"points":8,"rank":3,"time":2725,"second_time":"27,25","assessment_id":1184,"cup_id":1097,"type":"Series::TeamParticipation","team_id":3,"team_number":1,"person_id":null,"participation_type":"team"},{"id":52646,"points":6,"rank":5,"time":3244,"second_time":"32,44","assessment_id":1184,"cup_id":1097,"type":"Series::TeamParticipation","team_id":15,"team_number":1,"person_id":null,"participation_type":"team"},{"id":52648,"points":10,"rank":1,"time":2293,"second_time":"22,93","assessment_id":1185,"cup_id":1097,"type":"Series::TeamParticipation","team_id":3,"team_number":1,"person_id":null,"participation_type":"team"},{"id":52653,"points":10,"rank":1,"time":8807,"second_time":"88,07","assessment_id":1186,"cup_id":1097,"type":"Series::TeamParticipation","team_id":3,"team_number":1,"person_id":null,"participation_type":"team"},{"id":52654,"points":9,"rank":2,"time":8942,"second_time":"89,42","assessment_id":1186,"cup_id":1097,"type":"Series::TeamParticipation","team_id":1869,"team_number":1,"person_id":null,"participation_type":"team"},{"id":52657,"points":6,"rank":5,"time":9684,"second_time":"96,84","assessment_id":1186,"cup_id":1097,"type":"Series::TeamParticipation","team_id":1869,"team_number":2,"person_id":null,"participation_type":"team"},{"id":52658,"points":5,"rank":6,"time":9830,"second_time":"98,30","assessment_id":1186,"cup_id":1097,"type":"Series::TeamParticipation","team_id":15,"team_number":1,"person_id":null,"participation_type":"team"},{"id":52660,"points":10,"rank":1,"time":3693,"second_time":"36,93","assessment_id":1187,"cup_id":1097,"type":"Series::TeamParticipation","team_id":3,"team_number":1,"person_id":null,"participation_type":"team"},{"id":52661,"points":9,"rank":2,"time":3731,"second_time":"37,31","assessment_id":1187,"cup_id":1097,"type":"Series::TeamParticipation","team_id":1869,"team_number":1,"person_id":null,"participation_type":"team"},{"id":52665,"points":5,"rank":6,"time":4602,"second_time":"46,02","assessment_id":1187,"cup_id":1097,"type":"Series::TeamParticipation","team_id":1869,"team_number":2,"person_id":null,"participation_type":"team"},{"id":52668,"points":10,"rank":1,"time":6442,"second_time":"64,42","assessment_id":1188,"cup_id":1097,"type":"Series::TeamParticipation","team_id":3,"team_number":1,"person_id":null,"participation_type":"team"},{"id":52673,"points":10,"rank":1,"time":7122,"second_time":"71,22","assessment_id":1241,"cup_id":1097,"type":"Series::TeamParticipation","team_id":3,"team_number":1,"person_id":null,"participation_type":"team"},{"id":52678,"points":10,"rank":1,"time":7795,"second_time":"77,95","assessment_id":1242,"cup_id":1097,"type":"Series::TeamParticipation","team_id":1869,"team_number":1,"person_id":null,"participation_type":"team"},{"id":52680,"points":8,"rank":3,"time":8399,"second_time":"83,99","assessment_id":1242,"cup_id":1097,"type":"Series::TeamParticipation","team_id":3,"team_number":1,"person_id":null,"participation_type":"team"},{"id":52682,"points":6,"rank":5,"time":9449,"second_time":"94,49","assessment_id":1242,"cup_id":1097,"type":"Series::TeamParticipation","team_id":1869,"team_number":2,"person_id":null,"participation_type":"team"},{"id":50862,"points":27,"rank":4,"time":1665,"second_time":"16,65","assessment_id":1181,"cup_id":1090,"type":"Series::PersonParticipation","team_id":null,"team_number":null,"person_id":184,"participation_type":"person"},{"id":50907,"points":10,"rank":1,"time":2760,"second_time":"27,60","assessment_id":1184,"cup_id":1090,"type":"Series::TeamParticipation","team_id":3,"team_number":1,"person_id":null,"participation_type":"team"},{"id":50908,"points":9,"rank":2,"time":2894,"second_time":"28,94","assessment_id":1184,"cup_id":1090,"type":"Series::TeamParticipation","team_id":1869,"team_number":1,"person_id":null,"participation_type":"team"},{"id":50910,"points":7,"rank":4,"time":3712,"second_time":"37,12","assessment_id":1184,"cup_id":1090,"type":"Series::TeamParticipation","team_id":15,"team_number":1,"person_id":null,"participation_type":"team"},{"id":50913,"points":9,"rank":2,"time":2586,"second_time":"25,86","assessment_id":1185,"cup_id":1090,"type":"Series::TeamParticipation","team_id":3,"team_number":1,"person_id":null,"participation_type":"team"},{"id":50916,"points":10,"rank":1,"time":9072,"second_time":"90,72","assessment_id":1186,"cup_id":1090,"type":"Series::TeamParticipation","team_id":1869,"team_number":1,"person_id":null,"participation_type":"team"},{"id":50917,"points":9,"rank":2,"time":9165,"second_time":"91,65","assessment_id":1186,"cup_id":1090,"type":"Series::TeamParticipation","team_id":3,"team_number":1,"person_id":null,"participation_type":"team"},{"id":50918,"points":8,"rank":3,"time":9722,"second_time":"97,22","assessment_id":1186,"cup_id":1090,"type":"Series::TeamParticipation","team_id":15,"team_number":1,"person_id":null,"participation_type":"team"},{"id":50919,"points":7,"rank":4,"time":9975,"second_time":"99,75","assessment_id":1186,"cup_id":1090,"type":"Series::TeamParticipation","team_id":1869,"team_number":2,"person_id":null,"participation_type":"team"},{"id":50923,"points":10,"rank":1,"time":3764,"second_time":"37,64","assessment_id":1187,"cup_id":1090,"type":"Series::TeamParticipation","team_id":1869,"team_number":1,"person_id":null,"participation_type":"team"},{"id":50924,"points":9,"rank":2,"time":4107,"second_time":"41,07","assessment_id":1187,"cup_id":1090,"type":"Series::TeamParticipation","team_id":3,"team_number":1,"person_id":null,"participation_type":"team"},{"id":50926,"points":7,"rank":4,"time":4151,"second_time":"41,51","assessment_id":1187,"cup_id":1090,"type":"Series::TeamParticipation","team_id":15,"team_number":1,"person_id":null,"participation_type":"team"},{"id":50928,"points":5,"rank":6,"time":4884,"second_time":"48,84","assessment_id":1187,"cup_id":1090,"type":"Series::TeamParticipation","team_id":1869,"team_number":2,"person_id":null,"participation_type":"team"},{"id":50931,"points":10,"rank":1,"time":6704,"second_time":"67,04","assessment_id":1188,"cup_id":1090,"type":"Series::TeamParticipation","team_id":3,"team_number":1,"person_id":null,"participation_type":"team"},{"id":56514,"points":30,"rank":1,"time":1684,"second_time":"16,84","assessment_id":1233,"cup_id":1138,"type":"Series::PersonParticipation","team_id":null,"team_number":null,"person_id":184,"participation_type":"person"},{"id":56630,"points":30,"rank":1,"time":1395,"second_time":"13,95","assessment_id":1181,"cup_id":1138,"type":"Series::PersonParticipation","team_id":null,"team_number":null,"person_id":184,"participation_type":"person"},{"id":56685,"points":30,"rank":1,"time":3079,"second_time":"30,79","assessment_id":1237,"cup_id":1138,"type":"Series::PersonParticipation","team_id":null,"team_number":null,"person_id":184,"participation_type":"person"},{"id":56764,"points":10,"rank":1,"time":2531,"second_time":"25,31","assessment_id":1184,"cup_id":1138,"type":"Series::TeamParticipation","team_id":3,"team_number":1,"person_id":null,"participation_type":"team"},{"id":56766,"points":8,"rank":3,"time":2906,"second_time":"29,06","assessment_id":1184,"cup_id":1138,"type":"Series::TeamParticipation","team_id":1869,"team_number":1,"person_id":null,"participation_type":"team"},{"id":56769,"points":5,"rank":6,"time":4802,"second_time":"48,02","assessment_id":1184,"cup_id":1138,"type":"Series::TeamParticipation","team_id":1869,"team_number":2,"person_id":null,"participation_type":"team"},{"id":56771,"points":10,"rank":1,"time":2442,"second_time":"24,42","assessment_id":1185,"cup_id":1138,"type":"Series::TeamParticipation","team_id":3,"team_number":1,"person_id":null,"participation_type":"team"},{"id":56777,"points":10,"rank":1,"time":8737,"second_time":"87,37","assessment_id":1186,"cup_id":1138,"type":"Series::TeamParticipation","team_id":3,"team_number":1,"person_id":null,"participation_type":"team"},{"id":56779,"points":8,"rank":3,"time":9020,"second_time":"90,20","assessment_id":1186,"cup_id":1138,"type":"Series::TeamParticipation","team_id":1869,"team_number":1,"person_id":null,"participation_type":"team"},{"id":56781,"points":6,"rank":5,"time":9546,"second_time":"95,46","assessment_id":1186,"cup_id":1138,"type":"Series::TeamParticipation","team_id":1869,"team_number":2,"person_id":null,"participation_type":"team"},{"id":56786,"points":10,"rank":1,"time":3586,"second_time":"35,86","assessment_id":1187,"cup_id":1138,"type":"Series::TeamParticipation","team_id":1869,"team_number":1,"person_id":null,"participation_type":"team"},{"id":56787,"points":9,"rank":2,"time":3673,"second_time":"36,73","assessment_id":1187,"cup_id":1138,"type":"Series::TeamParticipation","team_id":3,"team_number":1,"person_id":null,"participation_type":"team"},{"id":56790,"points":6,"rank":5,"time":4626,"second_time":"46,26","assessment_id":1187,"cup_id":1138,"type":"Series::TeamParticipation","team_id":1869,"team_number":2,"person_id":null,"participation_type":"team"},{"id":56793,"points":10,"rank":1,"time":6052,"second_time":"60,52","assessment_id":1188,"cup_id":1138,"type":"Series::TeamParticipation","team_id":3,"team_number":1,"person_id":null,"participation_type":"team"},{"id":56800,"points":10,"rank":1,"time":7027,"second_time":"70,27","assessment_id":1241,"cup_id":1138,"type":"Series::TeamParticipation","team_id":3,"team_number":1,"person_id":null,"participation_type":"team"},{"id":56806,"points":10,"rank":1,"time":8003,"second_time":"80,03","assessment_id":1242,"cup_id":1138,"type":"Series::TeamParticipation","team_id":1869,"team_number":1,"person_id":null,"participation_type":"team"},{"id":56808,"points":8,"rank":3,"time":8377,"second_time":"83,77","assessment_id":1242,"cup_id":1138,"type":"Series::TeamParticipation","team_id":3,"team_number":1,"person_id":null,"participation_type":"team"},{"id":56810,"points":6,"rank":5,"time":8914,"second_time":"89,14","assessment_id":1242,"cup_id":1138,"type":"Series::TeamParticipation","team_id":1869,"team_number":2,"person_id":null,"participation_type":"team"},{"id":54309,"points":30,"rank":1,"time":1669,"second_time":"16,69","assessment_id":1233,"cup_id":1117,"type":"Series::PersonParticipation","team_id":null,"team_number":null,"person_id":184,"participation_type":"person"},{"id":54421,"points":30,"rank":1,"time":1536,"second_time":"15,36","assessment_id":1181,"cup_id":1117,"type":"Series::PersonParticipation","team_id":null,"team_number":null,"person_id":184,"participation_type":"person"},{"id":54462,"points":30,"rank":1,"time":3205,"second_time":"32,05","assessment_id":1237,"cup_id":1117,"type":"Series::PersonParticipation","team_id":null,"team_number":null,"person_id":184,"participation_type":"person"},{"id":54520,"points":10,"rank":1,"time":3017,"second_time":"30,17","assessment_id":1184,"cup_id":1117,"type":"Series::TeamParticipation","team_id":1869,"team_number":1,"person_id":null,"participation_type":"team"},{"id":54526,"points":8,"rank":3,"time":2411,"second_time":"24,11","assessment_id":1185,"cup_id":1117,"type":"Series::TeamParticipation","team_id":3,"team_number":1,"person_id":null,"participation_type":"team"},{"id":54527,"points":10,"rank":1,"time":6942,"second_time":"69,42","assessment_id":1271,"cup_id":1117,"type":"Series::TeamParticipation","team_id":1869,"team_number":1,"person_id":null,"participation_type":"team"},{"id":54534,"points":8,"rank":3,"time":9667,"second_time":"96,67","assessment_id":1272,"cup_id":1117,"type":"Series::TeamParticipation","team_id":3,"team_number":1,"person_id":null,"participation_type":"team"},{"id":54535,"points":10,"rank":1,"time":8853,"second_time":"88,53","assessment_id":1186,"cup_id":1117,"type":"Series::TeamParticipation","team_id":1869,"team_number":1,"person_id":null,"participation_type":"team"},{"id":54540,"points":10,"rank":1,"time":3782,"second_time":"37,82","assessment_id":1187,"cup_id":1117,"type":"Series::TeamParticipation","team_id":1869,"team_number":1,"person_id":null,"participation_type":"team"},{"id":54545,"points":10,"rank":1,"time":7091,"second_time":"70,91","assessment_id":1188,"cup_id":1117,"type":"Series::TeamParticipation","team_id":3,"team_number":1,"person_id":null,"participation_type":"team"},{"id":54550,"points":10,"rank":1,"time":7156,"second_time":"71,56","assessment_id":1241,"cup_id":1117,"type":"Series::TeamParticipation","team_id":3,"team_number":1,"person_id":null,"participation_type":"team"},{"id":54554,"points":10,"rank":1,"time":7803,"second_time":"78,03","assessment_id":1242,"cup_id":1117,"type":"Series::TeamParticipation","team_id":1869,"team_number":1,"person_id":null,"participation_type":"team"}],"collection_name":"series_participations"}'
-  recorded_at: Fri, 14 Jun 2024 12:20:59 GMT
-recorded_with: VCR 6.2.0
+      string: '{"success":true,"login":false,"series_team_participations":[{"id":9424,"points":9,"rank":2,"time":2153,"second_time":"21,53","team_assessment_id":153,"cup_id":99,"team_id":329,"team_number":1,"team_gender":1},{"id":9425,"points":8,"rank":3,"time":2154,"second_time":"21,54","team_assessment_id":153,"cup_id":99,"team_id":155,"team_number":1,"team_gender":1},{"id":9358,"points":11,"rank":1,"time":2109,"second_time":"21,09","team_assessment_id":153,"cup_id":96,"team_id":329,"team_number":1,"team_gender":1},{"id":9359,"points":9,"rank":2,"time":2140,"second_time":"21,40","team_assessment_id":153,"cup_id":96,"team_id":155,"team_number":1,"team_gender":1},{"id":52648,"points":10,"rank":1,"time":2293,"second_time":"22,93","team_assessment_id":1185,"cup_id":1097,"team_id":3,"team_number":1,"team_gender":1},{"id":52652,"points":6,"rank":5,"time":3030,"second_time":"30,30","team_assessment_id":1185,"cup_id":1097,"team_id":2,"team_number":1,"team_gender":1},{"id":52668,"points":10,"rank":1,"time":6442,"second_time":"64,42","team_assessment_id":1188,"cup_id":1097,"team_id":3,"team_number":1,"team_gender":1},{"id":52669,"points":9,"rank":2,"time":7104,"second_time":"71,04","team_assessment_id":1188,"cup_id":1097,"team_id":2,"team_number":1,"team_gender":1},{"id":52673,"points":10,"rank":1,"time":7122,"second_time":"71,22","team_assessment_id":1241,"cup_id":1097,"team_id":3,"team_number":1,"team_gender":1},{"id":52674,"points":9,"rank":2,"time":7738,"second_time":"77,38","team_assessment_id":1241,"cup_id":1097,"team_id":2,"team_number":1,"team_gender":1},{"id":50912,"points":10,"rank":1,"time":2477,"second_time":"24,77","team_assessment_id":1185,"cup_id":1090,"team_id":2,"team_number":1,"team_gender":1},{"id":50913,"points":9,"rank":2,"time":2586,"second_time":"25,86","team_assessment_id":1185,"cup_id":1090,"team_id":3,"team_number":1,"team_gender":1},{"id":50931,"points":10,"rank":1,"time":6704,"second_time":"67,04","team_assessment_id":1188,"cup_id":1090,"team_id":3,"team_number":1,"team_gender":1},{"id":50932,"points":9,"rank":2,"time":7617,"second_time":"76,17","team_assessment_id":1188,"cup_id":1090,"team_id":2,"team_number":1,"team_gender":1},{"id":54525,"points":9,"rank":2,"time":2301,"second_time":"23,01","team_assessment_id":1185,"cup_id":1117,"team_id":2,"team_number":1,"team_gender":1},{"id":54526,"points":8,"rank":3,"time":2411,"second_time":"24,11","team_assessment_id":1185,"cup_id":1117,"team_id":3,"team_number":1,"team_gender":1},{"id":54532,"points":10,"rank":1,"time":6485,"second_time":"64,85","team_assessment_id":1272,"cup_id":1117,"team_id":2,"team_number":1,"team_gender":1},{"id":54534,"points":8,"rank":3,"time":9667,"second_time":"96,67","team_assessment_id":1272,"cup_id":1117,"team_id":3,"team_number":1,"team_gender":1},{"id":54545,"points":10,"rank":1,"time":7091,"second_time":"70,91","team_assessment_id":1188,"cup_id":1117,"team_id":3,"team_number":1,"team_gender":1},{"id":54546,"points":9,"rank":2,"time":7136,"second_time":"71,36","team_assessment_id":1188,"cup_id":1117,"team_id":2,"team_number":1,"team_gender":1},{"id":54550,"points":10,"rank":1,"time":7156,"second_time":"71,56","team_assessment_id":1241,"cup_id":1117,"team_id":3,"team_number":1,"team_gender":1},{"id":54552,"points":8,"rank":3,"time":7842,"second_time":"78,42","team_assessment_id":1241,"cup_id":1117,"team_id":2,"team_number":1,"team_gender":1}],"collection_name":"series_team_participations"}'
+  recorded_at: Wed, 18 Mar 2026 10:37:12 GMT
+- request:
+    method: get
+    uri: https://feuerwehrsport-statistik.de/api/series/person_assessments
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Content-Type:
+      - application/json; charset=utf-8
+      Vary:
+      - Accept
+      Etag:
+      - W/"ae7e6affc83e8c3d290c2d933924fe24"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 4abef569-cd75-4f0d-ba08-b8f0ae33228a
+      X-Runtime:
+      - '0.008617'
+      Server-Timing:
+      - start_processing.action_controller;dur=0.01, sql.active_record;dur=0.53, instantiation.active_record;dur=0.04,
+        render.active_model_serializers;dur=0.16, process_action.action_controller;dur=3.89
+      Content-Length:
+      - '345'
+    body:
+      encoding: UTF-8
+      string: '{"success":true,"login":false,"series_person_assessments":[{"id":527,"key":"male-hb","discipline":"hb","round_id":44},{"id":1181,"key":"male-hl","discipline":"hl","round_id":87},{"id":1233,"key":"male-hb","discipline":"hb","round_id":87},{"id":1237,"key":"male-zk","discipline":"zk","round_id":87}],"collection_name":"series_person_assessments"}'
+  recorded_at: Wed, 18 Mar 2026 10:37:12 GMT
+- request:
+    method: get
+    uri: https://feuerwehrsport-statistik.de/api/series/person_participations
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Content-Type:
+      - application/json; charset=utf-8
+      Vary:
+      - Accept
+      Etag:
+      - W/"ab7fcbefff12ef70462e8005b9bb7468"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 6bc95325-15e6-406e-b510-eb2443f9ca66
+      X-Runtime:
+      - '0.010800'
+      Server-Timing:
+      - start_processing.action_controller;dur=0.01, sql.active_record;dur=0.64, instantiation.active_record;dur=0.13,
+        render.active_model_serializers;dur=1.18, process_action.action_controller;dur=5.72
+      Content-Length:
+      - '3876'
+    body:
+      encoding: UTF-8
+      string: '{"success":true,"login":false,"series_person_participations":[{"id":25075,"points":20,"rank":1,"time":1728,"second_time":"17,28","person_assessment_id":527,"cup_id":390,"person_id":184},{"id":25077,"points":18,"rank":3,"time":1781,"second_time":"17,81","person_assessment_id":527,"cup_id":390,"person_id":92},{"id":25079,"points":16,"rank":5,"time":1991,"second_time":"19,91","person_assessment_id":527,"cup_id":390,"person_id":271},{"id":25291,"points":20,"rank":1,"time":1873,"second_time":"18,73","person_assessment_id":527,"cup_id":399,"person_id":92},{"id":25293,"points":18,"rank":3,"time":2035,"second_time":"20,35","person_assessment_id":527,"cup_id":399,"person_id":271},{"id":25295,"points":16,"rank":5,"time":2114,"second_time":"21,14","person_assessment_id":527,"cup_id":399,"person_id":295},{"id":52381,"points":30,"rank":1,"time":1717,"second_time":"17,17","person_assessment_id":1233,"cup_id":1097,"person_id":184},{"id":52387,"points":24,"rank":7,"time":1836,"second_time":"18,36","person_assessment_id":1233,"cup_id":1097,"person_id":92},{"id":52396,"points":15,"rank":16,"time":1988,"second_time":"19,88","person_assessment_id":1233,"cup_id":1097,"person_id":295},{"id":52508,"points":30,"rank":1,"time":1437,"second_time":"14,37","person_assessment_id":1181,"cup_id":1097,"person_id":184},{"id":52512,"points":26,"rank":5,"time":1659,"second_time":"16,59","person_assessment_id":1181,"cup_id":1097,"person_id":92},{"id":52516,"points":22,"rank":9,"time":1764,"second_time":"17,64","person_assessment_id":1181,"cup_id":1097,"person_id":295},{"id":52529,"points":9,"rank":22,"time":2045,"second_time":"20,45","person_assessment_id":1181,"cup_id":1097,"person_id":271},{"id":52561,"points":30,"rank":1,"time":3154,"second_time":"31,54","person_assessment_id":1237,"cup_id":1097,"person_id":184},{"id":52565,"points":26,"rank":5,"time":3495,"second_time":"34,95","person_assessment_id":1237,"cup_id":1097,"person_id":92},{"id":52570,"points":21,"rank":10,"time":3752,"second_time":"37,52","person_assessment_id":1237,"cup_id":1097,"person_id":295},{"id":50861,"points":28,"rank":3,"time":1660,"second_time":"16,60","person_assessment_id":1181,"cup_id":1090,"person_id":92},{"id":50862,"points":27,"rank":4,"time":1665,"second_time":"16,65","person_assessment_id":1181,"cup_id":1090,"person_id":184},{"id":50869,"points":20,"rank":11,"time":1890,"second_time":"18,90","person_assessment_id":1181,"cup_id":1090,"person_id":295},{"id":50880,"points":9,"rank":22,"time":2159,"second_time":"21,59","person_assessment_id":1181,"cup_id":1090,"person_id":271},{"id":54309,"points":30,"rank":1,"time":1669,"second_time":"16,69","person_assessment_id":1233,"cup_id":1117,"person_id":184},{"id":54322,"points":17,"rank":14,"time":1880,"second_time":"18,80","person_assessment_id":1233,"cup_id":1117,"person_id":92},{"id":54324,"points":15,"rank":16,"time":1920,"second_time":"19,20","person_assessment_id":1233,"cup_id":1117,"person_id":295},{"id":54421,"points":30,"rank":1,"time":1536,"second_time":"15,36","person_assessment_id":1181,"cup_id":1117,"person_id":184},{"id":54422,"points":29,"rank":2,"time":1600,"second_time":"16,00","person_assessment_id":1181,"cup_id":1117,"person_id":92},{"id":54426,"points":25,"rank":6,"time":1812,"second_time":"18,12","person_assessment_id":1181,"cup_id":1117,"person_id":271},{"id":54429,"points":22,"rank":9,"time":1870,"second_time":"18,70","person_assessment_id":1181,"cup_id":1117,"person_id":295},{"id":54462,"points":30,"rank":1,"time":3205,"second_time":"32,05","person_assessment_id":1237,"cup_id":1117,"person_id":184},{"id":54464,"points":28,"rank":3,"time":3480,"second_time":"34,80","person_assessment_id":1237,"cup_id":1117,"person_id":92},{"id":54467,"points":25,"rank":6,"time":3790,"second_time":"37,90","person_assessment_id":1237,"cup_id":1117,"person_id":295}],"collection_name":"series_person_participations"}'
+  recorded_at: Wed, 18 Mar 2026 10:37:12 GMT
+recorded_with: VCR 6.4.0

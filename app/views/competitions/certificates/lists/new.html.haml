@@ -24,14 +24,14 @@
             .row
               .col-md-5= f.input :group_score_result_id, collection: @competition.score_results.select(&:single_group_result?).sort
 
-          - if @series_team_rounds.present?
+          - if @series_team_assessments.present?
             .row
               .col-md-2
               .col-md-3 oder
             .row
-              .col-md-5= f.input :series_team_round_id, collection: @series_team_rounds
+              .col-md-5= f.input :series_team_assessment_id, collection: @series_team_assessments
 
-          - if @series_person_assessments.exists?
+          - if @series_person_assessments.present?
             .row
               .col-md-2
               .col-md-3 oder

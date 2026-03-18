@@ -1,11 +1,13 @@
 ---
 de:
   activerecord:
-    attributes:
-      series/team_assessment:
     models:
       series/person_assessment: Einzelwertung
       series/round:
         one: Serie
         other: Serien
       series/team_assessment: Mannschaftswertung
+  series:
+    points:
+      one: 1 Punkt
+      other: "%{count} Punkte"

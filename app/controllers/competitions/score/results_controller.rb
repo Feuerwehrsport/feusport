@@ -51,7 +51,8 @@ class Competitions::Score::ResultsController < CompetitionNestedController
       team_tags_excluded: [],
       person_tags_included: [],
       person_tags_excluded: [],
-      series_assessment_ids: []
+      series_team_round_keys: [],
+      series_person_round_keys: []
     )
   end
 end

@@ -62,17 +62,19 @@
           %th= Score::Result.human_attribute_name :calculation_method
           %td= t("score_calculation_methods.#{result.calculation_method}")
 
-      - if result.series_assessments.exists?
+      - if result.series_person_round_keys.present? || result.series_team_round_keys.present?
         %tr
           %th Cup-Serie
           %td
             %ul
-              - result.series_assessments.each do |assessment|
-                %li
-                  - if assessment.is_a?(Series::TeamAssessment)
-                    = link_to("Mannschaftswertung: #{assessment.to_label}", competition_series_rounds_path(id: assessment.round.id))
-                  - else
-                    = link_to(assessment.to_label, competition_series_assessment_path(id: assessment.id))
+              - result.series_team_round_keys.each do |round_key|
+                - config = Series::AssessmentConfig.find_by_round_key(round_key, :team)
+                - if config
+                  %li= link_to("Mannschaftswertung: #{config.round_full_name}", competition_series_rounds_path(id: config.round.id))
+              - result.series_person_round_keys.each do |round_key|
+                - config = Series::AssessmentConfig.find_by_round_key(round_key, :person)
+                - if config
+                  %li= link_to(config.round_full_name, competition_series_person_assessment_path(id: config.round_key))
 
   - c.actions do |actions|
     - if result.group_assessment? && result.discipline&.single_discipline?

@@ -63,6 +63,8 @@ class Competition < ApplicationRecord
   has_many :simple_accesses, class_name: 'SimpleAccess', dependent: :destroy
   has_many :team_list_restrictions, dependent: :destroy
   has_many :information_requests, dependent: :destroy
+  has_many :series_round_competition_associations, dependent: :destroy, class_name: 'Series::RoundCompetitionAssociation'
+  has_many :series_rounds, class_name: 'Series::Round', through: :series_round_competition_associations, source: :round
 
   scope :current, -> { where(date: (14.days.ago..6.months.from_now)) }
 
@@ -147,5 +149,20 @@ class Competition < ApplicationRecord
 
   def full_name
     "#{date} #{name}"
+  end
+
+  def assign_series!
+    series_round_competition_associations.delete_all
+    round_ids = []
+    score_results.each do |result|
+      result.series_team_round_keys.each do |key|
+        if (res = key.match(/\A(\d+)-/))
+          round_ids.push(res[1])
+        end
+      end
+    end
+    round_ids.uniq.each do |round_id|
+      series_round_competition_associations.create!(round_id:)
+    end
   end
 end

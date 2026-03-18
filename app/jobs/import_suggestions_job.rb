@@ -15,22 +15,10 @@ class ImportSuggestionsJob < ApplicationJob
 
       import_series_rounds
       import_series_cups
-      import_series_assessments
-      import_series_participations
-
-      translate_old_aggregate_types
-    end
-  end
-
-  def translate_old_aggregate_types
-    {
-      'MVCup' => 'MvCup',
-      'MVHindernisCup' => 'MvHindernisCup',
-      'MVSteigerCup' => 'MvSteigerCup',
-      'KPBautzen' => 'KpBautzen',
-      'VierBahnenPokal2019' => 'VierBahnenPokal',
-    }.each do |old_type, new_type|
-      Series::Round.where(aggregate_type: old_type).update_all(aggregate_type: new_type)
+      import_series_team_assessments
+      import_series_team_participations
+      import_series_person_assessments
+      import_series_person_participations
     end
   end
 
@@ -121,8 +109,9 @@ class ImportSuggestionsJob < ApplicationJob
         id: round[:id],
         name: round[:name],
         year: round[:year],
-        aggregate_type: round[:aggregate_type],
         full_cup_count: round[:full_cup_count],
+        team_assessments_config_jsonb: round[:team_assessments_configs],
+        person_assessments_config_jsonb: round[:person_assessments_configs],
       )
     end
 
@@ -142,42 +131,72 @@ class ImportSuggestionsJob < ApplicationJob
     reset_autoincrement_id(Series::Cup)
   end
 
-  def import_series_assessments
-    fetch('series/assessments') do |assessment|
+  def import_series_team_assessments
+    fetch('series/team_assessments') do |assessment|
       discipline = assessment[:discipline].to_sym
       discipline = :hb if discipline == :hw
       discipline = :zk if discipline == :zw
 
-      Series::Assessment.create!(
+      Series::TeamAssessment.create!(
         id: assessment[:id],
-        name: assessment[:name],
+        key: assessment[:key],
         discipline:,
         round_id: assessment[:round_id].to_i,
-        gender: assessment[:gender],
-        type: assessment[:type],
       )
     end
 
-    reset_autoincrement_id(Series::Assessment)
+    reset_autoincrement_id(Series::TeamAssessment)
   end
 
-  def import_series_participations
-    fetch('series/participations') do |participation|
-      Series::Participation.create!(
+  def import_series_person_assessments
+    fetch('series/person_assessments') do |assessment|
+      discipline = assessment[:discipline].to_sym
+      discipline = :hb if discipline == :hw
+      discipline = :zk if discipline == :zw
+
+      Series::PersonAssessment.create!(
+        id: assessment[:id],
+        key: assessment[:key],
+        discipline:,
+        round_id: assessment[:round_id].to_i,
+      )
+    end
+
+    reset_autoincrement_id(Series::PersonAssessment)
+  end
+
+  def import_series_team_participations
+    fetch('series/team_participations') do |participation|
+      Series::TeamParticipation.create!(
         id: participation[:id],
         points: participation[:points],
         rank: participation[:rank],
         time: participation[:time],
         cup_id: participation[:cup_id].to_i,
-        assessment_id: participation[:assessment_id].to_i,
-        type: participation[:type],
+        team_assessment_id: participation[:team_assessment_id].to_i,
         team_id: participation[:team_id],
         team_number: participation[:team_number],
+        team_gender: participation[:team_gender],
+      )
+    end
+
+    reset_autoincrement_id(Series::TeamParticipation)
+  end
+
+  def import_series_person_participations
+    fetch('series/person_participations') do |participation|
+      Series::PersonParticipation.create!(
+        id: participation[:id],
+        points: participation[:points],
+        rank: participation[:rank],
+        time: participation[:time],
+        cup_id: participation[:cup_id].to_i,
+        person_assessment_id: participation[:person_assessment_id].to_i,
         person_id: participation[:person_id],
       )
     end
 
-    reset_autoincrement_id(Series::Participation)
+    reset_autoincrement_id(Series::PersonParticipation)
   end
 
   def people
@@ -189,8 +208,10 @@ class ImportSuggestionsJob < ApplicationJob
   end
 
   def destroy_old_imports
-    Series::Participation.delete_all
-    Series::Assessment.delete_all
+    Series::PersonParticipation.delete_all
+    Series::TeamParticipation.delete_all
+    Series::PersonAssessment.delete_all
+    Series::TeamAssessment.delete_all
     Series::Cup.delete_all
     Series::Round.delete_all
 

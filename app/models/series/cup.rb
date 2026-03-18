@@ -15,8 +15,10 @@
 class Series::Cup < ApplicationRecord
   belongs_to :round, class_name: 'Series::Round', inverse_of: :cups
   belongs_to :dummy_for_competition, class_name: 'Competition'
-  has_many :assessments, through: :round, class_name: 'Series::Assessment'
-  has_many :participations, dependent: :destroy, class_name: 'Series::Participation', inverse_of: :cup
+  has_many :team_assessments, through: :round, class_name: 'Series::TeamAssessment'
+  has_many :person_assessments, through: :round, class_name: 'Series::PersonAssessment'
+  has_many :team_participations, dependent: :destroy, class_name: 'Series::TeamParticipation', inverse_of: :cup
+  has_many :person_participations, dependent: :destroy, class_name: 'Series::PersonParticipation', inverse_of: :cup
 
   default_scope -> { order(:competition_date) }
 

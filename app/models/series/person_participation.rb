@@ -2,25 +2,32 @@
 
 # == Schema Information
 #
-# Table name: series_participations
+# Table name: series_person_participations
 #
-#  id            :bigint           not null, primary key
-#  points        :integer          default(0), not null
-#  rank          :integer          not null
-#  team_number   :integer
-#  time          :integer          not null
-#  type          :string(100)      not null
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  assessment_id :integer          not null
-#  cup_id        :integer          not null
-#  person_id     :integer
-#  team_id       :integer
+#  id                   :integer          not null, primary key
+#  points               :integer          default(0), not null
+#  rank                 :integer          not null
+#  time                 :integer          not null
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  cup_id               :integer          not null
+#  person_assessment_id :integer          not null
+#  person_id            :integer          not null
 #
-class Series::PersonParticipation < Series::Participation
-  belongs_to :person, class_name: 'FireSportStatistics::Person', inverse_of: :series_participations
+# Indexes
+#
+#  index_series_person_participations_on_cup_id                (cup_id)
+#  index_series_person_participations_on_person_assessment_id  (person_assessment_id)
+#  index_series_person_participations_on_person_id             (person_id)
+#
+class Series::PersonParticipation < ApplicationRecord
+  include Firesport::TimeInvalid
 
-  validates :person, presence: true
+  belongs_to :person, class_name: 'FireSportStatistics::Person', inverse_of: :series_person_participations
+  belongs_to :cup, class_name: 'Series::Cup', inverse_of: :person_participations
+  belongs_to :person_assessment, class_name: 'Series::PersonAssessment'
+
+  schema_validations
 
   def entity
     person
@@ -28,5 +35,13 @@ class Series::PersonParticipation < Series::Participation
 
   def entity_id
     person_id
+  end
+
+  def result_entry
+    @result_entry = Score::ResultEntry.new(time_with_valid_calculation: time)
+  end
+
+  def result_entry_with_points
+    "#{result_entry.human_time} (#{points})"
   end
 end

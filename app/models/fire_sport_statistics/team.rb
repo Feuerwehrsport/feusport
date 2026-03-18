@@ -22,7 +22,7 @@ class FireSportStatistics::Team < ApplicationRecord
                                inverse_of: :team
   has_one :team, class_name: '::Team', inverse_of: :fire_sport_statistics_team, dependent: :nullify,
                  foreign_key: :fire_sport_statistics_team_id
-  has_many :series_participations, class_name: 'Series::TeamParticipation', dependent: :destroy, inverse_of: :team
+  has_many :series_team_participations, class_name: 'Series::TeamParticipation', dependent: :destroy, inverse_of: :team
   belongs_to :federal_state
 
   auto_strip_attributes :name, :short

@@ -3,6 +3,7 @@
 class ApplicationRecord < ActiveRecord::Base
   primary_abstract_class
   include SchemaValidations # to include auto generated validations
+  include JsonbAsText
 
   validate :validate_dates
 

@@ -3,7 +3,7 @@
   %table.team_assessments
     - participations.each do |participation|
       %tr
-        %th.hide-xs= participation.assessment.discipline.upcase
+        %th.hide-xs= participation.team_assessment.discipline.upcase
         %td= participation.result_entry_with_points
 - else
   %div= free

@@ -2,52 +2,57 @@
 
 .row.g-4.mb-4
   .col-md-6= render('round_card', round: @round)
-  - if @person_assessments.present?
+  - if @round.person_assessments_configs.present?
     .col-md-6
       = card_direct('Einzelwertungen') do
         %table.table
           %thead
             %tr
               %th Disziplin
-              %th Wettkämpfer
               %th
           %tbody
-            - @person_assessments.each do |row|
+            - @round.person_assessments_configs.each do |config|
               %tr
                 %td
-                  = discipline_image(row.discipline)
-                  = row.name
-                %td= row.participations.pluck(:person_id).uniq.count
-                %td= link_to('Ansehen', competition_series_assessment_path(id: row.id), class: 'btn btn-sm btn-light')
+                  - config.disciplines.each do |discipline|
+                    = discipline_image(discipline)
+                  = config.name
+                %td= link_to('Ansehen', competition_series_person_assessment_path(id: config.round_key), class: 'btn btn-sm btn-light')
 
-- if @team_assessments_exists
-  - Genderable::KEYS.each do |gender|
-    - next if @round.team_assessment_rows(@competition, gender).blank?
 
-    = card("Mannschaftswertung #{t("gender.#{gender}")}", class: 'mb-4') do |c|
-      - c.direct do
-        .scroll-x
-          %table.table.table-hover.table-bordered.table-sm
-            %thead
-              %th.hide-xs Platz
-              %th Team
-              - @round.showable_cups(@competition).each do |cup|
-                %th.small= cup.competition_place
-              %th.hide-xs Teil.
-              %th.hide-xs Bestzeit
-              %th Punkte
-            %tbody
-              = tr_xs_rotate_hint
-              - @round.team_assessment_rows(@competition, gender).each do |row|
-                %tr
-                  %td.hide-xs= row.rank
-                  %td= row.full_name
-                  - @round.showable_cups(@competition).each do |cup|
-                    %td.small= render('competitions/series/rounds/participations_table', participations: row.participations_for_cup(cup))
-                  %td.hide-xs= row.count
-                  %td.hide-xs= row.best_result_entry
-                  %td= row.points
-        - c.actions do |actions|
-          - actions.link_to 'PDF', { format: :pdf }, end_icon: :file_pdf, target: '_blank', rel: 'noopener'
-          - if can?(:manage, @competition) && @competition.certificates_templates.exists?
-            - actions.link_to 'Urkunden', new_competition_certificates_list_path(series_team_round_id: "#{@round.id}-#{gender}"), end_icon: :file_certificate
+- @round.team_assessments_configs.each do |config|
+  - rows = config.rows(@competition)
+  - next if rows.blank?
+
+  = card("Mannschaftswertung #{config.name}", class: 'mb-4') do |c|
+    - c.direct do
+      .scroll-x
+        %table.table.table-hover.table-bordered.table-sm
+          %thead
+            %th.hide-xs Platz
+            %th Team
+            - @round.showable_cups(@competition).each do |cup|
+              %th.small= cup.competition_place
+            - config.show_columns_config.each_with_index do |col, index|
+              %th{ class: index == config.show_columns_config.size - 1 ? '' : 'hide-xs' }= col[:name]
+
+          %tbody
+            = tr_xs_rotate_hint
+            - rows.each do |row|
+              %tr
+                %td.hide-xs= row.rank
+                %td= row.full_name
+                - @round.showable_cups(@competition).each do |cup|
+                  %td.small= render('competitions/series/rounds/participations_table', participations: row.participations_for_cup(cup))
+
+                - config.show_columns_config.each_with_index do |col, index|
+                  %td{ class: index == config.show_columns_config.size - 1 ? '' : 'hide-xs' }= row.public_send(col[:method])
+
+      = render 'competitions/series/calculation_hint', config:
+
+    - c.actions do |actions|
+      - actions.link_to 'Details zur Berechnung', "#calculation-hint-#{config.key}", end_icon: :calculator, data: { 'bs-toggle' => 'collapse' }
+      - actions.link_to 'PDF', { format: :pdf }, end_icon: :file_pdf, target: '_blank', rel: 'noopener'
+
+      - if can?(:manage, @competition) && @competition.certificates_templates.exists?
+        - actions.link_to 'Urkunden', new_competition_certificates_list_path(series_team_assessmen_id: config.round_key), end_icon: :file_certificate

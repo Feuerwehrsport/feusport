@@ -33,7 +33,8 @@ class FireSportStatistics::Person < ApplicationRecord
   has_many :team_associations, class_name: 'FireSportStatistics::TeamAssociation', dependent: :destroy,
                                inverse_of: :person
   has_many :teams, through: :team_associations, class_name: 'FireSportStatistics::Team'
-  has_many :series_participations, class_name: 'Series::PersonParticipation', dependent: :destroy, inverse_of: :person
+  has_many :series_person_participations, class_name: 'Series::PersonParticipation', dependent: :destroy,
+                                          inverse_of: :person
   has_one :person, class_name: '::Person', inverse_of: :fire_sport_statistics_person,
                    foreign_key: :fire_sport_statistics_person_id, dependent: :nullify
   has_many :spellings, class_name: 'FireSportStatistics::PersonSpelling', dependent: :destroy, inverse_of: :person

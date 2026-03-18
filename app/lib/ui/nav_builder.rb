@@ -54,6 +54,6 @@ Ui::NavBuilderItem = Struct.new(:label, :url, :options) do
   end
 
   def link_options
-    options.slice(:title, :target, :rel)
+    options.slice(:title, :target, :rel, :data)
   end
 end

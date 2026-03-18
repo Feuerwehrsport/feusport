@@ -1,0 +1,4 @@
+competitions/series/rounds display round calculation shows all columns for person-as-pdf
+
+request
+pdf

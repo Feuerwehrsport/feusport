@@ -1,7 +1,10 @@
 - c.body do
   - if params[:form] == 'series_assessments'
     = hidden_field_tag :form, 'series_assessments'
-    = f.association :series_assessments, as: :check_boxes, collection: @result.possible_series_assessments, label_method: ->(assessment) { assessment.score_result_label }
+
+    = f.input :series_team_round_keys, as: :check_boxes, collection: @result.possible_series_team_round_keys
+    = f.input :series_person_round_keys, as: :check_boxes, collection: @result.possible_series_person_round_keys
+
   - elsif params[:form] == 'tags'
     = hidden_field_tag :form, 'tags'
     %fieldset.group

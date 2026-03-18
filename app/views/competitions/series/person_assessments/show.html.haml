@@ -1,0 +1,34 @@
+= render 'competitions/header', competition: @competition, sub: 'Serien', resource_class: Series::Round
+
+.row.g-4.mb-4
+  .col-md-6= render('competitions/series/rounds/round_card', round: @config.round)
+
+= card(@config.name) do |c|
+  - c.direct do
+    %table.table.table-hover.table-bordered.table-sm
+      %thead
+        %th Platz
+        %th Name
+        %th Vorname
+        - @config.round.showable_cups(@competition).each do |cup|
+          %th= cup.competition_place
+        - @config.show_columns_config.each_with_index do |col, index|
+          %th{ class: index == @config.show_columns_config.size - 1 ? '' : 'hide-xs' }= col[:name]
+      %tbody
+        - rows = @config.rows(@competition)
+        - rows.each do |row|
+          %tr
+            %td= row.rank
+            %td= row.last_name
+            %td= row.first_name
+            - @config.round.showable_cups(@competition).each do |cup|
+              %td= row.participation_for_cup(cup)&.result_entry_with_points
+            - @config.show_columns_config.each_with_index do |col, index|
+              %td{ class: index == @config.show_columns_config.size - 1 ? '' : 'hide-xs' }= row.public_send(col[:method])
+
+    = render 'competitions/series/calculation_hint', config: @config
+  - c.actions do |actions|
+    - actions.link_to 'Details zur Berechnung', "#calculation-hint-#{@config.key}", end_icon: :calculator, data: { 'bs-toggle' => 'collapse' }
+    - actions.link_to 'PDF', { format: :pdf }, end_icon: :file_pdf, target: '_blank', rel: 'noopener'
+    - if can?(:manage, @competition) && @competition.certificates_templates.exists?
+      - actions.link_to 'Urkunden', new_competition_certificates_list_path(series_person_assessment_id: params[:id]), end_icon: :file_certificate

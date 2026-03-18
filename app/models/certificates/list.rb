@@ -5,7 +5,7 @@ class Certificates::List
   include ActiveModel::Attributes
 
   attr_accessor :competition, :template_id, :score_result_id, :competition_result_id, :group_score_result_id,
-                :series_team_round_id, :series_person_assessment_id
+                :series_team_assessment_id, :series_person_assessment_id
 
   attribute :background_image, :boolean, default: true
 
@@ -31,19 +31,21 @@ class Certificates::List
     @competition_result ||= competition&.score_competition_results&.find_by(id: competition_result_id)
   end
 
-  def series_team_round
-    @series_team_round ||= Series::Round::GenderWrapper.find(series_team_round_id)
+  def series_team_assessment
+    return @series_team_assessment if defined?(@series_team_assessment)
+
+    @series_team_assessment ||= Series::AssessmentConfig.find_by_round_key(series_team_assessment_id, :team)
   end
 
   def series_person_assessment
     return @series_person_assessment if defined?(@series_person_assessment)
 
-    @series_person_assessment = Series::Assessment.find_by(id: series_person_assessment_id)
+    @series_person_assessment = Series::AssessmentConfig.find_by_round_key(series_person_assessment_id, :person)
   end
 
   def result
     @result ||= score_result || competition_result || group_score_result ||
-                series_team_round || series_person_assessment
+                series_team_assessment || series_person_assessment
   end
 
   def rows
@@ -58,12 +60,12 @@ class Certificates::List
 
   def result_present
     return if [score_result, competition_result, group_score_result,
-               series_team_round, series_person_assessment].one?(&:itself)
+               series_team_assessment, series_person_assessment].one?(&:itself)
 
     errors.add(:score_result_id, :invalid)
     errors.add(:competition_result_id, :invalid)
     errors.add(:group_score_result_id, :invalid)
-    errors.add(:series_team_round_id, :invalid)
+    errors.add(:series_team_assessment_id, :invalid)
     errors.add(:series_person_assessment_id, :invalid)
   end
 end

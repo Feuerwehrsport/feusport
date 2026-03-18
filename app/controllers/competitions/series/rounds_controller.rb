@@ -11,8 +11,6 @@ class Competitions::Series::RoundsController < CompetitionNestedController
 
     send_pdf(Exports::Pdf::Series::Round, args: [round, @competition]) && return
 
-    @person_assessments = Series::PersonAssessment.where(round:)
-    @team_assessments_exists = Series::TeamAssessment.where(round:).present?
     @round = round
     @page_title = "#{@round} - Wettkampfserie"
   end

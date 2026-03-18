@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_07_13_145623) do
+ActiveRecord::Schema[7.2].define(version: 2026_03_16_221556) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
@@ -426,15 +426,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_07_13_145623) do
     t.index ["result_id"], name: "index_score_result_references_on_result_id"
   end
 
-  create_table "score_result_series_assessments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "result_id", null: false
-    t.bigint "assessment_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["assessment_id"], name: "index_score_result_series_assessments_on_assessment_id"
-    t.index ["result_id"], name: "index_score_result_series_assessments_on_result_id"
-  end
-
   create_table "score_results", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "competition_id", null: false
     t.string "forced_name", limit: 100
@@ -453,18 +444,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_07_13_145623) do
     t.string "image_key", limit: 10
     t.integer "multi_result_method", default: 0, null: false
     t.boolean "calculation_help", default: false, null: false
+    t.string "series_team_round_keys", default: [], array: true
+    t.string "series_person_round_keys", default: [], array: true
     t.index ["assessment_id"], name: "index_score_results_on_assessment_id"
     t.index ["competition_id"], name: "index_score_results_on_competition_id"
-  end
-
-  create_table "series_assessments", force: :cascade do |t|
-    t.integer "round_id", null: false
-    t.string "discipline", limit: 2, null: false
-    t.string "name", default: "", null: false
-    t.string "type", limit: 100, null: false
-    t.integer "gender", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "series_cups", force: :cascade do |t|
@@ -476,27 +459,78 @@ ActiveRecord::Schema[7.2].define(version: 2025_07_13_145623) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "series_participations", force: :cascade do |t|
-    t.integer "assessment_id", null: false
+  create_table "series_person_assessments", id: :serial, force: :cascade do |t|
+    t.integer "round_id", null: false
+    t.string "discipline", limit: 3, null: false
+    t.string "key", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["discipline"], name: "index_series_person_assessments_on_discipline"
+    t.index ["key"], name: "index_series_person_assessments_on_key"
+    t.index ["round_id"], name: "index_series_person_assessments_on_round_id"
+  end
+
+  create_table "series_person_participations", id: :serial, force: :cascade do |t|
+    t.integer "person_assessment_id", null: false
     t.integer "cup_id", null: false
-    t.string "type", limit: 100, null: false
-    t.integer "team_id"
-    t.integer "team_number"
-    t.integer "person_id"
+    t.integer "person_id", null: false
     t.integer "time", null: false
     t.integer "points", default: 0, null: false
     t.integer "rank", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["cup_id"], name: "index_series_person_participations_on_cup_id"
+    t.index ["person_assessment_id"], name: "index_series_person_participations_on_person_assessment_id"
+    t.index ["person_id"], name: "index_series_person_participations_on_person_id"
   end
 
-  create_table "series_rounds", force: :cascade do |t|
-    t.string "name", limit: 100, null: false
-    t.integer "year", null: false
-    t.string "aggregate_type", limit: 100, null: false
-    t.integer "full_cup_count", default: 4, null: false
+  create_table "series_round_competition_associations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.bigint "round_id", null: false
+    t.uuid "competition_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["competition_id"], name: "index_series_round_competition_associations_on_competition_id"
+    t.index ["round_id"], name: "index_series_round_competition_associations_on_round_id"
+  end
+
+  create_table "series_rounds", id: :serial, force: :cascade do |t|
+    t.string "name", limit: 100, null: false
+    t.integer "year", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.integer "full_cup_count", default: 4, null: false
+    t.bigint "kind_id"
+    t.jsonb "team_assessments_config_jsonb", default: []
+    t.jsonb "person_assessments_config_jsonb", default: []
+    t.index ["kind_id"], name: "index_series_rounds_on_kind_id"
+  end
+
+  create_table "series_team_assessments", id: :serial, force: :cascade do |t|
+    t.integer "round_id", null: false
+    t.string "discipline", limit: 3, null: false
+    t.string "key", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["discipline"], name: "index_series_team_assessments_on_discipline"
+    t.index ["key"], name: "index_series_team_assessments_on_key"
+    t.index ["round_id"], name: "index_series_team_assessments_on_round_id"
+  end
+
+  create_table "series_team_participations", id: :serial, force: :cascade do |t|
+    t.integer "team_assessment_id", null: false
+    t.integer "cup_id", null: false
+    t.integer "team_id", null: false
+    t.integer "team_number", null: false
+    t.integer "team_gender", null: false
+    t.integer "time", null: false
+    t.integer "points", default: 0, null: false
+    t.integer "rank", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cup_id"], name: "index_series_team_participations_on_cup_id"
+    t.index ["team_assessment_id"], name: "index_series_team_participations_on_team_assessment_id"
+    t.index ["team_id"], name: "index_series_team_participations_on_team_id"
+    t.index ["team_number"], name: "index_series_team_participations_on_team_number"
   end
 
   create_table "simple_accesses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -836,9 +870,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_07_13_145623) do
   add_foreign_key "score_result_lists", "score_results", column: "result_id"
   add_foreign_key "score_result_references", "score_results", column: "multi_result_id"
   add_foreign_key "score_result_references", "score_results", column: "result_id"
-  add_foreign_key "score_result_series_assessments", "score_results", column: "result_id"
   add_foreign_key "score_results", "assessments"
   add_foreign_key "score_results", "competitions"
+  add_foreign_key "series_round_competition_associations", "competitions"
+  add_foreign_key "series_round_competition_associations", "series_rounds", column: "round_id"
   add_foreign_key "simple_accesses", "competitions"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_claimed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade

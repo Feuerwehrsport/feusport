@@ -7,36 +7,39 @@ RSpec.describe ImportSuggestionsJob do
     it 'imports entities from feuerwehrsport-statistik.de', :vcr do
       described_class.perform_now
 
-      expect(FireSportStatistics::Person.count).to eq 1
+      expect(FireSportStatistics::Person.count).to eq 4
       expect(FireSportStatistics::PersonSpelling.count).to eq 1
-      expect(FireSportStatistics::Team.count).to eq 11
-      expect(FireSportStatistics::TeamSpelling.count).to eq 7
-      expect(FireSportStatistics::TeamAssociation.count).to eq 11
+      expect(FireSportStatistics::Team.count).to eq 5
+      expect(FireSportStatistics::TeamSpelling.count).to eq 16
+      expect(FireSportStatistics::TeamAssociation.count).to eq 5
 
-      expect(FireSportStatistics::Person.first.attributes.except('updated_at', 'created_at')).to eq(
+      expect(FireSportStatistics::Person.find(271).attributes.except('updated_at', 'created_at')).to eq(
         'dummy' => false,
-        'first_name' => 'Tom',
+        'first_name' => 'Georg',
         'gender' => 'male',
-        'id' => 184,
-        'last_name' => 'Gehlert',
-        'personal_best_hb' => 1655,
-        'personal_best_hb_competition' => '20.07.2022 - Celje, CTIF',
-        'personal_best_hl' => 1364,
-        'personal_best_hl_competition' => '25.09.2023 - Varna, Pokallauf (Odessos Cup)',
-        'personal_best_zk' => 3023,
-        'personal_best_zk_competition' => '20.07.2022 - Celje, CTIF',
-        'saison_best_hb' => 1674,
-        'saison_best_hb_competition' => '23.05.2024 - Ostrowiec Świętokrzyski, Pokallauf',
-        'saison_best_hl' => 1404,
-        'saison_best_hl_competition' => '23.05.2024 - Ostrowiec Świętokrzyski, Pokallauf',
-        'saison_best_zk' => 3078,
-        'saison_best_zk_competition' => '23.05.2024 - Ostrowiec Świętokrzyski, Pokallauf',
+        'id' => 271,
+        'last_name' => 'Limbach',
+        'personal_best_hb' => 1796,
+        'personal_best_hb_competition' => '28.05.2016 - Doberlug-Kirchhain, D-Cup',
+        'personal_best_hl' => 1634,
+        'personal_best_hl_competition' => '07.06.2014 - Charlottenthal, MV-Cup (20. Pfingstpokal)',
+        'personal_best_zk' => 3497,
+        'personal_best_zk_competition' => '24.08.2019 - Ludwigslust, Landesausscheid ' \
+                                          '(Landesmeisterschaften Mecklenburg-Vorpommern)',
+        'saison_best_hb' => nil,
+        'saison_best_hb_competition' => nil,
+        'saison_best_hl' => 1992,
+        'saison_best_hl_competition' => '24.01.2026 - Tribsees, Neujahrssteigen (Neujahrssteigen 2026)',
+        'saison_best_zk' => nil,
+        'saison_best_zk_competition' => nil,
       )
 
-      expect(Series::Participation.count).to eq 70
-      expect(Series::Assessment.count).to eq 16
-      expect(Series::Cup.count).to eq 18
-      expect(Series::Round.count).to eq 4
+      expect(Series::TeamParticipation.count).to eq 22
+      expect(Series::PersonParticipation.count).to eq 30
+      expect(Series::TeamAssessment.count).to eq 5
+      expect(Series::PersonAssessment.count).to eq 4
+      expect(Series::Cup.count).to eq 7
+      expect(Series::Round.count).to eq 3
     end
   end
 end
