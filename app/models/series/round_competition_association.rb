@@ -18,7 +18,6 @@
 # Foreign Keys
 #
 #  fk_rails_...  (competition_id => competitions.id)
-#  fk_rails_...  (round_id => series_rounds.id)
 #
 class Series::RoundCompetitionAssociation < ApplicationRecord
   belongs_to :round, class_name: 'Series::Round'

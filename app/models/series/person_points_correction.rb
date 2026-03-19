@@ -4,18 +4,18 @@
 #
 # Table name: series_person_points_corrections
 #
-#  id                    :uuid             not null, primary key
-#  point_correction      :integer
-#  point_correction_hint :string
-#  round_key             :string
-#  created_at            :datetime         not null
-#  updated_at            :datetime         not null
-#  competition_id        :uuid
-#  person_id             :bigint
+#  id                     :uuid             not null, primary key
+#  points_correction      :integer
+#  points_correction_hint :string
+#  round_key              :string
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  competition_id         :uuid
+#  person_id              :bigint
 #
 # Indexes
 #
-#  index_series_person_point_corrections_on_competition_id  (competition_id)
+#  index_series_person_points_corrections_on_competition_id  (competition_id)
 #
 # Foreign Keys
 #

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_03_18_135852) do
+ActiveRecord::Schema[7.2].define(version: 2026_03_19_211316) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
@@ -902,7 +902,6 @@ ActiveRecord::Schema[7.2].define(version: 2026_03_18_135852) do
   add_foreign_key "score_results", "competitions"
   add_foreign_key "series_person_points_corrections", "competitions"
   add_foreign_key "series_round_competition_associations", "competitions"
-  add_foreign_key "series_round_competition_associations", "series_rounds", column: "round_id"
   add_foreign_key "series_team_points_corrections", "competitions"
   add_foreign_key "simple_accesses", "competitions"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
