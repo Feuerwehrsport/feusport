@@ -32,9 +32,13 @@ class DebugJob < ApplicationJob
 
     current_file.write(failed_ids)
 
+    errors = failed_jobs.first(20).map { |job| job.error.dup }
+    errors.each { |e| e['backtrace'] = e.fetch('backtrace', []).first(5) }
+
     send_message(
-      "#{failed_jobs.count} delayed jobs failed on #{`hostname`}",
-      failed_jobs.map { |job| JSON.pretty_generate(job.error) }.join("\n\n--NEXT--\n\n"),
+      "#{failed_jobs.count} solid queue jobs failed on #{`hostname`}",
+      errors.map { |e| JSON.pretty_generate(e) }.join("\n\n--NEXT--\n\n") +
+      "\n\nLink: #{Platform.path_to_url('/mission-control-jobs')}",
     )
   end
 
