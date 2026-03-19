@@ -157,7 +157,7 @@ class Competition < ApplicationRecord
     series_round_competition_associations.delete_all
     round_ids = []
     score_results.each do |result|
-      result.series_team_round_keys.each do |key|
+      (result.series_team_round_keys + result.series_person_round_keys).each do |key|
         if (res = key.match(/\A(\d+)-/))
           round_ids.push(res[1])
         end
