@@ -75,7 +75,7 @@ class Series::Round < ApplicationRecord
 
   def self.possible_series_round_keys(entity_key, with_round_keys: [], discipline_key: nil, year: Date.current.year)
     out = []
-    find_each do |round|
+    unscoped.find_each do |round|
       round.public_send(:"#{entity_key}_assessments_configs").map do |config|
         if (with_round_keys.present? && config.round_key.in?(with_round_keys)) ||
            ((discipline_key.blank? || discipline_key.in?(config.disciplines)) && round.year >= year)
