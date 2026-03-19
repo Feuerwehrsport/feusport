@@ -26,6 +26,7 @@
 #
 class FireSportStatistics::Person < ApplicationRecord
   include Genderable
+  include SortableByName
 
   BEST_TABLE_HEAD = { personal_best: ['PB', 'Persönliche Bestleistung'],
                       saison_best: %w[SB Saison-Bestleistung] }.freeze
@@ -68,6 +69,10 @@ class FireSportStatistics::Person < ApplicationRecord
 
   def full_name
     "#{first_name} #{last_name}"
+  end
+
+  def name
+    full_name
   end
 
   def team_list

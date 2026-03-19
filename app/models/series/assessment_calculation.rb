@@ -65,6 +65,8 @@ class Series::AssessmentCalculation
   def people
     people = {}
 
+    possible_corrections = Series::PersonPointsCorrection.where(competition:, round_key:)
+
     # Online-Einträge hinzufügen
     Series::PersonParticipation.where(person_assessment: person_assessments.where(key:)).find_each do |participation|
       next if participation.cup.dummy_for_competition.present?
@@ -84,12 +86,19 @@ class Series::AssessmentCalculation
 
       rows = result.rows
       convert_result_rows(rows) do |row, time, points, rank|
+        dummy_person = row.entity.fire_sport_statistics_person_with_dummy
+        correction = possible_corrections.find do |c|
+          c.person_id == dummy_person.id
+        end
+
         participation = Series::PersonParticipation.new(
           cup:,
-          person: row.entity.fire_sport_statistics_person_with_dummy,
+          person: dummy_person,
           time:,
           points:,
           rank:,
+          points_correction: correction&.points_correction,
+          points_correction_hint: correction&.points_correction_hint,
         )
 
         people[participation.person_id] ||= Series::Person.new(
@@ -104,6 +113,8 @@ class Series::AssessmentCalculation
 
   def teams
     teams = {}
+
+    possible_corrections = Series::TeamPointsCorrection.where(competition:, round_key:)
 
     # Online-Einträge hinzufügen
     Series::TeamParticipation.where(team_assessment: team_assessments.where(key:)).find_each do |participation|
@@ -131,6 +142,13 @@ class Series::AssessmentCalculation
       )
 
       convert_result_rows(rows) do |row, time, points, rank|
+        dummy_team = row.entity.fire_sport_statistics_team_with_dummy
+        correction = possible_corrections.find do |c|
+          c.team_id == dummy_team.id &&
+            c.team_number == row.entity.number &&
+            row.discipline = team_assessment.discipline
+        end
+
         participation = Series::TeamParticipation.new(
           cup:,
           team: row.entity.fire_sport_statistics_team_with_dummy,
@@ -139,6 +157,8 @@ class Series::AssessmentCalculation
           points:,
           rank:,
           team_assessment:,
+          points_correction: correction&.points_correction,
+          points_correction_hint: correction&.points_correction_hint,
         )
 
         teams[participation.entity_id] ||= Series::Team.new(

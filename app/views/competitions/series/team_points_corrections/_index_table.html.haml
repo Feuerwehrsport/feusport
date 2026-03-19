@@ -1,0 +1,21 @@
+%table.table
+  %tr
+    %th= resource_class.human_attribute_name(:round_key)
+    %th= resource_class.human_attribute_name(:team_id)
+    %th= resource_class.human_attribute_name(:points_correction)
+    %th
+  - resource_collection.sort.each do |team_points_correction|
+    %tr
+      %td
+        = team_points_correction.round_key_config.round_full_name
+        = team_points_correction.discipline.upcase
+      %td
+        = team_points_correction.team.name
+        = team_points_correction.team_number
+      %td
+        = team_points_correction.points_correction
+        %br
+        %em= team_points_correction.points_correction_hint
+      %td.text-end
+        = btn_link_to(t('a.edit'), edit_competition_series_team_points_correction_path(id: team_points_correction.id))
+        = btn_link_to(t('a.delete'), competition_series_team_points_correction_path({ action: :destroy, id: team_points_correction.id }), data: { turbo_method: 'delete', turbo_confirm: 'Korrektur wirklich löschen?' })

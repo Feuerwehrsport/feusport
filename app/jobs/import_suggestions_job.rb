@@ -177,6 +177,8 @@ class ImportSuggestionsJob < ApplicationJob
         team_id: participation[:team_id],
         team_number: participation[:team_number],
         team_gender: participation[:team_gender],
+        points_correction: participation[:points_correction],
+        points_correction_hint: participation[:points_correction_hint],
       )
     end
 
@@ -193,6 +195,8 @@ class ImportSuggestionsJob < ApplicationJob
         cup_id: participation[:cup_id].to_i,
         person_assessment_id: participation[:person_assessment_id].to_i,
         person_id: participation[:person_id],
+        points_correction: participation[:points_correction],
+        points_correction_hint: participation[:points_correction_hint],
       )
     end
 

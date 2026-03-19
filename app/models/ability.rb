@@ -72,6 +72,9 @@ class Ability
     can(:manage, Score::ListPrintGenerator, competition: manage_ua)
     can(:manage, Score::ListCondition, competition: manage_ua)
 
+    can(:manage, Series::TeamPointsCorrection, competition: manage_ua)
+    can(:manage, Series::PersonPointsCorrection, competition: manage_ua)
+
     can(:manage, SimpleAccess, competition: manage_ua)
 
     can(:read, UserAccess, competition: read_ua)

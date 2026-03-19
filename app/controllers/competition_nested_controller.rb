@@ -29,6 +29,16 @@ class CompetitionNestedController < ApplicationController
     end
     helper_method :resource_collection
 
+    define_method(:pdf_support?) do
+      true
+    end
+    helper_method :pdf_support?
+
+    define_method(:xlsx_support?) do
+      true
+    end
+    helper_method :xlsx_support?
+
     before_action :assign_new_resource, only: %i[new create]
   end
 

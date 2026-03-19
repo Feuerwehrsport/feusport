@@ -1,0 +1,20 @@
+- c.body do
+  %fieldset.group
+    %legend Serienauswahl
+
+    = f.input :round_key, as: :select, collection: f.object.possible_round_keys
+    = f.input :discipline, as: :select, collection: f.object.possible_disciplines
+
+  %fieldset.group
+    %legend Mannschaftsauswahl
+    = f.input :team_id, as: :select, collection: f.object.possible_teams
+    = f.input :team_number
+
+  %fieldset.group
+    %legend Punktevergabe
+    = f.input :points_correction
+    = f.input :points_correction_hint
+
+- c.footer do
+  = f.primary_button :submit
+  = f.cancel_button(competition_series_team_points_corrections_path)

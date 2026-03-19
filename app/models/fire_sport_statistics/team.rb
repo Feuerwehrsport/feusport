@@ -17,6 +17,7 @@ class FireSportStatistics::Team < ApplicationRecord
                       'sb' => %w[SB Saison-Bestleistung].freeze }.freeze
 
   include FireSportStatistics::TeamScopes
+  include SortableByName
 
   has_many :team_associations, class_name: 'FireSportStatistics::TeamAssociation', dependent: :destroy,
                                inverse_of: :team

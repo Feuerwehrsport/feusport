@@ -65,6 +65,8 @@ class Competition < ApplicationRecord
   has_many :information_requests, dependent: :destroy
   has_many :series_round_competition_associations, dependent: :destroy, class_name: 'Series::RoundCompetitionAssociation'
   has_many :series_rounds, class_name: 'Series::Round', through: :series_round_competition_associations, source: :round
+  has_many :series_team_points_corrections, class_name: 'Series::TeamPointsCorrection', dependent: :destroy
+  has_many :series_person_points_corrections, class_name: 'Series::PersonPointsCorrection', dependent: :destroy
 
   scope :current, -> { where(date: (14.days.ago..6.months.from_now)) }
 

@@ -4,6 +4,11 @@
     - participations.each do |participation|
       %tr
         %th.hide-xs= participation.team_assessment.discipline.upcase
-        %td= participation.result_entry_with_points
+        %td
+          - if participation.points_correction_hint.nil?
+            = participation.result_entry_with_points
+          - else
+            %abbr{ title: participation.points_correction_hint }= participation.result_entry_with_points
+
 - else
   %div= free

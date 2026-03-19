@@ -22,7 +22,12 @@
             %td= row.last_name
             %td= row.first_name
             - @config.round.showable_cups(@competition).each do |cup|
-              %td= row.participation_for_cup(cup)&.result_entry_with_points
+              - participation = row.participation_for_cup(cup)
+              %td
+                - if participation&.points_correction_hint.nil?
+                  = participation&.result_entry_with_points
+                - else
+                  %abbr{ title: participation.points_correction_hint }= participation.result_entry_with_points
             - @config.show_columns_config.each_with_index do |col, index|
               %td{ class: index == @config.show_columns_config.size - 1 ? '' : 'hide-xs' }= row.public_send(col[:method])
 

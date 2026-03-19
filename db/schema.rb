@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_03_16_221556) do
+ActiveRecord::Schema[7.2].define(version: 2026_03_18_135852) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
@@ -479,9 +479,22 @@ ActiveRecord::Schema[7.2].define(version: 2026_03_16_221556) do
     t.integer "rank", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "points_correction"
+    t.string "points_correction_hint", limit: 200
     t.index ["cup_id"], name: "index_series_person_participations_on_cup_id"
     t.index ["person_assessment_id"], name: "index_series_person_participations_on_person_assessment_id"
     t.index ["person_id"], name: "index_series_person_participations_on_person_id"
+  end
+
+  create_table "series_person_points_corrections", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "competition_id"
+    t.string "round_key"
+    t.bigint "person_id"
+    t.integer "points_correction"
+    t.string "points_correction_hint"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["competition_id"], name: "index_series_person_points_corrections_on_competition_id"
   end
 
   create_table "series_round_competition_associations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -527,10 +540,25 @@ ActiveRecord::Schema[7.2].define(version: 2026_03_16_221556) do
     t.integer "rank", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "points_correction"
+    t.string "points_correction_hint", limit: 200
     t.index ["cup_id"], name: "index_series_team_participations_on_cup_id"
     t.index ["team_assessment_id"], name: "index_series_team_participations_on_team_assessment_id"
     t.index ["team_id"], name: "index_series_team_participations_on_team_id"
     t.index ["team_number"], name: "index_series_team_participations_on_team_number"
+  end
+
+  create_table "series_team_points_corrections", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "competition_id", null: false
+    t.string "round_key", null: false
+    t.string "discipline", null: false
+    t.bigint "team_id", null: false
+    t.integer "team_number", default: 1, null: false
+    t.integer "points_correction", null: false
+    t.string "points_correction_hint", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["competition_id"], name: "index_series_team_points_corrections_on_competition_id"
   end
 
   create_table "simple_accesses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -872,8 +900,10 @@ ActiveRecord::Schema[7.2].define(version: 2026_03_16_221556) do
   add_foreign_key "score_result_references", "score_results", column: "result_id"
   add_foreign_key "score_results", "assessments"
   add_foreign_key "score_results", "competitions"
+  add_foreign_key "series_person_points_corrections", "competitions"
   add_foreign_key "series_round_competition_associations", "competitions"
   add_foreign_key "series_round_competition_associations", "series_rounds", column: "round_id"
+  add_foreign_key "series_team_points_corrections", "competitions"
   add_foreign_key "simple_accesses", "competitions"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_claimed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade

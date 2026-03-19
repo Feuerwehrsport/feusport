@@ -4,15 +4,17 @@
 #
 # Table name: series_person_participations
 #
-#  id                   :integer          not null, primary key
-#  points               :integer          default(0), not null
-#  rank                 :integer          not null
-#  time                 :integer          not null
-#  created_at           :datetime         not null
-#  updated_at           :datetime         not null
-#  cup_id               :integer          not null
-#  person_assessment_id :integer          not null
-#  person_id            :integer          not null
+#  id                     :integer          not null, primary key
+#  points                 :integer          default(0), not null
+#  points_correction      :integer
+#  points_correction_hint :string(200)
+#  rank                   :integer          not null
+#  time                   :integer          not null
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  cup_id                 :integer          not null
+#  person_assessment_id   :integer          not null
+#  person_id              :integer          not null
 #
 # Indexes
 #
@@ -42,6 +44,18 @@ class Series::PersonParticipation < ApplicationRecord
   end
 
   def result_entry_with_points
-    "#{result_entry.human_time} (#{points})"
+    "#{result_entry.human_time} (#{points_with_correction_string})"
+  end
+
+  def points_with_correction
+    points + (points_correction || 0)
+  end
+
+  def points_with_correction_string
+    if points_correction.nil?
+      points
+    else
+      "#{points}#{'+' unless points_correction < 0}#{points_correction}"
+    end
   end
 end

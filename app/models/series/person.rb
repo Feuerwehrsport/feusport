@@ -32,11 +32,11 @@ class Series::Person
   end
 
   def points
-    @points ||= ordered_participations.sum(&:points)
+    @points ||= ordered_participations.sum(&:points_with_correction)
   end
 
   def all_points
-    @cups.values.sum { |cup| cup.sum(&:points) }
+    @cups.values.sum { |cup| cup.sum(&:points_with_correction) }
   end
 
   def second_best_time
@@ -80,7 +80,7 @@ class Series::Person
 
   def ordered_participations
     @ordered_participations ||= @cups.values.map(&:first).sort do |a, b|
-      compare = b.points <=> a.points
+      compare = b.points_with_correction <=> a.points_with_correction
       compare.zero? ? a.time <=> b.time : compare
     end.first(config.calc_participations_count)
   end

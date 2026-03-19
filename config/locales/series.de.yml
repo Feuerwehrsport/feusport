@@ -1,12 +1,32 @@
 ---
 de:
   activerecord:
+    attributes:
+      series/person_points_correction:
+        person: Wettkämpfer
+        points_correction: Punktkorrektur
+        points_correction_hint: Hinweis
+        round_key: Serie
+      series/team_points_correction:
+        discipline: Disziplin
+        points_correction: Punktkorrektur
+        points_correction_hint: Hinweis
+        round_key: Serie
+        team: Mannschaft
+        team_id: Mannschaft
+        team_number: Mannschaftsnummer
     models:
       series/person_assessment: Einzelwertung
+      series/person_points_correction:
+        one: Punktkorrektur für Wettkämpfer
+        other: Punktkorrekturen für Wettkämpfer
       series/round:
         one: Serie
         other: Serien
       series/team_assessment: Mannschaftswertung
+      series/team_points_correction:
+        one: Punktkorrektur für Mannschaft
+        other: Punktkorrekturen für Mannschaft
   series:
     points:
       one: 1 Punkt

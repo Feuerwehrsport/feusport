@@ -1,11 +1,16 @@
-= card_direct(round.name) do
-  %table.table.table-sm.small
-    %thead
-      %tr
-        %th Ort
-        %th Datum
-    %tbody
-      - round.showable_cups(@competition).each do |cup|
+= card(round.name) do |c|
+  - c.direct do
+    %table.table.table-sm.small
+      %thead
         %tr
-          %td= cup.competition_place
-          %td= l(cup.competition_date)
+          %th Ort
+          %th Datum
+      %tbody
+        - round.showable_cups(@competition).each do |cup|
+          %tr
+            %td= cup.competition_place
+            %td= l(cup.competition_date)
+  - if can?(:manage, @competition)
+    - c.actions do |actions|
+      - actions.link_to Series::TeamPointsCorrection.model_name.human(count: :many), competition_series_team_points_corrections_path, end_icon: :user_edit
+      - actions.link_to Series::PersonPointsCorrection.model_name.human(count: :many), competition_series_person_points_corrections_path, end_icon: :user_edit

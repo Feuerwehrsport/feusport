@@ -87,6 +87,8 @@ Rails.application.routes.draw do
     namespace :series do
       resources :rounds, only: %i[index show]
       resources :person_assessments, only: [:show]
+      resources :team_points_corrections, only: %i[index new create edit update destroy]
+      resources :person_points_corrections, only: %i[index new create edit update destroy]
     end
 
     # wrench menu

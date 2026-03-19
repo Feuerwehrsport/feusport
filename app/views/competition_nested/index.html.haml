@@ -14,8 +14,10 @@
           - actions.link_to t('a.add'), { action: :new }, end_icon: :square_plus
 
       - c.actions do |actions|
-        - actions.link_to 'PDF', { format: :pdf }, end_icon: :file_pdf, target: '_blank', rel: 'noopener'
-        - actions.link_to 'XLS', { format: :xlsx }, end_icon: :file_excel
+        - if pdf_support?
+          - actions.link_to 'PDF', { format: :pdf }, end_icon: :file_pdf, target: '_blank', rel: 'noopener'
+        - if xlsx_support?
+          - actions.link_to 'XLS', { format: :xlsx }, end_icon: :file_excel
 
     = render('index_bottom', resource_class:, resource_collection:)
   .col-lg-4= render('index_right', resource_class:, resource_collection:)
