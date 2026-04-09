@@ -14,7 +14,7 @@ Exports::Json::Score::Result = Struct.new(:result) do
       series_team_round_keys: result.series_team_round_keys,
       name: result.name,
     }
-    hash[:group_rows] = build_group_data_rows(result) if result.single_group_result?
+    hash[:group_rows] = build_group_data_rows(result, full: true) if result.single_group_result?
     hash
   end
 end

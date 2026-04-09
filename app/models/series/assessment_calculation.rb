@@ -146,7 +146,7 @@ class Series::AssessmentCalculation
         correction = possible_corrections.find do |c|
           c.team_id == dummy_team.id &&
             c.team_number == row.entity.number &&
-            row.discipline = team_assessment.discipline
+            c.discipline == team_assessment.discipline
         end
 
         participation = Series::TeamParticipation.new(

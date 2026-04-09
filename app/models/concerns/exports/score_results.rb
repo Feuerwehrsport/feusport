@@ -22,7 +22,7 @@ module Exports::ScoreResults
         else
           line.push(entity&.team_name(row&.assessment_type))
         end
-        line.push(entity&.team&.fire_sport_statistics_team_id, entity&.team&.number) if full
+        line.push(entity&.team&.fire_sport_statistics_team_id, entity&.team&.number, entity&.export_gender) if full
       else
         line.push(entity&.full_name)
         line.push(entity&.fire_sport_statistics_team_id, entity&.number, entity&.export_gender) if full
@@ -69,10 +69,15 @@ module Exports::ScoreResults
     header
   end
 
-  def build_group_data_rows(result)
-    data = [%w[Platz Name Summe]]
+  def build_group_data_rows(result, full: false)
+    header = %w[Platz Name Summe]
+    header.push('statistik_team_id', 'statistik_team_number', 'gender') if full
+    data = [header]
+
     result.group_result.rows.each do |row|
-      data.push ["#{row.place}.", row.team.full_name, row.result_entry.human_time]
+      line = ["#{row.place}.", row.team.full_name, row.result_entry.human_time]
+      line.push(row&.team&.fire_sport_statistics_team_id, row&.team&.number, row&.team&.export_gender) if full
+      data.push(line)
     end
     data
   end
