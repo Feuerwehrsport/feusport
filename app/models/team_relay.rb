@@ -23,7 +23,7 @@ class TeamRelay < ApplicationRecord
   has_many :list_entries, class_name: 'Score::ListEntry', as: :entity, dependent: :destroy, inverse_of: :entity
 
   validates :team, :number, presence: true
-  delegate :fire_sport_statistics_team, :fire_sport_statistics_team_id, :band, to: :team
+  delegate :fire_sport_statistics_team, :fire_sport_statistics_team_id, :band, :export_gender, to: :team
 
   schema_validations
 

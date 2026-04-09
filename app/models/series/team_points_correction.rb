@@ -55,4 +55,15 @@ class Series::TeamPointsCorrection < ApplicationRecord
   def possible_teams
     competition.teams.map(&:fire_sport_statistics_team_with_dummy).uniq.sort
   end
+
+  def to_export_hash
+    {
+      discipline:,
+      points_correction:,
+      points_correction_hint:,
+      round_key:,
+      team_number:,
+      team_id:,
+    }
+  end
 end

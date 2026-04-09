@@ -77,6 +77,10 @@ module Series::EntitySupport
     @cups.values.count
   end
 
+  def valid_participations
+    @valid_participations ||= ordered_participations.select { |part| part.time < Firesport::INVALID_TIME }
+  end
+
   def <=>(other)
     config.sort(self, other)
   end

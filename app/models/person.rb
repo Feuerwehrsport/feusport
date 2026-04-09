@@ -96,6 +96,10 @@ class Person < ApplicationRecord
     super
   end
 
+  def export_gender
+    band&.gender
+  end
+
   private
 
   def validate_team_band

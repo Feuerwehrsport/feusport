@@ -47,4 +47,13 @@ class Series::PersonPointsCorrection < ApplicationRecord
   def possible_people
     competition.people.map(&:fire_sport_statistics_person_with_dummy).uniq.sort
   end
+
+  def to_export_hash
+    {
+      points_correction:,
+      points_correction_hint:,
+      round_key:,
+      person_id:,
+    }
+  end
 end

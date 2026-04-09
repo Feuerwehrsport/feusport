@@ -7,20 +7,25 @@ module Exports::ScoreResults
     delegate :competition, to: :result
   end
 
-  def build_data_rows(result, shortcut, export_headers: false, pdf: false)
-    data = [build_data_headline(result, export_headers:, pdf:)]
+  def build_data_rows(result, shortcut, export_headers: false, pdf: false, full: false)
+    data = [build_data_headline(result, export_headers:, pdf:, full:)]
     result.rows.each do |row|
+      entity = row&.entity
+
       line = []
       line.push "#{row.place}."
       if result.single_discipline?
-        line.push(row&.entity&.first_name, row&.entity&.last_name)
+        line.push(entity&.first_name, entity&.last_name)
+        line.push(entity&.fire_sport_statistics_person_id) if full
         if shortcut
-          line.push(row&.entity&.team_shortcut_name(row&.assessment_type))
+          line.push(entity&.team_shortcut_name(row&.assessment_type))
         else
-          line.push(row&.entity&.team_name(row&.assessment_type))
+          line.push(entity&.team_name(row&.assessment_type))
         end
+        line.push(entity&.team&.fire_sport_statistics_team_id, entity&.team&.number) if full
       else
-        line.push(row&.entity&.full_name)
+        line.push(entity&.full_name)
+        line.push(entity&.fire_sport_statistics_team_id, entity&.number, entity&.export_gender) if full
       end
       if result.multi_result_method_disabled?
         result.lists.each do |list|
@@ -38,13 +43,14 @@ module Exports::ScoreResults
     data
   end
 
-  def build_data_headline(result, export_headers: false, pdf: false)
+  def build_data_headline(result, export_headers: false, pdf: false, full: false)
     header = ['Platz']
     if result.single_discipline?
-      header.push('Vorname', 'Nachname', 'Mannschaft')
-    else
-      header.push('Mannschaft')
+      header.push('Vorname', 'Nachname')
+      header.push('statistik_person_id') if full
     end
+    header.push('Mannschaft')
+    header.push('statistik_team_id', 'statistik_team_number', 'gender') if full
     if result.multi_result_method_disabled?
       result.lists.each do |list|
         if pdf && list.separate_target_times?

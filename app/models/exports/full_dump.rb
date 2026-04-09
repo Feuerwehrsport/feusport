@@ -26,6 +26,8 @@ class Exports::FullDump
       user_email_address: user.email,
       hint:,
       url: competition.self_url,
+      person_points_corrections: competition.series_person_points_corrections.map(&:to_export_hash),
+      team_points_corrections: competition.series_team_points_corrections.map(&:to_export_hash),
     }
   end
 

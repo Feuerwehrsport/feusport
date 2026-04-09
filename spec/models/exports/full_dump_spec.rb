@@ -31,6 +31,8 @@ RSpec.describe Exports::FullDump do
         url: 'http://www.example.com/2024/mv-cup',
         user: 'Alfred Meier',
         user_email_address: 'alfred@meier.de',
+        person_points_corrections: [],
+        team_points_corrections: [],
       )
       expect(hash[:files].count).to eq(created_files.count)
       expect(hash[:files].first.except(:base64_data)).to eq(

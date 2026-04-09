@@ -105,6 +105,10 @@ class Team < ApplicationRecord
     certificate_name.presence || full_name
   end
 
+  def export_gender
+    band&.gender
+  end
+
   private
 
   def create_assessment_requests
