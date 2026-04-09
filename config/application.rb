@@ -48,6 +48,9 @@ module Feusport
       ENV.fetch('ENCRYPTION_PRIMARY_KEY', 'S0KXvOn2ar5TOKTBv7KBxqwguYgaIdUO')
 
     config.x.email_validation = { mx: true }
+    config.x.feuerwehrsport_statistik = {
+      url: 'https://feuerwehrsport-statistik.de',
+    }
 
     config.default_url_options = {}
 

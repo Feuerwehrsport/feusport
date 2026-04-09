@@ -67,8 +67,9 @@ class FireSportStatistics::Publishing < ApplicationRecord
 
   def conn
     @conn ||= begin
-      http = Net::HTTP.new('feuerwehrsport-statistik.de', 443)
-      http.use_ssl = true
+      uri = URI.parse(Rails.configuration.x.feuerwehrsport_statistik[:url])
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = (uri.scheme == 'https')
       http
     end
   end
