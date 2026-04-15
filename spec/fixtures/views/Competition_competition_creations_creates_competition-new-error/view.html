@@ -67,7 +67,22 @@ Benutzer
 <div class="card-body">
 <div class="form-group string required competition_name form-group-valid"><label class="control-label string required" for="competition_name">Name <abbr title="required">*</abbr></label><input class="form-control string required" autofocus="autofocus" type="text" value="Foo" name="competition[name]" id="competition_name" /><small class="form-text text-muted">Gib einen kurzen Namen an. Das Datum erscheint extra und braucht nicht im Namen auftauchen.</small></div>
 <div class="form-group date required competition_date form-group-invalid"><label class="date required" for="competition_date">Datum <abbr title="required">*</abbr></label><div class="d-flex flex-row justify-content-between align-items-center"><input class="form-control mx-1 is-invalid date required" aria-invalid="true" type="date" name="competition[date]" id="competition_date" /></div><div class="invalid-feedback d-block">Datum muss ausgefüllt werden</div><small class="form-text text-muted">Sollte sich der Wettkampf über mehrere Tage erstrecken, gib den Haupttag an. Weiteres musst du in der Beschreibung ergänzen.</small></div>
-<div class="form-group string required competition_place form-group-invalid"><label class="control-label string required" for="competition_place">Ort <abbr title="required">*</abbr></label><input class="form-control is-invalid string required" aria-invalid="true" type="text" name="competition[place]" id="competition_place" /><div class="invalid-feedback">Ort muss ausgefüllt werden</div><small class="form-text text-muted">Es sieht besser aus, wenn du hier nur den Namen des Ortes schreibst. Die vollständige Adresse solltest du in der Beschreibung angeben.</small></div>
+<fieldset class="group">
+<legend>Adresse</legend>
+<div class="row">
+<div class="col-md-6">
+<div class="form-group string required competition_place form-group-invalid"><label class="control-label string required" for="competition_place">Ort <abbr title="required">*</abbr></label><input class="form-control is-invalid string required" aria-invalid="true" type="text" name="competition[place]" id="competition_place" /><div class="invalid-feedback">Ort muss ausgefüllt werden</div><small class="form-text text-muted">Es sieht besser aus, wenn du hier nur den Namen des Ortes schreibst. Die vollständige Anschrift solltest du im Adressfeld angeben.</small></div>
+</div>
+<div class="col-md-6">
+<div class="form-group text optional competition_address"><label class="control-label text optional" for="competition_address">Adresse</label><textarea class="form-control text optional" name="competition[address]" id="competition_address">
+</textarea></div>
+<div class="btn btn-light btn-sm" id="search-address">Adresse in Karte übernehmen</div>
+</div>
+</div>
+<div class="map-target" data-address="#competition_address" data-lat="#competition_lat" data-lng="#competition_lng" data-search="#search-address" style="height: 400px;"></div>
+<div class="form-group hidden competition_lng"><input class="form-control hidden" autocomplete="off" type="hidden" name="competition[lng]" id="competition_lng" /></div>
+<div class="form-group hidden competition_lat"><input class="form-control hidden" autocomplete="off" type="hidden" name="competition[lat]" id="competition_lat" /></div>
+</fieldset>
 <fieldset class="group">
 <legend>Wettkampfordnung</legend>
 <div class="row">

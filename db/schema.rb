@@ -10,11 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_03_19_211316) do
+ActiveRecord::Schema[7.2].define(version: 2026_04_15_193630) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+  enable_extension "postgis"
 
   create_table "active_storage_attachments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
@@ -138,7 +139,10 @@ ActiveRecord::Schema[7.2].define(version: 2026_03_19_211316) do
     t.datetime "locked_at"
     t.uuid "wko_id"
     t.date "change_people_until"
+    t.text "address"
+    t.geography "lnglat", limit: {srid: 4326, type: "st_point", geographic: true}
     t.index ["date"], name: "index_competitions_on_date"
+    t.index ["lnglat"], name: "index_competitions_on_lnglat", using: :gist
     t.index ["wko_id"], name: "index_competitions_on_wko_id"
     t.index ["year", "slug"], name: "index_competitions_on_year_and_slug", unique: true
   end

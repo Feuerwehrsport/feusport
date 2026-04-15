@@ -5,11 +5,13 @@
 # Table name: competitions
 #
 #  id                      :uuid             not null, primary key
+#  address                 :text
 #  change_people_until     :date
 #  date                    :date             not null
 #  description             :text
 #  flyer_content           :text
 #  flyer_headline          :string
+#  lnglat                  :geography        point, 4326
 #  locked_at               :datetime
 #  lottery_numbers         :boolean          default(FALSE), not null
 #  name                    :string(50)       not null
@@ -28,6 +30,7 @@
 # Indexes
 #
 #  index_competitions_on_date           (date)
+#  index_competitions_on_lnglat         (lnglat) USING gist
 #  index_competitions_on_wko_id         (wko_id)
 #  index_competitions_on_year_and_slug  (year,slug) UNIQUE
 #

@@ -5,11 +5,13 @@
 # Table name: competitions
 #
 #  id                      :uuid             not null, primary key
+#  address                 :text
 #  change_people_until     :date
 #  date                    :date             not null
 #  description             :text
 #  flyer_content           :text
 #  flyer_headline          :string
+#  lnglat                  :geography        point, 4326
 #  locked_at               :datetime
 #  lottery_numbers         :boolean          default(FALSE), not null
 #  name                    :string(50)       not null
@@ -28,6 +30,7 @@
 # Indexes
 #
 #  index_competitions_on_date           (date)
+#  index_competitions_on_lnglat         (lnglat) USING gist
 #  index_competitions_on_wko_id         (wko_id)
 #  index_competitions_on_year_and_slug  (year,slug) UNIQUE
 #
@@ -95,7 +98,7 @@ class Competition < ApplicationRecord
     self.change_people_until = [date - 1.day, change_people_until].compact_blank.min if change_people_until.present?
   end
 
-  auto_strip_attributes :name, :place, :slug, :description, :flyer_headline, :flyer_content
+  auto_strip_attributes :name, :place, :slug, :description, :flyer_headline, :flyer_content, :address
   before_validation { self.slug = slug.to_s.parameterize }
   schema_validations
   validates :registration_open_until, presence: true, if: -> { registration_open == 'open' }
@@ -165,6 +168,35 @@ class Competition < ApplicationRecord
     end
     round_ids.uniq.each do |round_id|
       series_round_competition_associations.create!(round_id:)
+    end
+  end
+
+  def lat
+    lnglat&.latitude
+  end
+
+  def lng
+    lnglat&.longitude
+  end
+
+  def lat=(value)
+    @lat = value
+    set_lnglat
+  end
+
+  def lng=(value)
+    @lng = value
+    set_lnglat
+  end
+
+  private
+
+  def set_lnglat
+    if @lat.blank? || @lng.blank?
+      self.lnglat = nil
+    else
+      factory = RGeo::Geographic.spherical_factory(srid: 4326)
+      self.lnglat = factory.point(@lng.to_f, @lat.to_f)
     end
   end
 end

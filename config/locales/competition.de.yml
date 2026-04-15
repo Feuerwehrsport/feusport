@@ -15,6 +15,7 @@ de:
   activerecord:
     attributes:
       competition:
+        address: Adresse
         change_people_until: Wettkämper ändern bis einschließlich
         date: Datum
         description: Beschreibung
@@ -45,7 +46,7 @@ de:
         date: Sollte sich der Wettkampf über mehrere Tage erstrecken, gib den Haupttag an. Weiteres musst du in der Beschreibung ergänzen.
         lottery_numbers: Mit Losnummern kann die Reihenfolge der Mannschaften vorgegeben werden. Die Losnummern können dann bei den Mannschaften eingegeben werden, so wie außerhalb des Systems gezogen wurden.
         name: Gib einen kurzen Namen an. Das Datum erscheint extra und braucht nicht im Namen auftauchen.
-        place: Es sieht besser aus, wenn du hier nur den Namen des Ortes schreibst. Die vollständige Adresse solltest du in der Beschreibung angeben.
+        place: Es sieht besser aus, wenn du hier nur den Namen des Ortes schreibst. Die vollständige Anschrift solltest du im Adressfeld angeben.
         show_bib_numbers: Startnummern können zu Personen vergeben werden und werden dann bei Startlisten mit angezeigt.
         slug: Der »Slug« ist der Bestandteil der URL, der in der Adresse deines Browsers angezeigt wird. Änderst du diesen, werden alle von dir bisher verteilten QR-Codes und URLs ungültig.
         visible: Sobald du deinen Wettkampf sichtbar schaltest, wird er allen Besuchern in der Terminliste angezeigt.

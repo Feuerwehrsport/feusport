@@ -2,6 +2,15 @@
 import * as bootstrap from 'bootstrap';
 import '@hotwired/turbo-rails';
 
+import L from 'leaflet';
+
+delete L.Icon.Default.prototype._getIconUrl;
+
+L.Icon.Default.mergeOptions({
+  iconUrl: '/assets/marker-icon.png',
+  shadowUrl: '/assets/marker-shadow.png',
+});
+
 import './_global';
 import './_channels';
 import './_certificates';
@@ -43,6 +52,72 @@ onVisit(() => {
       hcaptcha.render(captchaDiv, { sitekey: captchaDiv.dataset.sitekey });
     }
   }, 101);
+});
+
+onVisit(() => {
+  document.querySelectorAll('.map-target').forEach((mapTarget) => {
+    const lngElement = document.querySelector(mapTarget.dataset.lng);
+    const latElement = document.querySelector(mapTarget.dataset.lat);
+    const addressElement = document.querySelector(mapTarget.dataset.address);
+    const searchElement = document.querySelector(mapTarget.dataset.search);
+
+    let addMarkerOnStart = false;
+
+    // default location east germany
+    let lng = 12.7;
+    let lat = 52.2;
+
+    if (lngElement && lngElement.value && latElement && latElement.value) {
+      addMarkerOnStart = true;
+      lng = lngElement.value;
+      lat = latElement.value;
+    }
+
+    const map = L.map(mapTarget).setView([lat, lng], addMarkerOnStart ? 10 : 6);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors',
+    }).addTo(map);
+
+    const marker = L.marker([lat, lng], { draggable: true });
+    marker.on('dragend', () => {
+      const pos = marker.getLatLng();
+      lngElement.value = pos.lng;
+      latElement.value = pos.lat;
+    });
+
+    if (addMarkerOnStart) {
+      marker.addTo(map);
+    }
+
+    if (searchElement && addressElement) {
+      searchElement.addEventListener('click', () => {
+        const address = addressElement.value;
+        if (!address) {
+          lngElement.value = '';
+          latElement.value = '';
+          marker.remove();
+          return;
+        }
+
+        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`)
+          .then((r) => r.json())
+          .then((data) => {
+            if (data.length === 0) return;
+
+            const { lat, lon } = data[0];
+            const pos = [parseFloat(lat), parseFloat(lon)];
+
+            lngElement.value = lon;
+            latElement.value = lat;
+
+            marker.setLatLng(pos);
+            marker.addTo(map);
+            map.setView(pos, 15);
+          });
+      });
+    }
+  });
 });
 
 document.addEventListener('turbo:load', () => {

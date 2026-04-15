@@ -7,9 +7,20 @@
         - c.body do
           = f.input :name, autofocus: true
           = f.input :date, html5: true
-          = f.input :place
           = f.input :description, input_html: { class: 'easymde-required', data: { files: documents_link_array(@competition) } }, hint: 'Du kannst den Text mittels <em>Markdown</em> formatieren.'.html_safe
 
+          %fieldset.group
+            %legend Adresse
+
+            .row
+              .col-md-6
+                = f.input :place
+              .col-md-6
+                = f.input :address
+                .btn.btn-light.btn-sm#search-address Adresse in Karte übernehmen
+            .map-target{ data: { lng: '#competition_lng', lat: '#competition_lat', address: '#competition_address', search: '#search-address' }, style: 'height: 400px;' }
+            = f.input :lng, as: :hidden
+            = f.input :lat, as: :hidden
           %fieldset.group
             %legend Wettkampfordnung
 

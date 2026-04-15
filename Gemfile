@@ -34,6 +34,7 @@ gem 'image_processing' # generate previews and thumbs
 gem 'activestorage-validator' # validate stored files
 gem 'valid_email2' # validates email addresses
 gem 'recaptcha', require: 'recaptcha/rails' # captch for registration
+gem 'activerecord-postgis-adapter' # adapter for postgis
 
 # exports
 gem 'caxlsx'
