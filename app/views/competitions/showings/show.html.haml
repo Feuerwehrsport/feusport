@@ -20,15 +20,15 @@
                   Navi öffnen
                 %br
                 = link_to("https://www.openstreetmap.org/directions?to=#{@competition.lat},#{@competition.lng}", target: '_blank', rel: 'noopener') do
-                  = image_tag 'osm-logo', size: '20x20'
+                  = image_tag 'osm-logo.svg', size: '20x20'
                   Openstreetmap
                 %br
                 = link_to("https://www.google.com/maps/dir/?api=1&destination=#{@competition.lat},#{@competition.lng}", target: '_blank', rel: 'noopener') do
-                  = image_tag 'google-maps-logo', size: '20x20'
+                  = image_tag 'google-maps-logo.svg', size: '20x20'
                   Google Maps
               - else
                 = link_to("https://www.google.com/maps/dir/?api=1&destination=#{@competition.address.lines.join(', ')}", target: '_blank', rel: 'noopener') do
-                  = image_tag 'google-maps-logo', size: '20x20'
+                  = image_tag 'google-maps-logo.svg', size: '20x20'
                   Google Maps
       .card-body.competition-descripton
         != @competition.description_html
