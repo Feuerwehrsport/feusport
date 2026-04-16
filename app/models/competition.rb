@@ -70,6 +70,8 @@ class Competition < ApplicationRecord
   has_many :series_rounds, class_name: 'Series::Round', through: :series_round_competition_associations, source: :round
   has_many :series_team_points_corrections, class_name: 'Series::TeamPointsCorrection', dependent: :destroy
   has_many :series_person_points_corrections, class_name: 'Series::PersonPointsCorrection', dependent: :destroy
+  has_many :competition_features, class_name: 'CompetitionFeature', dependent: :destroy
+  has_many :features, class_name: 'Feature', through: :competition_features
 
   scope :current, -> { where(date: (14.days.ago..6.months.from_now)) }
 

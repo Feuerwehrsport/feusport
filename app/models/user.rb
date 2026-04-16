@@ -57,6 +57,9 @@ class User < ApplicationRecord
 
   has_many :information_requests, dependent: :destroy
 
+  has_many :user_features, class_name: 'UserFeature', dependent: :destroy
+  has_many :features, class_name: 'Feature', through: :user_features
+
   auto_strip_attributes :name, :email, :phone_number
 
   schema_validations

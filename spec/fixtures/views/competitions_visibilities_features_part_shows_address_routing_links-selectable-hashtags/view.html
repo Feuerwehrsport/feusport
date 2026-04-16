@@ -113,7 +113,6 @@ Erweitert
 </header>
 <div class="container mt-4">
 <div class="alert-flash">
-<div class="alert alert-danger">Bitte überprüfe folgende Fehler:</div>
 </div>
 </div>
 <div class="pb-4 mt-4 container">
@@ -144,8 +143,8 @@ Es ist sinnvoll, wenn du zuerst so viel wie möglich über deinen Wettkampf eins
 </div>
 <div class="card-body">
 <fieldset class="form-group boolean optional competition_visible form-group-valid"><div class="form-check"><input name="competition[visible]" type="hidden" value="0" autocomplete="off" /><input class="form-check-input boolean optional" autofocus="autofocus" type="checkbox" value="1" checked="checked" name="competition[visible]" id="competition_visible" /><label class="form-check-label boolean optional" for="competition_visible">Sichtbar</label><small class="form-text text-muted">Sobald du deinen Wettkampf sichtbar schaltest, wird er allen Besuchern in der Terminliste angezeigt.</small></div></fieldset>
-<div class="form-group string required competition_slug form-group-invalid"><label class="control-label string required" for="competition_slug">URL-Bestandteil <abbr title="required">*</abbr></label><input class="form-control is-invalid string required" aria-invalid="true" type="text" value="" name="competition[slug]" id="competition_slug" /><div class="invalid-feedback">URL-Bestandteil muss ausgefüllt werden</div><small class="form-text text-muted">Der »Slug« ist der Bestandteil der URL, der in der Adresse deines Browsers angezeigt wird. Änderst du diesen, werden alle von dir bisher verteilten QR-Codes und URLs ungültig.</small></div>
-<fieldset class="form-group check_boxes optional competition_features"><div class="col-form-label pt-0">Merkmale</div><input type="hidden" name="competition[feature_ids][]" value="" autocomplete="off" /><small class="form-text text-muted">Wähle bitte die passenden Merkmale deines Wettkampfes aus, damit dein Wettkampf mit den richtigen Filtereinstellungen gefunden wird.</small></fieldset>
+<div class="form-group string required competition_slug form-group-valid"><label class="control-label string required" for="competition_slug">URL-Bestandteil <abbr title="required">*</abbr></label><input class="form-control string required" type="text" value="mv-cup" name="competition[slug]" id="competition_slug" /><small class="form-text text-muted">Der »Slug« ist der Bestandteil der URL, der in der Adresse deines Browsers angezeigt wird. Änderst du diesen, werden alle von dir bisher verteilten QR-Codes und URLs ungültig.</small></div>
+<fieldset class="form-group check_boxes optional competition_features"><div class="col-form-label pt-0">Merkmale</div><input type="hidden" name="competition[feature_ids][]" value="" autocomplete="off" /><div class="form-check"><input class="form-check-input check_boxes optional" type="checkbox" value="UUID" name="competition[feature_ids][]" id="competition_feature_ids_UUID" /><label class="form-check-label collection_check_boxes" for="competition_feature_ids_UUID">DIN</label></div><div class="form-check"><input class="form-check-input check_boxes optional" type="checkbox" value="UUID" name="competition[feature_ids][]" id="competition_feature_ids_UUID" /><label class="form-check-label collection_check_boxes" for="competition_feature_ids_UUID">TGL</label></div><small class="form-text text-muted">Wähle bitte die passenden Merkmale deines Wettkampfes aus, damit dein Wettkampf mit den richtigen Filtereinstellungen gefunden wird.</small></fieldset>
 
 </div>
 <div class="card-footer">

@@ -12,9 +12,15 @@
 
       .card-body.competition-descripton
         != @competition.description_html
-    - if @competition.wko.present?
-      .text-end.mt-2
-        = link_to(@competition.wko.subtitle, wko_path(@competition.wko.slug), class: 'btn btn-sm btn-secondary')
+    .d-flex.flex-wrap.mt-2
+      - @competition.features.each do |feature|
+        .p-2
+          .badge.bg-info
+            .far.fa-hashtag
+            = feature.name
+      - if @competition.wko.present?
+        .ms-auto.p-2
+          = link_to(@competition.wko.subtitle, wko_path(@competition.wko.slug), class: 'btn btn-sm btn-secondary')
   .col-lg-6.col-xl-4
     .card.text-bg-light
       - if @competition.locked?

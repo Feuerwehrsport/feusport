@@ -16,6 +16,7 @@
         - c.body do
           = f.input :visible, autofocus: true
           = f.input :slug
+          = f.association :features, as: :check_boxes
         - c.footer do
           = f.primary_button :submit
           = f.cancel_button(competition_show_path)

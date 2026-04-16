@@ -21,7 +21,7 @@ class Competitions::VisibilitiesController < CompetitionNestedController
 
   def competition_params
     params.require(:competition).permit(
-      :slug, :visible
+      :slug, :visible, feature_ids: []
     )
   end
 end

@@ -73,4 +73,25 @@ RSpec.describe 'competitions/visibilities' do
       expect(response).to match_html_fixture.with_affix('with-lnglat')
     end
   end
+
+  describe 'features part' do
+    let!(:competition) { create(:competition, visible: true) }
+    let!(:tgl) { create(:feature, :tgl) }
+    let!(:din) { create(:feature, :din) }
+    let!(:user) { competition.users.first }
+
+    it 'shows address routing links' do
+      sign_in user
+
+      get competition_nested('visibility/edit')
+      expect(response).to match_html_fixture.with_affix('selectable-hashtags')
+
+      patch competition_nested('visibility'),
+            params: { competition: { feature_ids: [tgl.id, din.id] } }
+      expect(response).to redirect_to competition_nested
+
+      get competition_nested
+      expect(response).to match_html_fixture.with_affix('with-hashtags')
+    end
+  end
 end

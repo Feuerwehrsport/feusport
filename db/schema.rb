@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_04_15_193630) do
+ActiveRecord::Schema[7.2].define(version: 2026_04_16_202911) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
@@ -119,6 +119,15 @@ ActiveRecord::Schema[7.2].define(version: 2026_04_15_193630) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "competition_features", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "competition_id", null: false
+    t.uuid "feature_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["competition_id"], name: "index_competition_features_on_competition_id"
+    t.index ["feature_id"], name: "index_competition_features_on_feature_id"
+  end
+
   create_table "competitions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", limit: 50, null: false
     t.date "date", null: false
@@ -175,6 +184,12 @@ ActiveRecord::Schema[7.2].define(version: 2026_04_15_193630) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["competition_id"], name: "index_documents_on_competition_id"
+  end
+
+  create_table "features", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "fire_sport_statistics_people", force: :cascade do |t|
@@ -783,6 +798,15 @@ ActiveRecord::Schema[7.2].define(version: 2026_04_15_193630) do
     t.index ["user_id"], name: "index_user_accesses_on_user_id"
   end
 
+  create_table "user_features", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.uuid "feature_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["feature_id"], name: "index_user_features_on_feature_id"
+    t.index ["user_id"], name: "index_user_features_on_user_id"
+  end
+
   create_table "user_person_accesses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "competition_id", null: false
     t.uuid "user_id", null: false
@@ -868,6 +892,8 @@ ActiveRecord::Schema[7.2].define(version: 2026_04_15_193630) do
   add_foreign_key "bands", "competitions"
   add_foreign_key "certificates_templates", "competitions"
   add_foreign_key "certificates_text_fields", "certificates_templates", column: "template_id"
+  add_foreign_key "competition_features", "competitions"
+  add_foreign_key "competition_features", "features"
   add_foreign_key "competitions", "wkos"
   add_foreign_key "disciplines", "competitions"
   add_foreign_key "documents", "competitions"
@@ -928,6 +954,8 @@ ActiveRecord::Schema[7.2].define(version: 2026_04_15_193630) do
   add_foreign_key "user_access_requests", "users", column: "sender_id"
   add_foreign_key "user_accesses", "competitions"
   add_foreign_key "user_accesses", "users"
+  add_foreign_key "user_features", "features"
+  add_foreign_key "user_features", "users"
   add_foreign_key "user_person_accesses", "competitions"
   add_foreign_key "user_person_accesses", "people"
   add_foreign_key "user_person_accesses", "users"
