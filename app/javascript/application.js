@@ -4,13 +4,6 @@ import '@hotwired/turbo-rails';
 
 import L from 'leaflet';
 
-delete L.Icon.Default.prototype._getIconUrl;
-
-L.Icon.Default.mergeOptions({
-  iconUrl: '/assets/marker-icon.png',
-  shadowUrl: '/assets/marker-shadow.png',
-});
-
 import './_global';
 import './_channels';
 import './_certificates';
