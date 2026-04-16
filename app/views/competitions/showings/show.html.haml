@@ -6,30 +6,10 @@
       .card-header
         = page_title(@competition.name)
         %p.lead.mb-0 #{l @competition.date} - #{@competition.place}
+
       - if @competition.address.present?
-        .card-header
-          .row
-            .col-1
-              .far.fa-map-marker-alt
-            .col-7
-              = simple_format(@competition.address)
-            .col-4
-              - if @competition.lnglat.present?
-                = link_to("geo:#{@competition.lat},#{@competition.lng}", target: '_blank', rel: 'noopener') do
-                  .far.fa-route{ style: 'width: 20px' }
-                  Navi öffnen
-                %br
-                = link_to("https://www.openstreetmap.org/directions?to=#{@competition.lat},#{@competition.lng}", target: '_blank', rel: 'noopener') do
-                  = image_tag 'osm-logo.svg', size: '20x20'
-                  Openstreetmap
-                %br
-                = link_to("https://www.google.com/maps/dir/?api=1&destination=#{@competition.lat},#{@competition.lng}", target: '_blank', rel: 'noopener') do
-                  = image_tag 'google-maps-logo.svg', size: '20x20'
-                  Google Maps
-              - else
-                = link_to("https://www.google.com/maps/dir/?api=1&destination=#{@competition.address.lines.join(', ')}", target: '_blank', rel: 'noopener') do
-                  = image_tag 'google-maps-logo.svg', size: '20x20'
-                  Google Maps
+        = render 'card_address', competition: @competition
+
       .card-body.competition-descripton
         != @competition.description_html
     - if @competition.wko.present?

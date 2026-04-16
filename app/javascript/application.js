@@ -49,21 +49,30 @@ onVisit(() => {
 
 onVisit(() => {
   document.querySelectorAll('.map-target').forEach((mapTarget) => {
-    const lngElement = document.querySelector(mapTarget.dataset.lng);
-    const latElement = document.querySelector(mapTarget.dataset.lat);
-    const addressElement = document.querySelector(mapTarget.dataset.address);
-    const searchElement = document.querySelector(mapTarget.dataset.search);
+    const lngElement = document.querySelector(mapTarget.dataset.lngInput);
+    const latElement = document.querySelector(mapTarget.dataset.latInput);
+    const addressElement = document.querySelector(mapTarget.dataset.addressInput);
+    const searchElement = document.querySelector(mapTarget.dataset.searchBtn);
+    const toggleElement = document.querySelector(mapTarget.dataset.toggleBtn);
 
     let addMarkerOnStart = false;
 
     // default location east germany
     let lng = 12.7;
     let lat = 52.2;
+    let draggable = true;
 
     if (lngElement && lngElement.value && latElement && latElement.value) {
       addMarkerOnStart = true;
       lng = lngElement.value;
       lat = latElement.value;
+    }
+
+    if (mapTarget.dataset.lng && mapTarget.dataset.lat) {
+      addMarkerOnStart = true;
+      lng = mapTarget.dataset.lng;
+      lat = mapTarget.dataset.lat;
+      draggable = false;
     }
 
     const map = L.map(mapTarget).setView([lat, lng], addMarkerOnStart ? 10 : 6);
@@ -72,7 +81,7 @@ onVisit(() => {
       attribution: '&copy; OpenStreetMap contributors',
     }).addTo(map);
 
-    const marker = L.marker([lat, lng], { draggable: true });
+    const marker = L.marker([lat, lng], { draggable: draggable });
     marker.on('dragend', () => {
       const pos = marker.getLatLng();
       lngElement.value = pos.lng;
@@ -81,6 +90,13 @@ onVisit(() => {
 
     if (addMarkerOnStart) {
       marker.addTo(map);
+    }
+
+    if (toggleElement) {
+      toggleElement.addEventListener('click', () => {
+        mapTarget.classList.toggle('d-none');
+        map.invalidateSize();
+      });
     }
 
     if (searchElement && addressElement) {

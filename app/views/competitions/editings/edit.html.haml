@@ -18,7 +18,7 @@
               .col-md-6
                 = f.input :address
                 .btn.btn-light.btn-sm#search-address Adresse in Karte übernehmen
-            .map-target{ data: { lng: '#competition_lng', lat: '#competition_lat', address: '#competition_address', search: '#search-address' }, style: 'height: 400px;' }
+              .map-target{ data: { lng_input: '#competition_lng', lat_input: '#competition_lat', address_input: '#competition_address', search_btn: '#search-address' } }
             = f.input :lng, as: :hidden
             = f.input :lat, as: :hidden
           %fieldset.group
