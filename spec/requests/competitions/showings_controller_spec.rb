@@ -52,4 +52,27 @@ RSpec.describe 'competitions/visibilities' do
       expect(session.key?("simple_access_#{competition.id}")).to be false
     end
   end
+
+  describe 'address part' do
+    let!(:competition) { create(:competition, visible: true) }
+    let!(:user) { competition.users.first }
+
+    it 'shows address routing links' do
+      sign_in user
+
+      patch competition_nested('editing'),
+            params: { competition: { address: "Admannshäger Damm 10\n18211 Bargeshagen" } }
+      expect(response).to redirect_to competition_nested
+
+      get competition_nested
+      expect(response).to match_html_fixture.with_affix('with-address')
+
+      patch competition_nested('editing'),
+            params: { competition: {  lng: '10', lat: '52' } }
+      expect(response).to redirect_to competition_nested
+
+      get competition_nested
+      expect(response).to match_html_fixture.with_affix('with-lnglat')
+    end
+  end
 end
