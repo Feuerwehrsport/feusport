@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
 class Competitions::EditingsController < CompetitionNestedController
-  def edit; end
+  def edit
+    authorize!(:edit, @competition)
+  end
 
   def update
+    authorize!(:edit, @competition)
     @competition.assign_attributes(competition_params)
     if @competition.save
       redirect_to competition_show_path, notice: :saved

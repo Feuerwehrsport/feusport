@@ -43,4 +43,15 @@ RSpec.describe Competitions::SimpleAccessesController do
       end.to change(SimpleAccess, :count).by(-1)
     end
   end
+
+  context 'when no login performed' do
+    it 'fails' do
+      get competition_nested('simple_accesses/new')
+      expect_access_denied
+
+      post competition_nested('simple_accesses'),
+           params: { simple_access: { name: 'foo' } }
+      expect_access_denied
+    end
+  end
 end

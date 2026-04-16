@@ -55,4 +55,17 @@ RSpec.describe TeamMarker do
       end.to change(described_class, :count).by(-1)
     end
   end
+
+  context 'when no login performed' do
+    it 'fails' do
+      get competition_nested('team_markers')
+      expect_access_denied
+
+      get competition_nested('team_markers/new')
+      expect_access_denied
+
+      post competition_nested('team_markers'), params: { team_marker: { value_type: 'boolean' } }
+      expect_access_denied
+    end
+  end
 end

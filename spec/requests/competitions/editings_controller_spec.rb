@@ -25,5 +25,16 @@ RSpec.describe 'competitions/editings' do
       expect(competition.reload.description).to eq 'new-description'
       expect(competition.wko).to eq wko
     end
+
+    context 'when no login performed' do
+      it 'fails' do
+        get competition_nested('editing/edit')
+        expect_access_denied
+
+        patch competition_nested('editing'),
+              params: { competition: { name: 'Foo' } }
+        expect_access_denied
+      end
+    end
   end
 end

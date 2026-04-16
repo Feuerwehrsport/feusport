@@ -165,4 +165,25 @@ RSpec.describe 'People' do
       expect(json['content'].length).to be < 1000
     end
   end
+
+  context 'when no login performed' do
+    let!(:person) { create(:person, competition:, band:) }
+
+    it 'fails' do
+      get competition_nested("people/new?band_id=#{band.id}")
+      expect_access_denied
+
+      post competition_nested('people'), params: { band_id: band.id, person: { first_name: 'Foo' } }
+      expect_access_denied
+
+      get competition_nested("people/#{person.id}/edit")
+      expect_access_denied
+
+      patch competition_nested("people/#{person.id}"), params: { person: { first_name: 'Foo' } }
+      expect_access_denied
+
+      delete competition_nested("people/#{person.id}")
+      expect_access_denied
+    end
+  end
 end

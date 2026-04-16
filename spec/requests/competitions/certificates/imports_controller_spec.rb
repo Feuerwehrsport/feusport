@@ -42,4 +42,15 @@ RSpec.describe 'competitions/certificates/imports' do
       )
     end
   end
+
+  context 'when no login performed' do
+    it 'fails' do
+      get competition_nested('certificates/imports/new')
+      expect_access_denied
+
+      post competition_nested('certificates/imports'),
+           params: { certificates_import: { template_id: 'other' } }
+      expect_access_denied
+    end
+  end
 end

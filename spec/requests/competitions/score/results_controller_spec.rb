@@ -216,4 +216,27 @@ RSpec.describe 'competitions/score/results' do
       expect(response).to match_html_fixture.with_affix('without-warning')
     end
   end
+
+  context 'when no login performed' do
+    let!(:score_result) { create(:score_result, competition:) }
+
+    it 'fails' do
+      get competition_nested('score/results/new')
+      expect_access_denied
+
+      post competition_nested('score/results'),
+           params: { score_result: { name: 'Foo' } }
+      expect_access_denied
+
+      get competition_nested("score/results/#{score_result.id}/edit")
+      expect_access_denied
+
+      patch competition_nested("score/results/#{score_result.id}"),
+            params: { score_result: { name: 'Foo' } }
+      expect_access_denied
+
+      delete competition_nested("score/results/#{score_result.id}")
+      expect_access_denied
+    end
+  end
 end

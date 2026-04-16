@@ -124,4 +124,25 @@ RSpec.describe Assessment do
       end.to change(Score::Result, :count).by(1)
     end
   end
+
+  context 'when no login performed' do
+    let!(:assessment) { create(:assessment, competition:, discipline: la, band: female) }
+
+    it 'fails' do
+      get competition_nested('assessments/new')
+      expect_access_denied
+
+      post competition_nested('assessments'), params: { assessment: { forced_name: 'Foo' } }
+      expect_access_denied
+
+      get competition_nested("assessments/#{assessment.id}/edit")
+      expect_access_denied
+
+      patch competition_nested("assessments/#{assessment.id}"), params: { assessment: { forced_name: 'Foo' } }
+      expect_access_denied
+
+      delete competition_nested("assessments/#{assessment.id}")
+      expect_access_denied
+    end
+  end
 end

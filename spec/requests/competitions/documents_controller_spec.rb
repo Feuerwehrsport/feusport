@@ -65,4 +65,25 @@ RSpec.describe 'competitions/documents' do
       expect(response).to redirect_to(%r{active_storage/blobs})
     end
   end
+
+  context 'when no login performed' do
+    let!(:document) { create(:document, competition:) }
+
+    it 'fails' do
+      get competition_nested('documents/new')
+      expect_access_denied
+
+      post competition_nested('documents'), params: { document: { title: 'Foo' } }
+      expect_access_denied
+
+      get competition_nested("documents/#{document.id}/edit")
+      expect_access_denied
+
+      patch competition_nested("documents/#{document.id}"), params: { document: { title: 'Foo' } }
+      expect_access_denied
+
+      delete competition_nested("documents/#{document.id}")
+      expect_access_denied
+    end
+  end
 end

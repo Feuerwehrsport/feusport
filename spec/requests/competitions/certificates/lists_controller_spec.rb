@@ -56,4 +56,15 @@ RSpec.describe 'competitions/certificates/lists' do
       expect(response).to redirect_to "/#{competition.year}/#{competition.slug}/certificates/lists/new"
     end
   end
+
+  context 'when no login performed' do
+    it 'fails' do
+      get competition_nested('certificates/lists/new')
+      expect_access_denied
+
+      post competition_nested('certificates/lists'),
+           params: { certificates_list: { template_id: 'other' } }
+      expect_access_denied
+    end
+  end
 end

@@ -528,4 +528,23 @@ RSpec.describe Score::List do
       expect(response).to match_html_fixture.with_affix('with-time')
     end
   end
+
+  context 'when no login performed' do
+    let!(:score_list) { create(:score_list, competition:) }
+
+    it 'fails' do
+      get competition_nested('score/list_factories/new')
+      expect_access_denied
+
+      get competition_nested("score/lists/#{score_list.id}/edit")
+      expect_access_denied
+
+      patch competition_nested("score/lists/#{score_list.id}"),
+            params: { score_list: { name: 'Foo' } }
+      expect_access_denied
+
+      delete competition_nested("score/lists/#{score_list.id}")
+      expect_access_denied
+    end
+  end
 end

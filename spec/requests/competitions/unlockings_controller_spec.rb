@@ -26,4 +26,15 @@ RSpec.describe 'competitions/unlockings' do
       expect(competition.reload.locked_at).to be_nil
     end
   end
+
+  context 'when no login performed' do
+    it 'fails' do
+      get competition_nested('unlocking/new')
+      expect_access_denied
+
+      post competition_nested('unlocking'),
+           params: { competitions_unlocking: { confirm: '0' } }
+      expect_access_denied
+    end
+  end
 end

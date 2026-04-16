@@ -24,4 +24,14 @@ RSpec.describe 'competitions/deletions' do
       end.to change(Competition, :count).by(-1)
     end
   end
+
+  context 'when no login performed' do
+    it 'fails' do
+      get competition_nested('deletion/new')
+      expect_access_denied
+
+      post competition_nested('deletion'), params: { competitions_deletion: { confirm: '0' } }
+      expect_access_denied
+    end
+  end
 end

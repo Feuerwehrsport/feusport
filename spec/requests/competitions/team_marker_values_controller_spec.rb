@@ -36,4 +36,15 @@ RSpec.describe TeamMarker do
       expect(TeamMarkerValue.first.boolean_value).to be false
     end
   end
+
+  context 'when no login performed' do
+    it 'fails' do
+      get competition_nested("teams/#{team.id}/markers/#{team_marker.id}/edit")
+      expect_access_denied
+
+      put competition_nested("teams/#{team.id}/markers/#{team_marker.id}"),
+          params: { team_marker_value: { boolean_value: '' } }
+      expect_access_denied
+    end
+  end
 end

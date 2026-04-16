@@ -63,4 +63,18 @@ RSpec.describe 'competitions/documents' do
       expect(competition.reload.preset_ran).to be(true)
     end
   end
+
+  context 'when no login performed' do
+    it 'fails' do
+      get competition_nested('presets')
+      expect_access_denied
+
+      get competition_nested('duplication/new')
+      expect_access_denied
+
+      post competition_nested('duplication'),
+           params: { duplication: { confirm: '0', duplicate_from_id: old.id } }
+      expect_access_denied
+    end
+  end
 end

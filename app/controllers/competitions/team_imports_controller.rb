@@ -23,5 +23,6 @@ class Competitions::TeamImportsController < CompetitionNestedController
 
   def assign_new_resource
     @team_import = TeamImport.new(competition: @competition)
+    authorize!(:edit, @competition)
   end
 end

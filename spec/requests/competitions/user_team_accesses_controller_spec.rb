@@ -134,4 +134,11 @@ RSpec.describe Competitions::UserTeamAccessesController do
       expect(response).to match_html_fixture.with_affix('new-with-selected-friend')
     end
   end
+
+  context 'when no login performed' do
+    it 'fails' do
+      get competition_nested("teams/#{team.id}/access_requests/new")
+      expect_access_denied
+    end
+  end
 end

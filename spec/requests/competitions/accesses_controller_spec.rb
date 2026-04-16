@@ -170,4 +170,14 @@ RSpec.describe Competitions::AccessesController do
       expect(response).to match_html_fixture
     end
   end
+
+  context 'when no login performed' do
+    it 'fails' do
+      get competition_nested('accesses')
+      expect_access_denied
+
+      get competition_nested('access_requests/new')
+      expect_access_denied
+    end
+  end
 end

@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class Competitions::VisibilitiesController < CompetitionNestedController
-  def edit; end
+  def edit
+    authorize!(:edit, @competition)
+  end
 
   def update
     authorize!(:edit, @competition)

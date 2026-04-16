@@ -80,4 +80,25 @@ RSpec.describe Discipline do
       end.to change(described_class, :count).by(-1)
     end
   end
+
+  context 'when no login performed' do
+    let!(:discipline) { create(:discipline, :la, competition:) }
+
+    it 'fails' do
+      get competition_nested('disciplines/new')
+      expect_access_denied
+
+      post competition_nested('disciplines'), params: { discipline: { name: 'Foo' } }
+      expect_access_denied
+
+      get competition_nested("disciplines/#{discipline.id}/edit")
+      expect_access_denied
+
+      patch competition_nested("disciplines/#{discipline.id}"), params: { discipline: { name: 'Foo' } }
+      expect_access_denied
+
+      delete competition_nested("disciplines/#{discipline.id}")
+      expect_access_denied
+    end
+  end
 end

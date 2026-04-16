@@ -23,5 +23,16 @@ RSpec.describe 'competitions/registrations' do
 
       expect(competition.reload.registration_open).to eq 'open'
     end
+
+    context 'when no login performed' do
+      it 'fails' do
+        get competition_nested('registration/edit')
+        expect_access_denied
+
+        patch competition_nested('registration'),
+              params: { competition: { registration_open: 'open', registration_open_until: '' } }
+        expect_access_denied
+      end
+    end
   end
 end

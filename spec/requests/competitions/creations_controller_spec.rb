@@ -37,4 +37,14 @@ RSpec.describe 'Competition' do
       expect(Competition.first.users).to eq [user]
     end
   end
+
+  context 'when no login performed' do
+    it 'fails' do
+      get '/competitions/creations/new'
+      expect_access_denied(redirect_to_url: '/users/sign_in?info_hint=competition')
+
+      post '/competitions/creations', params: { competition: { name: 'Foo' } }
+      expect_access_denied(redirect_to_url: '/users/sign_in?info_hint=competition')
+    end
+  end
 end

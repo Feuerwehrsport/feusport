@@ -83,4 +83,18 @@ RSpec.describe 'competitions/certificates/templates' do
       expect(response.body.size).to be_between 24_000, 25_000
     end
   end
+
+  context 'when no login performed' do
+    it 'fails' do
+      get competition_nested('certificates/templates')
+      expect_access_denied
+
+      get competition_nested('certificates/templates/new')
+      expect_access_denied
+
+      post competition_nested('certificates/templates'),
+           params: { certificates_template: { name: '' } }
+      expect_access_denied
+    end
+  end
 end

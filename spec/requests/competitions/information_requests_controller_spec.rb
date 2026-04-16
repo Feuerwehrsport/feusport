@@ -28,5 +28,16 @@ RSpec.describe InformationRequest do
         expect(response).to match_html_fixture.with_affix('show-with-flash')
       end.to have_enqueued_job.with('CompetitionMailer', 'information_request', 'deliver_now', any_args)
     end
+
+    context 'when no login performed' do
+      it 'fails' do
+        get competition_nested('information_requests/new')
+        expect_access_denied
+
+        post competition_nested('information_requests'),
+             params: { information_request: { foo: 'Foo' } }
+        expect_access_denied
+      end
+    end
   end
 end

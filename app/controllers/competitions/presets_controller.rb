@@ -4,7 +4,9 @@ class Competitions::PresetsController < CompetitionNestedController
   before_action :check_preset_ran
   before_action :assign_preset, only: %i[edit update]
 
-  def index; end
+  def index
+    authorize!(:edit, @competition)
+  end
 
   def update
     @preset.assign_attributes(preset_params) if params[:preset].present?

@@ -23,4 +23,15 @@ RSpec.describe 'competitions/visibilities' do
       expect(competition.reload.slug).to eq 'new-slug'
     end
   end
+
+  context 'when no login performed' do
+    it 'fails' do
+      get competition_nested('visibility/edit')
+      expect_access_denied
+
+      patch competition_nested('visibility'),
+            params: { competition: { slug: '' } }
+      expect_access_denied
+    end
+  end
 end

@@ -93,4 +93,25 @@ RSpec.describe Band do
       end.to change(described_class, :count).by(-1)
     end
   end
+
+  context 'when no login performed' do
+    let!(:band) { create(:band, competition:) }
+
+    it 'fails' do
+      get competition_nested('bands/new')
+      expect_access_denied
+
+      post competition_nested('bands'), params: { band: { name: 'Foo' } }
+      expect_access_denied
+
+      get competition_nested("bands/#{band.id}/edit")
+      expect_access_denied
+
+      patch competition_nested("bands/#{band.id}"), params: { band: { name: 'Foo' } }
+      expect_access_denied
+
+      delete competition_nested("bands/#{band.id}")
+      expect_access_denied
+    end
+  end
 end

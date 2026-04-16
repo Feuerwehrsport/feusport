@@ -58,4 +58,15 @@ RSpec.describe TeamMarkerBlockValue do
       expect(response).to match_html_fixture.with_affix('teams2')
     end
   end
+
+  context 'when no login performed' do
+    it 'fails' do
+      get competition_nested("team_marker_block_values/edit?band_id=#{band.id}")
+      expect_access_denied
+
+      put competition_nested('team_marker_block_values'),
+          params: { band_id: band.id, team_marker_block_value: {} }
+      expect_access_denied
+    end
+  end
 end

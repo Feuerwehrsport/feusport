@@ -10,13 +10,11 @@ RSpec.describe 'competitions/visibilities' do
 
     it 'uses CRUD' do
       get "/#{competition.year}/#{competition.slug}"
-      expect(response).to redirect_to '/users/sign_in'
-      expect(flash[:alert]).to eq 'Bitte melde Dich an, um diese Funktion nutzen zu können.'
+      expect_access_denied
       expect(session[:requested_url_before_login]).to eq '/2024/mv-cup'
 
       get '/competitions/creations/new'
-      expect(response).to redirect_to '/users/sign_in?info_hint=competition'
-      expect(flash[:alert]).to eq 'Bitte melde Dich an, um diese Funktion nutzen zu können.'
+      expect_access_denied(redirect_to_url: '/users/sign_in?info_hint=competition')
       expect(session[:requested_url_before_login]).to eq '/competitions/creations/new'
 
       sign_in other_user

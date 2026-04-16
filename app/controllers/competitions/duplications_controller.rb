@@ -30,10 +30,10 @@ class Competitions::DuplicationsController < CompetitionNestedController
   def assign_duplication
     @duplication = Competitions::Duplication.new(competition: @competition)
     @duplication.assign_attributes(duplication_params) if params[:duplication].present?
-    if @duplication.duplicate_from.nil?
-      redirect_to competition_presets_path
-      return
-    end
     authorize!(:create, @duplication)
+
+    return unless @duplication.duplicate_from.nil?
+
+    redirect_to competition_presets_path
   end
 end

@@ -282,4 +282,22 @@ RSpec.describe Team do
       expect(team.reload.real_certificate_name).to eq 'other'
     end
   end
+
+  context 'when no login performed' do
+    let!(:team) { create(:team, competition:, band:) }
+
+    it 'fails' do
+      get competition_nested('teams/new')
+      expect_access_denied
+
+      post competition_nested('teams'), params: { team: { name: 'Foo' } }
+      expect_access_denied
+
+      get competition_nested("teams/#{team.id}/edit")
+      expect_access_denied
+
+      patch competition_nested("teams/#{team.id}"), params: { team: { name: 'Foo' } }
+      expect_access_denied
+    end
+  end
 end

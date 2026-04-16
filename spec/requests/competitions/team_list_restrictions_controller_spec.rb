@@ -63,4 +63,18 @@ RSpec.describe TeamListRestriction do
       end.to change(described_class, :count).by(-1)
     end
   end
+
+  context 'when no login performed' do
+    it 'fails' do
+      get competition_nested('team_list_restrictions')
+      expect_access_denied
+
+      get competition_nested('team_list_restrictions/new')
+      expect_access_denied
+
+      post competition_nested('team_list_restrictions'),
+           params: { team_list_restriction: { discipline_id: '' } }
+      expect_access_denied
+    end
+  end
 end

@@ -30,4 +30,15 @@ RSpec.describe 'competition/team_imports' do
       expect(team2.shortcut).to eq 'Bargeshagen'
     end
   end
+
+  context 'when no login performed' do
+    it 'fails' do
+      get competition_nested('team_import/new')
+      expect_access_denied
+
+      post competition_nested('team_import'),
+           params: { team_import: { band_id: band.id } }
+      expect_access_denied
+    end
+  end
 end

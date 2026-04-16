@@ -2,10 +2,12 @@
 
 class Competitions::DeletionsController < CompetitionNestedController
   def new
+    authorize!(:destroy, @competition)
     @deletion = Competitions::Deletion.new(competition: @competition)
   end
 
   def create
+    authorize!(:destroy, @competition)
     @deletion = Competitions::Deletion.new(competition: @competition)
     @deletion.assign_attributes(deletion_params)
     if @deletion.save

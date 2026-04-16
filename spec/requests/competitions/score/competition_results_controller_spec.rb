@@ -100,4 +100,27 @@ RSpec.describe 'competitions/score/competition_results' do
       end.to change(Score::CompetitionResult, :count).by(-1)
     end
   end
+
+  context 'when no login performed' do
+    let!(:score_competition_result) { create(:score_competition_result, competition:) }
+
+    it 'fails' do
+      get competition_nested('score/competition_results/new')
+      expect_access_denied
+
+      post competition_nested('score/competition_results'),
+           params: { score_competition_result: { name: 'Foo' } }
+      expect_access_denied
+
+      get competition_nested("score/competition_results/#{score_competition_result.id}/edit")
+      expect_access_denied
+
+      patch competition_nested("score/competition_results/#{score_competition_result.id}"),
+            params: { score_competition_result: { name: 'Foo' } }
+      expect_access_denied
+
+      delete competition_nested("score/competition_results/#{score_competition_result.id}")
+      expect_access_denied
+    end
+  end
 end

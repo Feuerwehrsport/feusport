@@ -25,5 +25,16 @@ RSpec.describe 'competitions/publishings' do
         expect(response).to redirect_to(competition_show_path)
       end.to change(FireSportStatistics::Publishing, :count).by(1)
     end
+
+    context 'when no login performed' do
+      it 'fails' do
+        get competition_nested('publishing/new')
+        expect_access_denied
+
+        post competition_nested('publishing'),
+             params: { competitions_publishing: { confirm: '0' } }
+        expect_access_denied
+      end
+    end
   end
 end

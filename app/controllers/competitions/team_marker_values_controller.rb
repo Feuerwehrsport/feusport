@@ -28,6 +28,7 @@ class Competitions::TeamMarkerValuesController < CompetitionNestedController
   def assign_resource
     team_marker = @competition.team_markers.find(params[:id])
     team = @competition.teams.find(params[:team_id])
+    authorize!(:edit, @competition)
     @team_marker_value = TeamMarkerValue.find_or_initialize_by(team_marker:, team:)
   end
 
