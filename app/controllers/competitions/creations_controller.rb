@@ -28,7 +28,7 @@ class Competitions::CreationsController < ApplicationController
 
   def competition_params
     params.require(:competition).permit(
-      :name, :date, :place, :wko_id
+      :name, :date, :place, :wko_id, :address, :lng, :lat
     )
   end
 end
