@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   private
 
   def ensure_correct_host!
-    expected =    Rails.application.config.default_url_options
+    expected = Rails.application.config.default_url_options
 
     return if expected.blank?
 
@@ -27,21 +27,21 @@ class ApplicationController < ActionController::Base
 
     current_host     = request.host.to_s
     current_port     = request.port.to_s
-    current_protocol = request.protocol.delete("://").to_s
+    current_protocol = request.protocol.delete('://').to_s
 
     needs_redirect =
       (correct_host.present? && current_host != correct_host) ||
       (correct_port.present? && current_port != correct_port) ||
       (correct_protocol.present? && current_protocol != correct_protocol)
 
-    if needs_redirect
-      redirect_to url_for(
-        params.permit!.to_h.merge(
-          host: correct_host,
-          port: correct_port,
-          protocol: correct_protocol
-        )
-      ), status: :moved_permanently
-    end
+    return unless needs_redirect
+
+    redirect_to url_for(
+      params.permit!.to_h.merge(
+        host: correct_host,
+        port: correct_port,
+        protocol: correct_protocol,
+      ),
+    ), status: :moved_permanently
   end
 end
