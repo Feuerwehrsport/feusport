@@ -7,7 +7,7 @@
       "check_name": "CrossSiteScripting",
       "message": "Unescaped model attribute",
       "file": "app/views/wko/show.html.haml",
-      "line": 22,
+      "line": 23,
       "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
       "code": "Wko.find_by!(:slug => params[:id]).description_html",
       "render_path": [
@@ -37,11 +37,57 @@
     {
       "warning_type": "SQL Injection",
       "warning_code": 0,
+      "fingerprint": "0ee97d13a9746796ff72ab004b4f87a2262bbd151612cdb6023bd7d8e44b137c",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/series/assessment_calculation.rb",
+      "line": 132,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "competition.score_results.where(\"'#{round_key}' = ANY(series_team_round_keys)\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Series::AssessmentCalculation",
+        "method": "teams"
+      },
+      "user_input": "round_key",
+      "confidence": "Weak",
+      "cwe_id": [
+        89
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Mass Assignment",
+      "warning_code": 70,
+      "fingerprint": "22657755354b6d3d324049c65061643833cdda3510b51caf43a53e1cc3a1303d",
+      "check_name": "MassAssignment",
+      "message": "Specify exact keys allowed for mass assignment instead of using `permit!` which allows any keys",
+      "file": "app/controllers/application_controller.rb",
+      "line": 39,
+      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
+      "code": "params.permit!",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "ApplicationController",
+        "method": "ensure_correct_host!"
+      },
+      "user_input": null,
+      "confidence": "Medium",
+      "cwe_id": [
+        915
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
       "fingerprint": "47f7ea01000498838743cd95db4fcf03d432d1bb6923b2bf114a4e9d62866822",
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/jobs/import_suggestions_job.rb",
-      "line": 41,
+      "line": 29,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "ActiveRecord::Base.connection.execute(\"ALTER SEQUENCE #{klass.table_name}_id_seq RESTART WITH #{((klass.maximum(:id) or 0) + 1)}\")",
       "render_path": null,
@@ -58,13 +104,36 @@
       "note": ""
     },
     {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "74d5e1fc641bab3a6522c93b948dc2a15468a72b6bf5eaf9e383ca7363ac44bb",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/series/assessment_calculation.rb",
+      "line": 82,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "competition.score_results.where(\"'#{round_key}' = ANY(series_person_round_keys)\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Series::AssessmentCalculation",
+        "method": "people"
+      },
+      "user_input": "round_key",
+      "confidence": "Weak",
+      "cwe_id": [
+        89
+      ],
+      "note": ""
+    },
+    {
       "warning_type": "Cross-Site Scripting",
       "warning_code": 2,
       "fingerprint": "e88c7ca3ecd90e4e7e2aee81df05bd04bbf26eded928b0fea52178dd03ca45d5",
       "check_name": "CrossSiteScripting",
       "message": "Unescaped model attribute",
       "file": "app/views/competitions/showings/show.html.haml",
-      "line": 10,
+      "line": 14,
       "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
       "code": "Competition.find_by!(:year => params[:year], :slug => params[:slug]).description_html",
       "render_path": [
@@ -92,6 +161,5 @@
       "note": ""
     }
   ],
-  "updated": "2024-11-19 07:58:44 +0100",
-  "brakeman_version": "6.2.2"
+  "brakeman_version": "8.0.4"
 }
