@@ -505,7 +505,7 @@ Style/ClassAndModuleChildren:
 Style/CollectionCompact:
   Enabled: true
 Style/CollectionQuerying:
-  Enabled: true
+  Enabled: false
 Style/CombinableDefined:
   Enabled: true
 Style/CombinableLoops:
