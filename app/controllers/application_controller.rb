@@ -36,12 +36,14 @@ class ApplicationController < ActionController::Base
 
     return unless needs_redirect
 
+    Rails.logger.info "Request was to #{current_protocol}://#{current_host}:#{current_port}"
+
     redirect_to url_for(
       params.permit!.to_h.merge(
         host: correct_host,
         port: correct_port,
         protocol: correct_protocol,
       ),
-    ), status: :moved_permanently
+    ), status: :moved_permanently, allow_other_host: true
   end
 end
