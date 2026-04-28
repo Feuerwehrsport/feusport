@@ -31,4 +31,4 @@ namespace :feusport do
   end
 end
 
-after 'm3:puma_reload', 'feusport:generate_static_html'
+after 'featureset:puma_reload', 'feusport:generate_static_html'
