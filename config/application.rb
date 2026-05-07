@@ -31,6 +31,8 @@ module Feusport
 
     config.active_job.queue_adapter = :solid_queue
     config.solid_queue.preserve_finished_jobs = false
+    config.solid_queue.shutdown_timeout = 30.seconds
+    config.solid_queue.default_concurrency_control_period = 2.hours
 
     config.generators.system_tests = nil
     config.generators.helper = false
