@@ -5,6 +5,7 @@
 # Table name: users
 #
 #  id                     :uuid             not null, primary key
+#  admin                  :boolean          default(FALSE), not null
 #  competition_manager    :boolean          default(FALSE), not null
 #  confirmation_sent_at   :datetime
 #  confirmation_token     :string(100)
@@ -28,7 +29,7 @@
 #  unconfirmed_email      :string(100)
 #  unlock_token           :string(100)
 #  user_manager           :boolean          default(FALSE), not null
-#  want_mailing           :integer          default(0), not null
+#  want_mailing           :integer          default("nothing"), not null
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #

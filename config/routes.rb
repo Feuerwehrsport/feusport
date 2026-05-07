@@ -2,6 +2,7 @@
 
 Rails.application.routes.draw do
   mount ActionCable.server => '/cable'
+  mount MissionControl::Jobs::Engine, at: '/admin-jobs'
 
   root 'home#home'
   get 'info', to: 'home#info', as: :info

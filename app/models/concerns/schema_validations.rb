@@ -4,7 +4,7 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 
-# generated from version 20260416213304
+# generated from version 20260507203535
 
 module SchemaValidations
   extend ActiveSupport::Concern
@@ -1009,6 +1009,7 @@ module SchemaValidations
       belongs_to_presence_validations_for([:failed_attempts, :sign_in_count, :want_mailing])
       belongs_to_uniqueness_validations_for([["confirmation_token"], ["email"], ["reset_password_token"], ["unlock_token"]])
       uniqueness_validations_for([["confirmation_token"], ["email"], ["reset_password_token"], ["unlock_token"]])
+      validates_with_filter :admin, {inclusion: {in: [true, false], message: :blank}}
       validates_with_filter :competition_manager, {inclusion: {in: [true, false], message: :blank}}
       validates_with_filter :confirmation_sent_at, {date_time_in_db_range: {}}
       validates_with_filter :confirmation_token, {length: {allow_nil: true, maximum: 100}}

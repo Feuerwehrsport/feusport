@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_04_16_213304) do
+ActiveRecord::Schema[7.2].define(version: 2026_05_07_203535) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
@@ -872,6 +872,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_04_16_213304) do
     t.geography "lnglat", limit: {srid: 4326, type: "st_point", geographic: true}
     t.integer "distance"
     t.integer "want_mailing", default: 0, null: false
+    t.boolean "admin", default: false, null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["lnglat"], name: "index_users_on_lnglat", using: :gist

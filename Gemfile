@@ -23,6 +23,7 @@ gem 'generated_schema_validations' # validate models by schema
 gem 'rails_log_parser' # to analyise log
 
 gem 'solid_queue' # background jobs
+gem 'mission_control-jobs' # control page for background jobs
 
 gem 'simple_form' # rails form helper
 gem 'devise' # user authentication
