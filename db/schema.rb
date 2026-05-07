@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_04_16_202911) do
+ActiveRecord::Schema[7.2].define(version: 2026_04_16_213304) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
@@ -869,8 +869,12 @@ ActiveRecord::Schema[7.2].define(version: 2026_04_16_202911) do
     t.boolean "user_manager", default: false, null: false
     t.boolean "competition_manager", default: false, null: false
     t.string "phone_number"
+    t.geography "lnglat", limit: {srid: 4326, type: "st_point", geographic: true}
+    t.integer "distance"
+    t.integer "want_mailing", default: 0, null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["lnglat"], name: "index_users_on_lnglat", using: :gist
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end

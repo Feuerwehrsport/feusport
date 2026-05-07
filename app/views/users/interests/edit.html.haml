@@ -1,0 +1,32 @@
+- page_title('Benutzerkonto')
+
+.row.g-4
+  .col-lg-8
+    = simple_form_for(current_user, url: users_interests_path) do |f|
+      = card('Benutzerkonto bearbeiten') do |c|
+        - c.body do
+          %fieldset.group
+            %legend Benachrichtigungen
+            %p Du kannst vom System automatisch per E-Mail über neue Wettkämpfe informiert werden.
+            = f.input :want_mailing, collection: User.want_mailings.keys.map { |r| [t("user.want_mailings.#{r}"), r] }, as: :radio_buttons
+
+          %fieldset.group
+            %legend Filter
+            %p Du kannst einen Filter definieren, damit du Wettkämpfe, die für dich interessant sind, besser finden kannst. Wähle dazu deine Interessen und setze einen Radius für die Entfernung zum Wettkampf.
+
+            .row
+              .col-md-6
+                = f.association :features, as: :check_boxes
+              .col-md-6
+                .form-group
+                  %label.control-label{ for: 'user-address' } Adresse
+                  %textarea.form-control#user-address
+                .btn.btn-light.btn-sm#search-address Adresse in Karte übernehmen
+                = f.input :distance, input_html: { min: 1, step: 1 }
+
+            .map-target{ data: { lng_input: '#user_lng', lat_input: '#user_lat', address_input: '#user-address', search_btn: '#search-address', distance_input: '#user_distance' } }
+            = f.input :lng, as: :hidden
+            = f.input :lat, as: :hidden
+        - c.footer do
+          = f.primary_button :submit
+  .col-lg-4

@@ -11,11 +11,13 @@
 #  confirmed_at           :datetime
 #  current_sign_in_at     :datetime
 #  current_sign_in_ip     :string(100)
+#  distance               :integer
 #  email                  :string(100)      not null
 #  encrypted_password     :string(100)      not null
 #  failed_attempts        :integer          default(0), not null
 #  last_sign_in_at        :datetime
 #  last_sign_in_ip        :string(100)
+#  lnglat                 :geography        point, 4326
 #  locked_at              :datetime
 #  name                   :string(100)      not null
 #  phone_number           :string
@@ -26,6 +28,7 @@
 #  unconfirmed_email      :string(100)
 #  unlock_token           :string(100)
 #  user_manager           :boolean          default(FALSE), not null
+#  want_mailing           :integer          default(0), not null
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #
@@ -33,11 +36,13 @@
 #
 #  index_users_on_confirmation_token    (confirmation_token) UNIQUE
 #  index_users_on_email                 (email) UNIQUE
+#  index_users_on_lnglat                (lnglat) USING gist
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #  index_users_on_unlock_token          (unlock_token) UNIQUE
 #
 class User < ApplicationRecord
   include SortableByName
+  include LngLatSupport
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
@@ -60,9 +65,12 @@ class User < ApplicationRecord
   has_many :user_features, class_name: 'UserFeature', dependent: :destroy
   has_many :features, class_name: 'Feature', through: :user_features
 
+  enum :want_mailing, { nothing: 0, by_filter: 1, all: 2 }, suffix: true
+
   auto_strip_attributes :name, :email, :phone_number
 
   schema_validations
+  validates :distance, comparison: { greater_than: 0 }, allow_blank: true
 
   def friends
     user_ids = UserAccess.where(competition_id: competition_ids).pluck(:user_id) +

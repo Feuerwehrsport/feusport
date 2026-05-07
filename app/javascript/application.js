@@ -52,6 +52,7 @@ onVisit(() => {
     const lngElement = document.querySelector(mapTarget.dataset.lngInput);
     const latElement = document.querySelector(mapTarget.dataset.latInput);
     const addressElement = document.querySelector(mapTarget.dataset.addressInput);
+    const distanceElement = document.querySelector(mapTarget.dataset.distanceInput);
     const searchElement = document.querySelector(mapTarget.dataset.searchBtn);
     const toggleElement = document.querySelector(mapTarget.dataset.toggleBtn);
 
@@ -76,6 +77,8 @@ onVisit(() => {
     }
 
     const map = L.map(mapTarget).setView([lat, lng], addMarkerOnStart ? 10 : 6);
+    let distanceChanged = null;
+    let circle = null;
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors',
@@ -86,6 +89,8 @@ onVisit(() => {
       const pos = marker.getLatLng();
       lngElement.value = pos.lng;
       latElement.value = pos.lat;
+
+      if (distanceChanged) distanceChanged();
     });
 
     if (addMarkerOnStart) {
@@ -97,6 +102,22 @@ onVisit(() => {
         mapTarget.classList.toggle('d-none');
         map.invalidateSize();
       });
+    }
+
+    if (distanceElement) {
+      distanceChanged = function () {
+        if (circle) circle.remove();
+
+        const distance = distanceElement.value;
+        if (!distance.match(/^\d+$/)) return;
+        const distanceInKm = parseInt(distance, 10);
+
+        circle = L.circle(marker.getLatLng(), { radius: distanceInKm * 1000 });
+        circle.addTo(map);
+      };
+      distanceElement.addEventListener('change', distanceChanged);
+      distanceElement.addEventListener('keyup', distanceChanged);
+      distanceChanged();
     }
 
     if (searchElement && addressElement) {
@@ -123,6 +144,8 @@ onVisit(() => {
             marker.setLatLng(pos);
             marker.addTo(map);
             map.setView(pos, 15);
+
+            if (distanceChanged) distanceChanged();
           });
       });
     }

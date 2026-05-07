@@ -128,6 +128,10 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :users do
+    resource :interests, only: %i[edit update]
+  end
+
   get 'not_found', to: 'errors#not_found'
   get 'internal_server_error', to: 'errors#internal_server_error'
   get 'unprocessable_entity', to: 'errors#unprocessable_entity'

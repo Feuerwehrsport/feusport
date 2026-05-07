@@ -39,6 +39,8 @@
 #  fk_rails_...  (wko_id => wkos.id)
 #
 class Competition < ApplicationRecord
+  include LngLatSupport
+
   REGISTRATION_OPEN = { unstated: 0, open: 1, close: 2 }.freeze
   enum :registration_open, REGISTRATION_OPEN, scopes: false, prefix: true
 
@@ -170,35 +172,6 @@ class Competition < ApplicationRecord
     end
     round_ids.uniq.each do |round_id|
       series_round_competition_associations.create!(round_id:)
-    end
-  end
-
-  def lat
-    lnglat&.latitude
-  end
-
-  def lng
-    lnglat&.longitude
-  end
-
-  def lat=(value)
-    @lat = value
-    set_lnglat
-  end
-
-  def lng=(value)
-    @lng = value
-    set_lnglat
-  end
-
-  private
-
-  def set_lnglat
-    if @lat.blank? || @lng.blank?
-      self.lnglat = nil
-    else
-      factory = RGeo::Geographic.spherical_factory(srid: 4326)
-      self.lnglat = factory.point(@lng.to_f, @lat.to_f)
     end
   end
 end

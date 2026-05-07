@@ -8,12 +8,15 @@ de:
         password_confirmation: Passwortbestätigung
       user:
         current_password: Aktuelles Passwort
+        distance: Radius in km
         email: E-Mail-Adresse
+        features: Interessen
         password: Passwort
         password_confirmation: Passwortbestätigung
         phone_number: Telefonnummer
         remember_me: Eingeloggt bleiben
         reset_password_token: Zurücksetz-Link
+        want_mailing: Gewünschte Benachrichtigungen
       user_access:
         registration_mail_info: Infomail
         registration_mail_info_full: E-Mail-Information über neue Registrierungen oder Anfragen
@@ -53,6 +56,11 @@ de:
         drop_myself: Wenn du hier einen Haken setzt, wird dein Zugang zu diesem Wettkampf automatisch gelöscht, sobald die Anfrage bestätigt wurde.
         email: E-Mail-Adresse des zukünftigen Admins
         text: Dieser Text wird an den zukünftigen Admin gesendet
+  user:
+    want_mailings:
+      all: Über alle Wettkämpfe
+      by_filter: Nur über Wettkämpfe die zum Filter passen
+      nothing: Keine Benachrichtigungen
   user_access_requests:
     example_text: |
       Hallo%{name},

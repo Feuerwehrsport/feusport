@@ -116,6 +116,8 @@ class Ability
       (person.users.include?(user) || person.team&.users&.include?(user)) &&
         (person.competition.registration_possible? || person.competition.change_people_possible?)
     end
+
+    can(%i[show edit], user)
   end
 
   def global_abilities

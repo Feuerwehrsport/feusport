@@ -4,7 +4,7 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 
-# generated from version 20260416202911
+# generated from version 20260416213304
 
 module SchemaValidations
   extend ActiveSupport::Concern
@@ -1006,7 +1006,7 @@ module SchemaValidations
     end
 
     def dbv_users_validations(enums: [])
-      belongs_to_presence_validations_for([:failed_attempts, :sign_in_count])
+      belongs_to_presence_validations_for([:failed_attempts, :sign_in_count, :want_mailing])
       belongs_to_uniqueness_validations_for([["confirmation_token"], ["email"], ["reset_password_token"], ["unlock_token"]])
       uniqueness_validations_for([["confirmation_token"], ["email"], ["reset_password_token"], ["unlock_token"]])
       validates_with_filter :competition_manager, {inclusion: {in: [true, false], message: :blank}}
@@ -1017,6 +1017,7 @@ module SchemaValidations
       validates_with_filter :created_at, {presence: {}}
       validates_with_filter :current_sign_in_at, {date_time_in_db_range: {}}
       validates_with_filter :current_sign_in_ip, {length: {allow_nil: true, maximum: 100}}
+      validates_with_filter :distance, {numericality: {allow_nil: true, only_integer: true, greater_than_or_equal_to: -2147483648, less_than: 2147483648}} unless enums.include?(:distance)
       validates_with_filter :email, {length: {allow_nil: true, maximum: 100}}
       validates_with_filter :email, {presence: {}}
       validates_with_filter :encrypted_password, {length: {allow_nil: true, maximum: 100}}
@@ -1038,6 +1039,8 @@ module SchemaValidations
       validates_with_filter :updated_at, {date_time_in_db_range: {}}
       validates_with_filter :updated_at, {presence: {}}
       validates_with_filter :user_manager, {inclusion: {in: [true, false], message: :blank}}
+      validates_with_filter :want_mailing, {numericality: {allow_nil: true, only_integer: true, greater_than_or_equal_to: -2147483648, less_than: 2147483648}} unless enums.include?(:want_mailing)
+      validates_with_filter :want_mailing, {presence: {}}
     end
 
     def dbv_wkos_validations(enums: [])

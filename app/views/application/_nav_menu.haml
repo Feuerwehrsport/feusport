@@ -18,6 +18,8 @@
           %li
             = active_link_to('Bearbeiten', edit_user_registration_path, class: 'dropdown-item')
           %li
+            = active_link_to('Interessen', edit_users_interests_path, class: 'dropdown-item')
+          %li
             %hr.dropdown-divider/
           %li
             = active_link_to('Abmelden', destroy_user_session_path, data: { 'turbo-method': :delete }, class: 'dropdown-item')
