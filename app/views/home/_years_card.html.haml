@@ -1,0 +1,4 @@
+= card_body do
+  %ul
+    - years.each do |year|
+      %li= link_to(year, year_home_path(year))

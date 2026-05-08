@@ -15,6 +15,11 @@ class HomeController < ApplicationController
     @current_dates = ((Date.current - 3.days)..(Date.current + 3.days))
   end
 
+  def more
+    @years = Competition.accessible_by(current_ability)
+                        .group(:year).order(year: :desc).pluck(:year)
+  end
+
   def info; end
   def help; end
   def help_assessment; end

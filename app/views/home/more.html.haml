@@ -1,0 +1,11 @@
+- page_title('Überblick')
+
+- content_for :page_header do
+  %h1 Willkommen auf feusport.de
+  %p.lead.mb-0 Dein Portal für Feuerwehrsport-Wettkämpfe
+
+= render 'home/home_header'
+
+.row.g-4
+  .col-lg-7.col-xl-8
+    = render('years_card', years: @years)

@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get 'help', to: 'home#help', as: :help
   get 'help_assessment', to: 'home#help_assessment', as: :help_assessment
   get 'changelogs', to: 'home#changelogs', as: :changelogs
+  get 'more', to: 'home#more', as: :more
 
   devise_for :users, controllers: {
     registrations: 'users/registrations',
@@ -21,6 +22,7 @@ Rails.application.routes.draw do
   namespace :competitions do
     resource :creations, only: %i[new create]
   end
+  get '/:year', to: 'home#home', constraints: { year: /\d{4}/ }, as: :year_home
   scope '/:year/:slug', constraints: { year: /(\d{4})/ }, module: :competitions, as: :competition do
     root 'showings#show', as: :show
     resource :editing, only: %i[edit update]

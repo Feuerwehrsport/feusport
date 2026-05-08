@@ -1,5 +1,11 @@
+- current_year = Date.current.year
+- valid_years = [current_year + 1, current_year, current_year - 1, current_year - 2]
+
 = page do |page|
   = page.tabs do |tabs|
-    = tabs.link_to 'Aktuell', root_path, active: params[:year].blank?
+    = tabs.link_to 'Aktuell', root_path, active: params[:year].blank? && action_name == 'home'
     - @years.each do |year|
-      = tabs.link_to year, root_path(year:), active: params[:year] == year.to_s
+      - next unless year.in?(valid_years)
+
+      = tabs.link_to year, year_home_path(year:), active: params[:year] == year.to_s
+    = tabs.link_to 'Weitere', more_path, active: action_name == 'more' || (params[:year].present? && !params[:year].to_i.in?(valid_years))
