@@ -13,7 +13,7 @@ module AccessDeniedSupport
       end
       if current_user
         flash[:alert] = 'Zugriff verweigert'
-        redirect_to root_path
+        redirect_to main_app.root_path
       else
         flash[:alert] = 'Bitte melde Dich an, um diese Funktion nutzen zu können.'
         session[:requested_url_before_login] = request.fullpath if request.format == :html
@@ -31,6 +31,6 @@ module AccessDeniedSupport
   def require_admin!
     return if current_user&.admin?
 
-    redirect_to root_path, alert: 'Not authorized'
+    raise CanCan::AccessDenied, 'only admin area'
   end
 end
