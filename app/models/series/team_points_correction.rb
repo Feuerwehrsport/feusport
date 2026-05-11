@@ -34,10 +34,11 @@ class Series::TeamPointsCorrection < ApplicationRecord
   end
 
   def possible_assessment_configs
-    @possible_assessment_configs ||= competition.score_results.pluck(:series_team_round_keys).flatten.compact.uniq
+    @possible_assessment_configs ||= competition.score_results.pluck(:series_team_round_keys)
+                                                .flatten.compact_blank.uniq
                                                 .map do |round_key|
                                                   Series::AssessmentConfig.find_by_round_key(round_key, :team)
-                                                end
+                                                end.compact_blank
   end
 
   def possible_round_keys
