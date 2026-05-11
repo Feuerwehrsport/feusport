@@ -116,7 +116,7 @@ class Competition < ApplicationRecord
 
   def description_html
     markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
-    markdown.render(description)
+    markdown.render(description.to_s)
   end
 
   def date=(new_date)
