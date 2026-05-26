@@ -41,9 +41,9 @@
 require 'rails_helper'
 
 RSpec.describe Competition do
-  let(:competition) { create(:competition) }
-
   describe 'auto registration_open_until' do
+    let(:competition) { create(:competition) }
+
     it 'changes automaticly' do
       expect(competition.registration_open_until).to eq Date.parse('2024-02-28')
 
@@ -52,6 +52,27 @@ RSpec.describe Competition do
 
       competition.update!(date: Date.parse('2024-02-10'))
       expect(competition.registration_open_until).to eq Date.parse('2024-02-01')
+    end
+  end
+
+  describe 'safe markdown' do
+    let(:competition) { described_class.new }
+
+    it 'escapes html input' do
+      competition.description = '[Click mich](javascript:alert(Date.new))'
+      expect(competition.description_html).to eq "<p><a>Click mich</a></p>\n"
+
+      competition.description = '[Click mich](tel:01234)'
+      expect(competition.description_html).to eq "<p><a>Click mich</a></p>\n"
+
+      competition.description = '[Click mich](/foo)'
+      expect(competition.description_html).to eq "<p><a href=\"/foo\">Click mich</a></p>\n"
+
+      competition.description = '[Click mich](http://foo)'
+      expect(competition.description_html).to eq "<p><a href=\"http://foo\">Click mich</a></p>\n"
+
+      competition.description = '<iframe src="/"/>'
+      expect(competition.description_html).to eq "<p>&lt;iframe src=\"/\"/&gt;</p>\n"
     end
   end
 end

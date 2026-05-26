@@ -31,6 +31,7 @@ gem 'active_link_to' # add class to link
 gem 'acts_as_list' # position in lists
 gem 'cancancan' # model authentication
 gem 'redcarpet' # markdown to html parser
+gem 'sanitize' # Sanitize html and css
 gem 'image_processing' # generate previews and thumbs
 gem 'activestorage-validator' # validate stored files
 gem 'valid_email2' # validates email addresses

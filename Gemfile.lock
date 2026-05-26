@@ -475,6 +475,9 @@ GEM
       ffi (~> 1.12)
       logger
     rubyzip (3.3.0)
+    sanitize (7.0.0)
+      crass (~> 1.0.2)
+      nokogiri (>= 1.16.8)
     sassc (2.4.0)
       ffi (~> 1.9)
     sassc-rails (2.1.2)
@@ -619,6 +622,7 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   rubocop-rspec_rails
+  sanitize
   sassc-rails
   simple_form
   simplecov

@@ -115,8 +115,12 @@ class Competition < ApplicationRecord
   end
 
   def description_html
-    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
-    markdown.render(description.to_s)
+    markdown = Redcarpet::Markdown.new(
+      Redcarpet::Render::HTML.new(escape_html: true),
+      autolink: true, tables: true,
+    )
+    html = markdown.render(description)
+    Sanitize.fragment(html, Sanitize::Config::RELAXED) # xss safe
   end
 
   def date=(new_date)
