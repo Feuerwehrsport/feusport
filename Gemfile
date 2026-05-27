@@ -33,6 +33,7 @@ gem 'cancancan' # model authentication
 gem 'redcarpet' # markdown to html parser
 gem 'sanitize' # Sanitize html and css
 gem 'image_processing' # generate previews and thumbs
+gem 'ruby-vips' # use libvips to generate thumbs
 gem 'activestorage-validator' # validate stored files
 gem 'valid_email2' # validates email addresses
 gem 'recaptcha', require: 'recaptcha/rails' # captch for registration
