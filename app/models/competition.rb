@@ -119,7 +119,7 @@ class Competition < ApplicationRecord
       Redcarpet::Render::HTML.new(escape_html: true),
       autolink: true, tables: true,
     )
-    html = markdown.render(description)
+    html = markdown.render(description.to_s)
     Sanitize.fragment(html, Sanitize::Config::RELAXED) # xss safe
   end
 
