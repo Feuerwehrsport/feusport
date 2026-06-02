@@ -61,6 +61,8 @@ class Competitions::Score::ListFactoriesController < CompetitionNestedController
     factory.update!(next_step: :generator, results: list.results)
 
     redirect_to action: :edit
+  rescue ActiveRecord::RecordInvalid => e
+    redirect_to competition_score_lists_path, notice: e.message
   end
 
   protected
