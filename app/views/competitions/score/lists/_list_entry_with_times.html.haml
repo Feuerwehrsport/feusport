@@ -1,11 +1,17 @@
 = render layout: 'competitions/score/lists/list_entry', locals: { entry:, run:, track:, list:, best_of_run: } do
   - if list.separate_target_times?
     %td.separate-times
-      = entry&.human_time_left_target
-      %br
-      = entry&.human_time_right_target
+      - if editable || !list.hidden_results?
+        = entry&.human_time_left_target
+        %br
+        = entry&.human_time_right_target
+      - else
+        ?
   %td.time-col
-    = entry&.human_time
+    - if editable || !list.hidden_results?
+      = entry&.human_time
+    - else
+      ?
   - if editable
     %td.text-end
       - if track == 1 && destroy_index.nil? && edit_index.nil?

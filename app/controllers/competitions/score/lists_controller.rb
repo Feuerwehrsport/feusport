@@ -87,7 +87,7 @@ class Competitions::Score::ListsController < CompetitionNestedController
                                :edit_second_time_right_target, :edit_second_time_right_target_before)
     end
 
-    params.require(:score_list).permit(:name, :shortcut, :date, :show_multiple_assessments, :hidden,
+    params.require(:score_list).permit(:name, :shortcut, :date, :show_multiple_assessments, :hidden, :hidden_results,
                                        :show_best_of_run, :starting_time_string,
                                        result_ids: [],
                                        assessment_ids: [],

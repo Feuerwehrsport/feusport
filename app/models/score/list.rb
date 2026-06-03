@@ -7,6 +7,7 @@
 #  id                        :uuid             not null, primary key
 #  date                      :date
 #  hidden                    :boolean          default(FALSE), not null
+#  hidden_results            :boolean          default(FALSE), not null
 #  name                      :string(100)      default(""), not null
 #  separate_target_times     :boolean          default(FALSE), not null
 #  shortcut                  :string(50)       default(""), not null

@@ -58,6 +58,8 @@ class Score::Result < ApplicationRecord
   has_many :results, class_name: 'Score::Result', through: :result_multi_references
   has_many :result_list_factories, class_name: 'Score::ResultListFactory', dependent: :destroy
 
+  attr_accessor :show_hidden_result
+
   delegate :year, to: :competition
   delegate :discipline, to: :assessment, allow_nil: true
   delegate :band, to: :assessment, allow_nil: true
@@ -146,6 +148,9 @@ class Score::Result < ApplicationRecord
     out_of_competition_rows = {}
     rows = {}
     lists.each do |list|
+      next if list.hidden?
+      next if !show_hidden_result && list.hidden_results?
+
       list.entries.not_waiting.each do |list_entry|
         next if list_entry.assessment != assessment
 

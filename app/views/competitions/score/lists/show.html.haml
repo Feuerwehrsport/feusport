@@ -23,6 +23,11 @@
           %p Die Startliste ist derzeit noch versteckt. Bitte gebe diese nach der Kontrolle frei.
           - if can?(:edit, @list)
             = btn_link_to 'Bearbeiten', { action: :edit }
+      - if @list.hidden_results?
+        = card_body('Versteckte Ergebnisse', class: 'mb-3 text-bg-warning') do
+          %p Die Ergebnisse dieser Startliste sind derzeit noch versteckt. Bitte gebe diese nach der Kontrolle frei.
+          - if can?(:edit, @list)
+            = btn_link_to 'Bearbeiten', { action: :edit }
 
       = card(t('a.actions'), class: 'mb-3') do |c|
         - c.primary_actions do |actions|
