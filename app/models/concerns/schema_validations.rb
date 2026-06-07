@@ -711,6 +711,17 @@ module SchemaValidations
       validates_with_filter :updated_at, {presence: {}}
     end
 
+    def dbv_snapshots_validations(enums: [])
+      belongs_to_presence_validations_for([:competition_id])
+      validates_with_filter :competition_id, {presence: {}}
+      validates_with_filter :created_at, {date_time_in_db_range: {}}
+      validates_with_filter :created_at, {presence: {}}
+      validates_with_filter :highlight, {inclusion: {in: [true, false], message: :blank}}
+      validates_with_filter :title, {presence: {}}
+      validates_with_filter :updated_at, {date_time_in_db_range: {}}
+      validates_with_filter :updated_at, {presence: {}}
+    end
+
     def dbv_solid_queue_blocked_executions_validations(enums: [])
       belongs_to_presence_validations_for([:job_id, :priority])
       belongs_to_uniqueness_validations_for([["job_id"]])

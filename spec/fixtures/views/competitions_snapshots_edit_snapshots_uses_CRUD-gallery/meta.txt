@@ -1,0 +1,4 @@
+competitions/snapshots edit snapshots uses CRUD-gallery
+
+request
+html

@@ -1,0 +1,16 @@
+---
+de:
+  activerecord:
+    attributes:
+      snapshot:
+        file: Datei
+        highlight: Als Highlight markieren
+        title: Titel
+    models:
+      snapshot:
+        one: Schnappschuss
+        other: Schnappschüsse
+  simple_form:
+    hints:
+      snapshot:
+        title: 'Gib eine kurze Beschreibung der Scene an. Zum Beispiel: Mannschaft freut sich über Sieg'

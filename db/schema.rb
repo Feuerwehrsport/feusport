@@ -591,6 +591,15 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_03_213042) do
     t.index ["competition_id"], name: "index_simple_accesses_on_competition_id"
   end
 
+  create_table "snapshots", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "competition_id", null: false
+    t.string "title", null: false
+    t.boolean "highlight", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["competition_id"], name: "index_snapshots_on_competition_id"
+  end
+
   create_table "solid_queue_blocked_executions", force: :cascade do |t|
     t.bigint "job_id", null: false
     t.string "queue_name", null: false
@@ -940,6 +949,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_03_213042) do
   add_foreign_key "series_round_competition_associations", "competitions"
   add_foreign_key "series_team_points_corrections", "competitions"
   add_foreign_key "simple_accesses", "competitions"
+  add_foreign_key "snapshots", "competitions"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_claimed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_failed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade

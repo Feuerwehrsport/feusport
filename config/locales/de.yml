@@ -12,6 +12,7 @@ de:
   activerecord:
     errors:
       messages:
+        max_entries_created: hat die maximale Anzahl von Einträgen erreicht
         not_same_competition: hat nicht den gleichen Wettkampf
         record_invalid: 'Gültigkeitsprüfung ist fehlgeschlagen: %{errors}'
         restrict_dependent_destroy:

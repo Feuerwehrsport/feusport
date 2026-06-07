@@ -28,6 +28,7 @@ class Document < ApplicationRecord
   validates :file, presence: true,
                    blob: { content_type: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'application/pdf'],
                            size_range: 1..(10.megabytes) }
+  validates :competition, max_entries: { reverse_key: :documents, max: 20, add_to: :file }
 
   def self.find_idpart!(idpart)
     find_by!('id::varchar like ?', "#{idpart}%")

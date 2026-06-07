@@ -1,0 +1,7 @@
+- c.body do
+  = f.input :title
+  = f.input :file
+  = render 'competitions/snapshots/highlight', f:, resource_instance:
+- c.footer do
+  = f.primary_button :submit, 'Hochladen'
+  = f.cancel_button(competition_show_path)

@@ -3,6 +3,7 @@ import * as bootstrap from 'bootstrap';
 import '@hotwired/turbo-rails';
 
 import L from 'leaflet';
+import GLightbox from 'glightbox';
 
 import './_global';
 import './_channels';
@@ -21,6 +22,10 @@ import './_vertical_scroll';
 import './_hcaptcha';
 
 onVisit(() => {
+  GLightbox({
+    selector: '.gallery-item',
+  });
+
   setTimeout(() => {
     const url = new URL(window.location);
     const jumpTo = url.searchParams.get('jump_to');

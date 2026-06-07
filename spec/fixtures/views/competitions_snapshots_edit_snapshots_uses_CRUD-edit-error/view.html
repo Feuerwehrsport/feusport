@@ -58,14 +58,15 @@ Benutzer
 <div class="container">
 <h1>MV-Cup</h1>
 <p class="lead m-0 ms-1">29.02.2024 - Rostock</p>
+<p class="lead m-0 ms-1">Schnappschuss aktualisieren</p>
 
 </div>
 </header>
 <header class="page-tabs">
 <div class="container">
 <div class="nav nav-pills nav-tabs-responsive">
-<div class="nav-item active">
-<a class="nav-link active" aria-current="page" href="/2024/mv-cup">Informationen
+<div class="nav-item">
+<a class="nav-link" href="/2024/mv-cup">Informationen
 </a>
 </div>
 <div class="dropdown nav-item">
@@ -115,58 +116,52 @@ Erweitert
 </header>
 <div class="container mt-4">
 <div class="alert-flash">
-<div class="alert alert-info">Die Anfrage wird per E-Mail übermittelt.</div>
+<div class="alert alert-danger">Bitte überprüfe folgende Fehler:</div>
 </div>
 </div>
 <div class="pb-4 mt-4 container">
 <div class="row g-4">
-<div class="col-lg-6 col-xl-8">
+<div class="col-lg-8">
+<form class="simple_form edit_snapshot" id="edit_snapshot_UUID" novalidate="novalidate" action="/2024/mv-cup/snapshots/UUID" accept-charset="UTF-8" method="post"><input type="hidden" name="_method" value="patch" autocomplete="off" /><div class="card">
+<div class="card-header p-0">
+<div class="d-flex justify-content-between">
+<h4 class="m-0 py-2 ps-3">Schnappschuss aktualisieren</h4>
+</div>
+</div>
+<div class="card-body">
+<div class="form-group string required snapshot_title form-group-invalid"><label class="control-label string required" for="snapshot_title">Titel <abbr title="required">*</abbr></label><input class="form-control is-invalid string required" aria-invalid="true" type="text" name="snapshot[title]" id="snapshot_title" /><div class="invalid-feedback">Titel muss ausgefüllt werden</div><small class="form-text text-muted">Gib eine kurze Beschreibung der Scene an. Zum Beispiel: Mannschaft freut sich über Sieg</small></div>
+<a class="gallery-item" data-gallery="snapshots" href="/rails/BLOBIDpixel.jpg"><img class="img-fluid rounded highlight-shadow" src="http://www.example.com/rails/BLOBIDpixel.jpg" />
+</a>
+<fieldset class="group">
+<div class="row">
+<div class="col-md-6">
+<fieldset class="form-group boolean optional snapshot_highlight form-group-valid"><div class="form-check"><input name="snapshot[highlight]" type="hidden" value="0" autocomplete="off" /><input class="form-check-input boolean optional" type="checkbox" value="1" checked="checked" name="snapshot[highlight]" id="snapshot_highlight" /><label class="form-check-label boolean optional" for="snapshot_highlight">Als Highlight markieren</label></div></fieldset>
+</div>
+<div class="col-md-6">
+</div>
+</div>
+</fieldset>
+
+
+</div>
+<div class="card-footer">
+<div class="d-flex justify-content-between align-items-start">
+<div><button name="button" type="submit" class="btn btn-primary" data-disable-with="Bitte warten...">Ändern</button>
+<a class="btn btn-secondary" href="/2024/mv-cup">Abbrechen</a>
+</div>
+</div>
+</div>
+</div>
+</form></div>
+<div class="col-lg-4">
 <div class="card">
-<div class="card-header">
-<h1>MV-Cup</h1>
-<p class="lead mb-0">29.02.2024 - Rostock</p>
-</div>
-<div class="card-body competition-descripton">
-<p>Der Wettkampf <em>MV-Cup</em> findet am <strong>29.02.2024</strong> in <strong>Rostock</strong> statt.</p>
-
-<p>Weitere Informationen folgen.</p>
+<div class="card-body">
+<p>Hier kannst du bis zu <b>15 Schnappschüsse</b> von deinem Wettkampf hochladen. Sie werden deinen Besuchern als kleine Bildergalerie angezeigt.</p>
+<p>Ein Bild kannst du als <b>Highlight</b> markieren. Nur dieses Bild wird auf der Startseite per Zufall auf deinen Wettkampf verweisen.</p>
 
 </div>
 </div>
-<div class="d-flex flex-wrap mt-2">
-</div>
-</div>
-<div class="col-lg-6 col-xl-4">
-<div class="card text-bg-light">
-<div class="card-header text-bg-info">
-<div class="d-grid gap-2 col-10 mx-auto">
-<div class="text-center">
-Nächster Schritt
-</div>
-<a class="btn btn-light btn-sm" href="/2024/mv-cup/presets">Vorlage wählen</a>
-</div>
-</div>
 
-<div class="card-header">
-<div class="d-grid gap-2 col-10 mx-auto">
-<a class="btn btn-light btn-sm" href="/2024/mv-cup/information_requests/new">Anfrage stellen</a>
-<a class="btn btn-light btn-sm" href="/2024/mv-cup/editing/edit">Bearbeiten</a>
-<a class="btn btn-light btn-sm" href="/2024/mv-cup/visibility/edit">Sichtbarkeit bearbeiten</a>
-<a class="btn btn-light btn-sm" href="/2024/mv-cup/registration/edit">Anmeldungen bearbeiten</a>
-<a class="btn btn-light btn-sm" href="/2024/mv-cup/documents/new">Dokument hinzufügen</a>
-<a class="btn btn-light btn-sm" href="/2024/mv-cup/snapshots/new">Schnappschuss hinzufügen</a>
-<a class="btn btn-danger btn-sm" href="/2024/mv-cup/deletion/new">Löschen</a>
-<div class="social-share-button"><a rel="nofollow" data-site="twitter" class="ssb-icon ssb-twitter" onclick="return SocialShareButton.share(this);" title="Teilen via Twitter" href="#"></a> <a rel="nofollow" data-site="facebook" class="ssb-icon ssb-facebook" onclick="return SocialShareButton.share(this);" title="Teilen via Facebook" href="#"></a> <a rel="nofollow" data-site="email" class="ssb-icon ssb-email" onclick="return SocialShareButton.share(this);" title="Teilen via Email" href="#"></a> <a rel="nofollow" data-site="vkontakte" class="ssb-icon ssb-vkontakte" onclick="return SocialShareButton.share(this);" title="Teilen via Vkontakte" href="#"></a> <a rel="nofollow" data-site="telegram" class="ssb-icon ssb-telegram" onclick="return SocialShareButton.share(this);" title="Teilen via Telegram" href="#"></a> <a rel="nofollow" data-site="whatsapp_app" class="ssb-icon ssb-whatsapp_app" onclick="return SocialShareButton.share(this);" title="Teilen via WhatsApp" href="#"></a> <a rel="nofollow" data-site="whatsapp_web" class="ssb-icon ssb-whatsapp_web" onclick="return SocialShareButton.share(this);" title="Teilen via WhatsApp Web" href="#"></a></div>
-</div>
-</div>
-<div class="card-body text-center p-0 pt-3">
-<pre class="small"><a href="http://www.example.com/2024/mv-cup">www.example.com/2024/mv-cup</a></pre>
-<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAQAAAAHUWYVAAAEg0lEQVR4nO2dUY/bIBAG2/v//7l9cqUibb8FgzP1zeTpHIOxRrBmN7l8/RAUX58egPyNQmAoBIZCYCgEhkJgKASGQmAoBIZCYCgEhkJgKASGQmAoBIZCYCgEhkJgKASGQmAoBIZCYCgEhkJgKASGQmAoBIZCYCgEhkJgKASGQmAoBMYeIb8WX6n9+H76u3u9qt2u+7mBMwSGQmAoBMZeIT+br9S+Op5iSepvXPPTuO7ezwLOEBgKgaEQGGeErD6nj2t7N0aMa/nYvlrrZ8d1YN8x4gyBoRAYCoHBEDLGgmrtn33u78YSEAwh8geFwFAIjHcLmc19AXi3kP8QhcBQCIwzQmbrBt3a9q5xzNYzHqiDXDhDYCgEhkJg7BVy9/NLq7mrVEeZ/XvX/SzgDIGhEBgKgbFHSPd5Pz3HpzpIt+aeYkm3/d37WcAZAkMhMBQC4zOfy0prd3VetVaPMaFqV8Wmqv3s/mQDzhAYCoGhEBhnvmN4Ua3R1d9jf2m/UJ0/Xr8aZ4oBKaYdwBkCQyEwFALj7HcML9I+pLuWp1g10u035c66970BZwgMhcBQCIy99ZCRtC/p5pa61+nuR6rxpfta7WcCZwgMhcBQCIxnc1np/CoWdGNJGt9qDEjXdx/yXhQCQyEwnhHSjQHdtXi27pJIubcqlzab82rgDIGhEBgKgXE2lzVSrcGpfRUbZusuq+Ouzp+NVQ2cITAUAkMhMPbmsqrjqQ5S9ZOe+2frIGmcs/fnPuT9KASGQmCcFTJbBxnbpZiz63h1Xoods/02cIbAUAgMhcB45nNZKQc1G2vSmt3db6S6R3ff5D7kvSgEhkJgPCOkW7fo1kW6/aQcV7e+ka7jPuS9KASGQmDsrYektfuiOm+2XlHFhtX9SlVvWR3fAs4QGAqBoRAYe3NZ1Zpbvbr7g4vV/Us1znRedV3rId8HhcBQCIwzn8vq7kNW21fXT+1S7KrO6453A84QGAqBoRAYZ/5f1sVs7me17jC+313ju7m2lPNyH/JeFAJDITCe+R3D6niKEWktT9e/u8an8WyMHRfOEBgKgaEQGM/8fkh3f3LRrTdU/Xb3Halek/qZjW0NnCEwFAJDITDOfD9kNfdU5aBW6w9V/6ku0q2DHMAZAkMhMBQC48z/7Z19vu/uM1Ls6eaWqrrJeD9pPOn4As4QGAqBoRAYZ3+DKj3XJ7o5rxQTUvvu8bv7ogbOEBgKgaEQGJ/5PfXq/KpmPVv3ODXuajzuQ96LQmAoBAZLSKqHVDmrKuakHFeKEakesrr/+QcsIaIQGgqBwRaS1vT0/N89v6qvrF7nBmwh3xCFwFAIjGe+H7Jrrd9dh0jXna25b8AZAkMhMBQCY6+Q/EmsXo18tn4yHk/jqd4fx1HFmAM5rAtnCAyFwFAIjL3fD5l9pf7SdWaPd9vN3vdGnCEwFAJDITAUAkMhMBQCQyEwFAJDITAUAkMhMBQCQyEwFAJDITAUAkMhMBQCQyEwFAJDITAUAkMhMBQCQyEwFAJDITAUAkMhMBQCQyEwFAJDITB+AxBKfc1yHEspAAAAAElFTkSuQmCC" />
-<div class="d-grid gap-2 col-10 mx-auto mb-2">
-<a class="btn btn-dark btn-sm" target="_blank" rel="noopener" href="/2024/mv-cup.pdf">Flyer anzeigen</a>
-</div>
-</div>
-</div>
 </div>
 </div>
 </div>

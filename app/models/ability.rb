@@ -24,6 +24,9 @@ class Ability
     can(:read, Document, competition: read_ua)
     can(:manage, Document, competition: manage_ua)
 
+    can(:read, Snapshot, competition: read_ua)
+    can(:manage, Snapshot, competition: manage_ua)
+
     can(:read, Discipline, competition: read_ua)
     can(:manage, Discipline, competition: manage_ua)
     can(:manage, TeamListRestriction, competition: manage_ua)

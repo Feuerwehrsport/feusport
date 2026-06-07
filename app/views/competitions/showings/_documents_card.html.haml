@@ -1,0 +1,22 @@
+.card
+  .card-header Dokumente
+  %ul.list-group.list-group-flush
+    - @competition.documents.each do |document|
+      %li.list-group-item
+        - if can?(:manage, document)
+          .float-end
+            .btn-group
+              = link_to(edit_competition_document_path(id: document.id), class: 'btn btn-light btn-sm') do
+                .far.fa-edit
+              = link_to(competition_document_path(id: document.id), class: 'btn btn-light btn-sm', data: { turbo_confirm: 'Dokument wirklich entfernen?', 'turbo-method': :delete }) do
+                .far.fa-trash
+        = link_to rails_blob_path(document.file, disposition: 'attachment') do
+          .row
+            .col-3
+              - if document.file.representable?
+                = image_tag document.file.representation(resize_to_limit: [100, 100])
+            .col-9
+              = document.title
+              .sm= number_to_human_size document.file.byte_size
+              .sm= document.file.filename
+              .sm Stand: #{l document.updated_at}

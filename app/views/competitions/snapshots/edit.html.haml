@@ -1,0 +1,16 @@
+= render 'competitions/header', competition: @competition, sub: "#{resource_class.model_name.human} aktualisieren"
+
+.row.g-4
+  .col-lg-8
+    = simple_form_for(resource_instance, url: url_for(controller: controller_path, action: :update)) do |f|
+      = card("#{resource_class.model_name.human} aktualisieren") do |c|
+        - c.body do
+          = f.input :title
+          = render 'competitions/snapshots/gallery_item', snapshot: resource_instance, resize_to_fill: [200, 200]
+          = render 'competitions/snapshots/highlight', f:, resource_instance:
+        - c.footer do
+          = f.primary_button :submit, 'Ändern'
+          = f.cancel_button(competition_show_path)
+
+  .col-lg-4
+    = render('new_right')

@@ -32,6 +32,7 @@ Rails.application.routes.draw do
     resource :duplication, only: %i[new create]
     resource :unlocking, only: %i[new create]
     resources :documents, only: %i[new create edit update destroy]
+    resources :snapshots, only: %i[new create edit update destroy]
     get 'dd/:idpart', to: 'documents#download', as: :document_download
     get 'dp/:idpart', to: 'documents#preview', as: :document_preview
     get 'di/:idpart', to: 'documents#image', as: :document_image

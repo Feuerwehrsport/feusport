@@ -1,0 +1,9 @@
+%fieldset.group
+  .row
+    .col-md-6
+      = f.input :highlight
+    .col-md-6
+      - snapshot = resource_instance.other_highlights.first
+      - if snapshot
+        Zur Zeit ist folgendes Bild als Highlight markiert:
+        = render 'competitions/snapshots/gallery_item', snapshot:, resize_to_fill: [100, 100]

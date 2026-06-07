@@ -17,7 +17,7 @@ FactoryBot/AssociationStyle:
 FactoryBot/ConsistentParenthesesStyle:
   Enabled: true
 FactoryBot/ExcessiveCreateList:
-  Enabled: true
+  Enabled: false
 FactoryBot/FactoryAssociationWithStrategy:
   Enabled: true
 FactoryBot/FactoryNameStyle:

@@ -81,6 +81,7 @@
             = link_to 'Sichtbarkeit bearbeiten', edit_competition_visibility_path, class: 'btn btn-light btn-sm'
             = link_to 'Anmeldungen bearbeiten', edit_competition_registration_path, class: 'btn btn-light btn-sm'
             = link_to 'Dokument hinzufügen', new_competition_document_path, class: 'btn btn-light btn-sm'
+            = link_to 'Schnappschuss hinzufügen', new_competition_snapshot_path, class: 'btn btn-light btn-sm'
             - if simple_access.present?
               = link_to 'Gastzugang beenden', competition_simple_access_login_path, class: 'btn btn-warning btn-sm', data: { turbo_confirm: 'Danach hast du keinen Verwaltungszugriff auf diesen Wettkampf mehr.', 'turbo-method': :delete }
 
@@ -98,28 +99,17 @@
           .d-grid.gap-2.col-10.mx-auto.mb-2
             = link_to 'Flyer anzeigen', { format: :pdf }, class: 'btn btn-dark btn-sm', target: '_blank', rel: 'noopener'
 
-- if @competition.documents.exists?
+- if @competition.documents.exists? && @competition.snapshots.exists?
+  .row.g-4.mt-2
+    .col-md-6.mb-2
+      = render('documents_card')
+    .col-md-6.mb-2
+      = render('snapshots_card')
+- elsif @competition.documents.exists?
   .row.g-4.mt-2
     .col-md-8.mb-2
-      .card
-        .card-header Dokumente
-        %ul.list-group.list-group-flush
-          - @competition.documents.each do |document|
-            %li.list-group-item
-              - if can?(:manage, document)
-                .float-end
-                  .btn-group
-                    = link_to(edit_competition_document_path(id: document.id), class: 'btn btn-light btn-sm') do
-                      .far.fa-edit
-                    = link_to(competition_document_path(id: document.id), class: 'btn btn-light btn-sm', data: { turbo_confirm: 'Dokument wirklich entfernen?', 'turbo-method': :delete }) do
-                      .far.fa-trash
-              = link_to rails_blob_path(document.file, disposition: 'attachment') do
-                .row
-                  .col-3
-                    - if document.file.representable?
-                      = image_tag document.file.representation(resize_to_limit: [100, 100])
-                  .col-9
-                    = document.title
-                    .sm= number_to_human_size document.file.byte_size
-                    .sm= document.file.filename
-                    .sm Stand: #{l document.updated_at}
+      = render('documents_card')
+- elsif @competition.snapshots.exists?
+  .row.g-4.mt-2
+    .col-md-8.mb-2
+      = render('snapshots_card')

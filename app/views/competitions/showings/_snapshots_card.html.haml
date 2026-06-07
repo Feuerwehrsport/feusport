@@ -1,0 +1,24 @@
+.card
+  .card-header
+    Schnappschüsse
+
+  .card-body
+    .row.g-3.row-cols-2.row-cols-md-3.row-cols-lg-4
+
+      - @competition.snapshots.each do |snapshot|
+        .col
+          .position-relative
+
+            - if can?(:manage, snapshot)
+              .position-absolute.top-0.end-0.p-2{ style: 'z-index: 10' }
+                .btn-group
+                  = link_to edit_competition_snapshot_path(id: snapshot.id), class: 'btn btn-light btn-sm' do
+                    %i.far.fa-edit
+
+                  = link_to competition_snapshot_path(id: snapshot.id), class: 'btn btn-light btn-sm', data: { turbo_method: :delete, turbo_confirm: 'Schnappschuss wirklich entfernen?' } do
+                    %i.far.fa-trash
+
+            = render 'competitions/snapshots/gallery_item', snapshot:
+
+            .small.text-muted.mt-1
+              = snapshot.title
