@@ -4,7 +4,7 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 
-# generated from version 20260603213042
+# generated from version 20260607204313
 
 module SchemaValidations
   extend ActiveSupport::Concern
@@ -198,6 +198,7 @@ module SchemaValidations
       validates_with_filter :show_bib_numbers, {inclusion: {in: [true, false], message: :blank}}
       validates_with_filter :slug, {length: {allow_nil: true, maximum: 50}}
       validates_with_filter :slug, {presence: {}}
+      validates_with_filter :snapshot_reminder_sent, {date_time_in_db_range: {}}
       validates_with_filter :updated_at, {date_time_in_db_range: {}}
       validates_with_filter :updated_at, {presence: {}}
       validates_with_filter :visible, {inclusion: {in: [true, false], message: :blank}}

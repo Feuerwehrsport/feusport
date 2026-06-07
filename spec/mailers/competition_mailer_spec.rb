@@ -108,6 +108,20 @@ RSpec.describe CompetitionMailer do
     end
   end
 
+  describe 'snapshot_reminder' do
+    let(:competition) { create(:competition) }
+    let(:mail) { described_class.with(competition:).snapshot_reminder }
+
+    it 'renders the headers and body' do
+      expect(mail.subject).to eq('Lade Schnappschüsse deines Wettkampfs hoch - MV-Cup')
+      expect(mail.header[:to].to_s).to eq 'Alfred Meier <alfred@meier.de>'
+      expect(mail.header[:from].to_s).to eq 'Feuerwehrsport <no-reply@feusport.de>'
+      expect(mail.header[:cc].to_s).to eq ''
+      expect(mail.header[:reply_to].to_s).to eq ''
+      expect(mail).to match_html_fixture
+    end
+  end
+
   describe 'publishing_reminder' do
     let(:competition) { create(:competition) }
     let(:mail) { described_class.with(competition:).publishing_reminder }

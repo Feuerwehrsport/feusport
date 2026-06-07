@@ -1,0 +1,4 @@
+CompetitionMailer snapshot_reminder renders the headers and body
+
+mailer
+html

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_06_03_213042) do
+ActiveRecord::Schema[7.2].define(version: 2026_06_07_204313) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
@@ -150,6 +150,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_03_213042) do
     t.date "change_people_until"
     t.text "address"
     t.geography "lnglat", limit: {srid: 4326, type: "st_point", geographic: true}
+    t.datetime "snapshot_reminder_sent"
     t.index ["date"], name: "index_competitions_on_date"
     t.index ["lnglat"], name: "index_competitions_on_lnglat", using: :gist
     t.index ["wko_id"], name: "index_competitions_on_wko_id"

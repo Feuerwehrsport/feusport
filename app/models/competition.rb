@@ -21,6 +21,7 @@
 #  registration_open_until :date
 #  show_bib_numbers        :boolean          default(FALSE), not null
 #  slug                    :string(50)       not null
+#  snapshot_reminder_sent  :datetime
 #  visible                 :boolean          default(FALSE), not null
 #  year                    :integer          not null
 #  created_at              :datetime         not null

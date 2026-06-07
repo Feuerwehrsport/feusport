@@ -11,3 +11,7 @@ production:
     class: DebugJob
     priority: 10
     schedule: '*/20 * * * *'
+  snapshot_reminder_job:
+    class: 'Snapshot::ReminderJob'
+    priority: 40
+    schedule: */15 8-16 * * *

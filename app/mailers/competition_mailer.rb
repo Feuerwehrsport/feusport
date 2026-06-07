@@ -63,6 +63,16 @@ class CompetitionMailer < ApplicationMailer
     )
   end
 
+  def snapshot_reminder
+    @competition = @params[:competition]
+
+    to = @competition.users.map { |user| email_address_with_name(user.email, user.name) }
+    mail(
+      to:,
+      subject: "Lade Schnappschüsse deines Wettkampfs hoch - #{@competition.name}",
+    )
+  end
+
   def publishing_reminder
     @competition = @params[:competition]
 

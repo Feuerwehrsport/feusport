@@ -81,4 +81,37 @@ RSpec.describe Snapshot do
       expect(described_class.count).to eq 2
     end
   end
+
+  describe 'Snapshot::ReminderJob' do
+    it 'delivers mails to competitions without highligt' do
+      expect do
+        Snapshot::ReminderJob.perform_now
+      end.to have_enqueued_job.with('CompetitionMailer', 'snapshot_reminder', 'deliver_now',
+                                    { params: { competition: }, args: [] })
+
+      competition.reload
+      expect(competition.snapshot_reminder_sent).not_to be_nil
+
+      expect do
+        Snapshot::ReminderJob.perform_now
+      end.not_to have_enqueued_job
+
+      competition.update!(snapshot_reminder_sent: nil)
+      snapshot = create(:snapshot, competition:, highlight: true)
+
+      expect do
+        Snapshot::ReminderJob.perform_now
+      end.not_to have_enqueued_job
+
+      competition.reload
+      expect(competition.snapshot_reminder_sent).not_to be_nil
+      competition.update!(snapshot_reminder_sent: nil)
+
+      snapshot.update!(highlight: false)
+
+      expect do
+        Snapshot::ReminderJob.perform_now
+      end.to have_enqueued_job
+    end
+  end
 end

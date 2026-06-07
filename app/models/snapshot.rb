@@ -73,4 +73,21 @@ class Snapshot < ApplicationRecord
       snapshot.file.blob.analyze
     end
   end
+
+  class ReminderJob < ApplicationJob
+    discard_on ActiveJob::DeserializationError
+
+    def perform
+      competitions.first&.tap do |competition|
+        unless competition.snapshots.exists?(highlight: true)
+          CompetitionMailer.with(competition:).snapshot_reminder.deliver_later
+        end
+        competition.update!(snapshot_reminder_sent: Time.current)
+      end
+    end
+
+    def competitions
+      Competition.where(snapshot_reminder_sent: nil).where(Competition.arel_table[:date].lt(Date.current))
+    end
+  end
 end
