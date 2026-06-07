@@ -33,7 +33,7 @@ RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
   config.infer_spec_type_from_file_location!
   config.filter_rails_from_backtrace!
-  config.use_transactional_fixtures = false
+  config.use_transactional_fixtures = true
 
   config.before do
     FactoryBot.rewind_sequences
@@ -46,12 +46,5 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     FactoryBot.find_definitions
-  end
-
-  config.around do |example|
-    ActiveRecord::Base.transaction do
-      example.run
-      raise ActiveRecord::Rollback
-    end
   end
 end
