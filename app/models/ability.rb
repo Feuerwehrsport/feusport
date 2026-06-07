@@ -25,7 +25,7 @@ class Ability
     can(:manage, Document, competition: manage_ua)
 
     can(:read, Snapshot, competition: read_ua)
-    can(:manage, Snapshot, competition: manage_ua)
+    can(:manage, Snapshot, competition: { user_accesses: { user_id: user.id } })
 
     can(:read, Discipline, competition: read_ua)
     can(:manage, Discipline, competition: manage_ua)
