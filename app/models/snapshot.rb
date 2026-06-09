@@ -20,6 +20,23 @@
 #  fk_rails_...  (competition_id => competitions.id)
 #
 class Snapshot < ApplicationRecord
+  DISPLAY_VARIANT = {
+    resize_to_limit: [2000, 2000],
+    saver: { quality: 85 },
+  }.freeze
+  THUMB_DEFAULT_VARIANT = {
+    resize_to_fill: [400, 300],
+    saver: { quality: 85 },
+  }.freeze
+  THUMB_MINI_VARIANT = {
+    resize_to_fill: [100, 100],
+    saver: { quality: 85 },
+  }.freeze
+  THUMB_PREVIEW_VARIANT = {
+    resize_to_fill: [200, 200],
+    saver: { quality: 85 },
+  }.freeze
+
   belongs_to :competition
 
   has_one_attached :file
@@ -45,32 +62,17 @@ class Snapshot < ApplicationRecord
   end
 
   def enqueue_resize
-    ResizeJob.perform_later(self)
+    VariantJob.perform_later(self)
   end
 
-  class ResizeJob < ApplicationJob
-    MAX_DIMENSION = 2000
-    QUALITY = 85
-
+  class VariantJob < ApplicationJob
     queue_with_priority 20 # unwichtig
 
     def perform(snapshot)
-      require 'image_processing/vips'
-
-      source_path = ActiveStorage::Blob.service.path_for(snapshot.file.key)
-      processed = ImageProcessing::Vips
-                  .source(source_path)
-                  .resize_to_limit(MAX_DIMENSION, MAX_DIMENSION)
-                  .convert('jpg')
-                  .saver(quality: QUALITY)
-                  .call
-
-      snapshot.file.attach(
-        io: processed,
-        filename: "#{snapshot.file.filename.base}.jpg",
-        content_type: 'image/jpeg',
-      )
-      snapshot.file.blob.analyze
+      snapshot.file.variant(Snapshot::THUMB_DEFAULT_VARIANT).processed
+      snapshot.file.variant(Snapshot::THUMB_MINI_VARIANT).processed
+      snapshot.file.variant(Snapshot::THUMB_PREVIEW_VARIANT).processed
+      snapshot.file.variant(Snapshot::DISPLAY_VARIANT).processed
     end
   end
 

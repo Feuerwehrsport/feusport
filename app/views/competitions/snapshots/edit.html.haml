@@ -6,7 +6,7 @@
       = card("#{resource_class.model_name.human} aktualisieren") do |c|
         - c.body do
           = f.input :title
-          = render 'competitions/snapshots/gallery_item', snapshot: resource_instance, resize_to_fill: [200, 200]
+          = render 'competitions/snapshots/gallery_item', snapshot: resource_instance, variant: Snapshot::THUMB_PREVIEW_VARIANT
           = render 'competitions/snapshots/highlight', f:, resource_instance:
         - c.footer do
           = f.primary_button :submit, 'Ändern'

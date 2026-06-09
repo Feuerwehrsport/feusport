@@ -1,4 +1,4 @@
-- resize_to_fill ||= [400, 300]
+- variant ||= Snapshot::THUMB_DEFAULT_VARIANT
 
-= link_to rails_blob_path(snapshot.file), class: 'gallery-item', data: { gallery: 'snapshots' }, title: snapshot.title do
-  = image_tag(snapshot.file.variant(resize_to_fill:), class: "img-fluid rounded #{snapshot.highlight? ? 'highlight-shadow' : 'shadow-sm'}")
+= link_to snapshot.file.variant(Snapshot::DISPLAY_VARIANT), class: 'gallery-item', data: { gallery: 'snapshots' }, title: snapshot.title do
+  = image_tag(snapshot.file.variant(variant), class: "img-fluid rounded #{snapshot.highlight? ? 'highlight-shadow' : 'shadow-sm'}")

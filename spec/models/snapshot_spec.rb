@@ -50,21 +50,17 @@ RSpec.describe Snapshot do
       expect do
         snapshot = create(:snapshot)
         expect(snapshot).to be_persisted
-      end.to have_enqueued_job(Snapshot::ResizeJob)
+      end.to have_enqueued_job(Snapshot::VariantJob)
     end
   end
 
-  describe 'Snapshot::ResizeJob' do
+  describe 'Snapshot::VariantJob' do
     let(:snapshot) { create(:snapshot, :large_image, competition:) }
 
-    it 'limits image dimensions' do
-      Snapshot::ResizeJob.perform_now(snapshot)
-
-      snapshot.reload
-
-      metadata = snapshot.file.metadata
-      expect(metadata['width']).to be <= 2000
-      expect(metadata['height']).to be <= 2000
+    it 'creates image variants' do
+      expect do
+        Snapshot::VariantJob.perform_now(snapshot)
+      end.to change(ActiveStorage::VariantRecord, :count).by(4)
     end
   end
 
