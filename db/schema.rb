@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_06_07_204313) do
+ActiveRecord::Schema[7.2].define(version: 2026_06_09_110955) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
@@ -598,7 +598,10 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_07_204313) do
     t.boolean "highlight", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "processed", default: false, null: false
     t.index ["competition_id"], name: "index_snapshots_on_competition_id"
+    t.index ["highlight"], name: "index_snapshots_on_highlight"
+    t.index ["processed"], name: "index_snapshots_on_processed"
   end
 
   create_table "solid_queue_blocked_executions", force: :cascade do |t|

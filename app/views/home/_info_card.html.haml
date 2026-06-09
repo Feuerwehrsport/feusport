@@ -2,7 +2,7 @@
   .card.text-bg-dark.border-0
     - if snapshot
       = link_to competition_path(snapshot.competition), class: 'text-decoration-none' do
-        = image_tag snapshot.file.variant(Snapshot::HOME_VARIANT),
+        = image_tag snapshot.variant_path(:home),
                     class: 'card-img'
 
         .card-img-overlay.d-flex.flex-column.justify-content-end

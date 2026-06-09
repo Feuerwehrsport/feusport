@@ -1,4 +1,4 @@
-- variant ||= Snapshot::THUMB_DEFAULT_VARIANT
+- variant ||= :thumb_default
 
-= link_to snapshot.file.variant(Snapshot::DISPLAY_VARIANT), class: 'gallery-item', data: { gallery: 'snapshots' }, title: snapshot.title do
-  = image_tag(snapshot.file.variant(variant), class: "img-fluid rounded #{snapshot.highlight? ? 'highlight-shadow' : 'shadow-sm'}")
+= link_to snapshot.variant_path(:display), class: 'gallery-item', data: { gallery: 'snapshots' }, title: snapshot.title do
+  = image_tag(snapshot.variant_path(variant), class: "img-fluid rounded #{snapshot.highlight? ? 'highlight-shadow' : 'shadow-sm'}")

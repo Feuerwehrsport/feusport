@@ -6,6 +6,7 @@
 #
 #  id             :uuid             not null, primary key
 #  highlight      :boolean          default(FALSE), not null
+#  processed      :boolean          default(FALSE), not null
 #  title          :string           not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
@@ -14,6 +15,8 @@
 # Indexes
 #
 #  index_snapshots_on_competition_id  (competition_id)
+#  index_snapshots_on_highlight       (highlight)
+#  index_snapshots_on_processed       (processed)
 #
 # Foreign Keys
 #
@@ -59,8 +62,32 @@ RSpec.describe Snapshot do
 
     it 'creates image variants' do
       expect do
-        Snapshot::VariantJob.perform_now(snapshot)
-      end.to change(ActiveStorage::VariantRecord, :count).by(5)
+        expect do
+          Snapshot::VariantJob.perform_now(snapshot)
+        end.to change(ActiveStorage::VariantRecord, :count).by(5)
+      end.to have_enqueued_job(Snapshot::NginxVariantsJob)
+
+      expect do
+        Snapshot::RemoveVariantJob.perform_now(snapshot)
+      end.to change(ActiveStorage::VariantRecord, :count).by(-5)
+    end
+  end
+
+  describe 'Snapshot::NginxVariantsJob' do
+    let(:snapshot) { create(:snapshot, competition:) }
+
+    it 'creates image variants' do
+      FileUtils.rm_rf(snapshot.nginx_base_dir)
+
+      expect do
+        Snapshot::NginxVariantsJob.perform_now(snapshot)
+      end.to have_enqueued_job(Snapshot::RemoveVariantJob)
+
+      expect(Dir["#{snapshot.nginx_base_dir}/*"].count).to eq 5
+
+      snapshot.destroy
+
+      expect(Dir["#{snapshot.nginx_base_dir}/*"].count).to eq 0
     end
   end
 
