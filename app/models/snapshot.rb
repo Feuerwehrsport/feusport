@@ -24,6 +24,10 @@ class Snapshot < ApplicationRecord
     resize_to_limit: [2000, 2000],
     saver: { quality: 85 },
   }.freeze
+  HOME_VARIANT = {
+    resize_to_fill: [500, 500],
+    saver: { quality: 85 },
+  }.freeze
   THUMB_DEFAULT_VARIANT = {
     resize_to_fill: [400, 300],
     saver: { quality: 85 },
@@ -51,6 +55,10 @@ class Snapshot < ApplicationRecord
   after_commit :unset_other_highlights, if: :highlight?
   after_commit :enqueue_resize, on: :create
 
+  def self.for_home
+    Snapshot.where(highlight: true).order(Arel.sql('RANDOM()')).first
+  end
+
   def other_highlights
     competition.snapshots.where.not(id:).where(highlight: true)
   end
@@ -73,6 +81,7 @@ class Snapshot < ApplicationRecord
       snapshot.file.variant(Snapshot::THUMB_MINI_VARIANT).processed
       snapshot.file.variant(Snapshot::THUMB_PREVIEW_VARIANT).processed
       snapshot.file.variant(Snapshot::DISPLAY_VARIANT).processed
+      snapshot.file.variant(Snapshot::HOME_VARIANT).processed
     end
   end
 

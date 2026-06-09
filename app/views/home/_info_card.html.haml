@@ -1,5 +1,22 @@
 .card.text-bg-accent2
-  = image_tag 'ambiance/blurred-01.jpg', class: 'card-img-top'
+  .card.text-bg-dark.border-0
+    - if snapshot
+      = link_to competition_path(snapshot.competition), class: 'text-decoration-none' do
+        = image_tag snapshot.file.variant(Snapshot::HOME_VARIANT),
+                    class: 'card-img'
+
+        .card-img-overlay.d-flex.flex-column.justify-content-end
+          .bg-light.bg-opacity-75.rounded.p-3
+            %h5.card-title.mb-1.snapshot-home-title= snapshot.competition.name
+            %p.card-text.mb-1.snapshot-home-title.sub-title
+              = snapshot.competition.place
+              ·
+              = l(snapshot.competition.date)
+
+            %p.card-text.mb-0.snapshot-home-title.sub-title= snapshot.title
+
+    - else
+      = image_tag 'ambiance/blurred-01.jpg', class: 'card-img'
   .card-header
     %h2 feusport.de
     %p.lead Was ist das?
@@ -8,5 +25,3 @@
     %p Dieses Projekt dient der Kommunikation innerhalb der Feuerwehrsport-Szene in Deutschland. Es soll die Übersicht über Wettkämpfe, Termine und Ergebnisse verbessern.
 
     %p Die Wettkampf-Planung und -Auswertung ist dabei auf den internationalen Feuerwehrsport zugeschnitten. Es können zwar auch andere Wettkämpfe (z.B. Jugend, Traditionell) angelegt werden, aber die volle Unterstützung ist derzeit noch nicht gegeben.
-
-    %p Vor diesem Projekt gab es die Feuerwehrsport-Statistik und den Wettkampf-Manager. Beide sind mit der Zeit gewachsen und erfüllten nicht mehr die Anforderungen an eine zeitgemäße Wettkampfplanung. Gerade die Statistik-Seite war eigentlich niemals als Planungs-Tool gedacht. Der Wettkampf-Manager war ursprünglich nur für den lokalen Einsatz konzipiert und enthält deswegen wenig Funktionen, die man gut im Internet nutzen kann.

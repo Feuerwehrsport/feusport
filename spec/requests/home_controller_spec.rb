@@ -6,6 +6,11 @@ RSpec.describe 'Home' do
   let!(:competition) { create(:competition) }
   let(:user) { competition.users.first }
 
+  before do
+    view_sanitizer.gsub(%r{active_storage/blobs/redirect/[^/]+/}, 'BLOBID')
+    view_sanitizer.gsub(%r{active_storage/representations/redirect/[^/]+/[^/]+/}, 'BLOBID')
+  end
+
   describe 'home' do
     it 'shows home page' do
       get '/'
@@ -13,6 +18,10 @@ RSpec.describe 'Home' do
 
       get "/?year=#{competition.year}"
       expect(response).to match_html_fixture.with_affix('only-year')
+
+      create(:snapshot, highlight: true)
+      get '/'
+      expect(response).to match_html_fixture.with_affix('with-snapshot')
     end
   end
 

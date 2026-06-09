@@ -11,4 +11,5 @@
     = render('competitions_card', competitions: @competitions)
 
   .col-lg-5.col-xl-4
-    = render('info_card')
+    = render('info_card', snapshot: Snapshot.for_home)
+    = render('support_card')

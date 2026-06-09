@@ -60,7 +60,7 @@ RSpec.describe Snapshot do
     it 'creates image variants' do
       expect do
         Snapshot::VariantJob.perform_now(snapshot)
-      end.to change(ActiveStorage::VariantRecord, :count).by(4)
+      end.to change(ActiveStorage::VariantRecord, :count).by(5)
     end
   end
 
