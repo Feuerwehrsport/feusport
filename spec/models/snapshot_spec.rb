@@ -77,6 +77,8 @@ RSpec.describe Snapshot do
     let(:snapshot) { create(:snapshot, competition:) }
 
     it 'creates image variants' do
+      skip("Github-CI doesn't support avif") if ENV['GITHUB_ACTIONS']
+
       FileUtils.rm_rf(snapshot.nginx_base_dir)
 
       expect do
