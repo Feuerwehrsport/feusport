@@ -1,5 +1,5 @@
 .card.text-bg-accent2
-  .card.text-bg-dark.border-0
+  .card.text-bg-dark.border-0{ data: { turbo_temporary: true } }
     - if snapshot
       = link_to competition_path(snapshot.competition), class: 'text-decoration-none' do
         = image_tag snapshot.variant_path(:home),
