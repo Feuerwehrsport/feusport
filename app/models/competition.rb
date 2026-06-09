@@ -76,6 +76,7 @@ class Competition < ApplicationRecord
   has_many :competition_features, class_name: 'CompetitionFeature', dependent: :destroy
   has_many :features, class_name: 'Feature', through: :competition_features
   has_many :snapshots, class_name: 'Snapshot', dependent: :destroy
+  has_many :publishings, class_name: 'FireSportStatistics::Publishing', dependent: :destroy
 
   scope :current, -> { where(date: (14.days.ago..6.months.from_now)) }
 
