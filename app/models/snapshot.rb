@@ -144,7 +144,7 @@ class Snapshot < ApplicationRecord
       end
 
       snapshot.update!(processed: true)
-      RemoveVariantJob.set(wait: 10.seconds).perform_later
+      RemoveVariantJob.set(wait: 10.seconds).perform_later(snapshot)
     end
   end
 
