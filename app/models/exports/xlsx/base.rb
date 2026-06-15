@@ -33,6 +33,7 @@ module Exports::Xlsx::Base
   end
 
   def add_worksheet(name, &)
+    name = name.presence || '-'
     name = name.to_s.delete(Axlsx::WORKSHEET_NAME_FORBIDDEN_CHARS.join).truncate_bytes(30)
     workbook.add_worksheet(name:, &)
   end
