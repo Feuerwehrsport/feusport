@@ -20,10 +20,11 @@ RSpec.describe 'Score::MultiResultBestRow' do
     let(:team2) { create(:team, competition:, band:) }
     let(:team3) { create(:team, competition:, band:) }
     let(:team4) { create(:team, competition:, band:) }
+    let(:team5) { create(:team, competition:, band:) }
 
     context 'when entries given' do
       let!(:list_din1) do
-        create_score_list(result_din, team1 => 1892, team2 => nil, team3 => 2040, team4 => nil)
+        create_score_list(result_din, team1 => 1892, team2 => nil, team3 => 2040, team4 => nil, team5 => 1893)
       end
       let!(:list_din2) do
         create_score_list(result_din, team1 => 1912, team2 => 2021, team3 => 2041, team4 => nil)
@@ -38,7 +39,7 @@ RSpec.describe 'Score::MultiResultBestRow' do
       context 'when method is best' do
         it 'return results in correct order' do
           rows = result.rows
-          expect(rows.count).to eq 4
+          expect(rows.count).to eq 5
 
           expect(rows[0].entity).to eq team3
           expect(rows[0].best_result_entry.time).to eq 1892
@@ -59,10 +60,15 @@ RSpec.describe 'Score::MultiResultBestRow' do
           expect(rows[2].calculate(position: 2)).to eq 2021
           expect(rows[2].place).to eq 2
 
-          expect(rows[3].entity).to eq team4
-          expect(rows[3].best_result_entry.time).to eq 1998
-          expect(rows[3].calculate(position: 1)).to eq 1999
+          expect(rows[3].entity).to eq team5
+          expect(rows[3].best_result_entry.time).to eq 1893
+          expect(rows[3].calculate(position: 1)).to eq 99_999_999
           expect(rows[3].place).to eq 4
+
+          expect(rows[4].entity).to eq team4
+          expect(rows[4].best_result_entry.time).to eq 1998
+          expect(rows[4].calculate(position: 1)).to eq 1999
+          expect(rows[4].place).to eq 5
         end
       end
 
@@ -99,9 +105,9 @@ RSpec.describe 'Score::MultiResultBestRow' do
               time_long: '19,98 Sekunden',
               time_short: '19,98 s',
               time_without_seconds: '19,98',
-              rank: '4.',
-              rank_with_rank: '4. Platz',
-              rank_without_dot: '4',
+              rank: '5.',
+              rank_with_rank: '5. Platz',
+              rank_without_dot: '5',
               assessment: 'DIN oder TGL',
               assessment_with_gender: 'DIN oder TGL',
               result_name: 'DIN oder TGL',

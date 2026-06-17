@@ -2,7 +2,7 @@
 
 class Score::MultiResultBestRow < Score::MultiResultRow
   def self.select(rows)
-    rows.select { |row| row.result_rows.count == row.results.count }
+    rows
   end
 
   def add_result_row(result_row)
