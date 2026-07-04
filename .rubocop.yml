@@ -9,7 +9,7 @@ AllCops:
   - private/**/*
   - app/models/concerns/schema_validations.rb
   TargetRailsVersion: 7.2
-  TargetRubyVersion: 3.4.8
+  TargetRubyVersion: 3.4.10
 Bundler/OrderedGems:
   Enabled: false
 FactoryBot/AssociationStyle:
