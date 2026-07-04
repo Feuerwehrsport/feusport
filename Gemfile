@@ -46,8 +46,6 @@ gem 'prawn-table'
 gem 'prawn-qrcode'
 gem 'matrix'
 
-gem 'concurrent-ruby', '1.3.4' # to hold an this gem in the old version, wait for fix (bad version is 1.3.5)
-
 gem 'mutex_m' # remove on Rails 7.2
 gem 'drb' # remove on Rails 7.2
 gem 'base64' # remove on Rails 7.2
