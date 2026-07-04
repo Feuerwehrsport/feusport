@@ -14,4 +14,4 @@
     - Changelog.reorder(date: :desc).first(5).each do |log|
       = card_body(log.title, class: 'mb-4') do
         %p.text-end= l(log.date)
-        %p!= log.html
+        %p= log.html

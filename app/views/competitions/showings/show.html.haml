@@ -11,7 +11,7 @@
         = render 'card_address', competition: @competition
 
       .card-body.competition-descripton
-        != @competition.description_html
+        = @competition.description_html
     .d-flex.flex-wrap.mt-2
       - @competition.features.each do |feature|
         .p-2

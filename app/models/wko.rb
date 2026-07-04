@@ -30,6 +30,6 @@ class Wko < ApplicationRecord
 
   def description_html
     markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
-    markdown.render(description_md)
+    markdown.render(description_md).html_safe
   end
 end

@@ -123,7 +123,7 @@ class Competition < ApplicationRecord
       autolink: true, tables: true,
     )
     html = markdown.render(description.to_s)
-    Sanitize.fragment(html, Sanitize::Config::RELAXED) # xss safe
+    Sanitize.fragment(html, Sanitize::Config::RELAXED).html_safe # xss safe
   end
 
   def date=(new_date)

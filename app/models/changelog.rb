@@ -16,6 +16,6 @@ class Changelog < ApplicationRecord
 
   def html
     markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
-    markdown.render(md)
+    markdown.render(md).html_safe
   end
 end
