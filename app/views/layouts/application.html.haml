@@ -22,7 +22,7 @@
         .container
           = yield(:page_tabs)
     .container.mt-4
-      .alert-flash
+      .alert-flash{ data: { turbo_temporary: true } }
         - flash.each do |name, msg|
           - msg = t("alerts.#{msg}", default: msg)
           - next if name == 'timedout'
