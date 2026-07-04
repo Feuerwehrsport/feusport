@@ -110,6 +110,7 @@ class Snapshot < ApplicationRecord
 
   class VariantJob < ApplicationJob
     queue_with_priority 20 # unwichtig
+    discard_on ActiveJob::DeserializationError, ActiveRecord::RecordNotFound
 
     def perform(snapshot)
       PRODUCTION_VARIANTS.each_key { snapshot.file.variant(Snapshot.variant(it)).processed }
@@ -120,6 +121,7 @@ class Snapshot < ApplicationRecord
 
   class RemoveVariantJob < ApplicationJob
     queue_with_priority 40 # unwichtiger
+    discard_on ActiveJob::DeserializationError, ActiveRecord::RecordNotFound
 
     def perform(snapshot)
       PRODUCTION_VARIANTS.each_key { snapshot.file.variant(Snapshot.variant(it)).destroy }
@@ -128,6 +130,7 @@ class Snapshot < ApplicationRecord
 
   class NginxVariantsJob < ApplicationJob
     queue_with_priority 30 # unwichtiger
+    discard_on ActiveJob::DeserializationError, ActiveRecord::RecordNotFound
 
     def perform(snapshot)
       source_path = ActiveStorage::Blob.service.path_for(snapshot.file.key)

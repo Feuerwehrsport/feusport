@@ -9,5 +9,8 @@ RailsLogParser.configure do |parser|
     /Discarded ScoreListChannel::Updater/,
     /Rack::Multipart::EmptyContentError/,
     /ActionController::BadRequest/,
+    /Discarded .+ due to a ActiveJob::DeserializationError/,
+    /Discarded .+ due to a ActiveRecord::RecordNotFound/,
+
   ]
 end
