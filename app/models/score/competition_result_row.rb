@@ -46,7 +46,7 @@ Score::CompetitionResultRow = Struct.new(:result, :team) do
     compare
   end
 
-  def places_to_points_compare(other)
+  def ranks_to_points_compare(other)
     compare = points <=> other.points
     return fire_attack_result_entry <=> other.fire_attack_result_entry if compare.zero?
 

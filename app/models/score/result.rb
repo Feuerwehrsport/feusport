@@ -122,7 +122,7 @@ class Score::Result < ApplicationRecord
   end
 
   def rows(*)
-    @rows ||= add_places(generate_rows.sort)
+    @rows ||= add_ranks(generate_rows.sort)
   end
 
   def starting_time_required?

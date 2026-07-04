@@ -296,7 +296,7 @@ RSpec.describe Score::Result do
         let!(:list1) { create_score_list(result, person1 => nil, person2 => nil) }
         let!(:list2) { create_score_list(result, person1 => nil, person2 => nil) }
 
-        it 'get the same place' do
+        it 'get the same rank' do
           rows = result.rows
           expect(rows.first <=> rows.second).to eq 0
 
@@ -357,11 +357,11 @@ RSpec.describe Score::Result do
         let!(:list1) { create_score_list(result, team1 => nil, team2 => nil) }
         let!(:list2) { create_score_list(result, team1 => nil, team2 => nil) }
 
-        it 'get the same place' do
+        it 'get the same rank' do
           rows = result.rows
           expect(rows.first <=> rows.second).to eq 0
-          expect(rows.first.place).to eq 2
-          expect(rows.second.place).to eq 2
+          expect(rows.first.rank).to eq 2
+          expect(rows.second.rank).to eq 2
 
           # starting time is ignored
           list1.update!(starting_time_string: '00:00')
@@ -369,8 +369,8 @@ RSpec.describe Score::Result do
 
           rows = described_class.find(result.id).rows
           expect(rows.first <=> rows.second).to eq 0
-          expect(rows.first.place).to eq 2
-          expect(rows.second.place).to eq 2
+          expect(rows.first.rank).to eq 2
+          expect(rows.second.rank).to eq 2
         end
       end
 
@@ -383,14 +383,14 @@ RSpec.describe Score::Result do
           expect(rows.count).to eq 2
 
           expect(rows.first.entity).to eq team2
-          expect(rows.first.place).to eq 1
+          expect(rows.first.rank).to eq 1
           expect(rows.first.result_entry_from(list1).time).to eq 1912
           expect(rows.first.result_entry_from(list2).time).to eq 1913
 
           expect(rows.second.entity).to eq team1
           expect(rows.second.result_entry_from(list1).time).to eq 1912
           expect(rows.second.result_entry_from(list2)).to be_nil
-          expect(rows.second.place).to eq 2
+          expect(rows.second.rank).to eq 2
         end
       end
 
@@ -402,8 +402,8 @@ RSpec.describe Score::Result do
           rows = result.rows
           expect(rows.count).to eq 2
           expect(rows.first <=> rows.second).to eq 0
-          expect(rows.first.place).to eq 1
-          expect(rows.second.place).to eq 1
+          expect(rows.first.rank).to eq 1
+          expect(rows.second.rank).to eq 1
 
           # starting time is used
           list1.update!(starting_time_string: '00:00')
@@ -413,12 +413,12 @@ RSpec.describe Score::Result do
           expect(rows.first <=> rows.second).to eq(-1)
 
           expect(rows.first.entity).to eq team1
-          expect(rows.first.place).to eq 1
+          expect(rows.first.rank).to eq 1
           expect(rows.first.result_entry_from(list1).time).to eq 1912
           expect(rows.first.result_entry_from(list2).time).to eq 1913
 
           expect(rows.second.entity).to eq team2
-          expect(rows.second.place).to eq 2
+          expect(rows.second.rank).to eq 2
           expect(rows.second.result_entry_from(list1).time).to eq 1913
           expect(rows.second.result_entry_from(list2).time).to eq 1912
         end
@@ -433,11 +433,11 @@ RSpec.describe Score::Result do
           expect(rows.first <=> rows.second).to eq(-1)
 
           expect(rows.first.entity).to eq team1
-          expect(rows.first.place).to eq 1
+          expect(rows.first.rank).to eq 1
           expect(rows.first.result_entry_from(list1).time).to eq 1912
 
           expect(rows.second.entity).to eq team2
-          expect(rows.second.place).to eq 2
+          expect(rows.second.rank).to eq 2
           expect(rows.second.result_entry_from(list1).time).to eq 1912
         end
       end
@@ -458,11 +458,11 @@ RSpec.describe Score::Result do
         let!(:list1) { create_score_list(result, team1_a => nil, team1_b => nil, team2_a => nil, team2_b => nil) }
         let!(:list2) { create_score_list(result, team1_a => nil, team1_b => nil, team2_a => nil, team2_b => nil) }
 
-        it 'get the same place' do
+        it 'get the same rank' do
           rows = result.rows
           expect(rows.first <=> rows.second).to eq 0
-          expect(rows.first.place).to eq 4
-          expect(rows.second.place).to eq 4
+          expect(rows.first.rank).to eq 4
+          expect(rows.second.rank).to eq 4
 
           # starting time is ignored
           list1.update!(starting_time_string: '00:00')
@@ -470,8 +470,8 @@ RSpec.describe Score::Result do
 
           rows = described_class.find(result.id).rows
           expect(rows.first <=> rows.second).to eq 0
-          expect(rows.first.place).to eq 4
-          expect(rows.second.place).to eq 4
+          expect(rows.first.rank).to eq 4
+          expect(rows.second.rank).to eq 4
         end
       end
 
@@ -484,22 +484,22 @@ RSpec.describe Score::Result do
           expect(rows.count).to eq 4
 
           expect(rows[0].entity).to eq team1_a
-          expect(rows[0].place).to eq 1
+          expect(rows[0].rank).to eq 1
           expect(rows[0].result_entry_from(list1).time).to eq 1
           expect(rows[0].result_entry_from(list2).time).to be_nil
 
           expect(rows[1].entity).to eq team1_b
-          expect(rows[1].place).to eq 2
+          expect(rows[1].rank).to eq 2
           expect(rows[1].result_entry_from(list1).time).to eq 2
           expect(rows[1].result_entry_from(list2).time).to eq 2
 
           expect(rows[2].entity).to eq team2_a
-          expect(rows[2].place).to eq 3
+          expect(rows[2].rank).to eq 3
           expect(rows[2].result_entry_from(list1).time).to eq 3
           expect(rows[2].result_entry_from(list2).time).to eq 2
 
           expect(rows[3].entity).to eq team2_b
-          expect(rows[3].place).to eq 4
+          expect(rows[3].rank).to eq 4
           expect(rows[3].result_entry_from(list1).time).to eq 4
           expect(rows[3].result_entry_from(list2).time).to be_nil
         end
@@ -513,8 +513,8 @@ RSpec.describe Score::Result do
           rows = result.rows
           expect(rows.count).to eq 2
           expect(rows.first <=> rows.second).to eq 0
-          expect(rows.first.place).to eq 1
-          expect(rows.second.place).to eq 1
+          expect(rows.first.rank).to eq 1
+          expect(rows.second.rank).to eq 1
 
           # starting time is used
           list1.update!(starting_time_string: '00:00')
@@ -524,12 +524,12 @@ RSpec.describe Score::Result do
           expect(rows.first <=> rows.second).to eq(-1)
 
           expect(rows.first.entity).to eq team1_a
-          expect(rows.first.place).to eq 1
+          expect(rows.first.rank).to eq 1
           expect(rows.first.result_entry_from(list1).time).to eq 1
           expect(rows.first.result_entry_from(list2).time).to be_nil
 
           expect(rows.second.entity).to eq team1_b
-          expect(rows.second.place).to eq 2
+          expect(rows.second.rank).to eq 2
           expect(rows.second.result_entry_from(list1).time).to be_nil
           expect(rows.second.result_entry_from(list2).time).to eq 1
         end
@@ -544,11 +544,11 @@ RSpec.describe Score::Result do
           expect(rows.first <=> rows.second).to eq(-1)
 
           expect(rows.first.entity).to eq team1_a
-          expect(rows.first.place).to eq 1
+          expect(rows.first.rank).to eq 1
           expect(rows.first.result_entry_from(list1).time).to eq 1
 
           expect(rows.second.entity).to eq team1_b
-          expect(rows.second.place).to eq 2
+          expect(rows.second.rank).to eq 2
           expect(rows.second.result_entry_from(list1).time).to eq 1
         end
       end

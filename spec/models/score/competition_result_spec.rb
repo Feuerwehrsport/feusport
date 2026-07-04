@@ -112,7 +112,7 @@ RSpec.describe Score::CompetitionResult do
     it 'calculates correct results' do
       rows = competition_result.rows
       expect(rows[0].points).to eq 29
-      expect(rows[0].place).to eq 1
+      expect(rows[0].rank).to eq 1
       expect(rows[0].team).to eq team1
       expect(rows[0].assessment_result_from(result_la).points).to eq 10
       expect(rows[0].assessment_result_from(result_hl).points).to eq 10
@@ -120,7 +120,7 @@ RSpec.describe Score::CompetitionResult do
       expect(rows[0].assessment_result_from(result_fs).points).to eq 9
 
       expect(rows[1].points).to eq 26
-      expect(rows[1].place).to eq 2
+      expect(rows[1].rank).to eq 2
       expect(rows[1].team).to eq team2
       expect(rows[1].assessment_result_from(result_la).points).to eq 9
       expect(rows[1].assessment_result_from(result_hl).points).to eq 9
@@ -128,7 +128,7 @@ RSpec.describe Score::CompetitionResult do
       expect(rows[1].assessment_result_from(result_fs).points).to eq 8
 
       expect(rows[2].points).to eq 25
-      expect(rows[2].place).to eq 3
+      expect(rows[2].rank).to eq 3
       expect(rows[2].team).to eq team3
       expect(rows[2].assessment_result_from(result_la).points).to eq 8
       expect(rows[2].assessment_result_from(result_hl).points).to eq 8
@@ -136,7 +136,7 @@ RSpec.describe Score::CompetitionResult do
       expect(rows[2].assessment_result_from(result_fs).points).to eq 9
 
       expect(rows[3].points).to eq 7
-      expect(rows[3].place).to eq 4
+      expect(rows[3].rank).to eq 4
       expect(rows[3].team).to eq team4
       expect(rows[3].assessment_result_from(result_la).points).to eq 7
       expect(rows[3].assessment_result_from(result_hl).points).to eq 0
@@ -145,33 +145,33 @@ RSpec.describe Score::CompetitionResult do
     end
   end
 
-  describe '.places_to_points' do
-    let(:result_type) { 'places_to_points' }
+  describe '.ranks_to_points' do
+    let(:result_type) { 'ranks_to_points' }
 
     it 'calculates correct results' do
       # Zuerst prüfen, ob die FS richtig als Einzelwertung berechnet wurde
       fs_rows = result_fs.rows
       expect(fs_rows[0].result_entry.time).to eq 6000
       expect(fs_rows[0].entity).to eq team2_a
-      expect(fs_rows[0].place).to eq 1
+      expect(fs_rows[0].rank).to eq 1
       expect(fs_rows[1].result_entry.time).to eq 6000
       expect(fs_rows[1].entity).to eq team3_b
-      expect(fs_rows[1].place).to eq 2
+      expect(fs_rows[1].rank).to eq 2
       expect(fs_rows[2].result_entry.time).to eq 6000
       expect(fs_rows[2].entity).to eq team1_b
-      expect(fs_rows[2].place).to eq 3
+      expect(fs_rows[2].rank).to eq 3
       expect(fs_rows[3].result_entry.time).to eq 6002
       expect(fs_rows[3].entity).to eq team1_a
-      expect(fs_rows[3].place).to eq 4
+      expect(fs_rows[3].rank).to eq 4
       expect(fs_rows[4].result_entry.time).to eq 6002
       expect(fs_rows[4].entity).to eq team3_a
-      expect(fs_rows[4].place).to eq 5
+      expect(fs_rows[4].rank).to eq 5
 
       # Dann die Gesamtwertung prüfen
 
       rows = competition_result.rows
       expect(rows[0].points).to eq 3
-      expect(rows[0].place).to eq 1
+      expect(rows[0].rank).to eq 1
       expect(rows[0].team).to eq team1
       expect(rows[0].assessment_result_from(result_la).points).to eq 1
       expect(rows[0].assessment_result_from(result_hl).points).to eq 1
@@ -179,7 +179,7 @@ RSpec.describe Score::CompetitionResult do
       expect(rows[0].assessment_result_from(result_fs).points).to eq 1
 
       expect(rows[1].points).to eq 7
-      expect(rows[1].place).to eq 2
+      expect(rows[1].rank).to eq 2
       expect(rows[1].team).to eq team2
       expect(rows[1].assessment_result_from(result_la).points).to eq 2
       expect(rows[1].assessment_result_from(result_hl).points).to eq 2
@@ -187,7 +187,7 @@ RSpec.describe Score::CompetitionResult do
       expect(rows[1].assessment_result_from(result_fs).points).to eq 3
 
       expect(rows[2].points).to eq 7
-      expect(rows[2].place).to eq 3
+      expect(rows[2].rank).to eq 3
       expect(rows[2].team).to eq team3
       expect(rows[2].assessment_result_from(result_la).points).to eq 3
       expect(rows[2].assessment_result_from(result_hl).points).to eq 3
@@ -197,7 +197,7 @@ RSpec.describe Score::CompetitionResult do
       # Punktgleich aber besserer LA
 
       expect(rows[3].points).to eq 12
-      expect(rows[3].place).to eq 4
+      expect(rows[3].rank).to eq 4
       expect(rows[3].team).to eq team4
       expect(rows[3].assessment_result_from(result_la).points).to eq 4
       expect(rows[3].assessment_result_from(result_hl).points).to eq 4

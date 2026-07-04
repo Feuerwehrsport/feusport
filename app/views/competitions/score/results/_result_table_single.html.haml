@@ -1,6 +1,6 @@
 %table.table.table-bordered
   %tr
-    - if places
+    - if ranks
       %th
     - if result.competition.show_bib_numbers?
       %th.hide-xs Nr.
@@ -18,8 +18,8 @@
   = tr_xs_rotate_hint
   - rows.each do |row|
     %tr
-      - if places
-        %td #{row.place}.
+      - if ranks
+        %td #{row.rank}.
       - if result.competition.show_bib_numbers?
         %td.hide-xs= row.entity&.bib_number
       %td

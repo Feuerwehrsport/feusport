@@ -43,15 +43,15 @@ RSpec.describe 'Score::GroupResultRow' do
 
         expect(rows[0].entity).to eq team3
         expect(rows[0].result_entry.time).to eq Firesport::INVALID_TIME
-        expect(rows[0].place).to eq 1
+        expect(rows[0].rank).to eq 1
 
         expect(rows[1].entity).to be_in([team1, team2])
         expect(rows[1].result_entry.time).to eq Firesport::INVALID_TIME
-        expect(rows[1].place).to eq 3
+        expect(rows[1].rank).to eq 3
 
         expect(rows[2].entity).to be_in([team1, team2])
         expect(rows[2].result_entry.time).to eq Firesport::INVALID_TIME
-        expect(rows[2].place).to eq 3
+        expect(rows[2].rank).to eq 3
       end
     end
 
@@ -75,15 +75,15 @@ RSpec.describe 'Score::GroupResultRow' do
 
         expect(rows[0].entity).to be_in([team1, team2])
         expect(rows[0].result_entry.time).to eq 3
-        expect(rows[0].place).to eq 1
+        expect(rows[0].rank).to eq 1
 
         expect(rows[1].entity).to be_in([team1, team2])
         expect(rows[1].result_entry.time).to eq 3
-        expect(rows[1].place).to eq 1
+        expect(rows[1].rank).to eq 1
 
         expect(rows[2].entity).to eq team3
         expect(rows[2].result_entry.time).to eq 3
-        expect(rows[2].place).to eq 3
+        expect(rows[2].rank).to eq 3
       end
     end
   end

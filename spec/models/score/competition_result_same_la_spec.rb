@@ -53,30 +53,30 @@ RSpec.describe Score::CompetitionResult do
     let!(:competition_result) do
       create(:score_competition_result, competition:, results: [result_la, result_gs], result_type:)
     end
-    let(:result_type) { 'places_to_points' }
+    let(:result_type) { 'ranks_to_points' }
 
     it 'calculates correct results' do
       rows = competition_result.rows
       expect(rows[0].points).to eq 3
-      expect(rows[0].place).to eq 1
+      expect(rows[0].rank).to eq 1
       expect(rows[0].team).to be_in([team1, team2])
       expect(rows[0].assessment_result_from(result_la).points).to eq 1
       expect(rows[0].assessment_result_from(result_gs).points).to eq 2
 
       expect(rows[1].points).to eq 3
-      expect(rows[1].place).to eq 1
+      expect(rows[1].rank).to eq 1
       expect(rows[1].team).to be_in([team1, team2])
       expect(rows[1].assessment_result_from(result_la).points).to eq 2
       expect(rows[1].assessment_result_from(result_gs).points).to eq 1
 
       expect(rows[2].points).to eq 8
-      expect(rows[2].place).to eq 3
+      expect(rows[2].rank).to eq 3
       expect(rows[2].team).to be_in([team3, team4])
       expect(rows[2].assessment_result_from(result_la).points).to eq 4
       expect(rows[2].assessment_result_from(result_gs).points).to eq 4
 
       expect(rows[3].points).to eq 8
-      expect(rows[3].place).to eq 3
+      expect(rows[3].rank).to eq 3
       expect(rows[3].team).to be_in([team3, team4])
       expect(rows[3].assessment_result_from(result_la).points).to eq 4
       expect(rows[3].assessment_result_from(result_gs).points).to eq 4
@@ -88,25 +88,25 @@ RSpec.describe Score::CompetitionResult do
       it 'calculates correct results' do
         rows = competition_result.rows
         expect(rows[0].points).to eq 19
-        expect(rows[0].place).to eq 1
+        expect(rows[0].rank).to eq 1
         expect(rows[0].team).to be_in([team1, team2])
         expect(rows[0].assessment_result_from(result_la).points).to eq 10
         expect(rows[0].assessment_result_from(result_gs).points).to eq 9
 
         expect(rows[1].points).to eq 19
-        expect(rows[1].place).to eq 1
+        expect(rows[1].rank).to eq 1
         expect(rows[1].team).to be_in([team1, team2])
         expect(rows[1].assessment_result_from(result_la).points).to eq 9
         expect(rows[1].assessment_result_from(result_gs).points).to eq 10
 
         expect(rows[2].points).to eq 14
-        expect(rows[2].place).to eq 3
+        expect(rows[2].rank).to eq 3
         expect(rows[2].team).to be_in([team3, team4])
         expect(rows[2].assessment_result_from(result_la).points).to eq 7
         expect(rows[2].assessment_result_from(result_gs).points).to eq 7
 
         expect(rows[3].points).to eq 14
-        expect(rows[3].place).to eq 3
+        expect(rows[3].rank).to eq 3
         expect(rows[3].team).to be_in([team3, team4])
         expect(rows[3].assessment_result_from(result_la).points).to eq 7
         expect(rows[3].assessment_result_from(result_gs).points).to eq 7

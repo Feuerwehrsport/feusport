@@ -13,7 +13,7 @@ module Exports::ScoreResults
       entity = row&.entity
 
       line = []
-      line.push "#{row.place}."
+      line.push "#{row.rank}."
       if result.single_discipline?
         line.push(entity&.first_name, entity&.last_name)
         line.push(entity&.fire_sport_statistics_person_id) if full
@@ -75,7 +75,7 @@ module Exports::ScoreResults
     data = [header]
 
     result.group_result.rows.each do |row|
-      line = ["#{row.place}.", row.team.full_name, row.result_entry.human_time]
+      line = ["#{row.rank}.", row.team.full_name, row.result_entry.human_time]
       line.push(row&.team&.fire_sport_statistics_team_id, row&.team&.number, row&.team&.export_gender) if full
       data.push(line)
     end

@@ -43,28 +43,28 @@ RSpec.describe Score::GroupResult do
       rows = result_hl.group_result.rows
 
       expect(rows[0].team).to eq team1
-      expect(rows[0].place).to eq 1
+      expect(rows[0].rank).to eq 1
       expect(rows[0].result_entry.time).to eq 3850
       expect(rows[0].rows_in.count).to eq 2
       expect(rows[0].rows_out.count).to eq 0
       expect(rows[0].competition_result_valid?).to be true
 
       expect(rows[1].team).to eq team2
-      expect(rows[1].place).to eq 2
+      expect(rows[1].rank).to eq 2
       expect(rows[1].result_entry.time).to eq 3899
       expect(rows[1].rows_in.count).to eq 2
       expect(rows[1].rows_out.count).to eq 1
       expect(rows[1].competition_result_valid?).to be true
 
       expect(rows[2].team).to eq team3
-      expect(rows[2].place).to eq 3
+      expect(rows[2].rank).to eq 3
       expect(rows[2].result_entry.time).to eq Firesport::INVALID_TIME
       expect(rows[2].rows_in.count).to eq 2
       expect(rows[2].rows_out.count).to eq 0
       expect(rows[2].competition_result_valid?).to be true
 
       expect(rows[3].team).to eq team4
-      expect(rows[3].place).to eq 4
+      expect(rows[3].rank).to eq 4
       expect(rows[3].result_entry.time).to eq Firesport::INVALID_TIME
       expect(rows[3].rows_in.count).to eq 1
       expect(rows[3].rows_out.count).to eq 0

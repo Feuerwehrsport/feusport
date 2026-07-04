@@ -33,7 +33,7 @@ RSpec.describe 'competitions/score/competition_results' do
 
       expect do
         post "/#{competition.year}/#{competition.slug}/score/competition_results",
-             params: { score_competition_result: { name: 'Frauen', hidden: '1', result_type: 'places_to_points',
+             params: { score_competition_result: { name: 'Frauen', hidden: '1', result_type: 'ranks_to_points',
                                                    result_ids: ['', result_la.id] } }
       end.to change(Score::CompetitionResult, :count).by(1)
 
@@ -52,7 +52,7 @@ RSpec.describe 'competitions/score/competition_results' do
             params: { score_competition_result: { name: '' } }
       expect(response).to match_html_fixture.with_affix('edit-with-error').for_status(422)
 
-      Score::CompetitionResult.create!(competition:, name: 'other', result_type: 'places_to_points')
+      Score::CompetitionResult.create!(competition:, name: 'other', result_type: 'ranks_to_points')
 
       patch "/#{competition.year}/#{competition.slug}/score/competition_results/#{result.id}",
             params: { score_competition_result: { hidden: '0' } }

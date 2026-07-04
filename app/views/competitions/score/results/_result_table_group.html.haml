@@ -1,6 +1,6 @@
 %table.table.table-bordered
   %tr
-    - if places
+    - if ranks
       %th
     %th Mannschaft
     - if result.multi_result_method_disabled?
@@ -19,8 +19,8 @@
   = tr_xs_rotate_hint
   - rows.each do |row|
     %tr
-      - if places
-        %td #{row.place}.
+      - if ranks
+        %td #{row.rank}.
       %td
         = row.entity.full_name
         = team_badge(row.entity&.fire_sport_statistics_team, row.entity.band.gender)

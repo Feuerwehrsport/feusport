@@ -46,29 +46,29 @@ RSpec.describe 'Score::MultiResultBestRow' do
           expect(rows[0].calculate(position: 1)).to eq 1893
           expect(rows[0].calculate(position: 2)).to eq 2040
           expect(rows[0].calculate(position: 3)).to eq 2041
-          expect(rows[0].place).to eq 1
+          expect(rows[0].rank).to eq 1
 
           expect(rows[1].entity).to be_in([team1, team2])
           expect(rows[1].best_result_entry.time).to eq 1892
           expect(rows[1].calculate(position: 1)).to eq 1912
           expect(rows[1].calculate(position: 2)).to eq 2021
-          expect(rows[1].place).to eq 2
+          expect(rows[1].rank).to eq 2
 
           expect(rows[2].entity).to be_in([team1, team2])
           expect(rows[2].best_result_entry.time).to eq 1892
           expect(rows[2].calculate(position: 1)).to eq 1912
           expect(rows[2].calculate(position: 2)).to eq 2021
-          expect(rows[2].place).to eq 2
+          expect(rows[2].rank).to eq 2
 
           expect(rows[3].entity).to eq team5
           expect(rows[3].best_result_entry.time).to eq 1893
           expect(rows[3].calculate(position: 1)).to eq 99_999_999
-          expect(rows[3].place).to eq 4
+          expect(rows[3].rank).to eq 4
 
           expect(rows[4].entity).to eq team4
           expect(rows[4].best_result_entry.time).to eq 1998
           expect(rows[4].calculate(position: 1)).to eq 1999
-          expect(rows[4].place).to eq 5
+          expect(rows[4].rank).to eq 5
         end
       end
 
@@ -143,17 +143,17 @@ RSpec.describe 'Score::MultiResultBestRow' do
           expect(rows[0].entity).to eq team1
           expect(rows[0].best_result_entry.time).to eq 1
           expect(rows[0].calculate(position: 1)).to eq 2
-          expect(rows[0].place).to eq 1
+          expect(rows[0].rank).to eq 1
 
           expect(rows[1].entity).to be_in([team2, team3])
           expect(rows[1].best_result_entry.time).to eq Firesport::INVALID_TIME
           expect(rows[1].calculate(position: 1)).to eq Firesport::INVALID_TIME
-          expect(rows[1].place).to eq 3
+          expect(rows[1].rank).to eq 3
 
           expect(rows[2].entity).to be_in([team2, team3])
           expect(rows[2].best_result_entry.time).to eq Firesport::INVALID_TIME
           expect(rows[2].calculate(position: 1)).to eq Firesport::INVALID_TIME
-          expect(rows[2].place).to eq 3
+          expect(rows[2].rank).to eq 3
         end
       end
     end

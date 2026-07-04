@@ -2,9 +2,9 @@
   .col-lg-12.score-result-rows-table{ data: { content: 'rows' } }
     = card_direct(result.name) do
       - if result.single_discipline?
-        = render 'competitions/score/results/result_table_single', result:, rows: result.rows, places: true
+        = render 'competitions/score/results/result_table_single', result:, rows: result.rows, ranks: true
       - else
-        = render 'competitions/score/results/result_table_group', result:, rows: result.rows, places: true
+        = render 'competitions/score/results/result_table_group', result:, rows: result.rows, ranks: true
 
   - if result.single_group_result?
     .col-lg-12.score-result-rows-table{ data: { content: 'group-rows' } }
@@ -16,7 +16,7 @@
             %th Zeit
           - result.group_result.rows.each do |row|
             %tr{ class: row_invalid_class(row) }
-              %td #{row.place}.
+              %td #{row.rank}.
               %th= row.team.full_name
               %th= row.result_entry.human_time
             %tr{ class: row_invalid_class(row) }
@@ -33,6 +33,6 @@
   .col-lg-12.score-result-rows-table{ data: { content: 'out-of-competition-rows' } }
     = card_direct('Außer der Wertung') do
       - if result.single_discipline?
-        = render 'competitions/score/results/result_table_single', result:, rows: result.out_of_competition_rows, places: false
+        = render 'competitions/score/results/result_table_single', result:, rows: result.out_of_competition_rows, ranks: false
       - else
-        = render 'competitions/score/results/result_table_group', result:, rows: result.out_of_competition_rows, places: false
+        = render 'competitions/score/results/result_table_group', result:, rows: result.out_of_competition_rows, ranks: false

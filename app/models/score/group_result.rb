@@ -7,9 +7,9 @@ Score::GroupResult = Struct.new(:result) do
 
   def rows(*)
     @rows ||= if single_discipline?
-                add_places(calculated_rows.sort)
+                add_ranks(calculated_rows.sort)
               else
-                add_places(result.generate_rows(group_result: true).sort)
+                add_ranks(result.generate_rows(group_result: true).sort)
               end
   end
 

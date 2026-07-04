@@ -50,32 +50,32 @@ RSpec.describe 'Score::MultiResultSumOfBestRow' do
         expect(rows[0].entity).to eq person2
         expect(rows[0].best_result_entry.time).to eq 3931
         expect(rows[0].calculate(position: 1)).to eq 3933
-        expect(rows[0].place).to eq 1
+        expect(rows[0].rank).to eq 1
 
         expect(rows[1].entity).to eq person5
         expect(rows[1].best_result_entry.time).to eq 3931
         expect(rows[1].calculate(position: 1)).to eq 4700
-        expect(rows[1].place).to eq 2
+        expect(rows[1].rank).to eq 2
 
         expect(rows[2].entity).to eq person6
         expect(rows[2].best_result_entry.time).to eq 3931
         expect(rows[2].calculate(position: 1)).to eq Firesport::INVALID_TIME
-        expect(rows[2].place).to eq 3
+        expect(rows[2].rank).to eq 3
 
         expect(rows[3].entity).to be_in([person1, person3])
         expect(rows[3].best_result_entry.time).to eq 3932
         expect(rows[3].calculate(position: 1)).to eq 3934
-        expect(rows[3].place).to eq 4
+        expect(rows[3].rank).to eq 4
 
         expect(rows[4].entity).to be_in([person1, person3])
         expect(rows[4].best_result_entry.time).to eq 3932
         expect(rows[4].calculate(position: 1)).to eq 3934
-        expect(rows[4].place).to eq 4
+        expect(rows[4].rank).to eq 4
 
         expect(rows[5].entity).to eq person4
         expect(rows[5].best_result_entry.time).to eq Firesport::INVALID_TIME
         expect(rows[5].calculate(position: 1)).to eq Firesport::INVALID_TIME
-        expect(rows[5].place).to eq 6
+        expect(rows[5].rank).to eq 6
       end
 
       describe 'supports Certificates::StorageSupport' do
@@ -150,17 +150,17 @@ RSpec.describe 'Score::MultiResultSumOfBestRow' do
         expect(rows[0].entity).to eq person1
         expect(rows[0].best_result_entry.time).to eq Firesport::INVALID_TIME
         expect(rows[0].calculate(position: 1)).to eq Firesport::INVALID_TIME
-        expect(rows[0].place).to eq 3
+        expect(rows[0].rank).to eq 3
 
         expect(rows[1].entity).to be_in([person2, person3])
         expect(rows[1].best_result_entry.time).to eq Firesport::INVALID_TIME
         expect(rows[1].calculate(position: 1)).to eq Firesport::INVALID_TIME
-        expect(rows[1].place).to eq 3
+        expect(rows[1].rank).to eq 3
 
         expect(rows[2].entity).to be_in([person2, person3])
         expect(rows[2].best_result_entry.time).to eq Firesport::INVALID_TIME
         expect(rows[2].calculate(position: 1)).to eq Firesport::INVALID_TIME
-        expect(rows[2].place).to eq 3
+        expect(rows[2].rank).to eq 3
       end
     end
   end

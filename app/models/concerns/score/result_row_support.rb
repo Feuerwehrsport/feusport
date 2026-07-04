@@ -6,7 +6,7 @@ module Score::ResultRowSupport
   included do
     include Certificates::StorageSupport
 
-    attr_accessor :place
+    attr_accessor :rank
   end
 
   def starting_time_required?
