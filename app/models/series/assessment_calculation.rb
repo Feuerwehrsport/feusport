@@ -185,7 +185,7 @@ class Series::AssessmentCalculation
     result_rows.each do |row|
       rank              = ranks[row]
       time              = row.result_entry.compare_time.try(:to_i) || Firesport::INVALID_TIME
-      points            = points_for_rank[rank - 1] || 0
+      points            = row.competition_result_valid? ? (points_for_rank[rank - 1] || 0) : 0
       yield(row, time, points, rank)
     end
   end
