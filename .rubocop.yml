@@ -73,6 +73,8 @@ Lint/DataDefineOverride:
   Enabled: true
 Lint/DeprecatedConstants:
   Enabled: true
+Lint/DeprecatedReference:
+  Enabled: true
 Lint/DuplicateBranch:
   Enabled: true
 Lint/DuplicateMagicComment:
@@ -100,6 +102,8 @@ Lint/LambdaWithoutLiteralBlock:
 Lint/LiteralAssignmentInCondition:
   Enabled: true
 Lint/MixedCaseRange:
+  Enabled: true
+Lint/NameTypo:
   Enabled: true
 Lint/NoReturnInBeginEndBlocks:
   Enabled: true

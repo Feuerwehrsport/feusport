@@ -6,10 +6,10 @@ module AccessDeniedSupport
   included do
     rescue_from CanCan::AccessDenied do |exception|
       if Rails.env.development?
-        # :nocov:
+        # simplecov:disable
         Rails.logger.warn '### Access Denied'
         Rails.logger.warn exception.inspect
-        # :nocov:
+        # simplecov:enable
       end
       if current_user
         flash[:alert] = 'Zugriff verweigert'
