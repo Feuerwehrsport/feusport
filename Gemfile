@@ -8,7 +8,8 @@ gem 'rails', '~> 7.0'
 gem 'pg' # database
 gem 'puma' # webserver for development
 gem 'bcrypt' # password hashing
-gem 'redis' # Adapter for ActionCable
+# gem 'redis' # Adapter for ActionCable
+gem 'redis', '~> 5.4' # rails 7.2 needs redis 5
 
 gem 'sprockets-rails' # asset pipeline
 gem 'jsbundling-rails' # bundle and transpile JavaScript

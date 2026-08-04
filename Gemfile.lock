@@ -387,8 +387,8 @@ GEM
       tsort
     recaptcha (5.21.2)
     redcarpet (3.6.1)
-    redis (6.0.0)
-      redis-client (= 0.30.1)
+    redis (5.4.1)
+      redis-client (>= 0.22.0)
     redis-client (0.30.1)
       connection_pool
     regexp_parser (2.12.0)
@@ -604,7 +604,7 @@ DEPENDENCIES
   rails_log_parser
   recaptcha
   redcarpet
-  redis
+  redis (~> 5.4)
   roo
   rspec-rails
   rubocop
