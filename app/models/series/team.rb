@@ -54,12 +54,6 @@ class Series::Team
       round.name
     when :result_name
       config.name
-    when :assessment_with_gender
-      config.name
-    when :gender
-      ""
-    when :date
-      I18n.l(competition.date)
     else
       super
     end
