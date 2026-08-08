@@ -28,7 +28,9 @@ class Series::Person
     when :team_name, :person_bib_number, :assessment_with_gender, :gender, :date, :place, :competition_name
       ''
     when :assessment
-      participations.first&.assessment&.name
+      round.name
+    when :result_name
+      config.name
     else
       super
     end
