@@ -12,5 +12,6 @@ RailsLogParser.configure do |parser|
     /Discarded .+ due to a ActiveJob::DeserializationError/,
     /Discarded .+ due to a ActiveRecord::RecordNotFound/,
     /Request origin not allowed:\z/,
+    /ArgumentError \(invalid byte sequence in UTF-8\)/,
   ]
 end
