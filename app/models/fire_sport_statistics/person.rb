@@ -101,6 +101,8 @@ class FireSportStatistics::Person < ApplicationRecord
     return false if current_result.blank?
 
     discipline = current_result.try(:list)&.discipline&.key || :zk
+    return false unless discipline.in?(%i[hb hl zk])
+
     best_time = public_send(:"personal_best_#{discipline}") || Firesport::INVALID_TIME
     best_time > current_result.compare_time
   end
