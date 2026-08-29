@@ -57,7 +57,9 @@ PageColumn = Struct.new(:base, :pdf, :position) do
   def title(list)
     current_y = pdf.cursor
 
-    base.pdf_discipline_image(list.discipline.key, width: 12, at: [left(10), current_y])
+    if list.discipline&.key.present?
+      base.pdf_discipline_image(list.discipline.key, width: 12, at: [left(10), current_y])
+    end
     pdf.text_box(list.name, at: [left(25), current_y], size: 10, width: 200, height: 12, overflow: :shrink_to_fit,
                             valign: :center)
     pdf.move_down MULTI_LIST_HEADER_SIZE
