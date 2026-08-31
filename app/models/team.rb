@@ -113,7 +113,7 @@ class Team < ApplicationRecord
   end
 
   def update_multi_team
-    new_value = Team.where(band:).where(name:).where.not(id:).exists?
+    new_value = Team.unscoped.where(band:).where(name:).where.not(id:).exists?
     update_column(:multi_team, new_value) if new_value != multi_team?
 
     return unless name_previously_changed?
@@ -122,7 +122,7 @@ class Team < ApplicationRecord
   end
 
   def update_multi_team_similars
-    Team.where(competition:, name: [name, name_previously_was]).where.not(id:).find_each(&:update_multi_team)
+    Team.unscoped.where(competition:, name: [name, name_previously_was]).where.not(id:).find_each(&:update_multi_team)
   end
 
   private
