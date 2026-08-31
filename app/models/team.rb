@@ -8,6 +8,7 @@
 #  certificate_name              :string
 #  enrolled                      :boolean          default(FALSE), not null
 #  lottery_number                :integer
+#  multi_team                    :boolean          default(FALSE), not null
 #  name                          :string(100)      not null
 #  number                        :integer          default(1), not null
 #  registration_hint             :text
@@ -60,6 +61,8 @@ class Team < ApplicationRecord
   default_scope { order(:name, :number) }
 
   after_create :create_assessment_requests
+  after_commit :update_multi_team, on: %i[create update]
+  after_commit :update_multi_team_similars, on: %i[destroy]
   attr_accessor :disable_autocreate_assessment_requests
 
   def group_assessment_validator
@@ -109,6 +112,19 @@ class Team < ApplicationRecord
     band&.gender
   end
 
+  def update_multi_team
+    new_value = Team.where(band:).where(name:).where.not(id:).exists?
+    update_column(:multi_team, new_value) if new_value != multi_team?
+
+    return unless name_previously_changed?
+
+    update_multi_team_similars
+  end
+
+  def update_multi_team_similars
+    Team.where(competition:, name: [name, name_previously_was]).where.not(id:).find_each(&:update_multi_team)
+  end
+
   private
 
   def create_assessment_requests
@@ -118,10 +134,6 @@ class Team < ApplicationRecord
       count = assessment.like_fire_relay? ? 2 : 1
       requests.create!(assessment:, relay_count: count)
     end
-  end
-
-  def multi_team?
-    Team.where(band:).where(name:).where.not(id:).exists?
   end
 
   class GroupAssessmentValidator

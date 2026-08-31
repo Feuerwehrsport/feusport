@@ -44,6 +44,8 @@ RSpec.describe TeamListRestriction do
 
   describe 'validation' do
     it 'checks for diffent teams' do
+      team1.reload
+
       expect(instance).to be_valid
 
       instance.team2 = team1

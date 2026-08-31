@@ -62,7 +62,7 @@ RSpec.describe Score::CompetitionResult do
 
   let!(:list_la1) do
     create_score_list(result_la,
-                      team1 => 2200, team2 => 2400, team3 => 2500, team4 => nil)
+                      team1.reload => 2200, team2 => 2400, team3 => 2500, team4 => nil)
   end
   let!(:list_la2) do
     create_score_list(result_la,

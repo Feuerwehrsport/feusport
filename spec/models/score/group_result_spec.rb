@@ -74,6 +74,7 @@ RSpec.describe Score::GroupResult do
 
   describe 'supports Certificates::StorageSupport' do
     it 'supports all keys' do
+      team1.reload
       rows = result_hl.group_result.rows
 
       [

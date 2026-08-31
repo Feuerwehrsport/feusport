@@ -8,6 +8,7 @@
 #  certificate_name              :string
 #  enrolled                      :boolean          default(FALSE), not null
 #  lottery_number                :integer
+#  multi_team                    :boolean          default(FALSE), not null
 #  name                          :string(100)      not null
 #  number                        :integer          default(1), not null
 #  registration_hint             :text

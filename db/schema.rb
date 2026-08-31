@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_06_09_110955) do
+ActiveRecord::Schema[7.2].define(version: 2026_08_30_191603) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
@@ -784,6 +784,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_09_110955) do
     t.datetime "updated_at", null: false
     t.text "registration_hint"
     t.string "certificate_name"
+    t.boolean "multi_team", default: false, null: false
     t.index ["band_id"], name: "index_teams_on_band_id"
     t.index ["competition_id", "band_id", "name", "number"], name: "index_teams_on_competition_id_and_band_id_and_name_and_number", unique: true
     t.index ["competition_id"], name: "index_teams_on_competition_id"

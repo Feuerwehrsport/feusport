@@ -4,7 +4,7 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 
-# generated from version 20260609110955
+# generated from version 20260830191603
 
 module SchemaValidations
   extend ActiveSupport::Concern
@@ -932,6 +932,7 @@ module SchemaValidations
       validates_with_filter :enrolled, {inclusion: {in: [true, false], message: :blank}}
       validates_with_filter :fire_sport_statistics_team_id, {numericality: {allow_nil: true, only_integer: true, greater_than_or_equal_to: -2147483648, less_than: 2147483648}} unless enums.include?(:fire_sport_statistics_team_id)
       validates_with_filter :lottery_number, {numericality: {allow_nil: true, only_integer: true, greater_than_or_equal_to: -2147483648, less_than: 2147483648}} unless enums.include?(:lottery_number)
+      validates_with_filter :multi_team, {inclusion: {in: [true, false], message: :blank}}
       validates_with_filter :name, {length: {allow_nil: true, maximum: 100}}
       validates_with_filter :name, {presence: {}}
       validates_with_filter :number, {numericality: {allow_nil: true, only_integer: true, greater_than_or_equal_to: -2147483648, less_than: 2147483648}} unless enums.include?(:number)
