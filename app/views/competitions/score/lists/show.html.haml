@@ -59,8 +59,8 @@
           - if can?(:destroy, @list)
             = btn_link_to 'Löschen', { action: :destroy }, data: { turbo_method: 'delete', turbo_confirm: 'Startliste wirklich löschen? Alle bisher eingetragenen Zeiten dieser Liste gehen verloren!' }
 
-    - if @list.results.present?
+    - if @results.present?
       = card_body('Ergebnisse') do
         .d-grid.gap-2
-          - @list.results.each do |result|
+          - @results.each do |result|
             = btn_link_to(result.name, competition_score_result_path(id: result.id))

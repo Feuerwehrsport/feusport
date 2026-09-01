@@ -64,7 +64,9 @@ class Score::List < ApplicationRecord
   end
 
   def discipline
-    assessments&.first&.discipline
+    return @discipline if defined?(@discipline)
+
+    @discipline ||= assessments&.first&.discipline
   end
 
   def single_discipline?

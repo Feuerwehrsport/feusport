@@ -151,23 +151,25 @@ class Score::Result < ApplicationRecord
       next if list.hidden?
       next if !show_hidden_result && list.hidden_results?
 
-      list.entries.not_waiting.each do |list_entry|
-        next if list_entry.assessment != assessment
+      list.entries.not_waiting
+          .includes(assessment: :band).to_a
+          .each do |list_entry|
+            next if list_entry.assessment != assessment
 
-        entity = list_entry.entity
-        entity = entity.team if group_result && entity.is_a?(TeamRelay)
-        next unless use?(entity)
+            entity = list_entry.entity
+            entity = entity.team if group_result && entity.is_a?(TeamRelay)
+            next unless use?(entity)
 
-        if list_entry.out_of_competition?
-          if out_of_competition_rows[entity.id].nil?
-            out_of_competition_rows[entity.id] = Score::ResultRow.new(entity, self, false)
+            if list_entry.out_of_competition?
+              if out_of_competition_rows[entity.id].nil?
+                out_of_competition_rows[entity.id] = Score::ResultRow.new(entity, self, false)
+              end
+              out_of_competition_rows[entity.id].add_list(list_entry)
+            else
+              rows[entity.id] = Score::ResultRow.new(entity, self, group_result) if rows[entity.id].nil?
+              rows[entity.id].add_list(list_entry)
+            end
           end
-          out_of_competition_rows[entity.id].add_list(list_entry)
-        else
-          rows[entity.id] = Score::ResultRow.new(entity, self, group_result) if rows[entity.id].nil?
-          rows[entity.id].add_list(list_entry)
-        end
-      end
     end
     @out_of_competition_rows = out_of_competition_rows.values
     rows.values

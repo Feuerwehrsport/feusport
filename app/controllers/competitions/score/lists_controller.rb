@@ -39,6 +39,7 @@ class Competitions::Score::ListsController < CompetitionNestedController
   def show
     send_pdf(Exports::Pdf::Score::List, args: [@list, params[:more_columns].present?])
     send_xlsx(Exports::Xlsx::Score::List, args: [@list])
+    @results = @list.results.includes(assessment: %i[band discipline])
   end
 
   def edit_times

@@ -80,7 +80,7 @@ module Exports::ScoreLists
     entries = if list.errors.present?
                 list.entries.to_a
               else
-                list.entries.includes(:entity).to_a
+                list.entries.includes(:entity, assessment: %i[band discipline]).to_a
               end
     entries.sort_by!(&:run_and_track_sortable)
     best_of_runs = list.show_best_of_run? ? calculate_best_of_runs(entries) : {}
