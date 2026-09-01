@@ -88,4 +88,6 @@ group :development do
   gem 'web-console' # Use console on exceptions pages
 
   gem 'capistrano3_featureset' # Deployment
+
+  gem 'websocket-client-simple' # test websockets
 end

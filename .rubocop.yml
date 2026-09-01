@@ -418,6 +418,7 @@ Rails/Output:
   Exclude:
   - config/deploy/**/*
   - db/migrate/**/*
+  - lib/websocket_test.rb
 Rails/OutputSafety:
   Enabled: false
 Rails/Pluck:

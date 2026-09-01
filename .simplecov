@@ -6,6 +6,7 @@ SimpleCov.configure do
   skip '/spec/'
   skip '/app/models/concerns/schema_validations.rb'
   skip '/app/jobs/debug_job.rb'
+  skip '/lib/websocket_test.rb'
 end
 
 SimpleCov.at_exit do
