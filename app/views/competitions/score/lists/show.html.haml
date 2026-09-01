@@ -1,66 +1,67 @@
 = render 'competitions/header', competition: @competition, sub: resource_class.model_name.human(count: :many)
 
-.row.g-4
-  .col-lg-8
-    = card(@list.name) do |c|
-      - if can?(:edit, @list) || !@list.hidden?
-        - c.direct do
-          %table.table.much-data.score-list-channel{ data: { score_list_id: @list.id, score_list_editable: can?(:edit, @list) ? '1' : '0' } }
-            = render 'list_headline', times: true, list: @list, edit: false
-            %tbody
-              - score_list_entries(@list) do |entry, run, track, best_of_run|
-                = render partial: 'list_entry_with_times', locals: { entry:, run:, track:, list: @list, best_of_run:, editable: can?(:edit, @list), destroy_index: params[:destroy_index], edit_index: params[:edit_index] }
-        - c.actions do |actions|
-          - actions.link_to 'PDF', { format: :pdf }, end_icon: :file_pdf, target: '_blank', rel: 'noopener'
-          - actions.link_to 'XLS', { format: :xlsx }, end_icon: :file_excel
-      - else
-        - c.body do
-          %p Diese Startliste ist derzeit nicht öffentlich einsehbar.
-  .col-lg-4
-    - if can?(:edit, @list)
-      - if @list.hidden?
-        = card_body('Versteckt', class: 'mb-3 text-bg-warning') do
-          %p Die Startliste ist derzeit noch versteckt. Bitte gebe diese nach der Kontrolle frei.
-          - if can?(:edit, @list)
-            = btn_link_to 'Bearbeiten', { action: :edit }
-      - if @list.hidden_results?
-        = card_body('Versteckte Ergebnisse', class: 'mb-3 text-bg-warning') do
-          %p Die Ergebnisse dieser Startliste sind derzeit noch versteckt. Bitte gebe diese nach der Kontrolle frei.
-          - if can?(:edit, @list)
-            = btn_link_to 'Bearbeiten', { action: :edit }
+- cache_if(current_user.nil? && simple_access.nil?, [@list, @competition]) do
+  .row.g-4
+    .col-lg-8
+      = card(@list.name) do |c|
+        - if can?(:edit, @list) || !@list.hidden?
+          - c.direct do
+            %table.table.much-data.score-list-channel{ data: { score_list_id: @list.id, score_list_editable: can?(:edit, @list) ? '1' : '0' } }
+              = render 'list_headline', times: true, list: @list, edit: false
+              %tbody
+                - score_list_entries(@list) do |entry, run, track, best_of_run|
+                  = render partial: 'list_entry_with_times', locals: { entry:, run:, track:, list: @list, best_of_run:, editable: can?(:edit, @list), destroy_index: params[:destroy_index], edit_index: params[:edit_index] }
+          - c.actions do |actions|
+            - actions.link_to 'PDF', { format: :pdf }, end_icon: :file_pdf, target: '_blank', rel: 'noopener'
+            - actions.link_to 'XLS', { format: :xlsx }, end_icon: :file_excel
+        - else
+          - c.body do
+            %p Diese Startliste ist derzeit nicht öffentlich einsehbar.
+    .col-lg-4
+      - if can?(:edit, @list)
+        - if @list.hidden?
+          = card_body('Versteckt', class: 'mb-3 text-bg-warning') do
+            %p Die Startliste ist derzeit noch versteckt. Bitte gebe diese nach der Kontrolle frei.
+            - if can?(:edit, @list)
+              = btn_link_to 'Bearbeiten', { action: :edit }
+        - if @list.hidden_results?
+          = card_body('Versteckte Ergebnisse', class: 'mb-3 text-bg-warning') do
+            %p Die Ergebnisse dieser Startliste sind derzeit noch versteckt. Bitte gebe diese nach der Kontrolle frei.
+            - if can?(:edit, @list)
+              = btn_link_to 'Bearbeiten', { action: :edit }
 
-      = card(t('a.actions'), class: 'mb-3') do |c|
-        - c.primary_actions do |actions|
-          - actions.link_to 'Übersicht', { action: :index }, end_icon: :list
-        - c.body do
+        = card(t('a.actions'), class: 'mb-3') do |c|
+          - c.primary_actions do |actions|
+            - actions.link_to 'Übersicht', { action: :index }, end_icon: :list
+          - c.body do
+            .d-grid.gap-2
+              - if can?(:edit, @list)
+                = btn_link_to 'Reihenfolge bearbeiten', { action: :move }
+              - if can?(:edit_times, @list)
+                = btn_link_to 'Zeiten im Block eintragen', { action: :edit_times }
+              - if can?(:edit, @list)
+                = btn_link_to 'Teilnehmer hinzufügen', { action: :select_entity }, remote: true
+              - if params[:destroy_index] || params[:edit_index]
+                = btn_link_to 'Zeiten eintragen', { action: :show }
+              - else
+                = btn_link_to 'Teilnehmer ändern', { action: :show, edit_index: 1 }
+                = btn_link_to 'Teilnehmer entfernen', { action: :show, destroy_index: 1 }
+              - if can?(:copy, @list)
+                = btn_link_to 'Startliste klonen', copy_list_competition_score_list_factories_path(list_id: @list.id)
+          - c.actions do |actions|
+            - actions.link_to 'PDF', { format: :pdf }, end_icon: :file_pdf, target: '_blank', rel: 'noopener'
+            - actions.link_to 'PDF für Kampfrichter', { format: :pdf, more_columns: true }, end_icon: :file_pdf, target: '_blank', rel: 'noopener'
+
+        = render 'restriction_check', list: @list
+
+        = card_body('Allgemein', class: 'mb-3') do
           .d-grid.gap-2
-            - if can?(:edit, @list)
-              = btn_link_to 'Reihenfolge bearbeiten', { action: :move }
-            - if can?(:edit_times, @list)
-              = btn_link_to 'Zeiten im Block eintragen', { action: :edit_times }
-            - if can?(:edit, @list)
-              = btn_link_to 'Teilnehmer hinzufügen', { action: :select_entity }, remote: true
-            - if params[:destroy_index] || params[:edit_index]
-              = btn_link_to 'Zeiten eintragen', { action: :show }
-            - else
-              = btn_link_to 'Teilnehmer ändern', { action: :show, edit_index: 1 }
-              = btn_link_to 'Teilnehmer entfernen', { action: :show, destroy_index: 1 }
-            - if can?(:copy, @list)
-              = btn_link_to 'Startliste klonen', copy_list_competition_score_list_factories_path(list_id: @list.id)
-        - c.actions do |actions|
-          - actions.link_to 'PDF', { format: :pdf }, end_icon: :file_pdf, target: '_blank', rel: 'noopener'
-          - actions.link_to 'PDF für Kampfrichter', { format: :pdf, more_columns: true }, end_icon: :file_pdf, target: '_blank', rel: 'noopener'
+            = btn_link_to 'Bearbeiten', { action: :edit }
+            - if can?(:destroy, @list)
+              = btn_link_to 'Löschen', { action: :destroy }, data: { turbo_method: 'delete', turbo_confirm: 'Startliste wirklich löschen? Alle bisher eingetragenen Zeiten dieser Liste gehen verloren!' }
 
-      = render 'restriction_check', list: @list
-
-      = card_body('Allgemein', class: 'mb-3') do
-        .d-grid.gap-2
-          = btn_link_to 'Bearbeiten', { action: :edit }
-          - if can?(:destroy, @list)
-            = btn_link_to 'Löschen', { action: :destroy }, data: { turbo_method: 'delete', turbo_confirm: 'Startliste wirklich löschen? Alle bisher eingetragenen Zeiten dieser Liste gehen verloren!' }
-
-    - if @results.present?
-      = card_body('Ergebnisse') do
-        .d-grid.gap-2
-          - @results.each do |result|
-            = btn_link_to(result.name, competition_score_result_path(id: result.id))
+      - if @results.present?
+        = card_body('Ergebnisse') do
+          .d-grid.gap-2
+            - @results.each do |result|
+              = btn_link_to(result.name, competition_score_result_path(id: result.id))
