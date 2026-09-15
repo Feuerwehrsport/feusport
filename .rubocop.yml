@@ -9,7 +9,7 @@ AllCops:
   - private/**/*
   - app/models/concerns/schema_validations.rb
   TargetRailsVersion: 7.2
-  TargetRubyVersion: 3.4.10
+  TargetRubyVersion: 4.0.7
 Bundler/OrderedGems:
   Enabled: false
 FactoryBot/AssociationStyle:
@@ -61,6 +61,8 @@ Lint/AmbiguousOperatorPrecedence:
   Enabled: true
 Lint/AmbiguousRange:
   Enabled: true
+Lint/ArgumentMismatch:
+  Enabled: true
 Lint/ArrayLiteralInRegexp:
   Enabled: true
 Lint/ConstantOverwrittenInRescue:
@@ -101,6 +103,8 @@ Lint/LambdaWithoutLiteralBlock:
   Enabled: true
 Lint/LiteralAssignmentInCondition:
   Enabled: true
+Lint/MisplacedMagicComment:
+  Enabled: true
 Lint/MixedCaseRange:
   Enabled: true
 Lint/NameTypo:
@@ -128,6 +132,8 @@ Lint/RequireRangeParentheses:
 Lint/RequireRelativeSelfPath:
   Enabled: true
 Lint/SharedMutableDefault:
+  Enabled: true
+Lint/SuperArgumentMismatch:
   Enabled: true
 Lint/SuppressedExceptionInNumberConversion:
   Enabled: true
@@ -531,6 +537,8 @@ Style/DigChain:
   Enabled: true
 Style/DirEmpty:
   Enabled: true
+Style/DirectiveScope:
+  Enabled: true
 Style/DocumentDynamicEvalDefinition:
   Enabled: true
 Style/Documentation:
@@ -704,6 +712,8 @@ Style/SuperWithArgsParentheses:
 Style/SwapValues:
   Enabled: true
 Style/TallyMethod:
+  Enabled: true
+Style/TimeNow:
   Enabled: true
 Style/TrailingCommaInArguments:
   EnforcedStyleForMultiline: comma

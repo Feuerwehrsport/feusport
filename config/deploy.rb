@@ -9,7 +9,7 @@ set :deploy_to, '/srv/feusport'
 
 set :branch, 'main'
 
-set :rvm_ruby_version, '3.4.10'
+set :rvm_ruby_version, 'ruby-4.0.7'
 set :migration_servers, -> { release_roles(fetch(:migration_role)) }
 
 set :enable_solid_queue, true

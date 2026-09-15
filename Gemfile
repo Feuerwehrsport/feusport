@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-ruby '3.4.10'
+ruby '4.0.7'
 
 gem 'rails', '~> 7.0'
 
@@ -47,9 +47,7 @@ gem 'prawn-table'
 gem 'prawn-qrcode'
 gem 'matrix'
 
-gem 'mutex_m' # remove on Rails 7.2
-gem 'drb' # remove on Rails 7.2
-gem 'base64' # remove on Rails 7.2
+gem 'json', '~> 2.0' # hold old json for rails 7.2
 
 group :development, :test do
   gem 'debug' # debugger

@@ -4,10 +4,20 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 
-# generated from version 20260830191603
+# generated from version 20260915121527
 
 module SchemaValidations
   extend ActiveSupport::Concern
+
+  mattr_accessor :relaxed, default: false
+
+  def self.relaxed!
+    self.relaxed = true
+  end
+
+  def self.relaxed?
+    relaxed
+  end
 
   included do
     class_attribute :schema_validations_excluded_columns, default: %i[id created_at updated_at type]
@@ -15,8 +25,10 @@ module SchemaValidations
 
     if defined?(Rails::Railtie) && (Rails.env.development? || Rails.env.test?)
       TracePoint.trace(:end) do |t|
-        if t.self.respond_to?(:schema_validations_called) && t.self < ApplicationRecord &&
-           !t.self.schema_validations_called
+        if t.self.respond_to?(:schema_validations_called) &&
+            t.self < ApplicationRecord &&
+            !t.self.schema_validations_called &&
+            !SchemaValidations.relaxed?
           raise "#{t.self}: schema_validations or skip_schema_validations missing"
         end
       end
@@ -27,7 +39,12 @@ module SchemaValidations
     def schema_validations(exclude: [], schema_table_name: table_name)
       self.schema_validations_called = true
       self.schema_validations_excluded_columns += exclude.map(&:to_sym)
-      send("dbv_#{schema_table_name}_validations", enums: defined_enums.keys.map(&:to_sym))
+
+      if SchemaValidations.relaxed?
+        try("dbv_#{schema_table_name}_validations", enums: defined_enums.keys.map(&:to_sym))
+      else
+        send("dbv_#{schema_table_name}_validations", enums: defined_enums.keys.map(&:to_sym))
+      end
     end
 
     def skip_schema_validations
@@ -724,6 +741,37 @@ module SchemaValidations
       validates_with_filter :updated_at, {presence: {}}
     end
 
+    def dbv_solid_queue_batch_executions_validations(enums: [])
+      belongs_to_presence_validations_for([:batch_id, :job_id])
+      belongs_to_uniqueness_validations_for([["job_id"]])
+      uniqueness_validations_for([["job_id"]])
+      validates_with_filter :batch_id, {numericality: {allow_nil: true}} unless enums.include?(:batch_id)
+      validates_with_filter :batch_id, {presence: {}}
+      validates_with_filter :created_at, {date_time_in_db_range: {}}
+      validates_with_filter :created_at, {presence: {}}
+      validates_with_filter :job_id, {numericality: {allow_nil: true}} unless enums.include?(:job_id)
+      validates_with_filter :job_id, {presence: {}}
+    end
+
+    def dbv_solid_queue_batches_validations(enums: [])
+      belongs_to_presence_validations_for([:completed_jobs, :failed_jobs, :total_jobs])
+      belongs_to_uniqueness_validations_for([["active_job_batch_id"]])
+      uniqueness_validations_for([["active_job_batch_id"]])
+      validates_with_filter :completed_jobs, {numericality: {allow_nil: true, only_integer: true, greater_than_or_equal_to: -2147483648, less_than: 2147483648}} unless enums.include?(:completed_jobs)
+      validates_with_filter :completed_jobs, {presence: {}}
+      validates_with_filter :created_at, {date_time_in_db_range: {}}
+      validates_with_filter :created_at, {presence: {}}
+      validates_with_filter :enqueued_at, {date_time_in_db_range: {}}
+      validates_with_filter :failed_at, {date_time_in_db_range: {}}
+      validates_with_filter :failed_jobs, {numericality: {allow_nil: true, only_integer: true, greater_than_or_equal_to: -2147483648, less_than: 2147483648}} unless enums.include?(:failed_jobs)
+      validates_with_filter :failed_jobs, {presence: {}}
+      validates_with_filter :finished_at, {date_time_in_db_range: {}}
+      validates_with_filter :total_jobs, {numericality: {allow_nil: true, only_integer: true, greater_than_or_equal_to: -2147483648, less_than: 2147483648}} unless enums.include?(:total_jobs)
+      validates_with_filter :total_jobs, {presence: {}}
+      validates_with_filter :updated_at, {date_time_in_db_range: {}}
+      validates_with_filter :updated_at, {presence: {}}
+    end
+
     def dbv_solid_queue_blocked_executions_validations(enums: [])
       belongs_to_presence_validations_for([:job_id, :priority])
       belongs_to_uniqueness_validations_for([["job_id"]])
@@ -763,6 +811,7 @@ module SchemaValidations
 
     def dbv_solid_queue_jobs_validations(enums: [])
       belongs_to_presence_validations_for([:priority])
+      validates_with_filter :batch_id, {numericality: {allow_nil: true}} unless enums.include?(:batch_id)
       validates_with_filter :class_name, {presence: {}}
       validates_with_filter :created_at, {date_time_in_db_range: {}}
       validates_with_filter :created_at, {presence: {}}
