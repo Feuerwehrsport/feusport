@@ -25,7 +25,7 @@ class TeamMarker < ApplicationRecord
   VALUE_TYPES = { boolean: 0, date: 1, string: 2 }.freeze
   enum :value_type, VALUE_TYPES, scopes: false, default: :boolean, prefix: true
 
-  belongs_to :competition
+  belongs_to :competition, touch: true
   has_many :team_marker_values, dependent: :destroy
 
   schema_validations

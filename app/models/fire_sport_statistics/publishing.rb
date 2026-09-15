@@ -25,7 +25,7 @@
 require 'net/http'
 
 class FireSportStatistics::Publishing < ApplicationRecord
-  belongs_to :competition, class_name: '::Competition'
+  belongs_to :competition, class_name: '::Competition', touch: true
   belongs_to :user
 
   schema_validations

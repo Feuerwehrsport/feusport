@@ -24,7 +24,7 @@
 #  fk_rails_...  (competition_id => competitions.id)
 #
 class Series::TeamPointsCorrection < ApplicationRecord
-  belongs_to :competition, class_name: 'Competition'
+  belongs_to :competition, class_name: 'Competition', touch: true
   belongs_to :team, class_name: 'FireSportStatistics::Team'
 
   schema_validations

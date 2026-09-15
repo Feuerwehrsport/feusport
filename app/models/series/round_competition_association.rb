@@ -21,7 +21,7 @@
 #
 class Series::RoundCompetitionAssociation < ApplicationRecord
   belongs_to :round, class_name: 'Series::Round'
-  belongs_to :competition, class_name: 'Competition'
+  belongs_to :competition, class_name: 'Competition', touch: true
 
   schema_validations
 end

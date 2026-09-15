@@ -51,7 +51,7 @@ class Snapshot < ApplicationRecord
     }.freeze,
   }.freeze
 
-  belongs_to :competition
+  belongs_to :competition, touch: true
 
   has_one_attached :file
 
