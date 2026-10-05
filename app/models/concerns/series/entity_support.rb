@@ -3,11 +3,11 @@
 module Series::EntitySupport
   extend ActiveSupport::Concern
 
-  included do
-    include ActiveModel::Model
-    include ActiveModel::Attributes
-    include Certificates::StorageSupport
+  include Certificates::StorageSupport
+  include ActiveModel::Model
+  include ActiveModel::Attributes
 
+  included do
     attr_accessor :config, :rank, :round
   end
 
@@ -87,16 +87,12 @@ module Series::EntitySupport
 
   def storage_support_get(position)
     case position.key
-    when :rank
-      "#{rank}."
-    when :rank_with_rank
-      "#{rank}. Platz"
-    when :rank_with_rank2
-      "den #{rank}. Platz"
-    when :rank_without_dot
-      rank.to_s
-    when :result_name
+    when :person_bib_number, :assessment_with_gender, :gender, :date, :place, :competition_name
+      ''
+    when :assessment
       round.name
+    when :result_name
+      config.name
     else
       super
     end

@@ -25,12 +25,8 @@ class Series::Person
     case position.key
     when :person_name
       person&.full_name
-    when :team_name, :person_bib_number, :assessment_with_gender, :gender, :date, :place, :competition_name
+    when :team_name
       ''
-    when :assessment
-      round.name
-    when :result_name
-      config.name
     else
       super
     end

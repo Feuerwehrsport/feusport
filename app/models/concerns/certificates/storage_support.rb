@@ -8,7 +8,7 @@ module Certificates::StorageSupport
     when :person_name
       entity&.full_name
     when :person_bib_number
-      entity.try(:bib_number)
+      entity.try(:bib_number).to_s
     when :time_long
       result_entry.long_human_time(seconds: 'Sekunden', invalid: 'Ungültig') if respond_to?(:result_entry)
     when :time_very_long
@@ -28,7 +28,7 @@ module Certificates::StorageSupport
     when :rank_with_rank2
       "den #{rank}. Platz"
     when :rank_without_dot
-      rank
+      rank.to_s
     when :assessment
       result&.try(:assessment)&.forced_name.presence || result&.try(:assessment)&.discipline&.name.presence ||
         result&.name
@@ -45,7 +45,7 @@ module Certificates::StorageSupport
     when :competition_name
       competition.name
     when :points
-      points if respond_to?(:points)
+      points.to_s if respond_to?(:points)
     when :points_with_points
       I18n.t('certificates.lists.export.points', count: points) if respond_to?(:points)
     when :text

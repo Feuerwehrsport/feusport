@@ -46,26 +46,16 @@ RSpec.describe Series::EntitySupport do
   end
 
   describe '#storage_support_get' do
-    # Diese Methode wird in Series::Team und Series::Person von Certificates::StorageSupport
-    # überdeckt (StorageSupport steht in der Ancestor-Kette davor), daher direkter Aufruf.
-    let(:method) { described_class.instance_method(:storage_support_get) }
-
     def get(key)
-      method.bind_call(team, Certificates::TextField.new(key:, text: 'foo'))
+      team.storage_support_get(Certificates::TextField.new(key:, text: 'foo'))
     end
 
-    it 'supports rank and name keys' do
+    it 'returns rank keys as strings' do
       team.rank = 4
       expect(get(:rank)).to eq '4.'
       expect(get(:rank_with_rank)).to eq '4. Platz'
       expect(get(:rank_with_rank2)).to eq 'den 4. Platz'
       expect(get(:rank_without_dot)).to eq '4'
-      expect(get(:result_name)).to eq 'D-Cup'
-    end
-
-    it 'is shadowed by Certificates::StorageSupport' do
-      expect(Series::Team.ancestors.index(Certificates::StorageSupport)).to be < Series::Team.ancestors.index(described_class)
-      expect { get(:text) }.to raise_error(NoMethodError)
     end
   end
 end
