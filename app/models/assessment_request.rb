@@ -105,9 +105,9 @@ class AssessmentRequest < ApplicationRecord
 
   def type
     if group_competitor?
-      I18n.t('assessment_types.group_competitor_order', competitor_order: group_competitor_order)
+      competitor_order_type(:group_competitor, group_competitor_order)
     elsif single_competitor?
-      I18n.t('assessment_types.single_competitor_order', competitor_order: single_competitor_order)
+      competitor_order_type(:single_competitor, single_competitor_order)
     elsif out_of_competition?
       I18n.t('assessment_types.out_of_competition_order')
     elsif competitor?
@@ -125,6 +125,14 @@ class AssessmentRequest < ApplicationRecord
   end
 
   private
+
+  def competitor_order_type(type, competitor_order)
+    if competitor_order.to_i.zero?
+      I18n.t("assessment_types.#{type}")
+    else
+      I18n.t("assessment_types.#{type}_order", competitor_order:)
+    end
+  end
 
   def next_free_competitor_order(type)
     return 0 if entity.nil? || entity.is_a?(Team) || entity.team.nil?

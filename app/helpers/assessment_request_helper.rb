@@ -3,11 +3,9 @@
 module AssessmentRequestHelper
   def person_short_type(request, html: true)
     if request.group_competitor?
-      I18n.t('assessment_types.group_competitor_short_order',
-             competitor_order: request.group_competitor_order)
+      competitor_order_short_type(:group_competitor, request.group_competitor_order)
     elsif request.single_competitor?
-      I18n.t('assessment_types.single_competitor_short_order',
-             competitor_order: request.single_competitor_order)
+      competitor_order_short_type(:single_competitor, request.single_competitor_order)
     elsif request.out_of_competition?
       I18n.t('assessment_types.out_of_competition_short')
     elsif request.competitor?
@@ -39,5 +37,15 @@ module AssessmentRequestHelper
       ),
       class: 'float-end',
     )
+  end
+
+  private
+
+  def competitor_order_short_type(type, competitor_order)
+    if competitor_order.to_i.zero?
+      I18n.t("assessment_types.#{type}_short")
+    else
+      I18n.t("assessment_types.#{type}_short_order", competitor_order:)
+    end
   end
 end

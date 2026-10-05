@@ -24,6 +24,11 @@ RSpec.describe AssessmentRequestHelper do
       expect(helper.person_short_type(request_double(:single_competitor, single_competitor_order: 2))).to eq 'E2'
     end
 
+    it 'returns short type without order if order is zero' do
+      expect(helper.person_short_type(request_double(:group_competitor, group_competitor_order: 0))).to eq 'M'
+      expect(helper.person_short_type(request_double(:single_competitor, single_competitor_order: 0))).to eq 'E'
+    end
+
     it 'returns out of competition short' do
       expect(helper.person_short_type(request_double(:out_of_competition))).to eq 'A'
     end

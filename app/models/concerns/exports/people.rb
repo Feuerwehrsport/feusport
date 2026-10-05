@@ -6,7 +6,7 @@ module Exports::People
   def index_export_data(band)
     collection = band.people.sort
 
-    assessments = Assessment.where(band:)
+    assessments = Assessment.requestable_for_person(band)
 
     headline = []
     headline.push('Nr.') if competition.show_bib_numbers?

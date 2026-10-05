@@ -39,6 +39,30 @@ RSpec.describe AssessmentRequest do
       expect(request.type).to eq '3 C-Schlauch'
     end
 
+    it 'returns long type with and without competitor order' do
+      expect(described_class.new(assessment_type: :group_competitor, group_competitor_order: 2).type)
+        .to eq 'Mannschaftswertung (2)'
+      expect(described_class.new(assessment_type: :single_competitor, single_competitor_order: 3).type)
+        .to eq 'Einzelstarter (3)'
+    end
+
+    it 'returns long type without order for people without team' do
+      hl = create(:discipline, :hl, competition:)
+      assessment = create(:assessment, competition:, band:, discipline: hl)
+      person = create(:person, competition:, band:, team: nil)
+
+      group = create(:assessment_request, assessment:, entity: person, assessment_type: :group_competitor,
+                                          group_competitor_order: 2)
+      expect(group.reload.group_competitor_order).to eq 0
+      expect(group.type).to eq 'Mannschaftswertung'
+
+      group.destroy!
+      single = create(:assessment_request, assessment:, entity: person, assessment_type: :single_competitor,
+                                           single_competitor_order: 2)
+      expect(single.reload.single_competitor_order).to eq 0
+      expect(single.type).to eq 'Einzelstarter'
+    end
+
     it 'returns 0 without assessment type' do
       expect(described_class.new(assessment_type: nil).type).to eq 0
     end
