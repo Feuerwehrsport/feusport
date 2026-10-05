@@ -5,13 +5,13 @@
 # Table name: series_person_points_corrections
 #
 #  id                     :uuid             not null, primary key
-#  points_correction      :integer
-#  points_correction_hint :string
-#  round_key              :string
+#  points_correction      :integer          not null
+#  points_correction_hint :string           not null
+#  round_key              :string           not null
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
-#  competition_id         :uuid
-#  person_id              :bigint
+#  competition_id         :uuid             not null
+#  person_id              :bigint           not null
 #
 # Indexes
 #

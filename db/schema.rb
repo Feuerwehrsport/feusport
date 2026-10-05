@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_09_15_121527) do
+ActiveRecord::Schema[7.2].define(version: 2026_10_05_214047) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
@@ -508,11 +508,11 @@ ActiveRecord::Schema[7.2].define(version: 2026_09_15_121527) do
   end
 
   create_table "series_person_points_corrections", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "competition_id"
-    t.string "round_key"
-    t.bigint "person_id"
-    t.integer "points_correction"
-    t.string "points_correction_hint"
+    t.uuid "competition_id", null: false
+    t.string "round_key", null: false
+    t.bigint "person_id", null: false
+    t.integer "points_correction", null: false
+    t.string "points_correction_hint", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["competition_id"], name: "index_series_person_points_corrections_on_competition_id"

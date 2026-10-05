@@ -1,5 +1,17 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: fire_sport_statistics_teams
+#
+#  id          :bigint           not null, primary key
+#  best_scores :jsonb
+#  dummy       :boolean          default(FALSE), not null
+#  name        :string(100)      not null
+#  short       :string(50)       not null
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
 require 'rails_helper'
 
 RSpec.describe FireSportStatistics::Team do

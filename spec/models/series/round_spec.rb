@@ -1,5 +1,23 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: series_rounds
+#
+#  id                              :integer          not null, primary key
+#  full_cup_count                  :integer          default(4), not null
+#  name                            :string(100)      not null
+#  person_assessments_config_jsonb :jsonb
+#  team_assessments_config_jsonb   :jsonb
+#  year                            :integer          not null
+#  created_at                      :datetime         not null
+#  updated_at                      :datetime         not null
+#  kind_id                         :bigint
+#
+# Indexes
+#
+#  index_series_rounds_on_kind_id  (kind_id)
+#
 require 'rails_helper'
 
 RSpec.describe Series::Round do

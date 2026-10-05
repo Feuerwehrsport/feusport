@@ -26,6 +26,12 @@ RSpec.describe 'competitions/series/person_points_corrections' do
     get "#{base_path}/new"
     expect(response).to have_http_status(:success)
 
+    # POST create with failure
+    post base_path, params: { series_person_points_correction: { round_key: person_round_key, points_correction: '' } }
+    expect(response).to have_http_status(:unprocessable_content)
+    expect(flash[:alert]).to eq :check_errors
+    expect(Series::PersonPointsCorrection.count).to eq 0
+
     # POST create
     post base_path, params: { series_person_points_correction: {
       round_key: person_round_key, person_id: fss_person.id, points_correction: -3, points_correction_hint: 'Strafe'
@@ -37,6 +43,12 @@ RSpec.describe 'competitions/series/person_points_corrections' do
     get "#{base_path}/#{correction.id}/edit"
     expect(response).to have_http_status(:success)
 
+    # PATCH update with failure
+    patch "#{base_path}/#{correction.id}", params: { series_person_points_correction: { points_correction_hint: '' } }
+    expect(response).to have_http_status(:unprocessable_content)
+    expect(flash[:alert]).to eq :check_errors
+    expect(correction.reload.points_correction_hint).to eq 'Strafe'
+
     # PATCH update
     patch "#{base_path}/#{correction.id}", params: { series_person_points_correction: { points_correction: 2 } }
     expect(response).to redirect_to(base_path)
@@ -47,24 +59,5 @@ RSpec.describe 'competitions/series/person_points_corrections' do
     expect(response).to redirect_to(base_path)
     expect(flash[:notice]).to eq :deleted
     expect(Series::PersonPointsCorrection.count).to eq 0
-  end
-
-  context 'when saving fails' do
-    before { allow_any_instance_of(Series::PersonPointsCorrection).to receive(:save).and_return(false) }
-
-    it 'renders form again' do
-      sign_in user
-
-      post base_path, params: { series_person_points_correction: { round_key: person_round_key } }
-      expect(response).to have_http_status(:unprocessable_content)
-      expect(flash[:alert]).to eq :check_errors
-
-      existing = Series::PersonPointsCorrection.create!(competition:, round_key: person_round_key, person: fss_person,
-                                                        points_correction: 1, points_correction_hint: 'Bonus')
-      patch "#{base_path}/#{existing.id}", params: { series_person_points_correction: { points_correction: 2 } }
-      expect(response).to have_http_status(:unprocessable_content)
-      expect(flash[:alert]).to eq :check_errors
-      expect(existing.reload.points_correction).to eq 1
-    end
   end
 end

@@ -4,7 +4,7 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 
-# generated from version 20260915121527
+# generated from version 20261005214047
 
 module SchemaValidations
   extend ActiveSupport::Concern
@@ -626,10 +626,16 @@ module SchemaValidations
     end
 
     def dbv_series_person_points_corrections_validations(enums: [])
+      belongs_to_presence_validations_for([:competition_id, :person_id, :points_correction])
+      validates_with_filter :competition_id, {presence: {}}
       validates_with_filter :created_at, {date_time_in_db_range: {}}
       validates_with_filter :created_at, {presence: {}}
       validates_with_filter :person_id, {numericality: {allow_nil: true}} unless enums.include?(:person_id)
+      validates_with_filter :person_id, {presence: {}}
       validates_with_filter :points_correction, {numericality: {allow_nil: true, only_integer: true, greater_than_or_equal_to: -2147483648, less_than: 2147483648}} unless enums.include?(:points_correction)
+      validates_with_filter :points_correction, {presence: {}}
+      validates_with_filter :points_correction_hint, {presence: {}}
+      validates_with_filter :round_key, {presence: {}}
       validates_with_filter :updated_at, {date_time_in_db_range: {}}
       validates_with_filter :updated_at, {presence: {}}
     end

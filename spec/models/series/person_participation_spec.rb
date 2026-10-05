@@ -1,5 +1,27 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: series_person_participations
+#
+#  id                     :integer          not null, primary key
+#  points                 :integer          default(0), not null
+#  points_correction      :integer
+#  points_correction_hint :string(200)
+#  rank                   :integer          not null
+#  time                   :integer          not null
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  cup_id                 :integer          not null
+#  person_assessment_id   :integer          not null
+#  person_id              :integer          not null
+#
+# Indexes
+#
+#  index_series_person_participations_on_cup_id                (cup_id)
+#  index_series_person_participations_on_person_assessment_id  (person_assessment_id)
+#  index_series_person_participations_on_person_id             (person_id)
+#
 require 'rails_helper'
 
 RSpec.describe Series::PersonParticipation do

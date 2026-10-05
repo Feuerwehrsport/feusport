@@ -1,5 +1,26 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: series_person_points_corrections
+#
+#  id                     :uuid             not null, primary key
+#  points_correction      :integer          not null
+#  points_correction_hint :string           not null
+#  round_key              :string           not null
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  competition_id         :uuid             not null
+#  person_id              :bigint           not null
+#
+# Indexes
+#
+#  index_series_person_points_corrections_on_competition_id  (competition_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (competition_id => competitions.id)
+#
 require 'rails_helper'
 
 RSpec.describe Series::PersonPointsCorrection do
@@ -17,6 +38,13 @@ RSpec.describe Series::PersonPointsCorrection do
   let(:correction) do
     described_class.create!(competition:, person: fss_person, round_key: person_round_key,
                             points_correction: 2, points_correction_hint: 'Bonus')
+  end
+
+  it 'requires all attributes' do
+    correction = described_class.new(competition:)
+    expect(correction).not_to be_valid
+    expect(correction.errors.attribute_names).to include(:round_key, :person, :points_correction,
+                                                         :points_correction_hint)
   end
 
   it 'finds config for round key' do

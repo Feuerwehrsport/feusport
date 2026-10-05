@@ -1,5 +1,22 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: series_person_assessments
+#
+#  id         :integer          not null, primary key
+#  discipline :string(3)        not null
+#  key        :string           not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  round_id   :integer          not null
+#
+# Indexes
+#
+#  index_series_person_assessments_on_discipline  (discipline)
+#  index_series_person_assessments_on_key         (key)
+#  index_series_person_assessments_on_round_id    (round_id)
+#
 require 'rails_helper'
 
 RSpec.describe Series::PersonAssessment do

@@ -1,5 +1,28 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: series_team_points_corrections
+#
+#  id                     :uuid             not null, primary key
+#  discipline             :string           not null
+#  points_correction      :integer          not null
+#  points_correction_hint :string           not null
+#  round_key              :string           not null
+#  team_number            :integer          default(1), not null
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  competition_id         :uuid             not null
+#  team_id                :bigint           not null
+#
+# Indexes
+#
+#  index_series_team_points_corrections_on_competition_id  (competition_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (competition_id => competitions.id)
+#
 require 'rails_helper'
 
 RSpec.describe Series::TeamPointsCorrection do
