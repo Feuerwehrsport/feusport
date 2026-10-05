@@ -21,6 +21,7 @@ RSpec.describe 'competitions/score/list_factories' do
       get "/#{competition.year}/#{competition.slug}/score/list_factories/copy_list/#{list_without_results.id}"
       expect(response).to redirect_to "/#{competition.year}/#{competition.slug}/score/lists"
       expect(flash[:notice]).to eq 'Gültigkeitsprüfung ist fehlgeschlagen: Ergebnislisten muss ausgefüllt werden'
+      expect(Score::ListFactory.count).to eq 0
     end
   end
 end

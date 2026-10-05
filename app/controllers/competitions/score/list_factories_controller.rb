@@ -44,21 +44,23 @@ class Competitions::Score::ListFactoriesController < CompetitionNestedController
   end
 
   def copy_list
-    @competition.score_list_factories.where(session_id: session.id.to_s).destroy_all
-    list = @competition.score_lists.find(params[:list_id])
+    Score::ListFactory.transaction do
+      @competition.score_list_factories.where(session_id: session.id.to_s).destroy_all
+      list = @competition.score_lists.find(params[:list_id])
 
-    factory = Score::ListFactories::TrackChange.create!(
-      competition: @competition,
-      session_id: session.id.to_s,
-      discipline_id: list.assessments.first.discipline_id,
-      next_step: :assessments,
-      show_best_of_run: list.show_best_of_run,
-      separate_target_times: list.separate_target_times,
-    )
-    factory.update!(next_step: :names, assessments: list.assessments)
-    factory.update!(next_step: :tracks, name: factory.default_name, shortcut: factory.default_shortcut)
-    factory.update!(next_step: :results, track_count: list.track_count)
-    factory.update!(next_step: :generator, results: list.results)
+      factory = Score::ListFactories::TrackChange.create!(
+        competition: @competition,
+        session_id: session.id.to_s,
+        discipline_id: list.assessments.first.discipline_id,
+        next_step: :assessments,
+        show_best_of_run: list.show_best_of_run,
+        separate_target_times: list.separate_target_times,
+      )
+      factory.update!(next_step: :names, assessments: list.assessments)
+      factory.update!(next_step: :tracks, name: factory.default_name, shortcut: factory.default_shortcut)
+      factory.update!(next_step: :results, track_count: list.track_count)
+      factory.update!(next_step: :generator, results: list.results)
+    end
 
     redirect_to action: :edit
   rescue ActiveRecord::RecordInvalid => e
