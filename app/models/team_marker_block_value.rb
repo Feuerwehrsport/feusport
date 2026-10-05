@@ -32,6 +32,8 @@ class TeamMarkerBlockValue
     TeamMarkerValue.transaction do
       team_marker_values.all?(&:save!)
     end
+  rescue ActiveRecord::RecordInvalid
+    false
   end
 
   def persisted?

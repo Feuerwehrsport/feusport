@@ -59,24 +59,20 @@ RSpec.describe TeamMarkerBlockValue do
     end
   end
 
-  context 'when saving fails' do
-    before do
-      allow(described_class).to receive(:new).and_wrap_original do |original, *args, **kwargs|
-        original.call(*args, **kwargs).tap { |value| allow(value).to receive(:save).and_return(false) }
-      end
-    end
-
-    it 'renders edit again' do
+  context 'when a value is invalid' do
+    it 'renders edit again with errors and saves nothing' do
       sign_in user
 
       put competition_nested('team_marker_block_values'),
           params: { band_id: band.id, team_marker_block_value: {
             team_marker_values_attributes: {
               '0' => { team_id: team.id, team_marker_id: string.id, string_value: 'test values' },
+              '1' => { team_id: team.id, team_marker_id: boolean.id, boolean_value: '' },
             },
           } }
       expect(response).to have_http_status(:unprocessable_content)
       expect(flash[:alert]).to eq :check_errors
+      expect(response.body).to include('<div class="invalid-feedback">Ja/Nein muss ausgefüllt werden</div>')
       expect(TeamMarkerValue.count).to eq 0
     end
   end
