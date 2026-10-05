@@ -25,8 +25,6 @@ module AssessmentRequestHelper
           arr[0]
         end
       end
-    else
-      0
     end
   end
 

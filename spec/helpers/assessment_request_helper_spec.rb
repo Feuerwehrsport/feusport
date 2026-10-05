@@ -60,9 +60,5 @@ RSpec.describe AssessmentRequestHelper do
     it 'returns nil for other disciplines' do
       expect(helper.person_short_type(request_double(:competitor, discipline_key: 'hl', competitor_order: 1))).to be_nil
     end
-
-    it 'returns 0 without known assessment type' do
-      expect(helper.person_short_type(request_double(nil))).to eq 0
-    end
   end
 end
