@@ -33,11 +33,22 @@ RSpec.describe Exports::Xlsx::Score::List do
     end
   end
 
-  describe 'content_row' do
-    it 'strips tags from hash contents' do
-      export = described_class.new(list)
-      row = [1, { content: "FF Warin<font size='6'> (Frauen)</font>", inline_format: true }]
-      expect(export.send(:content_row, row)).to eq [1, 'FF Warin (Frauen)']
+  describe 'with multiple assessments' do
+    let(:male) { create(:band, :male, competition:) }
+    let(:assessment_male) { create(:assessment, competition:, discipline: la, band: male) }
+    let(:team_male) { create(:team, competition:, band: male, name: 'FF Goldberg') }
+
+    it 'adds assessment hint as plain text' do
+      list.update!(assessments: [assessment, assessment_male])
+      create(:score_list_entry, list:, competition:, entity: team_male, assessment: assessment_male, run: 1, track: 2,
+                                result_type: :valid, time_left_target: 2100, time_right_target: 2300)
+
+      xlsx = parse_xlsx_bytestream(described_class.perform(list.reload).bytestream)
+      expect(xlsx.sheet(0).to_a).to eq [
+        %w[Lauf Bahn Mannschaft Ziele Zeit],
+        [1, 1, 'FF Warin (Löschangriff Nass - Frauen)', 'L: 20,00, R: 22,10', '22,10'],
+        [nil, 2, 'FF Goldberg (Löschangriff Nass - Männer)', 'L: 21,00, R: 23,00', '23,00'],
+      ]
     end
   end
 end
