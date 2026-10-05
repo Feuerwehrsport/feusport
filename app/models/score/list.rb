@@ -39,7 +39,7 @@ class Score::List < ApplicationRecord
                                                        inverse_of: :list
   has_many :conditions, class_name: 'Score::ListCondition', dependent: :destroy, inverse_of: :list
 
-  default_scope { order(:name) }
+  default_scope { order(:name, :created_at) }
   auto_strip_attributes :name, :shortcut
 
   after_touch do

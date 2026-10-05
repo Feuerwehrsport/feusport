@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-def create_score_list(result, entities)
+def create_score_list(result, entities, name = "#{result.name} - Lauf 1")
   list = create(:score_list, competition: result.competition, results: [result], assessments: [result.assessment],
-                             name: "#{result.name} - Lauf 1")
+                             name:)
   index = 1
   entities.each do |entity, time|
     index += 1

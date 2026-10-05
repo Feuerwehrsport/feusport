@@ -201,7 +201,9 @@ RSpec.describe 'competitions/score/results' do
     let(:team2) { create(:team, competition:, band: female) }
 
     let!(:list1) { create_score_list(result, team1 => 1912, team2 => 1913) }
-    let!(:list2) { create_score_list(result, team1 => 1913, team2 => 1912) }
+    let!(:list2) do
+      create_score_list(result, { team1 => 1913, team2 => 1912 }, 'Löschangriff Nass - Frauen - Lauf 2')
+    end
 
     it 'shows a warning' do
       sign_in user

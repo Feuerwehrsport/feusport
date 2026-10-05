@@ -1,4 +1,4 @@
-- grouped_competitions = competitions.reorder(:date, :name).includes(:disciplines).group_by(&:year_and_month)
+- grouped_competitions = competitions.reorder(:date, :name, :slug).includes(:disciplines).group_by(&:year_and_month)
 .card
   - grouped_competitions.each_value do |competitions|
     - sample = competitions.first
