@@ -69,4 +69,15 @@ RSpec.describe TeamRelay do
       end
     end
   end
+
+  describe '#full_name and #shortcut_name' do
+    let(:team) { create(:team, competition:, band:, name: 'Warin', shortcut: 'Wa') }
+
+    it 'appends relay letter' do
+      relay = described_class.create!(team:)
+      expect(relay.full_name).to eq 'Warin A'
+      expect(relay.shortcut_name).to eq 'Wa A'
+      expect(relay.full_name_with_band).to eq 'Warin Frauen A'
+    end
+  end
 end

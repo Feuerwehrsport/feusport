@@ -107,4 +107,32 @@ RSpec.describe Score::ListFactory do
       factory.send(:for_run_and_track_for, rows)
     end
   end
+
+  describe 'defaults' do
+    let(:male) { create(:band, :male, competition:) }
+    let(:male_assessment) { create(:assessment, competition:, discipline:, band: male) }
+    let(:instance) do
+      described_class.create!(competition:, discipline:, session_id: '1', type: 'Score::ListFactory',
+                              next_step: 'names', assessments: [assessment, male_assessment])
+    end
+
+    it 'returns bands of assessments' do
+      create(:band, :youth, competition:)
+      expect(instance.possible_bands).to contain_exactly(band, male)
+    end
+
+    it 'uses discipline name for multiple assessments' do
+      expect(instance.default_shortcut).to eq 'Lauf 1'
+      expect(instance.default_name).to eq 'Hakenleitersteigen - Lauf 1'
+    end
+
+    context 'when discipline is like fire relay' do
+      let(:discipline) { create(:discipline, :fs, competition:) }
+
+      it 'uses shortcut without run number' do
+        expect(instance.default_shortcut).to eq 'Lauf'
+        expect(instance.default_name).to eq '4x100m-Hindernisstaffel'
+      end
+    end
+  end
 end

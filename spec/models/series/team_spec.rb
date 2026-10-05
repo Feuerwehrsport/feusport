@@ -49,4 +49,37 @@ RSpec.describe Series::Team do
       end
     end
   end
+
+  describe '#full_name' do
+    it 'returns team name without number for single team' do
+      expect(team.full_name).to eq 'Mecklenburg-Vorpommern'
+    end
+
+    it 'adds team number if team has multiple numbers in round' do
+      create(:series_team_participation,
+             team_assessment: team_participation.team_assessment,
+             cup: team_participation.cup,
+             team_gender: 1,
+             team_number: 2,
+             team: fss_team)
+      expect(team.full_name).to eq 'Mecklenburg-Vorpommern 1'
+    end
+  end
+
+  describe '#points' do
+    before do
+      create(:series_cup, round:)
+      create(:series_cup, round:)
+      team.add_participation(team_participation)
+    end
+
+    it 'sums points without penalty' do
+      expect(team.points).to eq 15
+    end
+
+    it 'adds penalty points for missing cups' do
+      config.penalty_points = -5
+      expect(team.points).to eq 15 - 10
+    end
+  end
 end

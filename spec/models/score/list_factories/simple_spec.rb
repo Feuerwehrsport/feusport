@@ -92,4 +92,37 @@ RSpec.describe Score::ListFactories::Simple do
       end
     end
   end
+
+  describe 'perform without possible solution' do
+    let(:assessment2) { create(:assessment, competition:, discipline:, band:) }
+    let(:assessment3) { create(:assessment, competition:, discipline:, band:) }
+
+    before do
+      factory.update!(assessments: [assessment2, assessment3], track_count: 1)
+      factory.conditions.create!(competition:, track: 1, assessments: [assessment2])
+      create(:person, :with_team, competition:, band:).requests.create!(assessment: assessment2)
+      create(:person, :with_team, competition:, band:).requests.create!(assessment: assessment3)
+      factory.reload
+    end
+
+    it 'gives up after all softer modes failed' do
+      new_list = factory.list
+      expect(factory.perform).to be false
+      expect(new_list.entries.count).to eq 0
+    end
+  end
+
+  describe 'perform with timeout' do
+    before do
+      stub_const("#{described_class}::TIMEOUT_PER_MODE", 0.01)
+      allow(factory).to receive(:try_next_track) { sleep 1 }
+    end
+
+    it 'kills threads and gives up' do
+      new_list = factory.list
+      expect(factory.perform).to be false
+      expect(factory).to have_received(:try_next_track).at_least(11).times
+      expect(new_list.entries.count).to eq 0
+    end
+  end
 end

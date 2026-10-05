@@ -166,6 +166,33 @@ RSpec.describe 'People' do
     end
   end
 
+  context 'when edit_assessment_requests form has errors' do
+    let!(:person) { create(:person, competition:, band:) }
+
+    it 'renders assessment requests form again' do
+      sign_in user
+
+      get "/#{competition.year}/#{competition.slug}/people/#{person.id}/edit_assessment_requests"
+      expect(response).to have_http_status(:success)
+      expect(response.content_type).to start_with('text/html')
+
+      patch "/#{competition.year}/#{competition.slug}/people/#{person.id}?form=edit_assessment_requests",
+            params: { person: { first_name: '' } }
+      expect(response).to have_http_status(:unprocessable_content)
+      expect(response.body).to include("people/#{person.id}?form=edit_assessment_requests")
+    end
+  end
+
+  context 'when new is requested without band' do
+    it 'redirects to index' do
+      sign_in user
+
+      get "/#{competition.year}/#{competition.slug}/people/new"
+      expect(response).to redirect_to("/#{competition.year}/#{competition.slug}/people")
+      expect(flash[:notice]).to eq 'Bitte wähle eine Wertungsgruppe aus'
+    end
+  end
+
   context 'when no login performed' do
     let!(:person) { create(:person, competition:, band:) }
 

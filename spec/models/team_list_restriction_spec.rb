@@ -171,4 +171,40 @@ RSpec.describe TeamListRestriction do
       end
     end
   end
+
+  describe '#<=>' do
+    let!(:team_a) { create(:team, competition:, band:, name: 'Alpha', shortcut: 'A') }
+    let!(:team_b) { create(:team, competition:, band:, name: 'Beta', shortcut: 'B') }
+    let!(:team_c) { create(:team, competition:, band:, name: 'Gamma', shortcut: 'C') }
+    let(:other_discipline) { create(:discipline, :hb, competition:) }
+
+    def build_restriction(first, second, restriction: :before, discipline: self.discipline)
+      described_class.new(team1: first, team2: second, competition:, discipline:, restriction:)
+    end
+
+    it 'sorts by first team name' do
+      expect(build_restriction(team_a, team_c) <=> build_restriction(team_b, team_a)).to eq(-1)
+      expect(build_restriction(team_b, team_a) <=> build_restriction(team_a, team_c)).to eq 1
+    end
+
+    it 'sorts by second team name' do
+      expect(build_restriction(team_a, team_b) <=> build_restriction(team_a, team_c)).to eq(-1)
+      expect(build_restriction(team_a, team_c) <=> build_restriction(team_a, team_b)).to eq 1
+    end
+
+    it 'sorts by restriction' do
+      first = build_restriction(team_a, team_b, restriction: :same_run)
+      second = build_restriction(team_a, team_b, restriction: :not_same_run)
+      expect([first, second].sort).to eq [second, first]
+      expect(first <=> second).not_to eq 0
+    end
+
+    it 'sorts by id at last' do
+      first = build_restriction(team_a, team_b).tap(&:save!)
+      second = build_restriction(team_a, team_b, discipline: other_discipline).tap(&:save!)
+      expect(first <=> second).to eq(first.to_key <=> second.to_key)
+      expect(first <=> second).not_to eq 0
+      expect(first <=> first).to eq 0 # rubocop:disable Lint/BinaryOperatorWithIdenticalOperands
+    end
+  end
 end

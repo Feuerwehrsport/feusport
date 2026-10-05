@@ -57,4 +57,62 @@ RSpec.describe Team do
       expect(requests.second.relay_count).to eq 2
     end
   end
+
+  describe '#<=>' do
+    let(:competition) { create(:competition) }
+    let(:female) { create(:band, :female, competition:) }
+    let(:male) { create(:band, :male, competition:) }
+
+    it 'sorts by full name and then by id' do
+      team_b = create(:team, competition:, band: female, name: 'Bad Doberan')
+      team_a1 = create(:team, competition:, band: female, name: 'Ahrenshagen')
+      team_a2 = create(:team, competition:, band: male, name: 'Ahrenshagen')
+
+      expect(team_a1 <=> team_b).to eq(-1)
+      expect(team_b <=> team_a1).to eq 1
+      expect(team_a1.full_name).to eq team_a2.full_name
+      expect(team_a1 <=> team_a2).to eq(team_a1.id <=> team_a2.id)
+      expect(team_a1 <=> team_a2).not_to eq 0
+    end
+  end
+
+  describe '#export_gender' do
+    it 'returns gender of band' do
+      expect(build(:team, band: build(:band, :male)).export_gender).to eq 'male'
+      expect(described_class.new.export_gender).to be_nil
+    end
+  end
+
+  describe 'GroupAssessmentValidator' do
+    let(:competition) { create(:competition) }
+    let(:band) { create(:band, :female, competition:) }
+    let(:hl) { create(:discipline, :hl, competition:) }
+    let(:assessment) { create(:assessment, competition:, discipline: hl, band:) }
+    let!(:result) do
+      create(:score_result, competition:, assessment:, group_assessment: true, group_run_count: 2,
+                            forced_name: 'Gruppenwertung')
+    end
+    let(:team) { create(:team, competition:, band:) }
+
+    it 'is valid without people' do
+      validator = described_class::GroupAssessmentValidator.new(team)
+      expect(validator).to be_valid
+      expect(validator.messages).to eq ''
+    end
+
+    it 'checks group competitor count' do
+      people = create_list(:person, 3, :generated, competition:, band:, team:)
+      people.first(2).each do |person|
+        create(:assessment_request, assessment:, entity: person, assessment_type: :group_competitor)
+      end
+      create(:assessment_request, assessment:, entity: people.last, assessment_type: :single_competitor)
+
+      expect(described_class::GroupAssessmentValidator.new(team)).to be_valid
+
+      people.last.requests.first.update!(assessment_type: :group_competitor)
+      validator = described_class::GroupAssessmentValidator.new(team)
+      expect(validator).not_to be_valid
+      expect(validator.messages).to eq "#{result.name}: 3 von 2"
+    end
+  end
 end

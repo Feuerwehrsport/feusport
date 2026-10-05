@@ -64,6 +64,17 @@ RSpec.describe 'competitions/documents' do
     end
   end
 
+  context 'when preset already ran' do
+    it 'redirects to competition' do
+      competition.update!(preset_ran: true)
+      sign_in user
+
+      get competition_nested("duplication/new?duplication[duplicate_from_id]=#{old.id}")
+      expect(response).to redirect_to(competition_nested)
+      expect(flash[:alert]).to eq 'Es wurde bereits eine Vorlage gewählt.'
+    end
+  end
+
   context 'when no login performed' do
     it 'fails' do
       get competition_nested('presets')

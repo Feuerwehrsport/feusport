@@ -70,4 +70,17 @@ RSpec.describe 'Home' do
       expect(response).to match_html_fixture
     end
   end
+
+  describe 'more' do
+    it 'shows years of accessible competitions' do
+      create(:competition, name: 'Alter Wettkampf', date: Date.parse('2019-05-01'))
+      create(:competition, name: 'Versteckter Wettkampf', date: Date.parse('2015-05-01'), visible: false)
+
+      get '/more'
+      expect(response).to have_http_status(:success)
+      expect(response.body).to include('href="/2024"', 'href="/2019"')
+      expect(response.body).not_to include('href="/2015"')
+      expect(response.body.index('href="/2024"')).to be < response.body.index('href="/2019"')
+    end
+  end
 end

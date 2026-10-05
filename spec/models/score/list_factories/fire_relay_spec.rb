@@ -79,4 +79,15 @@ RSpec.describe Score::ListFactories::FireRelay do
       expect(team3_requests.map(&:name)).to eq %w[A B]
     end
   end
+
+  describe '#preview_entries_count' do
+    before do
+      create(:assessment_request, assessment:, relay_count: 2)
+      create(:assessment_request, assessment:, relay_count: 3)
+    end
+
+    it 'sums up relay counts' do
+      expect(factory.preview_entries_count).to eq 5
+    end
+  end
 end

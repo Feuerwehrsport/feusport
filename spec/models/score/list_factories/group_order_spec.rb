@@ -178,4 +178,10 @@ RSpec.describe Score::ListFactories::GroupOrder do
       end
     end
   end
+
+  describe '.generator_params' do
+    it 'asks for single competitor order' do
+      expect(described_class.generator_params).to eq %i[single_competitors_first]
+    end
+  end
 end

@@ -134,14 +134,6 @@ class Score::Result < ApplicationRecord
     @out_of_competition_rows
   end
 
-  def person_tags
-    @person_tags ||= tags.where(type: 'PersonTag')
-  end
-
-  def team_tags
-    @team_tags ||= tags.where(type: 'TeamTag')
-  end
-
   def generate_rows(group_result: false)
     return generate_multi_rows unless multi_result_method_disabled?
 

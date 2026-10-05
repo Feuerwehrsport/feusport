@@ -66,6 +66,26 @@ RSpec.describe 'competitions/documents' do
     end
   end
 
+  describe 'preview and image' do
+    let!(:document) { competition.documents.create!(title: 'Bild', file: fixture_file_upload('pixel.jpg')) }
+
+    it 'redirects to resized representations' do
+      get "/#{competition.year}/#{competition.slug}/dp/foo"
+      expect(response).to have_http_status(:not_found)
+
+      get "/#{competition.year}/#{competition.slug}/dp/#{document.idpart}"
+      expect(response).to redirect_to(%r{/rails/active_storage/disk/.+/pixel\.jpg})
+      expect(document.file.variant_records.count).to eq 1
+
+      get "/#{competition.year}/#{competition.slug}/di/foo"
+      expect(response).to have_http_status(:not_found)
+
+      get "/#{competition.year}/#{competition.slug}/di/#{document.idpart}"
+      expect(response).to redirect_to(%r{/rails/active_storage/disk/.+/pixel\.jpg})
+      expect(document.file.variant_records.count).to eq 2
+    end
+  end
+
   context 'when no login performed' do
     let!(:document) { create(:document, competition:) }
 

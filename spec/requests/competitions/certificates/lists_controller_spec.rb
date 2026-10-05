@@ -57,6 +57,28 @@ RSpec.describe 'competitions/certificates/lists' do
     end
   end
 
+  context 'when series rounds exist for competition' do
+    let!(:round) { create(:series_round, :with_team_config, :with_person_config) }
+
+    before { round.competitions << competition }
+
+    it 'offers series assessments' do
+      sign_in user
+
+      get "/#{competition.year}/#{competition.slug}/certificates/lists/new"
+      expect(response).to have_http_status(:success)
+
+      team_config = round.team_assessments_configs.first
+      person_config = round.person_assessments_configs.first
+      expect(response.body).to include(
+        "<option value=\"#{team_config.round_key}\">D-Cup - #{round.year} - LA-Männer</option>",
+      )
+      expect(response.body).to include(
+        "<option value=\"#{person_config.round_key}\">D-Cup - #{round.year} - HL-Männer</option>",
+      )
+    end
+  end
+
   context 'when no login performed' do
     it 'fails' do
       get competition_nested('certificates/lists/new')

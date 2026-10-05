@@ -72,4 +72,26 @@ RSpec.describe Score::ListFactories::TrackSame do
       end
     end
   end
+
+  describe '#perform' do
+    let(:before_assessment) { assessment }
+    let(:person1) { create(:person, :generated, competition:, band:) }
+    let(:person2) { create(:person, :generated, competition:, band:) }
+    let(:person3) { create(:person, :generated, competition:, band:) }
+
+    before do
+      create(:score_list_entry, list: before_list, competition:, assessment:, entity: person1, run: 1, track: 1)
+      create(:score_list_entry, list: before_list, competition:, assessment:, entity: person2, run: 1, track: 2)
+      create(:score_list_entry, list: before_list, competition:, assessment:, entity: person3, run: 2, track: 1)
+    end
+
+    it 'copies entries with same tracks' do
+      new_list = factory.list
+      expect { factory.perform }.to change(Score::ListEntry, :count).by(3)
+
+      expect(new_list.entries.reload.map { |e| [e.entity, e.run, e.track] }).to eq [
+        [person1, 1, 1], [person2, 1, 2], [person3, 2, 1]
+      ]
+    end
+  end
 end

@@ -39,4 +39,37 @@ RSpec.describe Assessment do
       expect(assessment.errors.attribute_names).to eq [:discipline]
     end
   end
+
+  describe '#name_with_request_count' do
+    let(:band) { create(:band, :female, competition:) }
+
+    context 'when discipline is like fire relay' do
+      let(:fs) { create(:discipline, :fs, competition:) }
+      let!(:fs_assessment) { create(:assessment, competition:, discipline: fs, band:) }
+
+      it 'counts requests per relay' do
+        expect(fs_assessment.name_with_request_count).to eq "#{fs_assessment.name} (0 Starter)"
+
+        team1 = create(:team, competition:, band:)
+        create(:team, competition:, band:)
+        team1.requests.find_by(assessment: fs_assessment).update!(relay_count: 3)
+
+        expect(fs_assessment.name_with_request_count).to eq "#{fs_assessment.name} (2x A, 2x B, 1x C)"
+      end
+    end
+
+    context 'when discipline is single discipline' do
+      let(:hl) { create(:discipline, :hl, competition:) }
+      let!(:hl_assessment) { create(:assessment, competition:, discipline: hl, band:) }
+
+      it 'counts person requests only' do
+        person = create(:person, competition:, band:)
+        create(:assessment_request, assessment: hl_assessment, entity: person)
+        create(:assessment_request, assessment: hl_assessment)
+
+        expect(hl_assessment.related_requests.map(&:entity)).to eq [person]
+        expect(hl_assessment.name_with_request_count).to eq "#{hl_assessment.name} (1 Starter)"
+      end
+    end
+  end
 end

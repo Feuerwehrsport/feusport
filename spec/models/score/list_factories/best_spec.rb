@@ -113,4 +113,32 @@ RSpec.describe Score::ListFactories::Best do
       end
     end
   end
+
+  describe '#perform' do
+    let(:person1) { create(:person, :generated, competition:, band:) }
+    let(:person2) { create(:person, :generated, competition:, band:) }
+    let(:person3) { create(:person, :generated, competition:, band:) }
+    let(:person4) { create(:person, :generated, competition:, band:) }
+
+    before do
+      create_score_list(before_result, person1 => 1900, person2 => 1800, person3 => 2000, person4 => nil)
+    end
+
+    it 'creates entries for best rows with best last' do
+      expect(factory.preview_entries_count).to eq 2
+
+      new_list = factory.list
+      expect { factory.perform }.to change(Score::ListEntry, :count).by(2)
+
+      entries = new_list.entries.reload
+      expect(entries.map { |e| [e.entity, e.run, e.track] }).to eq [[person1, 1, 1], [person2, 1, 2]]
+      expect(entries.map(&:assessment).uniq).to eq [assessment]
+      expect(entries.map(&:assessment_type).uniq).to eq ['group_competitor']
+    end
+
+    it 'limits preview count to available rows' do
+      factory.best_count = 10
+      expect(factory.preview_entries_count).to eq 4
+    end
+  end
 end

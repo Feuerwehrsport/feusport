@@ -73,4 +73,40 @@ RSpec.describe Score::ListEntry do
       end
     end
   end
+
+  describe '.insert_random_values' do
+    let(:person1) { create(:person, :generated, competition:, band:) }
+    let(:person2) { create(:person, :generated, competition:, band:) }
+    let!(:waiting_entry) do
+      create(:score_list_entry, list: score_list, assessment:, competition:, entity: person1, track: 1)
+    end
+    let!(:valid_entry) do
+      create(:score_list_entry, :result_valid, list: score_list, assessment:, competition:, entity: person2,
+                                               track: 2, time: 1234)
+    end
+
+    it 'fills only waiting entries with valid times' do
+      described_class.insert_random_values
+
+      expect(waiting_entry.reload).to be_result_valid
+      expect(waiting_entry.time).to be_between(1900, 2300)
+      expect(valid_entry.reload.time).to eq 1234
+    end
+
+    context 'when list has separate target times' do
+      let(:score_list) do
+        create(:score_list, competition:, assessments: [assessment], results: [result], separate_target_times: true)
+      end
+
+      it 'fills target times too' do
+        described_class.insert_random_values
+
+        waiting_entry.reload
+        expect(waiting_entry).to be_result_valid
+        expect(waiting_entry.time_left_target).to be_between(1900, 2300)
+        expect(waiting_entry.time_right_target).to be_between(1900, 2300)
+        expect(waiting_entry.time).to eq [waiting_entry.time_left_target, waiting_entry.time_right_target].max
+      end
+    end
+  end
 end

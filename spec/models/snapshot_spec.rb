@@ -139,4 +139,17 @@ RSpec.describe Snapshot do
       end.to have_enqueued_job
     end
   end
+
+  describe '#variant_path' do
+    let(:snapshot) { create(:snapshot, competition:) }
+
+    it 'returns nginx path when processed' do
+      snapshot.update!(processed: true)
+      expect(snapshot.variant_path(:thumb_mini)).to eq "/uploads/snapshots/#{snapshot.id}/thumb_mini.avif"
+    end
+
+    it 'returns active storage variant when not processed' do
+      expect(snapshot.variant_path(:thumb_mini)).to be_a(ActiveStorage::VariantWithRecord)
+    end
+  end
 end

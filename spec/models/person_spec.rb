@@ -59,4 +59,24 @@ RSpec.describe Person do
       end
     end
   end
+
+  describe '#<=>' do
+    it 'sorts by full name and then by id' do
+      person_b = create(:person, competition:, band: male, first_name: 'Bernd')
+      person_a1 = create(:person, competition:, band: male, first_name: 'Anna')
+      person_a2 = create(:person, competition:, band: male, first_name: 'Anna')
+
+      expect(person_a1 <=> person_b).to eq(-1)
+      expect(person_b <=> person_a1).to eq 1
+      expect(person_a1 <=> person_a2).to eq(person_a1.id <=> person_a2.id)
+      expect(person_a1 <=> person_a2).not_to eq 0
+    end
+  end
+
+  describe '#export_gender' do
+    it 'returns gender of band' do
+      expect(build(:person, competition:, band: female).export_gender).to eq 'female'
+      expect(described_class.new.export_gender).to be_nil
+    end
+  end
 end

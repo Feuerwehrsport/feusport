@@ -554,4 +554,100 @@ RSpec.describe Score::Result do
       end
     end
   end
+
+  describe 'series round keys' do
+    let!(:round) { create(:series_round, :with_team_config, :with_person_config) }
+
+    it 'returns person round keys matching discipline' do
+      expect(result.possible_series_person_round_keys).to eq [
+        ["D-Cup - #{round.year} - HL-Männer", "#{round.id}-male-hl"],
+      ]
+    end
+
+    it 'returns team round keys only when already selected' do
+      expect(result.possible_series_team_round_keys).to eq []
+
+      result.series_team_round_keys = ["#{round.id}-male-la"]
+      expect(result.possible_series_team_round_keys).to eq [
+        ["D-Cup - #{round.year} - LA-Männer", "#{round.id}-male-la"],
+      ]
+    end
+  end
+
+  describe 'multi result' do
+    let(:discipline) { create(:discipline, :fs, competition:) }
+    let(:assessment) { create(:assessment, competition:, band:, discipline:) }
+    let(:result1) { create(:score_result, competition:, assessment:, forced_name: 'Lauf A') }
+    let(:result2) { create(:score_result, competition:, assessment:, forced_name: 'Lauf B') }
+    let(:multi_result) do
+      described_class.create!(competition:, forced_name: 'Bester', multi_result_method: :best,
+                              image_key: :fs, results: [result1, result2])
+    end
+
+    it 'is like fire relay when all results are like fire relay' do
+      expect(multi_result).to be_like_fire_relay
+
+      la_assessment = create(:assessment, competition:, band:, discipline: create(:discipline, :la, competition:))
+      la_result = create(:score_result, competition:, assessment: la_assessment)
+      mixed_result = described_class.create!(competition:, forced_name: 'Gemischt', multi_result_method: :best,
+                                             image_key: :la, results: [result1, la_result])
+      expect(mixed_result).not_to be_like_fire_relay
+    end
+
+    it 'does not require starting time' do
+      team = create(:team, competition:, band:)
+      create_score_list(result1, team => 2000)
+
+      expect(multi_result.rows.count).to eq 1
+      expect(multi_result.starting_time_required?).to be false
+    end
+  end
+
+  describe 'out of competition entries' do
+    let(:person1) { create(:person, :generated, competition:, band:) }
+    let(:person2) { create(:person, :generated, competition:, band:) }
+
+    it 'separates out of competition rows' do
+      list1 = create_score_list(result, person1 => 1900, person2 => 2000)
+      list2 = create_score_list(result, person2 => 1800)
+      list1.entries.find_by(entity: person2).update!(assessment_type: :out_of_competition)
+      list2.entries.find_by(entity: person2).update!(assessment_type: :out_of_competition)
+
+      fresh_result = described_class.find(result.id)
+      expect(fresh_result.rows.map(&:entity)).to eq [person1]
+
+      out_rows = fresh_result.out_of_competition_rows
+      expect(out_rows.map(&:entity)).to eq [person2]
+      expect(out_rows.first.result_entry_from(list1).time).to eq 2000
+      expect(out_rows.first.result_entry_from(list2).time).to eq 1800
+    end
+  end
+
+  describe '#use?' do
+    it 'ignores unknown entity types' do
+      expect(result.send(:use?, Object.new)).to be false
+    end
+  end
+
+  describe 'tag validation' do
+    let(:band) { create(:band, competition:, person_tags: %w[U20 Ü40], team_tags: %w[Kreis Land]) }
+
+    it 'rejects same team tags in included and excluded' do
+      result.assign_attributes(team_tags_included: %w[Kreis], team_tags_excluded: %w[Kreis])
+      expect(result).not_to be_valid
+      expect(result.errors.attribute_names).to include(:team_tags_included, :team_tags_excluded)
+    end
+
+    it 'rejects same person tags in included and excluded' do
+      result.assign_attributes(person_tags_included: %w[U20], person_tags_excluded: %w[U20])
+      expect(result).not_to be_valid
+      expect(result.errors.attribute_names).to include(:person_tags_included, :person_tags_excluded)
+    end
+
+    it 'accepts different tags' do
+      result.assign_attributes(team_tags_included: %w[Kreis], team_tags_excluded: %w[Land],
+                               person_tags_included: %w[U20], person_tags_excluded: %w[Ü40])
+      expect(result).to be_valid
+    end
+  end
 end

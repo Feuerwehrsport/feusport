@@ -37,6 +37,16 @@ RSpec.describe TeamMarker do
     end
   end
 
+  describe 'edit as modal' do
+    it 'returns form as json' do
+      sign_in user
+
+      get competition_nested("teams/#{team.id}/markers/#{team_marker.id}/edit?output=modal")
+      expect(response).to have_http_status(:success)
+      expect(response.parsed_body['content']).to include('team_marker_value[boolean_value]')
+    end
+  end
+
   context 'when no login performed' do
     it 'fails' do
       get competition_nested("teams/#{team.id}/markers/#{team_marker.id}/edit")
