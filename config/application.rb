@@ -23,7 +23,7 @@ Bundler.require(*Rails.groups)
 module Feusport
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.2
+    config.load_defaults 8.0
 
     config.generators.orm :active_record, primary_key_type: :uuid
     config.time_zone = 'Berlin'

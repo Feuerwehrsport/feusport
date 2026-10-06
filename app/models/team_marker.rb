@@ -6,7 +6,7 @@
 #
 #  id             :uuid             not null, primary key
 #  name           :string(20)       not null
-#  value_type     :integer          default("boolean"), not null
+#  value_type     :integer          default(0), not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  competition_id :uuid

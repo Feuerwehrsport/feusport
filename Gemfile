@@ -3,13 +3,13 @@
 source 'https://rubygems.org'
 ruby '4.0.7'
 
-gem 'rails', '~> 7.0'
+gem 'rails', '~> 8.0.0'
 
 gem 'pg' # database
 gem 'puma' # webserver for development
 gem 'bcrypt' # password hashing
 # gem 'redis' # Adapter for ActionCable
-gem 'redis', '~> 5.4' # rails 7.2 needs redis 5
+gem 'redis', '~> 5.4' # actioncable 8.0 needs redis < 6
 
 gem 'sprockets-rails' # asset pipeline
 gem 'jsbundling-rails' # bundle and transpile JavaScript
@@ -47,7 +47,7 @@ gem 'prawn-table'
 gem 'prawn-qrcode'
 gem 'matrix'
 
-gem 'json', '~> 2.0' # hold old json for rails 7.2
+gem 'json', '~> 2.0' # activesupport 8.0 is not compatible with json 3
 
 group :development, :test do
   gem 'debug' # debugger
@@ -57,7 +57,7 @@ group :development, :test do
   gem 'factory_bot' # create db fixtures
   gem 'vcr' # record http requests
   gem 'webmock' # mock http requests
-  gem 'annotate' # schema info in model
+  gem 'annotaterb' # schema info in model
 
   # code beautifier
   gem 'rubocop', require: false

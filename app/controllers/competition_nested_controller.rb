@@ -39,7 +39,7 @@ class CompetitionNestedController < ApplicationController
     end
     helper_method :xlsx_support?
 
-    before_action :assign_new_resource, only: %i[new create]
+    before_action :assign_new_resource, if: -> { action_name.in?(%w[new create]) }
   end
 
   protected

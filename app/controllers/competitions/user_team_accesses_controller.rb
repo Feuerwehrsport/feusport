@@ -2,7 +2,6 @@
 
 class Competitions::UserTeamAccessesController < CompetitionNestedController
   before_action :preauthorize
-  before_action :assign_new_resource, only: %i[new create]
   before_action :assign_team
 
   def destroy
