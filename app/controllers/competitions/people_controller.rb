@@ -27,6 +27,7 @@ class Competitions::PeopleController < CompetitionNestedController
 
   def create
     @person.assign_attributes(person_params)
+    authorize_person_team!
     if @person.save
       CompetitionMailer.with(person: @person).registration_person.deliver_later if @person.users.exists?
 
@@ -44,6 +45,7 @@ class Competitions::PeopleController < CompetitionNestedController
   def update
     @person.assign_attributes(person_params)
     @person.check_band_limit = !can?(:manage, @competition)
+    authorize_person_team!
     if @person.save
       if params[:return_to] == 'team'
         redirect_to competition_team_path(id: @person.team_id, jump_to: 'people-table'), notice: :saved
@@ -69,6 +71,10 @@ class Competitions::PeopleController < CompetitionNestedController
 
   protected
 
+  def authorize_person_team!
+    authorize!(:sub_edit, @person.team) if @person.team.present? && @person.team_id_changed?
+  end
+
   def team_from_param
     return @team_from_param if defined?(@team_from_param)
 
@@ -79,7 +85,7 @@ class Competitions::PeopleController < CompetitionNestedController
     return {} unless params.key?(:person)
 
     params.require(:person).permit(
-      :first_name, :last_name, :team_id, :band_id, :fire_sport_statistics_person_id, :registration_hint,
+      :first_name, :last_name, :team_id, :fire_sport_statistics_person_id, :registration_hint,
       :registration_order, :bib_number, :create_team_name,
       tags: [],
       requests_attributes: %i[assessment_type _destroy assessment_id id

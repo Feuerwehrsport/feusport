@@ -240,6 +240,38 @@ RSpec.describe Team do
     end
   end
 
+  context 'when team leader manipulates params' do
+    let!(:other_user) { create(:user, :other, phone_number: '1234') }
+    let!(:team) { create(:team, band:, competition:, user_team_accesses: [user_team_access]) }
+    let(:user_team_access) { UserTeamAccess.new(competition:, user: other_user) }
+    let(:other_competition) { create(:competition, name: 'Other', date: Date.parse('2024-05-01')) }
+    let(:other_band) { create(:band, competition: other_competition) }
+    let(:other_la) { create(:discipline, :la, competition: other_competition) }
+    let(:other_assessment) do
+      create(:assessment, competition: other_competition, discipline: other_la, band: other_band)
+    end
+
+    before do
+      competition.update!(registration_open_until: Date.current, registration_open: 'open', visible: true)
+      sign_in other_user
+    end
+
+    it 'ignores band changes' do
+      patch competition_nested("teams/#{team.id}"), params: { team: { band_id: other_band.id } }
+      expect(response).to redirect_to(competition_nested("teams/#{team.id}"))
+      expect(team.reload.band).to eq band
+    end
+
+    it 'rejects assessments of other competitions' do
+      expect do
+        patch competition_nested("teams/#{team.id}"),
+              params: { team: { requests_attributes: [{ assessment_id: other_assessment.id,
+                                                        assessment_type: 'group_competitor', relay_count: 1 }] } }
+      end.not_to change(AssessmentRequest, :count)
+      expect(response).to have_http_status(:unprocessable_content)
+    end
+  end
+
   context 'when band limit is reached' do
     let!(:other_user) { create(:user, :other, phone_number: '1234') }
     let!(:team) { create(:team, band:, competition:, user_team_accesses: [user_team_access]) }

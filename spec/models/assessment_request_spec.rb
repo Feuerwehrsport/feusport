@@ -86,4 +86,25 @@ RSpec.describe AssessmentRequest do
       expect(request.group_competitor_order).to eq 3
     end
   end
+
+  describe 'competition validation' do
+    let(:hl) { create(:discipline, :hl, competition:) }
+    let(:assessment) { create(:assessment, competition:, band:, discipline: hl) }
+    let(:person) { create(:person, competition:, band:) }
+    let(:other_competition) { create(:competition, name: 'Other') }
+    let(:other_band) { create(:band, competition: other_competition) }
+    let(:other_hl) { create(:discipline, :hl, competition: other_competition) }
+    let(:other_assessment) do
+      create(:assessment, competition: other_competition, band: other_band, discipline: other_hl)
+    end
+
+    it 'requires an assessment of the same competition' do
+      request = person.requests.build(assessment: other_assessment, assessment_type: :competitor)
+      expect(request).not_to be_valid
+      expect(request.errors.details[:assessment]).to include(error: :not_same_competition)
+
+      request.assessment = assessment
+      expect(request).to be_valid
+    end
+  end
 end

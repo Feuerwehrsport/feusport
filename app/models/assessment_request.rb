@@ -86,6 +86,7 @@ class AssessmentRequest < ApplicationRecord
   schema_validations
   validates :group_competitor_order, :single_competitor_order, :relay_count,
             numericality: { greater_than_or_equal_to: 0 }
+  validate :validate_same_competition
 
   after_initialize :assign_next_free_competitor_order
   before_save :set_valid_competitor_order
@@ -125,6 +126,12 @@ class AssessmentRequest < ApplicationRecord
   end
 
   private
+
+  def validate_same_competition
+    return if assessment.nil? || entity.nil? || assessment.competition_id == entity.competition_id
+
+    errors.add(:assessment, :not_same_competition)
+  end
 
   def competitor_order_type(type, competitor_order)
     if competitor_order.to_i.zero?

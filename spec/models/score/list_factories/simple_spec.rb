@@ -54,7 +54,9 @@ RSpec.describe Score::ListFactories::Simple do
   end
 
   before do
-    create_list(:person, 5, :with_team).each { |person| person.requests.create!(assessment: factory.assessments.first) }
+    create_list(:person, 5, :with_team, competition:).each do |person|
+      person.requests.create!(assessment: factory.assessments.first)
+    end
     factory.reload
   end
 
@@ -80,7 +82,9 @@ RSpec.describe Score::ListFactories::Simple do
         factory.conditions.create!(competition:, track: 1, assessments: [assessment])
         factory.conditions.create!(competition:, track: 2, assessments: [assessment2])
 
-        create_list(:person, 2, :with_team).each { |person| person.requests.create!(assessment: assessment2) }
+        create_list(:person, 2, :with_team, competition:).each do |person|
+          person.requests.create!(assessment: assessment2)
+        end
 
         new_list = factory.list
         expect { factory.perform }.to change(Score::ListEntry, :count).by(7)

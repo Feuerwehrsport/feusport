@@ -18,7 +18,7 @@ FactoryBot.define do
 
     trait :male
     trait :female do
-      band { Band.find_by(gender: :female) || build(:band, :female) }
+      band { Band.find_by(gender: :female, competition:) || build(:band, :female, competition:) }
     end
     trait :with_team do
       team do |person|

@@ -54,6 +54,7 @@ class Team < ApplicationRecord
   schema_validations
   validates :number, numericality: { greater_than: 0 }
   validates :shortcut, length: { maximum: 12 }
+  validates :band, same_competition: true
   validate :validate_band_limit, if: :check_band_limit
 
   auto_strip_attributes :name, :shortcut, :registration_hint

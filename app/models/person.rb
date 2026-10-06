@@ -51,6 +51,7 @@ class Person < ApplicationRecord
 
   schema_validations
   validate :validate_team_band
+  validates :band, :team, same_competition: true
   validate :validate_band_limit, if: :check_band_limit
 
   accepts_nested_attributes_for :requests, allow_destroy: true

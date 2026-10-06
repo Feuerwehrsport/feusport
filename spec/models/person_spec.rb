@@ -60,6 +60,22 @@ RSpec.describe Person do
     end
   end
 
+  describe 'competition validation' do
+    let(:other_competition) { create(:competition, name: 'Other') }
+    let(:other_band) { create(:band, :male, competition: other_competition) }
+    let(:other_team) { create(:team, competition: other_competition, band: other_band) }
+
+    it 'requires band and team of the same competition' do
+      person = build(:person, competition:, band: other_band, team: other_team)
+      expect(person).not_to be_valid
+      expect(person.errors.details[:band]).to include(error: :not_same_competition)
+      expect(person.errors.details[:team]).to include(error: :not_same_competition)
+
+      person.assign_attributes(band: male, team: nil)
+      expect(person).to be_valid
+    end
+  end
+
   describe 'band limit validation' do
     let!(:existing) { create(:person, competition:, band: female) }
 

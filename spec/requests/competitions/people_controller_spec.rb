@@ -117,6 +117,41 @@ RSpec.describe 'People' do
     end
   end
 
+  context 'when team leader manipulates team param' do
+    let!(:other_user) { create(:user, :other, phone_number: '1234') }
+    let!(:own_team) { create(:team, competition:, band:, name: 'Own', user_team_accesses: [user_team_access]) }
+    let(:user_team_access) { UserTeamAccess.new(competition:, user: other_user) }
+    let!(:foreign_team) { create(:team, competition:, band:, name: 'Foreign') }
+    let!(:person) { create(:person, competition:, band:, team: own_team) }
+
+    before do
+      competition.update!(registration_open_until: Date.current, registration_open: 'open', visible: true)
+      sign_in other_user
+    end
+
+    it 'denies moving a person into a foreign team' do
+      patch competition_nested("people/#{person.id}"), params: { person: { team_id: foreign_team.id } }
+      expect(response).to redirect_to('/')
+      expect(flash[:alert]).to eq 'Zugriff verweigert'
+      expect(person.reload.team).to eq own_team
+    end
+
+    it 'denies creating a person in a foreign team' do
+      expect do
+        post competition_nested("people?team=#{own_team.id}"),
+             params: { band_id: band.id, person: { first_name: 'X', last_name: 'Y', team_id: foreign_team.id } }
+      end.not_to change(Person, :count)
+      expect(response).to redirect_to('/')
+    end
+
+    it 'allows moving a person within own teams' do
+      second_team = create(:team, competition:, band:, name: 'Own2',
+                                  user_team_accesses: [UserTeamAccess.new(competition:, user: other_user)])
+      patch competition_nested("people/#{person.id}"), params: { person: { team_id: second_team.id } }
+      expect(person.reload.team).to eq second_team
+    end
+  end
+
   context 'when band limit is reached' do
     let!(:other_user) { create(:user, :other, phone_number: '1234') }
 

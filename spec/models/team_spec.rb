@@ -58,6 +58,20 @@ RSpec.describe Team do
     end
   end
 
+  describe 'competition validation' do
+    let(:competition) { create(:competition) }
+    let(:other_competition) { create(:competition, name: 'Other') }
+
+    it 'requires a band of the same competition' do
+      team = build(:team, competition:, band: create(:band, competition: other_competition))
+      expect(team).not_to be_valid
+      expect(team.errors.details[:band]).to include(error: :not_same_competition)
+
+      team.band = create(:band, competition:)
+      expect(team).to be_valid
+    end
+  end
+
   describe 'band limit validation' do
     let(:competition) { create(:competition) }
     let(:band) { create(:band, competition:, max_teams: 1) }
