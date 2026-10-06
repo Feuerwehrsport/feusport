@@ -11,7 +11,7 @@ end
 
 SimpleCov.at_exit do
   output = {
-    covered_percent: SimpleCov.result.covered_percent,
+    covered_percent: SimpleCov.result.covered_percent.round(2),
     files: SimpleCov.result.files.count,
     total_lines: SimpleCov.result.total_lines,
     covered_lines: SimpleCov.result.covered_lines,

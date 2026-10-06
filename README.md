@@ -1,5 +1,8 @@
 # Feusport
 
+[![Tests](https://github.com/Feuerwehrsport/feusport/actions/workflows/rubyonrails.yml/badge.svg?branch=main)](https://github.com/Feuerwehrsport/feusport/actions/workflows/rubyonrails.yml)
+[![Testabdeckung](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2FFeuerwehrsport%2Ffeusport%2Fmain%2Fdoc%2Fsimplecov.json&query=%24.covered_percent&suffix=%25&label=Testabdeckung&color=brightgreen)](doc/simplecov.json)
+
 Dieses Projekt dient der Kommunikation innerhalb der [Feuerwehrsport](https://de.wikipedia.org/wiki/Feuerwehrsport)-Szene in Deutschland. Es soll die Übersicht über Wettkämpfe, Termine und Ergebnisse verbessern.
 
 Die Wettkampf-Planung und -Auswertung ist dabei auf den internationalen Feuerwehrsport zugeschnitten. Es können zwar auch andere Wettkämpfe (z.B. Jugend, Traditionell), aber die Unterstützung ist nicht gegeben.
