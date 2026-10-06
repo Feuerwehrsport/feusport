@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_10_05_214047) do
+ActiveRecord::Schema[8.0].define(version: 2026_10_06_120000) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
-  enable_extension "plpgsql"
   enable_extension "postgis"
 
   create_table "active_storage_attachments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -80,6 +80,8 @@ ActiveRecord::Schema[7.2].define(version: 2026_10_05_214047) do
     t.string "team_tags", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "max_teams"
+    t.integer "max_people"
     t.index ["competition_id"], name: "index_bands_on_competition_id"
     t.index ["name", "competition_id"], name: "index_bands_on_name_and_competition_id", unique: true
   end

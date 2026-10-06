@@ -38,6 +38,7 @@ class Competitions::TeamsController < CompetitionNestedController
 
   def update
     @team.assign_attributes(team_params)
+    @team.check_band_limit = !can?(:manage, @competition)
     if @team.save
       if params[:return_to] == 'without_statistics_connection'
         redirect_to without_statistics_connection_competition_teams_path, notice: :saved
@@ -61,6 +62,11 @@ class Competitions::TeamsController < CompetitionNestedController
   end
   helper_method :can_sub_edit_team?
 
+  def can_add_people_to_team?
+    can?(:manage, @competition) || !@team.band.people_limit_reached?
+  end
+  helper_method :can_add_people_to_team?
+
   def team_params
     return {} unless params.key?(:team)
 
@@ -78,6 +84,9 @@ class Competitions::TeamsController < CompetitionNestedController
 
     self.resource_instance = resource_class.new(competition: @competition, band:)
     return if can?(:manage, @competition)
+
+    resource_instance.check_band_limit = true
+    return redirect_to({ action: :index }, alert: :band_full) if action_name == 'new' && band.teams_limit_reached?
 
     resource_instance.user_team_accesses.build(user: current_user, competition: @competition)
     resource_instance.registration_hint =

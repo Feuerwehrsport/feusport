@@ -6,6 +6,8 @@
 #
 #  id             :uuid             not null, primary key
 #  gender         :integer          not null
+#  max_people     :integer
+#  max_teams      :integer
 #  name           :string(100)      not null
 #  person_tags    :string           default([]), is an Array
 #  position       :integer
@@ -64,6 +66,47 @@ RSpec.describe Band do
 
       band.team_tag_names = ''
       expect(band.team_tags).to eq []
+    end
+  end
+
+  describe 'registration limits' do
+    let(:band) { create(:band, competition:) }
+
+    it 'validates limits to be positive' do
+      band.max_teams = 0
+      band.max_people = -1
+      expect(band).not_to be_valid
+      expect(band.errors.attribute_names).to include(:max_teams, :max_people)
+
+      band.max_teams = nil
+      band.max_people = 1
+      expect(band).to be_valid
+    end
+
+    it 'checks team limit' do
+      expect(band).not_to be_teams_limit_reached
+      expect(band).not_to be_teams_limit_exceeded
+
+      create(:team, competition:, band:)
+      band.max_teams = 1
+      expect(band).to be_teams_limit_reached
+      expect(band).not_to be_teams_limit_exceeded
+
+      create(:team, competition:, band:, name: 'Other')
+      expect(band).to be_teams_limit_exceeded
+    end
+
+    it 'checks people limit' do
+      expect(band).not_to be_people_limit_reached
+      expect(band).not_to be_people_limit_exceeded
+
+      create(:person, competition:, band:)
+      band.max_people = 1
+      expect(band).to be_people_limit_reached
+      expect(band).not_to be_people_limit_exceeded
+
+      create(:person, competition:, band:)
+      expect(band).to be_people_limit_exceeded
     end
   end
 end

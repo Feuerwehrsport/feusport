@@ -240,6 +240,60 @@ RSpec.describe Team do
     end
   end
 
+  context 'when band limit is reached' do
+    let!(:other_user) { create(:user, :other, phone_number: '1234') }
+    let!(:team) { create(:team, band:, competition:, user_team_accesses: [user_team_access]) }
+    let(:user_team_access) { UserTeamAccess.new(competition:, user: other_user) }
+
+    before do
+      band.update!(max_teams: 1, max_people: 1)
+      create(:person, competition:, band:, team:)
+      competition.update!(registration_open_until: Date.current, registration_open: 'open', visible: true)
+    end
+
+    it 'blocks team leaders' do
+      sign_in other_user
+
+      get competition_nested('teams')
+      expect(response.body).to include('1 Mannschaft (maximal 1)', 'Ausgebucht')
+      expect(response.body).not_to include("teams/new?band_id=#{band.id}", 'Limit überschritten')
+
+      get competition_nested("teams/new?band_id=#{band.id}")
+      expect(response).to redirect_to(competition_nested('teams'))
+      follow_redirect!
+      expect(response.body).to include('Diese Wertungsgruppe ist ausgebucht.')
+
+      expect do
+        post competition_nested('teams'),
+             params: { band_id: band.id, team: { name: 'new-name', shortcut: 'new-n', number: '1' } }
+      end.not_to change(described_class, :count)
+      expect(response).to have_http_status(:unprocessable_content)
+      expect(response.body).to include('ist ausgebucht, die maximale Anzahl an Mannschaften ist erreicht')
+
+      patch competition_nested("teams/#{team.id}"), params: { team: { name: 'renamed' } }
+      expect(response).to redirect_to(competition_nested("teams/#{team.id}"))
+
+      get competition_nested("teams/#{team.id}")
+      expect(response.body).not_to include('Wettkämpfer hinzufügen')
+    end
+
+    it 'only shows a hint to admins' do
+      sign_in user
+
+      expect do
+        post competition_nested('teams'),
+             params: { band_id: band.id, team: { name: 'new-name', shortcut: 'new-n', number: '1' } }
+      end.to change(described_class, :count).by(1)
+
+      get competition_nested('teams')
+      expect(response.body).to include('2 Mannschaften (maximal 1)', 'Limit überschritten')
+      expect(response.body).to include("teams/new?band_id=#{band.id}")
+
+      get competition_nested("teams/#{team.id}")
+      expect(response.body).to include('Wettkämpfer hinzufügen')
+    end
+  end
+
   context 'when firesport_statistics is not connected' do
     let!(:team) { create(:team, competition:, band:) }
     let!(:team_mv) { create(:team, competition:, band:, name: 'Mecklenburg-Vorpommern') }

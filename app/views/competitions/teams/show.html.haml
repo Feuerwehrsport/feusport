@@ -93,7 +93,8 @@
           - actions.link_to 'Übersicht', { action: :index }, end_icon: :list
         - c.body do
           .d-grid.gap-2
-            = btn_link_to 'Wettkämpfer hinzufügen', new_competition_person_path(team: @team, return_to: 'team')
+            - if can_add_people_to_team?
+              = btn_link_to 'Wettkämpfer hinzufügen', new_competition_person_path(team: @team, return_to: 'team')
             = btn_link_to 'Name bearbeiten', { action: :edit }
             = btn_link_to 'Anmeldungshinweise bearbeiten', { action: :edit, form: 'registration_hint' }
             = btn_link_to 'Bedingung für Startliste hinzufügen', new_competition_team_list_restriction_path(team1_id: @team.id)
@@ -103,7 +104,7 @@
   - if can_sub_edit_team? || @team.people.exists?
     .col-lg-12#people-table
       = card(Team.human_attribute_name(:people)) do |c|
-        - if can_sub_edit_team?
+        - if can_sub_edit_team? && can_add_people_to_team?
           - c.primary_actions do |actions|
             - actions.link_to 'Wettkämpfer hinzufügen', new_competition_person_path(team: @team, return_to: 'team'), end_icon: :square_plus
         - if @team.people.exists?

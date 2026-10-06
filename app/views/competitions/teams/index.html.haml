@@ -17,7 +17,11 @@
           - c.direct do
             = render('index_table', resource_class:, resource_collection: teams, band:, assessments: Assessment.requestable_for_team(band))
           - c.footer do
-            %small #{teams.count} #{Team.model_name.human(count: teams.count)}
+            %small #{teams.count} #{Team.model_name.human(count: teams.count)}#{" (maximal #{band.max_teams})" if band.max_teams.present?}
+            - if can?(:manage, @competition) && band.teams_limit_exceeded?
+              %span.badge.bg-warning.text-dark Limit überschritten
+            - elsif band.teams_limit_reached?
+              %span.badge.bg-secondary Ausgebucht
         - else
           - c.body do
             .alert.alert-info= t('a.no_entries_found')
@@ -29,6 +33,6 @@
           - c.actions do |actions|
             - actions.link_to 'PDF', { format: :pdf }, end_icon: :file_pdf, target: '_blank', rel: 'noopener'
             - actions.link_to 'XLS', { format: :xlsx }, end_icon: :file_excel
-        - elsif @competition.registration_possible?
+        - elsif @competition.registration_possible? && !band.teams_limit_reached?
           - c.primary_actions do |actions|
             - actions.link_to t('a.add'), { action: :new, band_id: band.id }, end_icon: :square_plus

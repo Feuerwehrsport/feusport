@@ -54,6 +54,7 @@ class Team < ApplicationRecord
   schema_validations
   validates :number, numericality: { greater_than: 0 }
   validates :shortcut, length: { maximum: 12 }
+  validate :validate_band_limit, if: :check_band_limit
 
   auto_strip_attributes :name, :shortcut, :registration_hint
   accepts_nested_attributes_for :requests, allow_destroy: true
@@ -63,7 +64,7 @@ class Team < ApplicationRecord
   after_create :create_assessment_requests
   after_commit :update_multi_team, on: %i[create update]
   after_commit :update_multi_team_similars, on: %i[destroy]
-  attr_accessor :disable_autocreate_assessment_requests
+  attr_accessor :disable_autocreate_assessment_requests, :check_band_limit
 
   def group_assessment_validator
     @group_assessment_validator ||= GroupAssessmentValidator.new(self)
@@ -126,6 +127,13 @@ class Team < ApplicationRecord
   end
 
   private
+
+  def validate_band_limit
+    return unless new_record? || band_id_changed?
+    return unless band&.teams_limit_reached?
+
+    errors.add(:band, :teams_limit_reached)
+  end
 
   def create_assessment_requests
     return if disable_autocreate_assessment_requests.present?

@@ -3,6 +3,8 @@
     %th= resource_class.human_attribute_name(:name)
     %th= resource_class.human_attribute_name(:gender)
     %th= resource_class.human_attribute_name(:assessments)
+    %th= Team.model_name.human(count: :many)
+    %th= Person.model_name.human(count: :many)
     %th{ colspan: 2 } Kennzeichnungen
     %th
   - resource_collection.sort.each do |band|
@@ -10,6 +12,8 @@
       %td= band.name
       %td= band.translated_gender
       %td= band.assessments.count
+      %td= render('limit', count: band.teams.count, max: band.max_teams, exceeded: band.teams_limit_exceeded?)
+      %td= render('limit', count: band.people.count, max: band.max_people, exceeded: band.people_limit_exceeded?)
       %td= band.person_tag_names
       %td= band.team_tag_names
       %td.text-end

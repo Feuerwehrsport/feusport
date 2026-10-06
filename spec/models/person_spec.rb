@@ -60,6 +60,33 @@ RSpec.describe Person do
     end
   end
 
+  describe 'band limit validation' do
+    let!(:existing) { create(:person, competition:, band: female) }
+
+    before do
+      female.update!(max_people: 1)
+      male.update!(max_people: 1)
+    end
+
+    it 'only checks when requested' do
+      person = build(:person, competition:, band: female)
+      expect(person).to be_valid
+
+      person.check_band_limit = true
+      expect(person).not_to be_valid
+      expect(person.errors.details[:band]).to include(error: :people_limit_reached)
+    end
+
+    it 'checks persisted people only on band change' do
+      existing.check_band_limit = true
+      expect(existing).to be_valid
+
+      create(:person, competition:, band: male)
+      existing.band = male
+      expect(existing).not_to be_valid
+    end
+  end
+
   describe '#<=>' do
     it 'sorts by full name and then by id' do
       person_b = create(:person, competition:, band: male, first_name: 'Bernd')

@@ -5,11 +5,17 @@ de:
       band:
         assessments: Wertungen
         gender: Geschlecht
+        max_people: Maximale Anzahl Wettkämpfer
+        max_teams: Maximale Anzahl Mannschaften
         name: Name
         person_tag_names: Mögliche Kennzeichnungen für Wettkämpfer
         person_tags: Personen-Kennzeichnungen
         team_tag_names: Mögliche Kennzeichnungen für Mannschaften
         team_tags: Mannschaft-Kennzeichnungen
+    errors:
+      messages:
+        people_limit_reached: ist ausgebucht, die maximale Anzahl an Wettkämpfern ist erreicht
+        teams_limit_reached: ist ausgebucht, die maximale Anzahl an Mannschaften ist erreicht
     models:
       band:
         one: Wertungsgruppe
@@ -17,4 +23,6 @@ de:
   simple_form:
     hints:
       band:
+        max_people: Gilt nur für Anmeldungen durch Mannschaftsleiter. Leer lassen für keine Begrenzung.
+        max_teams: Gilt nur für Anmeldungen durch Mannschaftsleiter. Leer lassen für keine Begrenzung.
         tag_names: 'Werte mit Komma trennen. Z.B.: »U20« oder »Ü40«'

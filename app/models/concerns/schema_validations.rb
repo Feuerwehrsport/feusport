@@ -4,7 +4,7 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 
-# generated from version 20261005214047
+# generated from version 20261006120000
 
 module SchemaValidations
   extend ActiveSupport::Concern
@@ -127,6 +127,8 @@ module SchemaValidations
       validates_with_filter :created_at, {presence: {}}
       validates_with_filter :gender, {numericality: {allow_nil: true, only_integer: true, greater_than_or_equal_to: -2147483648, less_than: 2147483648}} unless enums.include?(:gender)
       validates_with_filter :gender, {presence: {}}
+      validates_with_filter :max_people, {numericality: {allow_nil: true, only_integer: true, greater_than_or_equal_to: -2147483648, less_than: 2147483648}} unless enums.include?(:max_people)
+      validates_with_filter :max_teams, {numericality: {allow_nil: true, only_integer: true, greater_than_or_equal_to: -2147483648, less_than: 2147483648}} unless enums.include?(:max_teams)
       validates_with_filter :name, {length: {allow_nil: true, maximum: 100}}
       validates_with_filter :name, {presence: {}}
       validates_with_filter :position, {numericality: {allow_nil: true, only_integer: true, greater_than_or_equal_to: -2147483648, less_than: 2147483648}} unless enums.include?(:position)

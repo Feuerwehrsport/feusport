@@ -20,6 +20,7 @@ de:
           has_one: Datensatz kann nicht gelöscht werden, da ein abhängiger %{record}-Datensatz existiert.
         year_not_valid: hat ein ungültiges Jahr
   alerts:
+    band_full: Diese Wertungsgruppe ist ausgebucht.
     check_errors: 'Bitte überprüfe folgende Fehler:'
     deleted: Der Eintrag wurde gelöscht.
     saved: Die Änderungen wurden gespeichert.

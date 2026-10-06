@@ -6,6 +6,8 @@
 #
 #  id             :uuid             not null, primary key
 #  gender         :integer          not null
+#  max_people     :integer
+#  max_teams      :integer
 #  name           :string(100)      not null
 #  person_tags    :string           default([]), is an Array
 #  position       :integer
@@ -40,6 +42,7 @@ class Band < ApplicationRecord
   auto_strip_attributes :name
 
   schema_validations
+  validates :max_teams, :max_people, numericality: { greater_than: 0, allow_nil: true }
 
   after_save :clean_tags
 
@@ -56,6 +59,22 @@ class Band < ApplicationRecord
 
   def destroy_possible?
     assessments.empty?
+  end
+
+  def teams_limit_reached?
+    max_teams.present? && teams.count >= max_teams
+  end
+
+  def teams_limit_exceeded?
+    max_teams.present? && teams.count > max_teams
+  end
+
+  def people_limit_reached?
+    max_people.present? && people.count >= max_people
+  end
+
+  def people_limit_exceeded?
+    max_people.present? && people.count > max_people
   end
 
   def person_tag_names=(names)

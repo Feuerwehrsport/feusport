@@ -15,12 +15,16 @@
       - c.direct do
         = render('index_table', resource_class:, resource_collection: people, band:)
       - c.footer do
-        %small #{people.count} #{Person.model_name.human(count: people.count)}
+        %small #{people.count} #{Person.model_name.human(count: people.count)}#{" (maximal #{band.max_people})" if band.max_people.present?}
+        - if can?(:manage, @competition) && band.people_limit_exceeded?
+          %span.badge.bg-warning.text-dark Limit überschritten
+        - elsif band.people_limit_reached?
+          %span.badge.bg-secondary Ausgebucht
     - else
       - c.body do
         .alert.alert-info= t('a.no_entries_found')
 
-    - if can?(:create, resource_class.new(competition: @competition, band:))
+    - if can?(:create, resource_class.new(competition: @competition, band:)) && (can?(:manage, @competition) || !band.people_limit_reached?)
       - c.primary_actions do |actions|
         - actions.link_to t('a.add'), { action: :new, band_id: band.id }, end_icon: :square_plus
 

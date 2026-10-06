@@ -43,6 +43,7 @@ class Competitions::PeopleController < CompetitionNestedController
 
   def update
     @person.assign_attributes(person_params)
+    @person.check_band_limit = !can?(:manage, @competition)
     if @person.save
       if params[:return_to] == 'team'
         redirect_to competition_team_path(id: @person.team_id, jump_to: 'people-table'), notice: :saved
@@ -97,6 +98,11 @@ class Competitions::PeopleController < CompetitionNestedController
     end
 
     return if can?(:manage, @competition)
+
+    resource_instance.check_band_limit = true
+    if action_name == 'new' && resource_instance.band.people_limit_reached?
+      return redirect_to({ action: :index }, alert: :band_full)
+    end
     return if can?(:edit, resource_instance.team)
 
     resource_instance.user_person_accesses.build(user: current_user, competition: @competition)

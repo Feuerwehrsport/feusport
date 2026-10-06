@@ -51,13 +51,14 @@ class Person < ApplicationRecord
 
   schema_validations
   validate :validate_team_band
+  validate :validate_band_limit, if: :check_band_limit
 
   accepts_nested_attributes_for :requests, allow_destroy: true
 
   default_scope { order(:last_name, :first_name) }
   scope :registration_order, -> { reorder(:registration_order) }
 
-  attr_accessor :create_team_name
+  attr_accessor :create_team_name, :check_band_limit
 
   def full_name
     "#{first_name} #{last_name}"
@@ -107,6 +108,13 @@ class Person < ApplicationRecord
 
     errors.add(:team, :has_other_band)
     errors.add(:band, :has_other_band)
+  end
+
+  def validate_band_limit
+    return unless new_record? || band_id_changed?
+    return unless band&.people_limit_reached?
+
+    errors.add(:band, :people_limit_reached)
   end
 
   def assign_registration_order

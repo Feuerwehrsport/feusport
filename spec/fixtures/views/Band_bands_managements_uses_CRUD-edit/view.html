@@ -144,6 +144,10 @@ Erweitert
 <div class="form-group string required band_name form-group-valid"><label class="control-label string required" for="band_name">Name <abbr title="required">*</abbr></label><input class="form-control string required" type="text" value="Männer" name="band[name]" id="band_name" /></div>
 <div class="form-group string optional band_person_tag_names"><label class="control-label string optional" for="band_person_tag_names">Mögliche Kennzeichnungen für Wettkämpfer</label><input class="form-control string optional" type="text" value="" name="band[person_tag_names]" id="band_person_tag_names" /><small class="form-text text-muted">Werte mit Komma abtrennen, z.B.: U20, Gäste</small></div>
 <div class="form-group string optional band_team_tag_names"><label class="control-label string optional" for="band_team_tag_names">Mögliche Kennzeichnungen für Mannschaften</label><input class="form-control string optional" type="text" value="" name="band[team_tag_names]" id="band_team_tag_names" /><small class="form-text text-muted">Werte mit Komma abtrennen, z.B.: BB-Cup, Ü40</small></div>
+<div class="row">
+<div class="col-md-6"><div class="form-group integer optional band_max_teams"><label class="control-label integer optional" for="band_max_teams">Maximale Anzahl Mannschaften</label><input class="form-control numeric integer optional" min="1" type="number" step="1" name="band[max_teams]" id="band_max_teams" /><small class="form-text text-muted">Gilt nur für Anmeldungen durch Mannschaftsleiter. Leer lassen für keine Begrenzung.</small></div></div>
+<div class="col-md-6"><div class="form-group integer optional band_max_people"><label class="control-label integer optional" for="band_max_people">Maximale Anzahl Wettkämpfer</label><input class="form-control numeric integer optional" min="1" type="number" step="1" name="band[max_people]" id="band_max_people" /><small class="form-text text-muted">Gilt nur für Anmeldungen durch Mannschaftsleiter. Leer lassen für keine Begrenzung.</small></div></div>
+</div>
 
 </div>
 <div class="card-footer">

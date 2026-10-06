@@ -11,6 +11,14 @@
           %th= Band.human_attribute_name(:name)
           %td= @band.name
         %tr
+          %th= Team.model_name.human(count: :many)
+          %td
+            = render('limit', count: @band.teams.count, max: @band.max_teams, exceeded: @band.teams_limit_exceeded?)
+        %tr
+          %th= Person.model_name.human(count: :many)
+          %td
+            = render('limit', count: @band.people.count, max: @band.max_people, exceeded: @band.people_limit_exceeded?)
+        %tr
           %th= Band.human_attribute_name(:person_tag_names)
           %td
             - if @band.person_tags.present?

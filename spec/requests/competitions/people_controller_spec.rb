@@ -117,6 +117,49 @@ RSpec.describe 'People' do
     end
   end
 
+  context 'when band limit is reached' do
+    let!(:other_user) { create(:user, :other, phone_number: '1234') }
+
+    before do
+      band.update!(max_people: 1)
+      create(:person, competition:, band:)
+      competition.update!(registration_open_until: Date.current, registration_open: 'open', visible: true)
+    end
+
+    it 'blocks team leaders' do
+      sign_in other_user
+
+      get competition_nested('people')
+      expect(response.body).to include('1 Wettkämpfer (maximal 1)', 'Ausgebucht')
+      expect(response.body).not_to include("people/new?band_id=#{band.id}", 'Limit überschritten')
+
+      get competition_nested("people/new?band_id=#{band.id}")
+      expect(response).to redirect_to(competition_nested('people'))
+      follow_redirect!
+      expect(response.body).to include('Diese Wertungsgruppe ist ausgebucht.')
+
+      expect do
+        post competition_nested('people'),
+             params: { band_id: band.id, person: { first_name: 'first-name', last_name: 'last-name' } }
+      end.not_to change(Person, :count)
+      expect(response).to have_http_status(:unprocessable_content)
+      expect(response.body).to include('ist ausgebucht, die maximale Anzahl an Wettkämpfern ist erreicht')
+    end
+
+    it 'only shows a hint to admins' do
+      sign_in user
+
+      expect do
+        post competition_nested('people'),
+             params: { band_id: band.id, person: { first_name: 'first-name', last_name: 'last-name' } }
+      end.to change(Person, :count).by(1)
+
+      get competition_nested('people')
+      expect(response.body).to include('2 Wettkämpfer (maximal 1)', 'Limit überschritten')
+      expect(response.body).to include("people/new?band_id=#{band.id}")
+    end
+  end
+
   context 'when firesport_statistics is not connected' do
     let!(:person) { create(:person, competition:, band:) }
     let!(:person_peter) { create(:person, competition:, band:, first_name: 'Peter') }

@@ -58,6 +58,31 @@ RSpec.describe Team do
     end
   end
 
+  describe 'band limit validation' do
+    let(:competition) { create(:competition) }
+    let(:band) { create(:band, competition:, max_teams: 1) }
+    let(:other_band) { create(:band, :male, competition:, max_teams: 1) }
+    let!(:existing) { create(:team, competition:, band:) }
+
+    it 'only checks when requested' do
+      team = build(:team, competition:, band:, name: 'Other')
+      expect(team).to be_valid
+
+      team.check_band_limit = true
+      expect(team).not_to be_valid
+      expect(team.errors.details[:band]).to include(error: :teams_limit_reached)
+    end
+
+    it 'checks persisted teams only on band change' do
+      existing.check_band_limit = true
+      expect(existing).to be_valid
+
+      create(:team, competition:, band: other_band)
+      existing.band = other_band
+      expect(existing).not_to be_valid
+    end
+  end
+
   describe '#<=>' do
     let(:competition) { create(:competition) }
     let(:female) { create(:band, :female, competition:) }

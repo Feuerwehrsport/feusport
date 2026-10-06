@@ -86,6 +86,25 @@ RSpec.describe Band do
 
       expect(band.reload.gender).to eq 'indifferent'
 
+      # PUT update limits
+      put "/#{competition.year}/#{competition.slug}/bands/#{band.id}",
+          params: { band: { max_teams: '1', max_people: '2' } }
+      expect(band.reload.max_teams).to eq 1
+      expect(band.max_people).to eq 2
+
+      team = create(:team, competition:, band:)
+      create(:team, competition:, band:, name: 'Other')
+      create(:person, competition:, band:, team:)
+
+      get "/#{competition.year}/#{competition.slug}/bands/#{band.id}"
+      expect(response.body).to include('2', 'von 1', 'Limit überschritten', 'von 2')
+
+      get "/#{competition.year}/#{competition.slug}/bands"
+      expect(response.body).to include('von 1', 'Limit überschritten')
+
+      Person.destroy_all
+      Team.destroy_all
+
       expect do
         # DELETE destroy
         delete "/#{competition.year}/#{competition.slug}/bands/#{band.id}"
