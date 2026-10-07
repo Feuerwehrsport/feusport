@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Competitions::UserTeamAccessesController < CompetitionNestedController
-  before_action :preauthorize
   before_action :assign_team
+  before_action :preauthorize
 
   def destroy
     if resource_instance.user == current_user
@@ -18,7 +18,7 @@ class Competitions::UserTeamAccessesController < CompetitionNestedController
   protected
 
   def preauthorize
-    authorize!(params[:action].to_sym, UserTeamAccess)
+    authorize!(params[:action].to_sym, UserTeamAccess.new(competition: @competition, team: @team))
   end
 
   def resource_class

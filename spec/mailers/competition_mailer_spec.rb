@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe CompetitionMailer do
   describe 'access_request' do
-    let(:access_request) { create(:user_access_request) }
+    let(:access_request) { create(:user_access_request, token: 'secret-token') }
     let(:mail) { described_class.with(access_request:).access_request }
 
     it 'renders the headers and body' do
@@ -13,6 +13,7 @@ RSpec.describe CompetitionMailer do
       expect(mail.header[:from].to_s).to eq 'Feuerwehrsport <no-reply@feusport.de>'
       expect(mail.header[:cc].to_s).to eq ''
       expect(mail.header[:reply_to].to_s).to eq 'Alfred Meier <alfred@meier.de>'
+      expect(mail.html_part.decoded).to include('/connect?token=secret-token')
       expect(mail).to match_html_fixture
     end
   end
@@ -37,7 +38,7 @@ RSpec.describe CompetitionMailer do
     let(:competition) { create(:competition) }
     let(:band) { create(:band, competition:) }
     let(:team) { create(:team, competition:, band:) }
-    let(:user_team_access_request) { create(:user_team_access_request, competition:, team:) }
+    let(:user_team_access_request) { create(:user_team_access_request, competition:, team:, token: 'secret-token') }
     let(:mail) { described_class.with(user_team_access_request:).user_team_access_request }
 
     it 'renders the headers and body' do
@@ -46,6 +47,7 @@ RSpec.describe CompetitionMailer do
       expect(mail.header[:from].to_s).to eq 'Feuerwehrsport <no-reply@feusport.de>'
       expect(mail.header[:cc].to_s).to eq ''
       expect(mail.header[:reply_to].to_s).to eq 'Alfred Meier <alfred@meier.de>'
+      expect(mail.html_part.decoded).to include('/connect?token=secret-token')
       expect(mail).to match_html_fixture
     end
   end

@@ -38,9 +38,10 @@ RSpec.describe Competitions::UserTeamAccessesController do
 
       # load request
       req = competition.user_team_access_requests.first
+      expect(response.body).not_to include(req.token)
 
       # GET connect - error same user
-      get competition_nested("teams/#{team.id}/access_requests/#{req.id}/connect")
+      get competition_nested("teams/#{team.id}/access_requests/#{req.id}/connect?token=#{req.token}")
       expect(response).to redirect_to(competition_nested("teams/#{team.id}/accesses"))
       expect(flash[:alert]).to eq 'Du kannst dich nicht selber hinzufügen.'
 
@@ -50,7 +51,7 @@ RSpec.describe Competitions::UserTeamAccessesController do
       expect do
         expect do
           # GET connect
-          get competition_nested("teams/#{team.id}/access_requests/#{req.id}/connect")
+          get competition_nested("teams/#{team.id}/access_requests/#{req.id}/connect?token=#{req.token}")
           expect(response).to redirect_to(competition_nested("teams/#{team.id}"))
           expect(flash[:notice]).to eq 'Du wurdest erfolgreich mit dieser Mannschaft verbunden.'
         end.not_to change(UserAccess, :count)
@@ -70,7 +71,7 @@ RSpec.describe Competitions::UserTeamAccessesController do
 
       expect do
         # GET connect
-        get competition_nested("teams/#{team.id}/access_requests/#{req.id}/connect")
+        get competition_nested("teams/#{team.id}/access_requests/#{req.id}/connect?token=#{req.token}")
         expect(response).to redirect_to(competition_nested("teams/#{team.id}"))
         expect(flash[:notice]).to eq 'Du wurdest erfolgreich mit dieser Mannschaft verbunden.'
       end.to change(UserTeamAccess, :count).by(1)
@@ -79,7 +80,7 @@ RSpec.describe Competitions::UserTeamAccessesController do
       req = UserTeamAccessRequest.create!(competition:, sender: other_user, email: 'foo@bar.de', text: 'Hallo', team:)
 
       # GET connect with error
-      get competition_nested("teams/#{team.id}/access_requests/#{req.id}/connect")
+      get competition_nested("teams/#{team.id}/access_requests/#{req.id}/connect?token=#{req.token}")
       expect(response).to redirect_to(competition_nested("teams/#{team.id}/accesses"))
       expect(flash[:alert]).to eq 'Du hast bereits Zugriff auf diese Mannschaft.'
 
@@ -117,6 +118,34 @@ RSpec.describe Competitions::UserTeamAccessesController do
         delete competition_nested("teams/#{team.id}/accesses/#{access.id}")
         expect(response).to redirect_to(competition_nested("teams/#{team.id}/accesses"))
       end.not_to change(UserTeamAccess, :count)
+    end
+  end
+
+  context 'when user has no access to team' do
+    let!(:req) { UserTeamAccessRequest.create!(competition:, sender: user, email: 'foo@bar.de', text: 'Hallo', team:) }
+
+    it 'hides accesses and requests' do
+      sign_in other_user
+
+      get competition_nested("teams/#{team.id}/accesses")
+      expect(response).to redirect_to('/')
+      expect(flash[:alert]).to eq 'Zugriff verweigert'
+    end
+
+    it 'connects only with valid token' do
+      sign_in other_user
+
+      ['', '?token=', '?token=wrong'].each do |query|
+        expect do
+          get competition_nested("teams/#{team.id}/access_requests/#{req.id}/connect#{query}")
+          expect(response).to redirect_to(competition_nested("teams/#{team.id}"))
+          expect(flash[:alert]).to eq 'Der Link ist ungültig.'
+        end.not_to change(UserTeamAccess, :count)
+      end
+
+      expect do
+        get competition_nested("teams/#{team.id}/access_requests/#{req.id}/connect?token=#{req.token}")
+      end.to change(UserTeamAccess, :count).by(1)
     end
   end
 

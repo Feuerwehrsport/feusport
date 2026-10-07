@@ -24,7 +24,10 @@ class Competitions::UserTeamAccessRequestsController < CompetitionNestedControll
   def connect
     authorize!(:connect, @user_team_access_request)
 
-    if @user_team_access_request.sender == current_user
+    if !@user_team_access_request.valid_token?(params[:token])
+      flash[:alert] = 'Der Link ist ungültig.'
+      redirect_to competition_team_path(id: @team.id)
+    elsif @user_team_access_request.sender == current_user
       flash[:alert] = 'Du kannst dich nicht selber hinzufügen.'
       redirect_to competition_team_accesses_path
     elsif current_user.in?(@user_team_access_request.team.users)

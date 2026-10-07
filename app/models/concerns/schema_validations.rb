@@ -4,7 +4,7 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 
-# generated from version 20261006120000
+# generated from version 20261006190000
 
 module SchemaValidations
   extend ActiveSupport::Concern
@@ -1002,6 +1002,8 @@ module SchemaValidations
 
     def dbv_user_access_requests_validations(enums: [])
       belongs_to_presence_validations_for([:competition_id, :sender_id])
+      belongs_to_uniqueness_validations_for([["token"]])
+      uniqueness_validations_for([["token"]])
       validates_with_filter :competition_id, {presence: {}}
       validates_with_filter :created_at, {date_time_in_db_range: {}}
       validates_with_filter :created_at, {presence: {}}
@@ -1010,6 +1012,7 @@ module SchemaValidations
       validates_with_filter :email, {presence: {}}
       validates_with_filter :sender_id, {presence: {}}
       validates_with_filter :text, {presence: {}}
+      validates_with_filter :token, {presence: {}}
       validates_with_filter :updated_at, {date_time_in_db_range: {}}
       validates_with_filter :updated_at, {presence: {}}
     end
@@ -1050,8 +1053,8 @@ module SchemaValidations
 
     def dbv_user_team_access_requests_validations(enums: [])
       belongs_to_presence_validations_for([:competition_id, :sender_id, :team_id])
-      belongs_to_uniqueness_validations_for([["team_id", "competition_id", "email"]])
-      uniqueness_validations_for([["team_id", "competition_id", "email"]])
+      belongs_to_uniqueness_validations_for([["team_id", "competition_id", "email"], ["token"]])
+      uniqueness_validations_for([["team_id", "competition_id", "email"], ["token"]])
       validates_with_filter :competition_id, {presence: {}}
       validates_with_filter :created_at, {date_time_in_db_range: {}}
       validates_with_filter :created_at, {presence: {}}
@@ -1060,6 +1063,7 @@ module SchemaValidations
       validates_with_filter :sender_id, {presence: {}}
       validates_with_filter :team_id, {presence: {}}
       validates_with_filter :text, {presence: {}}
+      validates_with_filter :token, {presence: {}}
       validates_with_filter :updated_at, {date_time_in_db_range: {}}
       validates_with_filter :updated_at, {presence: {}}
     end

@@ -8,6 +8,7 @@
 #  drop_myself    :boolean          default(FALSE), not null
 #  email          :string(200)      not null
 #  text           :text             not null
+#  token          :string           not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  competition_id :uuid             not null
@@ -17,6 +18,7 @@
 #
 #  index_user_access_requests_on_competition_id  (competition_id)
 #  index_user_access_requests_on_sender_id       (sender_id)
+#  index_user_access_requests_on_token           (token) UNIQUE
 #
 # Foreign Keys
 #
@@ -27,10 +29,15 @@ class UserAccessRequest < ApplicationRecord
   belongs_to :competition, touch: true
   belongs_to :sender, class_name: 'User'
 
+  has_secure_token :token, on: :initialize
   auto_strip_attributes :email, :text
 
   schema_validations
   validates :email, 'valid_email_2/email': Rails.configuration.x.email_validation
+
+  def valid_token?(other)
+    ActiveSupport::SecurityUtils.secure_compare(token, other.to_s)
+  end
 
   def connect(user)
     competition.user_accesses.create!(user:)

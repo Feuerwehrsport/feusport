@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_10_06_120000) do
+ActiveRecord::Schema[8.0].define(version: 2026_10_06_190000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -830,8 +830,10 @@ ActiveRecord::Schema[8.0].define(version: 2026_10_06_120000) do
     t.boolean "drop_myself", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "token", null: false
     t.index ["competition_id"], name: "index_user_access_requests_on_competition_id"
     t.index ["sender_id"], name: "index_user_access_requests_on_sender_id"
+    t.index ["token"], name: "index_user_access_requests_on_token", unique: true
   end
 
   create_table "user_accesses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -873,10 +875,12 @@ ActiveRecord::Schema[8.0].define(version: 2026_10_06_120000) do
     t.text "text", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "token", null: false
     t.index ["competition_id"], name: "index_user_team_access_requests_on_competition_id"
     t.index ["sender_id"], name: "index_user_team_access_requests_on_sender_id"
     t.index ["team_id", "competition_id", "email"], name: "idx_on_team_id_competition_id_email_8c8e6a5a48", unique: true
     t.index ["team_id"], name: "index_user_team_access_requests_on_team_id"
+    t.index ["token"], name: "index_user_team_access_requests_on_token", unique: true
   end
 
   create_table "user_team_accesses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

@@ -7,6 +7,7 @@
 #  id             :uuid             not null, primary key
 #  email          :string(200)      not null
 #  text           :text             not null
+#  token          :string           not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  competition_id :uuid             not null
@@ -19,6 +20,7 @@
 #  index_user_team_access_requests_on_competition_id  (competition_id)
 #  index_user_team_access_requests_on_sender_id       (sender_id)
 #  index_user_team_access_requests_on_team_id         (team_id)
+#  index_user_team_access_requests_on_token           (token) UNIQUE
 #
 # Foreign Keys
 #
@@ -31,11 +33,16 @@ class UserTeamAccessRequest < ApplicationRecord
   belongs_to :team
   belongs_to :sender, class_name: 'User'
 
+  has_secure_token :token, on: :initialize
   auto_strip_attributes :email, :text
 
   schema_validations
   validates :email, 'valid_email_2/email': Rails.configuration.x.email_validation
   validates :team, same_competition: true
+
+  def valid_token?(other)
+    ActiveSupport::SecurityUtils.secure_compare(token, other.to_s)
+  end
 
   def connect(user)
     competition.user_team_accesses.create!(user:, team:)

@@ -23,7 +23,10 @@ class Competitions::AccessRequestsController < CompetitionNestedController
   def connect
     authorize!(:connect, @access_request)
 
-    if @access_request.sender == current_user
+    if !@access_request.valid_token?(params[:token])
+      flash[:alert] = 'Der Link ist ungültig.'
+      redirect_to competition_show_path
+    elsif @access_request.sender == current_user
       flash[:alert] = 'Du kannst dich nicht selber hinzufügen.'
       redirect_to competition_accesses_path
     elsif current_user.in?(@access_request.competition.users)

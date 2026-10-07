@@ -4,7 +4,7 @@
 
 Dieser Text wurde dir von *<%= @access_request.sender.name %>* geschickt. Er möchte dich zur Zusammenarbeit beim Wettkampf [<%= @access_request.competition.name %>](<%= competition_show_url(@access_request.competition.year, @access_request.competition.slug) %>) auffordern.
 
-[[Anfrage annehmen]](<%= connect_competition_access_request_url(@access_request.competition.year, @access_request.competition.slug, @access_request.id) %>)
+[[Anfrage annehmen]](<%= connect_competition_access_request_url(@access_request.competition.year, @access_request.competition.slug, @access_request.id, token: @access_request.token) %>)
 
 Sobald du die Anfrage annimmst, hast du vollen Zugriff auf diesen Wettkampf und kannst zum Beispiel die Beschreibung und Dokumente ergänzen. Wenn du willst, kannst du über feusport.de auch Startlisten erstellen und die komplette Wettkampfauswertung abwickeln.
 

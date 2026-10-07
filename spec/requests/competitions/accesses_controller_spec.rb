@@ -35,9 +35,10 @@ RSpec.describe Competitions::AccessesController do
 
       # load request
       req = competition.user_access_requests.first
+      expect(response.body).not_to include(req.token)
 
       # GET connect - error same user
-      get "/#{competition.year}/#{competition.slug}/access_requests/#{req.id}/connect"
+      get "/#{competition.year}/#{competition.slug}/access_requests/#{req.id}/connect?token=#{req.token}"
       expect(response).to redirect_to("/#{competition.year}/#{competition.slug}/accesses")
       expect(flash[:alert]).to eq 'Du kannst dich nicht selber hinzufügen.'
 
@@ -47,7 +48,7 @@ RSpec.describe Competitions::AccessesController do
       expect do
         expect do
           # GET connect
-          get "/#{competition.year}/#{competition.slug}/access_requests/#{req.id}/connect"
+          get "/#{competition.year}/#{competition.slug}/access_requests/#{req.id}/connect?token=#{req.token}"
           expect(response).to redirect_to("/#{competition.year}/#{competition.slug}")
           expect(flash[:notice]).to eq 'Du wurdest erfolgreich mit dem Wettkampf verbunden.'
         end.not_to change(UserAccess, :count)
@@ -66,7 +67,7 @@ RSpec.describe Competitions::AccessesController do
 
       expect do
         # GET connect
-        get "/#{competition.year}/#{competition.slug}/access_requests/#{req.id}/connect"
+        get "/#{competition.year}/#{competition.slug}/access_requests/#{req.id}/connect?token=#{req.token}"
         expect(response).to redirect_to("/#{competition.year}/#{competition.slug}")
         expect(flash[:notice]).to eq 'Du wurdest erfolgreich mit dem Wettkampf verbunden.'
       end.to change(UserAccess, :count).by(1)
@@ -75,7 +76,7 @@ RSpec.describe Competitions::AccessesController do
       req = UserAccessRequest.create!(competition:, sender: other_user, email: 'foo@bar.de', text: 'Hallo')
 
       # GET connect with error
-      get "/#{competition.year}/#{competition.slug}/access_requests/#{req.id}/connect"
+      get "/#{competition.year}/#{competition.slug}/access_requests/#{req.id}/connect?token=#{req.token}"
       expect(response).to redirect_to("/#{competition.year}/#{competition.slug}/accesses")
       expect(flash[:alert]).to eq 'Du hast bereits Zugriff auf diesen Wettkampf.'
 
@@ -120,6 +121,26 @@ RSpec.describe Competitions::AccessesController do
         delete competition_nested("accesses/#{access.id}")
         expect(response).to redirect_to(competition_nested('accesses'))
       end.not_to change(UserAccess, :count)
+    end
+  end
+
+  context 'when connecting with invalid token' do
+    let!(:req) { UserAccessRequest.create!(competition:, sender: user, email: 'foo@bar.de', text: 'Hallo') }
+
+    it 'connects only with valid token' do
+      sign_in other_user
+
+      ['', '?token=', '?token=wrong'].each do |query|
+        expect do
+          get competition_nested("access_requests/#{req.id}/connect#{query}")
+          expect(response).to redirect_to(competition_nested)
+          expect(flash[:alert]).to eq 'Der Link ist ungültig.'
+        end.not_to change(UserAccess, :count)
+      end
+
+      expect do
+        get competition_nested("access_requests/#{req.id}/connect?token=#{req.token}")
+      end.to change(UserAccess, :count).by(1)
     end
   end
 
