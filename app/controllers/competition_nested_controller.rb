@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class CompetitionNestedController < ApplicationController
+  SIMPLE_ACCESS_TIMEOUT = 1.hour
+
   before_action :load_competition
   authorize_resource :competition
 
@@ -53,11 +55,33 @@ class CompetitionNestedController < ApplicationController
   end
 
   def current_ability
-    @current_ability ||= ::Ability.new(current_user, simple_access:)
+    @current_ability ||= ::Ability.new(current_user, simple_access: current_simple_access)
   end
 
-  def simple_access
-    SimpleAccess.find_by(id: session["simple_access_#{@competition.id}"]) if session["simple_access_#{@competition.id}"]
+  def current_simple_access
+    return @current_simple_access if defined?(@current_simple_access)
+
+    @current_simple_access = load_simple_access_from_session
   end
-  helper_method :simple_access
+  helper_method :current_simple_access
+
+  def remember_simple_access(simple_access)
+    session[simple_access_session_key] = { 'id' => simple_access.id, 'last_seen_at' => Time.current.to_i }
+  end
+
+  def forget_simple_access
+    session.delete(simple_access_session_key)
+  end
+
+  # Gast-Sessions laufen nach einer Stunde ohne Anfrage ab, jede Anfrage verlängert sie.
+  def load_simple_access_from_session
+    data = forget_simple_access
+    return unless data.is_a?(Hash) && Time.zone.at(data['last_seen_at'].to_i) > SIMPLE_ACCESS_TIMEOUT.ago
+
+    SimpleAccess.find_by(id: data['id'])&.tap { |simple_access| remember_simple_access(simple_access) }
+  end
+
+  def simple_access_session_key
+    "simple_access_#{@competition.id}"
+  end
 end

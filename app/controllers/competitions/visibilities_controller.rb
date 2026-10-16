@@ -2,11 +2,11 @@
 
 class Competitions::VisibilitiesController < CompetitionNestedController
   def edit
-    authorize!(:edit, @competition)
+    authorize!(:change_visibility, @competition)
   end
 
   def update
-    authorize!(:edit, @competition)
+    authorize!(:change_visibility, @competition)
 
     @competition.assign_attributes(competition_params)
     if @competition.save

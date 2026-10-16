@@ -91,7 +91,7 @@ class Ability
     can(:read, FireSportStatistics::Publishing, competition: read_ua)
     can(:manage, Competitions::Publishing, competition: manage_ua)
     can(:manage, Presets::Base) { |preset| can?(:manage, preset.competition) }
-    can(:manage, Competitions::Duplication) { |duplication| can?(:manage, duplication.competition) }
+    can(:manage, Competitions::Duplication) { |duplication| can?(:duplicate, duplication.competition) }
 
     can(%i[create], Team) { |team| team.competition.registration_possible? }
     can(%i[edit sub_edit edit_assessment_requests update destroy], Team) do |team|
@@ -140,6 +140,8 @@ class Ability
     return if simple_access.competition.locked?
 
     can(:manage, Competition, id: simple_access.competition_id)
+    # Gäste dürfen den Wettkampf verwalten, aber nicht löschen, verstecken, veröffentlichen oder überschreiben
+    cannot(%i[destroy change_visibility publish duplicate], Competition, id: simple_access.competition_id)
     can(:manage, Document, competition: { id: simple_access.competition_id })
     can(:manage, Discipline, competition: { id: simple_access.competition_id })
     can(:manage, TeamListRestriction, competition: { id: simple_access.competition_id })

@@ -1,6 +1,6 @@
 = render 'competitions/header', competition: @competition, sub: resource_class.model_name.human(count: :many)
 
-- cache_if(current_user.nil? && simple_access.nil?, [@result, @competition]) do
+- cache_if(current_user.nil? && current_simple_access.nil?, [@result, @competition]) do
   .row.g-4.score-result-channel{ data: { score_result_id: @result.id } }
     .col-lg-8.mb-4
       = render 'overview_card', result: @result

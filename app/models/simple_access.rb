@@ -27,4 +27,5 @@ class SimpleAccess < ApplicationRecord
   has_secure_password
 
   schema_validations
+  validates :password, length: { minimum: 8 }, allow_nil: true
 end

@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Competitions::SimpleAccessLoginsController < CompetitionNestedController
+  rate_limit to: 10, within: 1.minute, only: :create,
+             with: -> { redirect_to new_competition_simple_access_login_path, alert: :too_many_requests }
+
   def new
     @simple_access = SimpleAccess.new(competition: @competition)
   end
@@ -9,7 +12,7 @@ class Competitions::SimpleAccessLoginsController < CompetitionNestedController
     @simple_access = @competition.simple_accesses.find_by(name: simple_access_params[:name])
 
     if @simple_access&.authenticate(simple_access_params[:password])
-      session["simple_access_#{@competition.id}"] = @simple_access.id
+      remember_simple_access(@simple_access)
       flash[:notice] = 'Login mit Gastzugang erfolgreich'
       redirect_to competition_show_path
     else
@@ -22,7 +25,7 @@ class Competitions::SimpleAccessLoginsController < CompetitionNestedController
   end
 
   def destroy
-    session.delete("simple_access_#{@competition.id}")
+    forget_simple_access
     flash[:notice] = 'Login mit Gastzugang beendet'
     redirect_to competition_show_path
   end

@@ -30,7 +30,7 @@ RSpec.describe 'competitions/visibilities' do
     let!(:competition) { create(:competition, visible: true, wko:) }
 
     it 'logs in and out' do
-      access = SimpleAccess.create!(competition:, name: 'test', password: 'secret')
+      access = SimpleAccess.create!(competition:, name: 'test', password: 'secret123')
 
       get "/#{competition.year}/#{competition.slug}"
       expect(response).to match_html_fixture.with_affix('with-login-link')
@@ -39,9 +39,9 @@ RSpec.describe 'competitions/visibilities' do
       expect(response).to match_html_fixture.with_affix('login-new')
 
       post "/#{competition.year}/#{competition.slug}/simple_access_login/",
-           params: { simple_access_login: { name: 'test', password: 'secret' } }
+           params: { simple_access_login: { name: 'test', password: 'secret123' } }
       expect(response).to redirect_to "/#{competition.year}/#{competition.slug}"
-      expect(session["simple_access_#{competition.id}"]).to eq access.id
+      expect(session["simple_access_#{competition.id}"]).to include('id' => access.id)
 
       get "/#{competition.year}/#{competition.slug}"
       expect(response).to match_html_fixture.with_affix('with-logout-link')

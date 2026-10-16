@@ -45,7 +45,8 @@
             .text-center
               .far.fa-eye-slash
               Nicht öffentlich sichtbar
-            = link_to 'Sichtbarkeit bearbeiten', edit_competition_visibility_path, class: 'btn btn-light btn-sm'
+            - if can?(:change_visibility, @competition)
+              = link_to 'Sichtbarkeit bearbeiten', edit_competition_visibility_path, class: 'btn btn-light btn-sm'
       - if @competition.registration_possible?
         .card-header.text-bg-info
           .d-grid.gap-2.col-10.mx-auto
@@ -79,11 +80,12 @@
               = link_to 'Ergebnisse übertragen', new_competition_publishing_path, class: 'btn btn-dark btn-sm'
 
             = link_to 'Bearbeiten', edit_competition_editing_path, class: 'btn btn-light btn-sm'
-            = link_to 'Sichtbarkeit bearbeiten', edit_competition_visibility_path, class: 'btn btn-light btn-sm'
+            - if can?(:change_visibility, @competition)
+              = link_to 'Sichtbarkeit bearbeiten', edit_competition_visibility_path, class: 'btn btn-light btn-sm'
             = link_to 'Anmeldungen bearbeiten', edit_competition_registration_path, class: 'btn btn-light btn-sm'
             = link_to 'Dokument hinzufügen', new_competition_document_path, class: 'btn btn-light btn-sm'
             = link_to 'Schnappschuss hinzufügen', new_competition_snapshot_path, class: 'btn btn-light btn-sm'
-            - if simple_access.present?
+            - if current_simple_access.present?
               = link_to 'Gastzugang beenden', competition_simple_access_login_path, class: 'btn btn-warning btn-sm', data: { turbo_confirm: 'Danach hast du keinen Verwaltungszugriff auf diesen Wettkampf mehr.', 'turbo-method': :delete }
 
           - elsif @competition.simple_accesses.exists? && !@competition.locked?

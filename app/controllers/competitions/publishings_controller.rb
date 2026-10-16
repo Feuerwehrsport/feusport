@@ -16,7 +16,7 @@ class Competitions::PublishingsController < CompetitionNestedController
   protected
 
   def assign_new_resource
-    authorize!(:edit, @competition)
+    authorize!(:publish, @competition)
     @publishing = Competitions::Publishing.new(competition: @competition, user: current_user)
   end
 

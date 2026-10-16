@@ -19,13 +19,13 @@ RSpec.describe Competitions::SimpleAccessesController do
 
       # POST create with failure
       post "/#{competition.year}/#{competition.slug}/simple_accesses",
-           params: { simple_access: { name: 'foo', password: 'secret', password_confirmation: 'wrong' } }
+           params: { simple_access: { name: 'foo', password: 'secret123', password_confirmation: 'wrong' } }
       expect(response).to match_html_fixture.with_affix('new-error').for_status(422)
 
       # POST create an access_request
       expect do
         post "/#{competition.year}/#{competition.slug}/simple_accesses",
-             params: { simple_access: { name: 'foo', password: 'secret', password_confirmation: 'secret' } }
+             params: { simple_access: { name: 'foo', password: 'secret123', password_confirmation: 'secret123' } }
         expect(response).to redirect_to("/#{competition.year}/#{competition.slug}/accesses")
         follow_redirect!
       end.to change(SimpleAccess, :count).by(1)

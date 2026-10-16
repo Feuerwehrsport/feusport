@@ -26,6 +26,7 @@ de:
     invitation_expired: Die Einladung ist abgelaufen. Bitte lass dich erneut einladen.
     invitation_revoked: Die Einladung ist nicht mehr gültig. Bitte lass dich erneut einladen.
     saved: Die Änderungen wurden gespeichert.
+    too_many_requests: Zu viele Versuche. Bitte warte eine Minute und versuche es dann erneut.
   assessment_types:
     competitor: Teilnahme
     competitor_order: Teilnahme (%{competitor_order})

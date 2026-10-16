@@ -1,6 +1,6 @@
 = render 'competitions/header', competition: @competition, sub: resource_class.model_name.human(count: :many)
 
-- cache_if(current_user.nil? && simple_access.nil?, [@list, @competition]) do
+- cache_if(current_user.nil? && current_simple_access.nil?, [@list, @competition]) do
   .row.g-4
     .col-lg-8
       = card(@list.name) do |c|
