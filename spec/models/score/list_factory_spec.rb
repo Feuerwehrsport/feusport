@@ -48,6 +48,14 @@ RSpec.describe Score::ListFactory do
 
   let(:created_list) { Score::List.last }
 
+  describe 'validations' do
+    it 'requires a positive track count' do
+      instance = described_class.new(competition:, discipline:, next_step: 'results', track_count: 0)
+      expect(instance).not_to be_valid
+      expect(instance.errors.details[:track_count]).to include(a_hash_including(error: :greater_than))
+    end
+  end
+
   describe 'steps' do
     it 'goes through steps' do
       instance = described_class.create!(competition:, discipline:, next_step: 'assessments', session_id: '1',

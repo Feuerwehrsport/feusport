@@ -73,7 +73,7 @@ class Score::ListFactory < ApplicationRecord
   validate :assessments_possible, if: -> { step_reached?(:names) }
   validates :name, presence: true, if: -> { step_reached?(:tracks) }
   validates :shortcut, presence: true, length: { maximum: 8 }, if: -> { step_reached?(:tracks) }
-  validates :track_count, numericality: { only_integer: true, graeter_than: 0 }, if: -> { step_reached?(:results) }
+  validates :track_count, numericality: { only_integer: true, greater_than: 0 }, if: -> { step_reached?(:results) }
   validates :results, presence: true, if: -> { step_reached?(:generator) }
   validate :type_valid, if: -> { step_reached?(:generator_params) }
   validates :discipline, :before_list, :before_result, :assessments, :results, same_competition: true

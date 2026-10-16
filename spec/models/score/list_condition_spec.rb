@@ -87,6 +87,12 @@ RSpec.describe Score::ListCondition do
       condition = described_class.new(assessment_ids: ['', assessment.id])
       expect(condition.assessments).to eq [assessment]
     end
+
+    it 'requires a positive track' do
+      condition = described_class.new(competition:, list:, track: 0, assessments: [assessment])
+      expect(condition).not_to be_valid
+      expect(condition.errors.details[:track]).to include(a_hash_including(error: :greater_than))
+    end
   end
 
   describe 'Score::ListCondition::Check' do

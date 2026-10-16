@@ -36,7 +36,7 @@ class Score::ListCondition < ApplicationRecord
   has_many :assessments, class_name: 'Assessment', through: :list_condition_assessments
 
   schema_validations
-  validates :track, numericality: { only_integer: true, graeter_than: 0, less_than_or_equal_to: :track_count }
+  validates :track, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: :track_count }
   validates :list, presence: true, if: -> { factory.blank? }
   validates :list, :factory, :assessments, same_competition: true
 
