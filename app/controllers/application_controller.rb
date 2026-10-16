@@ -38,12 +38,11 @@ class ApplicationController < ActionController::Base
 
     Rails.logger.info "Request was to #{current_protocol}://#{current_host}:#{current_port}"
 
-    redirect_to url_for(
-      params.permit!.to_h.merge(
-        host: correct_host,
-        port: correct_port,
-        protocol: correct_protocol,
-      ),
+    redirect_to ActionDispatch::Http::URL.full_url_for(
+      host: correct_host.presence || current_host,
+      port: correct_port.presence || current_port,
+      protocol: correct_protocol.presence || current_protocol,
+      path: request.fullpath,
     ), status: :moved_permanently, allow_other_host: true
   end
 end
