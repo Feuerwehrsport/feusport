@@ -27,6 +27,10 @@ class Competitions::UserTeamAccessRequestsController < CompetitionNestedControll
     if !@user_team_access_request.valid_token?(params[:token])
       flash[:alert] = 'Der Link ist ungültig.'
       redirect_to competition_team_path(id: @team.id)
+    elsif @user_team_access_request.expired?
+      redirect_to competition_team_path(id: @team.id), alert: :invitation_expired
+    elsif !@user_team_access_request.sender_allowed?
+      redirect_to competition_team_path(id: @team.id), alert: :invitation_revoked
     elsif @user_team_access_request.sender == current_user
       flash[:alert] = 'Du kannst dich nicht selber hinzufügen.'
       redirect_to competition_team_accesses_path

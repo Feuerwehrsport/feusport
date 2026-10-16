@@ -29,6 +29,8 @@
 #  fk_rails_...  (team_id => teams.id)
 #
 class UserTeamAccessRequest < ApplicationRecord
+  include InvitationValidity
+
   belongs_to :competition, touch: true
   belongs_to :team
   belongs_to :sender, class_name: 'User'

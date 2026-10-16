@@ -57,6 +57,9 @@ RSpec.describe Competitions::UserTeamAccessesController do
         end.not_to change(UserAccess, :count)
       end.to have_enqueued_job.with('CompetitionMailer', 'user_team_access_request_connected', 'deliver_now', any_args)
 
+      # team leaders may only invite while registration is possible
+      competition.update!(registration_open_until: Date.current, registration_open: 'open', visible: true)
+
       # POST create an other access_request
       post competition_nested("teams/#{team.id}/access_requests"),
            params: { user_team_access_request: { email: 'foo@bar.de', text: 'Hallo' } }
@@ -146,6 +149,55 @@ RSpec.describe Competitions::UserTeamAccessesController do
       expect do
         get competition_nested("teams/#{team.id}/access_requests/#{req.id}/connect?token=#{req.token}")
       end.to change(UserTeamAccess, :count).by(1)
+    end
+  end
+
+  context 'when invitation is no longer valid' do
+    let(:sender) { create(:user, email: 'sender@meier.de') }
+    let!(:sender_access) { UserTeamAccess.create!(user: sender, competition:, team:) }
+    let!(:req) { UserTeamAccessRequest.create!(competition:, sender:, email: 'foo@bar.de', text: 'Hallo', team:) }
+    let(:connect_path) { competition_nested("teams/#{team.id}/access_requests/#{req.id}/connect?token=#{req.token}") }
+
+    before do
+      competition.update!(registration_open_until: Date.current, registration_open: 'open', visible: true)
+      sign_in other_user
+    end
+
+    it 'rejects expired invitations' do
+      req.update!(created_at: 31.days.ago)
+
+      expect do
+        get connect_path
+        expect(response).to redirect_to(competition_nested("teams/#{team.id}"))
+        expect(flash[:alert]).to eq :invitation_expired
+      end.not_to change(UserTeamAccess, :count)
+    end
+
+    it 'rejects invitations of team leaders after registration' do
+      competition.update!(registration_open_until: Date.yesterday)
+
+      expect do
+        get connect_path
+        expect(response).to redirect_to(competition_nested("teams/#{team.id}"))
+        expect(flash[:alert]).to eq :invitation_revoked
+      end.not_to change(UserTeamAccess, :count)
+    end
+
+    it 'deletes invitations when access of sender is removed' do
+      sign_in user
+
+      expect do
+        delete competition_nested("teams/#{team.id}/accesses/#{sender_access.id}")
+      end.to change(UserTeamAccessRequest, :count).by(-1)
+    end
+
+    it 'keeps invitations of senders who are still allowed' do
+      UserAccess.create!(user: sender, competition:)
+      sign_in user
+
+      expect do
+        delete competition_nested("teams/#{team.id}/accesses/#{sender_access.id}")
+      end.not_to change(UserTeamAccessRequest, :count)
     end
   end
 

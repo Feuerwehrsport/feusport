@@ -28,4 +28,15 @@ class UserAccess < ApplicationRecord
   scope :with_registration_mail_info, -> { where(registration_mail_info: true) }
 
   schema_validations
+
+  after_destroy :destroy_revoked_invitations
+
+  private
+
+  def destroy_revoked_invitations
+    # Über die Klasse laden, damit `competition.user_accesses` nicht aus dem Speicher kommt
+    [UserAccessRequest, UserTeamAccessRequest].each do |requests|
+      requests.where(competition_id:, sender: user).reject(&:sender_allowed?).each(&:destroy)
+    end
+  end
 end

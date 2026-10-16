@@ -31,4 +31,12 @@ class UserTeamAccess < ApplicationRecord
 
   schema_validations
   validates :team, same_competition: true
+
+  after_destroy :destroy_revoked_invitations
+
+  private
+
+  def destroy_revoked_invitations
+    UserTeamAccessRequest.where(competition_id:, sender: user, team_id:).reject(&:sender_allowed?).each(&:destroy)
+  end
 end

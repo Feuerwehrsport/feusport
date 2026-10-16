@@ -23,6 +23,8 @@ de:
     band_full: Diese Wertungsgruppe ist ausgebucht.
     check_errors: 'Bitte überprüfe folgende Fehler:'
     deleted: Der Eintrag wurde gelöscht.
+    invitation_expired: Die Einladung ist abgelaufen. Bitte lass dich erneut einladen.
+    invitation_revoked: Die Einladung ist nicht mehr gültig. Bitte lass dich erneut einladen.
     saved: Die Änderungen wurden gespeichert.
   assessment_types:
     competitor: Teilnahme

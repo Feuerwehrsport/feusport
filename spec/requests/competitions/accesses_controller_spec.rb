@@ -124,6 +124,52 @@ RSpec.describe Competitions::AccessesController do
     end
   end
 
+  context 'when invitation is no longer valid' do
+    let(:sender) { create(:user, email: 'sender@meier.de') }
+    let!(:sender_access) { UserAccess.create!(user: sender, competition:) }
+    let!(:req) { UserAccessRequest.create!(competition:, sender:, email: 'foo@bar.de', text: 'Hallo') }
+    let(:connect_path) { competition_nested("access_requests/#{req.id}/connect?token=#{req.token}") }
+
+    before { sign_in other_user }
+
+    it 'rejects expired invitations' do
+      req.update!(created_at: 31.days.ago)
+
+      expect do
+        get connect_path
+        expect(response).to redirect_to(competition_nested)
+        expect(flash[:alert]).to eq :invitation_expired
+      end.not_to change(UserAccess, :count)
+    end
+
+    it 'rejects invitations of senders without access' do
+      sender_access.delete
+
+      expect do
+        get connect_path
+        expect(response).to redirect_to(competition_nested)
+        expect(flash[:alert]).to eq :invitation_revoked
+      end.not_to change(UserAccess, :count)
+    end
+
+    it 'rejects invitations for locked competitions' do
+      competition.update!(locked_at: Time.current)
+
+      expect do
+        get connect_path
+        expect(flash[:alert]).to eq :invitation_revoked
+      end.not_to change(UserAccess, :count)
+    end
+
+    it 'deletes invitations when access of sender is removed' do
+      sign_in user
+
+      expect do
+        delete competition_nested("accesses/#{sender_access.id}")
+      end.to change(UserAccessRequest, :count).by(-1)
+    end
+  end
+
   context 'when connecting with invalid token' do
     let!(:req) { UserAccessRequest.create!(competition:, sender: user, email: 'foo@bar.de', text: 'Hallo') }
 
