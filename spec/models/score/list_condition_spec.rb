@@ -64,6 +64,31 @@ RSpec.describe Score::ListCondition do
     end
   end
 
+  describe 'validations' do
+    let(:competition) { create(:competition) }
+    let(:assessment) { create(:assessment, competition:) }
+    let(:list) { create(:score_list, competition:, assessments: [assessment], track_count: 2) }
+    let(:other_competition) { create(:competition, name: 'Fremd-Cup') }
+    let(:other_assessment) { create(:assessment, competition: other_competition) }
+
+    it 'rejects assessments of other competitions' do
+      condition = described_class.new(competition:, list:, track: 1, assessments: [other_assessment])
+      expect(condition).not_to be_valid
+      expect(condition.errors.details[:assessments]).to eq [{ error: :not_same_competition }]
+    end
+
+    it 'ignores assessment ids of other competitions' do
+      condition = described_class.create!(competition:, list:, track: 1, assessments: [assessment])
+      condition.assessment_ids = [assessment.id, other_assessment.id]
+      expect(condition.reload.assessments).to eq [assessment]
+    end
+
+    it 'keeps assessment ids without competition' do
+      condition = described_class.new(assessment_ids: ['', assessment.id])
+      expect(condition.assessments).to eq [assessment]
+    end
+  end
+
   describe 'Score::ListCondition::Check' do
     let(:competition) { create(:competition) }
     let(:la) { create(:discipline, :la, competition:) }

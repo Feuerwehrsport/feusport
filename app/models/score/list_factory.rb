@@ -37,6 +37,7 @@
 #
 class Score::ListFactory < ApplicationRecord
   include Score::ListFactoryDefaults
+  include CompetitionScopedIds
 
   STEPS = %i[discipline assessments names tracks results generator generator_params finish create].freeze
   GENERATORS = [
@@ -76,6 +77,8 @@ class Score::ListFactory < ApplicationRecord
   validates :results, presence: true, if: -> { step_reached?(:generator) }
   validate :type_valid, if: -> { step_reached?(:generator_params) }
   validates :discipline, :before_list, :before_result, :assessments, :results, same_competition: true
+
+  competition_scoped_ids :assessments, results: :score_results
 
   attr_writer :next_step
 

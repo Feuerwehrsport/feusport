@@ -26,6 +26,8 @@
 #
 
 class Score::ListCondition < ApplicationRecord
+  include CompetitionScopedIds
+
   belongs_to :competition
   belongs_to :list, class_name: 'Score::List'
   belongs_to :factory, class_name: 'Score::ListFactory'
@@ -36,7 +38,9 @@ class Score::ListCondition < ApplicationRecord
   schema_validations
   validates :track, numericality: { only_integer: true, graeter_than: 0, less_than_or_equal_to: :track_count }
   validates :list, presence: true, if: -> { factory.blank? }
-  validates :list, :factory, same_competition: true
+  validates :list, :factory, :assessments, same_competition: true
+
+  competition_scoped_ids :assessments
 
   def self.useful?(list_or_factory)
     conditions = list_or_factory.conditions.to_a

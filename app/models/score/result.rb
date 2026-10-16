@@ -38,6 +38,7 @@
 class Score::Result < ApplicationRecord
   include Score::Resultable
   include SortableByName
+  include CompetitionScopedIds
 
   CALCULATION_METHODS = { default: 0, sum_of_two: 1 }.freeze
   MULTI_RESULT_METHODS = { disabled: 0, sum_of_best: 1, best: 2 }.freeze
@@ -77,6 +78,8 @@ class Score::Result < ApplicationRecord
   validates :assessment, :competition_results, :results, same_competition: true
   validates :assessment, presence: true, if: :multi_result_method_disabled?
   validates :image_key, presence: true, unless: :multi_result_method_disabled?
+
+  competition_scoped_ids results: :score_results
 
   after_destroy :assign_series_if_needed
   after_save :assign_series_if_needed

@@ -29,6 +29,7 @@ class Score::CompetitionResult < ApplicationRecord
 
   include Score::Resultable
   include SortableByName
+  include CompetitionScopedIds
 
   belongs_to :competition, touch: true
   has_many :result_references, class_name: 'Score::CompetitionResultReference', dependent: :destroy
@@ -38,6 +39,8 @@ class Score::CompetitionResult < ApplicationRecord
 
   schema_validations
   validates :results, same_competition: true
+
+  competition_scoped_ids results: :score_results
 
   def rows(*)
     @rows ||= result_type.present? ? add_ranks(send(result_type)) : []

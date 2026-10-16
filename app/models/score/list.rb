@@ -29,6 +29,7 @@
 #
 class Score::List < ApplicationRecord
   include SortableByName
+  include CompetitionScopedIds
 
   belongs_to :competition, touch: true
   has_many :list_assessments, dependent: :destroy
@@ -49,6 +50,8 @@ class Score::List < ApplicationRecord
   schema_validations
   validates :track_count, numericality: { greater_than: 0 }
   validates :assessments, :results, same_competition: true
+
+  competition_scoped_ids :assessments, results: :score_results
   accepts_nested_attributes_for :entries, allow_destroy: true
 
   def next_free_track
