@@ -77,6 +77,33 @@ RSpec.describe TeamMarkerBlockValue do
     end
   end
 
+  context 'when ids belong to other bands or competitions' do
+    let(:other_band) { create(:band, :male, competition:) }
+    let(:other_band_team) { create(:team, competition:, band: other_band, name: 'Andere Gruppe') }
+    let(:other_user) { create(:user, :other) }
+    let(:other_competition) { create(:competition, name: 'Fremd-Cup', users: [other_user]) }
+    let(:foreign_band) { create(:band, competition: other_competition) }
+    let(:foreign_team) { create(:team, competition: other_competition, band: foreign_band) }
+    let(:foreign_marker) { create(:team_marker, :string, competition: other_competition) }
+
+    it 'ignores them' do
+      sign_in user
+
+      put competition_nested('team_marker_block_values'),
+          params: { band_id: band.id, team_marker_block_value: {
+            team_marker_values_attributes: {
+              '0' => { team_id: foreign_team.id, team_marker_id: foreign_marker.id, string_value: 'fremd' },
+              '1' => { team_id: team.id, team_marker_id: foreign_marker.id, string_value: 'fremd' },
+              '2' => { team_id: other_band_team.id, team_marker_id: string.id, string_value: 'andere Gruppe' },
+              '3' => { team_id: team.id, team_marker_id: string.id, string_value: 'eigen' },
+            },
+          } }
+      expect(response).to redirect_to(competition_nested('teams'))
+
+      expect(TeamMarkerValue.pluck(:team_id, :team_marker_id, :string_value)).to eq [[team.id, string.id, 'eigen']]
+    end
+  end
+
   context 'when no login performed' do
     it 'fails' do
       get competition_nested("team_marker_block_values/edit?band_id=#{band.id}")

@@ -20,8 +20,9 @@ class TeamMarkerBlockValue
 
     attributes.each_value do |params|
       next unless params.is_a?(Hash)
-      next unless params.key?(:team_marker_id)
-      next unless params.key?(:team_id)
+      # Nur Mannschaften dieser Wertungsgruppe und Spalten dieses Wettkampfs, sonst ließen sich fremde Werte schreiben
+      next unless params[:team_marker_id].in?(team_markers.map(&:id))
+      next unless params[:team_id].in?(teams.map(&:id))
 
       value = find_value_by(team_marker_id: params[:team_marker_id], team_id: params[:team_id])
       value.assign_attributes(params.slice(:boolean_value, :date_value, :string_value))
