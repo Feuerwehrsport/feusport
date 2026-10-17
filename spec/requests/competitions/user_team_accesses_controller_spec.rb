@@ -201,6 +201,26 @@ RSpec.describe Competitions::UserTeamAccessesController do
     end
   end
 
+  context 'when team belongs to another competition' do
+    let(:other_competition) { create(:competition, name: 'Fremd-Cup') }
+    let(:other_band) { create(:band, competition: other_competition) }
+    let(:other_team) { create(:team, competition: other_competition, band: other_band) }
+
+    before do
+      other_competition.update!(registration_open_until: Date.current, registration_open: 'open', visible: true)
+      UserTeamAccess.create!(user: other_user, competition: other_competition, team: other_team)
+      sign_in other_user
+    end
+
+    it 'does not find the team through this competition' do
+      get competition_nested("teams/#{other_team.id}/accesses")
+      expect(response).to have_http_status(:not_found)
+
+      get competition_nested("teams/#{other_team.id}/access_requests/new")
+      expect(response).to have_http_status(:not_found)
+    end
+  end
+
   context 'when user has friends' do
     let!(:other_competition) { create(:competition) }
     let!(:other_access) { UserAccess.create(user: other_user, competition: other_competition) }

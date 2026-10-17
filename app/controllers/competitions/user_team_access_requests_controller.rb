@@ -75,6 +75,6 @@ class Competitions::UserTeamAccessRequestsController < CompetitionNestedControll
   end
 
   def assign_team
-    @team = Team.find(params[:team_id])
+    @team = @competition.teams.find(params[:team_id])
   end
 end

@@ -34,7 +34,7 @@ class Competitions::UserTeamAccessesController < CompetitionNestedController
   helper_method :resource_collection
 
   def assign_team
-    @team = Team.find(params[:team_id])
+    @team = @competition.teams.find(params[:team_id])
   end
 
   def resource_instance
