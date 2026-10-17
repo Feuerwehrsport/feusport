@@ -20,6 +20,7 @@ module Exports::ScoreLists
       else
         team_name = entry&.entity&.full_name
       end
+      team_name = prawn_escape(team_name) if pdf
       team_name = append_assessment(list, entry, team_name, pdf:, hint_size:)
       if pdf
         line.push(content: team_name, inline_format: true)
@@ -121,10 +122,11 @@ module Exports::ScoreLists
   def append_assessment(list, entry, team_name, pdf:, hint_size: 6)
     if list.show_multiple_assessments? && list.multiple_assessments? && entry.present?
       team_name += if pdf
+                     assessment_name = prawn_escape(entry&.assessment&.name)
                      if entry&.assessment_type == 'out_of_competition'
-                       "<font size='#{hint_size}'><strikethrough> (#{entry&.assessment&.name})</strikethrough></font>"
+                       "<font size='#{hint_size}'><strikethrough> (#{assessment_name})</strikethrough></font>"
                      else
-                       "<font size='#{hint_size}'> (#{entry&.assessment&.name})</font>"
+                       "<font size='#{hint_size}'> (#{assessment_name})</font>"
                      end
                    else
                      " (#{entry&.assessment&.name})"
@@ -135,5 +137,10 @@ module Exports::ScoreLists
 
   def export_title
     list.name
+  end
+
+  # Benutzertexte in Zellen mit `inline_format: true` dürfen kein Prawn-Markup (<link>, <font> …) erzeugen
+  def prawn_escape(text)
+    Prawn::Text::Formatted::Parser.escape(text) unless text.nil?
   end
 end

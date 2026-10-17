@@ -60,6 +60,21 @@ RSpec.describe Exports::Pdf::Score::List do
       ]
     end
 
+    it 'escapes prawn markup in team and assessment names for pdf' do
+      team_female1.update!(name: "FF <link href='https://evil.example'>Warin</link> & Co")
+      assessment_female.update!(forced_name: "<font size='40'>Frauen</font>")
+      export = described_class.new(list.reload, false)
+
+      expect(export.show_export_data(list, pdf: true).second.third).to eq(
+        content: "FF &lt;link href='https://evil.example'&gt;Warin&lt;/link&gt; &amp; Co" \
+                 "<font size='6'> (&lt;font size='40'&gt;Frauen&lt;/font&gt;)</font>",
+        inline_format: true,
+      )
+      expect(export.show_export_data(list).second.third).to eq(
+        "FF <link href='https://evil.example'>Warin</link> & Co (<font size='40'>Frauen</font>)",
+      )
+    end
+
     it 'adds target times as separate columns' do
       export = described_class.new(list, false)
       data = export.show_export_data(list, separate_target_times_as_columns: true)
