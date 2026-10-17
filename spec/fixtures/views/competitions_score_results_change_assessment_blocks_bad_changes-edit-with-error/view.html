@@ -138,7 +138,7 @@ Erweitert
 <div class="pb-4 mt-4 container">
 <div class="row g-4">
 <div class="col-lg-8">
-<form class="simple_form edit_score_result" id="edit_score_result_UUID" novalidate="novalidate" action="/2024/mv-cup/score/results/UUID" accept-charset="UTF-8" method="post"><input type="hidden" name="_method" value="patch" autocomplete="off" /><div class="card">
+<form class="simple_form edit_score_result" id="edit_score_result_UUID" novalidate="novalidate" action="/2024/mv-cup/score/results/UUID" accept-charset="UTF-8" method="post"><input type="hidden" name="_method" value="patch" /><div class="card">
 <div class="card-header p-0">
 <div class="d-flex justify-content-between">
 <h4 class="m-0 py-2 ps-3">Ergebnisse aktualisieren</h4>
@@ -152,7 +152,7 @@ Erweitert
 <div class="form-group string optional score_result_forced_name"><label class="control-label string optional" for="score_result_forced_name">Name</label><input class="form-control string optional" data-name-preview="1" type="text" name="score_result[forced_name]" id="score_result_forced_name" /><small class="form-text text-muted">Der Name wird automatisch aus den Wertungen und Kennzeichnungen generiert. Hier kann man ihn überschreiben.</small></div>
 <fieldset class="group row">
 <div class="col-lg-6">
-<fieldset class="form-group boolean optional score_result_group_assessment"><div class="form-check"><input name="score_result[group_assessment]" type="hidden" value="0" autocomplete="off" /><input class="form-check-input boolean optional" type="checkbox" value="1" name="score_result[group_assessment]" id="score_result_group_assessment" /><label class="form-check-label boolean optional" for="score_result_group_assessment">Mannschaftswertung</label><small class="form-text text-muted">Eine Mannschaftswertung kann für eine Gesamtwertung wichtig sein.</small></div></fieldset>
+<fieldset class="form-group boolean optional score_result_group_assessment"><div class="form-check"><input name="score_result[group_assessment]" type="hidden" value="0" /><input class="form-check-input boolean optional" type="checkbox" value="1" name="score_result[group_assessment]" id="score_result_group_assessment" /><label class="form-check-label boolean optional" for="score_result_group_assessment">Mannschaftswertung</label><small class="form-text text-muted">Eine Mannschaftswertung kann für eine Gesamtwertung wichtig sein.</small></div></fieldset>
 </div>
 <div class="col-lg-6">
 <div class="form-group integer required score_result_group_run_count form-group-valid"><label class="control-label integer required" for="score_result_group_run_count">Wettkämpfer pro Disziplin <abbr title="required">*</abbr></label><input class="form-control numeric integer required" type="number" step="1" value="8" name="score_result[group_run_count]" id="score_result_group_run_count" /></div>
@@ -162,7 +162,7 @@ Erweitert
 </fieldset>
 <fieldset class="group">
 <legend>Berechnung der Ergebnisse</legend>
-<fieldset class="form-group radio_buttons required score_result_calculation_method form-group-valid"><div class="col-form-label pt-0">Berechnungsmethode <abbr title="required">*</abbr></div><input type="hidden" name="score_result[calculation_method]" value="" autocomplete="off" /><div class="form-check"><input class="form-check-input radio_buttons required" type="radio" value="default" checked="checked" name="score_result[calculation_method]" id="score_result_calculation_method_default" /><label class="form-check-label collection_radio_buttons" for="score_result_calculation_method_default">Standard (Bester Lauf in der Wertung)</label></div><div class="form-check"><input class="form-check-input radio_buttons required" type="radio" value="sum_of_two" name="score_result[calculation_method]" id="score_result_calculation_method_sum_of_two" /><label class="form-check-label collection_radio_buttons" for="score_result_calculation_method_sum_of_two">Summe der besten zwei Läufe</label></div></fieldset>
+<fieldset class="form-group radio_buttons required score_result_calculation_method form-group-valid"><div class="col-form-label pt-0">Berechnungsmethode <abbr title="required">*</abbr></div><input type="hidden" name="score_result[calculation_method]" value="" /><div class="form-check"><input class="form-check-input radio_buttons required" type="radio" value="default" checked="checked" name="score_result[calculation_method]" id="score_result_calculation_method_default" /><label class="form-check-label collection_radio_buttons" for="score_result_calculation_method_default">Standard (Bester Lauf in der Wertung)</label></div><div class="form-check"><input class="form-check-input radio_buttons required" type="radio" value="sum_of_two" name="score_result[calculation_method]" id="score_result_calculation_method_sum_of_two" /><label class="form-check-label collection_radio_buttons" for="score_result_calculation_method_sum_of_two">Summe der besten zwei Läufe</label></div></fieldset>
 <small class="text-muted">Bei einigen Wettkämpfen gewinnt nicht der Schnellste, sondern der Kontinuierlichste.</small>
 </fieldset>
 <fieldset class="group">
@@ -174,7 +174,7 @@ Erweitert
 </div>
 <div class="row">
 <div class="col-lg-6">
-<fieldset class="form-group boolean optional score_result_calculation_help"><div class="form-check"><input name="score_result[calculation_help]" type="hidden" value="0" autocomplete="off" /><input class="form-check-input boolean optional" type="checkbox" value="1" name="score_result[calculation_help]" id="score_result_calculation_help" /><label class="form-check-label boolean optional" for="score_result_calculation_help">Berechnungshilfe</label><small class="form-text text-muted">Die Liste dient nur als Berechnungshilfe und wird in der Auflistung ganz unten angezeigt.</small></div></fieldset>
+<fieldset class="form-group boolean optional score_result_calculation_help"><div class="form-check"><input name="score_result[calculation_help]" type="hidden" value="0" /><input class="form-check-input boolean optional" type="checkbox" value="1" name="score_result[calculation_help]" id="score_result_calculation_help" /><label class="form-check-label boolean optional" for="score_result_calculation_help">Berechnungshilfe</label><small class="form-text text-muted">Die Liste dient nur als Berechnungshilfe und wird in der Auflistung ganz unten angezeigt.</small></div></fieldset>
 </div>
 </div>
 </fieldset>

@@ -36,10 +36,10 @@ RSpec.describe 'competitions/certificates/lists' do
                                           score_result_id: result_hl.id } }
       expect(response).to redirect_to(
         "/#{competition.year}/#{competition.slug}/certificates/lists/export.pdf" \
-        '?certificates_list%5Bbackground_image%5D=false&certificates_list%5Bcompetition_result_id%5D=&' \
-        'certificates_list%5Bgroup_score_result_id%5D=&certificates_list%5B' \
-        "score_result_id%5D=#{result_hl.id}&certificates_list%5Bseries_person_assessment_id%5D=&" \
-        "certificates_list%5Bseries_team_assessment_id%5D=&certificates_list%5Btemplate_id%5D=#{template.id}",
+        '?certificates_list%5Bbackground_image%5D=false&certificates_list%5Bcompetition_result_id%5D&' \
+        'certificates_list%5Bgroup_score_result_id%5D&certificates_list%5B' \
+        "score_result_id%5D=#{result_hl.id}&certificates_list%5Bseries_person_assessment_id%5D&" \
+        "certificates_list%5Bseries_team_assessment_id%5D&certificates_list%5Btemplate_id%5D=#{template.id}",
       )
       follow_redirect!
       expect(response.content_type).to eq(Mime[:pdf])

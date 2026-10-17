@@ -295,6 +295,8 @@ RSpec/NestedGroups:
   Enabled: false
 RSpec/NoExpectationExample:
   Enabled: true
+RSpec/Output:
+  Enabled: true
 RSpec/PendingWithoutReason:
   Enabled: true
 RSpec/ReceiveMessages:
@@ -329,6 +331,8 @@ RSpec/VerifiedDoubleReference:
   Enabled: true
 RSpecRails/AvoidSetupHook:
   Enabled: true
+RSpecRails/FileFixture:
+  Enabled: true
 RSpecRails/HaveHttpStatus:
   Enabled: true
 RSpecRails/HttpStatusNameConsistency:
@@ -338,6 +342,8 @@ RSpecRails/InferredSpecType:
 RSpecRails/MinitestAssertions:
   Enabled: true
 RSpecRails/NegationBeValid:
+  Enabled: true
+RSpecRails/ReceivePerformLater:
   Enabled: true
 RSpecRails/TravelAround:
   Enabled: true

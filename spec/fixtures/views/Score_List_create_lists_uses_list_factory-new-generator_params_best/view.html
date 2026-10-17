@@ -144,7 +144,7 @@ Erweitert
 </div>
 </div>
 <div class="card-body">
-<form class="simple_form edit_score_list_factory" id="edit_score_list_factory" novalidate="novalidate" action="/2024/mv-cup/score/list_factories" accept-charset="UTF-8" method="post"><input type="hidden" name="_method" value="patch" autocomplete="off" /><div class="form-group hidden score_list_factory_next_step"><input class="form-control hidden" value="finish" autocomplete="off" type="hidden" name="score_list_factory[next_step]" id="score_list_factory_next_step" /></div>
+<form class="simple_form edit_score_list_factory" id="edit_score_list_factory" novalidate="novalidate" action="/2024/mv-cup/score/list_factories" accept-charset="UTF-8" method="post"><input type="hidden" name="_method" value="patch" /><div class="form-group hidden score_list_factory_next_step"><input class="form-control hidden" value="finish" type="hidden" name="score_list_factory[next_step]" id="score_list_factory_next_step" /></div>
 <div class="form-group select optional score_list_factory_before_result"><label class="control-label select optional" for="score_list_factory_before_result_id">Ergebnisliste</label><select class="form-select select optional" name="score_list_factory[before_result_id]" id="score_list_factory_before_result_id"><option selected="selected" value="UUID">Löschangriff Nass - Frauen</option>
 <option value="UUID">Löschangriff Nass - Männer</option></select></div>
 <div class="form-group integer optional score_list_factory_best_count"><label class="control-label integer optional" for="score_list_factory_best_count">Anzahl der Finalisten auf der neuen Liste (X)</label><input class="form-control numeric integer optional" value="30" type="number" step="1" name="score_list_factory[best_count]" id="score_list_factory_best_count" /></div>
@@ -161,7 +161,7 @@ Erweitert
 </div>
 <div class="card-footer">
 <div class="d-flex justify-content-between align-items-start">
-<div><form class="simple_form edit_score_list_factory" id="edit_score_list_factory" novalidate="novalidate" action="/2024/mv-cup/score/list_factories" accept-charset="UTF-8" method="post"><input type="hidden" name="_method" value="patch" autocomplete="off" /><div class="form-group hidden score_list_factory_next_step"><input class="form-control hidden" value="generator" autocomplete="off" type="hidden" name="score_list_factory[next_step]" id="score_list_factory_next_step" /></div>
+<div><form class="simple_form edit_score_list_factory" id="edit_score_list_factory" novalidate="novalidate" action="/2024/mv-cup/score/list_factories" accept-charset="UTF-8" method="post"><input type="hidden" name="_method" value="patch" /><div class="form-group hidden score_list_factory_next_step"><input class="form-control hidden" value="generator" type="hidden" name="score_list_factory[next_step]" id="score_list_factory_next_step" /></div>
 <input type="submit" name="commit" value="Zurück" class="btn btn-light btn-sm" data-disable-with="Zurück" />
 <a data-turbo-method="delete" data-turbo-confirm="Listenerstellung abbrechen?" class=" btn btn-light btn-sm" href="/2024/mv-cup/score/list_factories">Abbrechen</a>
 </form></div>

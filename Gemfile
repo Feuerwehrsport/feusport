@@ -3,13 +3,12 @@
 source 'https://rubygems.org'
 ruby '4.0.7'
 
-gem 'rails', '~> 8.0.0'
+gem 'rails', '~> 8.1.0'
 
 gem 'pg' # database
 gem 'puma' # webserver for development
 gem 'bcrypt' # password hashing
-# gem 'redis' # Adapter for ActionCable
-gem 'redis', '~> 5.4' # actioncable 8.0 needs redis < 6
+gem 'redis' # Adapter for ActionCable
 
 gem 'sprockets-rails' # asset pipeline
 gem 'jsbundling-rails' # bundle and transpile JavaScript
@@ -47,7 +46,7 @@ gem 'prawn-table'
 gem 'prawn-qrcode'
 gem 'matrix'
 
-gem 'json', '~> 2.0' # activesupport 8.0 is not compatible with json 3
+gem 'json'
 
 group :development, :test do
   gem 'debug' # debugger

@@ -8,8 +8,6 @@ RSpec.describe 'competitions/publishings' do
 
   describe 'publishing competition' do
     it 'uses CRUD' do
-      expect(FireSportStatistics::Publishing::Worker).to receive(:perform_later)
-
       sign_in user
 
       get "/#{competition.year}/#{competition.slug}/publishing/new"
@@ -20,10 +18,12 @@ RSpec.describe 'competitions/publishings' do
       expect(response).to match_html_fixture.with_affix('new-error').for_status(422)
 
       expect do
-        post "/#{competition.year}/#{competition.slug}/publishing",
-             params: { competitions_publishing: { confirm: '1' } }
-        expect(response).to redirect_to(competition_show_path)
-      end.to change(FireSportStatistics::Publishing, :count).by(1)
+        expect do
+          post "/#{competition.year}/#{competition.slug}/publishing",
+               params: { competitions_publishing: { confirm: '1' } }
+          expect(response).to redirect_to(competition_show_path)
+        end.to change(FireSportStatistics::Publishing, :count).by(1)
+      end.to have_enqueued_job(FireSportStatistics::Publishing::Worker)
     end
 
     context 'when no login performed' do
