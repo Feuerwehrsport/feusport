@@ -220,3 +220,11 @@ document.addEventListener('turbo:load', () => {
     },
   };
 });
+
+document.addEventListener('click', (event) => {
+  const link = event.target.closest('.social-share-button a[data-site]');
+  if (!link) return;
+
+  event.preventDefault();
+  SocialShareButton.share(link);
+});

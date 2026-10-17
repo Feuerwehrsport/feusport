@@ -1,4 +1,5 @@
 import EasyMDE from 'easymde';
+import DOMPurify from 'dompurify';
 
 const insertFileLink = function (editor, files) {
   const [modal, modalContent] = feusportModal(false);
@@ -84,6 +85,10 @@ onVisit(function () {
       autoDownloadFontAwesome: false,
       spellChecker: false,
       status: false,
+      renderingConfig: {
+        // Die Vorschau darf kein Skript-HTML aus der Eingabe ausführen (der Server filtert per Sanitize)
+        sanitizerFunction: (html) => DOMPurify.sanitize(html),
+      },
       toolbar: [
         'bold',
         'italic',

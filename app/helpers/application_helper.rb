@@ -30,7 +30,6 @@ module ApplicationHelper
       link_to('', '#', rel: 'nofollow',
                        'data-site' => name,
                        :class => "ssb-icon ssb-#{name}",
-                       :onclick => 'return SocialShareButton.share(this);',
                        :title => h(link_title))
     end
     tag.div(safe_join(links, ' '), class: 'social-share-button')

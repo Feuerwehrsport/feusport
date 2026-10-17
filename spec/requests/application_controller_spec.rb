@@ -32,4 +32,16 @@ RSpec.describe ApplicationController do
       expect(response).to have_http_status(:success)
     end
   end
+
+  describe 'content security policy' do
+    it 'forbids inline scripts and plugins' do
+      get '/info'
+      policy = response.headers['Content-Security-Policy'].split(';').map(&:strip)
+
+      expect(policy).to include("default-src 'self'", "object-src 'none'", "base-uri 'self'", "form-action 'self'",
+                                "frame-ancestors 'self'")
+      expect(response.headers['X-Frame-Options']).to eq 'SAMEORIGIN'
+      expect(policy.find { |directive| directive.start_with?('script-src') }).not_to include('unsafe')
+    end
+  end
 end
