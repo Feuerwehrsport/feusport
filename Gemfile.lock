@@ -169,7 +169,7 @@ GEM
     fugit (1.14.0)
       et-orbi (~> 1.4)
       raabro (~> 1.4)
-    generated_schema_validations (0.6.0)
+    generated_schema_validations (0.6.1)
     globalid (1.4.0)
       activesupport (>= 6.1)
     guard (2.20.2)
