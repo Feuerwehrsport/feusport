@@ -47,6 +47,24 @@ RSpec.describe Band do
     end
   end
 
+  describe 'position' do
+    let(:other_competition) { create(:competition, name: 'Fremd-Cup') }
+
+    it 'is numbered per competition' do
+      women = create(:band, competition:)
+      other_women = create(:band, competition: other_competition)
+      men = create(:band, :male, competition:)
+      other_men = create(:band, :male, competition: other_competition)
+
+      expect([women, men, other_women, other_men].map(&:position)).to eq [1, 2, 1, 2]
+      expect([women.first?, men.last?, other_women.first?, other_men.last?]).to all(be true)
+
+      men.move_higher
+      expect([women.reload.position, men.reload.position]).to eq [2, 1]
+      expect([other_women.reload.position, other_men.reload.position]).to eq [1, 2]
+    end
+  end
+
   describe 'tag names' do
     let(:band) { create(:band, competition:) }
 

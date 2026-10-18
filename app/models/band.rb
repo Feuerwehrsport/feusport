@@ -38,7 +38,7 @@ class Band < ApplicationRecord
   has_many :teams, dependent: :restrict_with_error
   has_many :people, dependent: :restrict_with_error
 
-  acts_as_list
+  acts_as_list scope: :competition
   auto_strip_attributes :name
 
   schema_validations

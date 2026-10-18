@@ -4,7 +4,7 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 
-# generated from version 20261006190000
+# generated from version 20261018090000
 
 module SchemaValidations
   extend ActiveSupport::Concern
