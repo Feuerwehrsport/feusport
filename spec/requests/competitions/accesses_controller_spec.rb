@@ -132,6 +132,22 @@ RSpec.describe Competitions::AccessesController do
 
     before { sign_in other_user }
 
+    it 'marks invalid invitations in the list' do
+      sign_in user
+
+      get competition_nested('accesses')
+      expect(response.body).to include('<td>30.03.2024</td>')
+
+      req.update!(created_at: 31.days.ago)
+      get competition_nested('accesses')
+      expect(response.body).to include('<span class="badge text-bg-warning">abgelaufen</span>')
+
+      req.update!(created_at: Time.current)
+      sender_access.delete
+      get competition_nested('accesses')
+      expect(response.body).to include('<span class="badge text-bg-warning">nicht mehr gültig</span>')
+    end
+
     it 'rejects expired invitations' do
       req.update!(created_at: 31.days.ago)
 

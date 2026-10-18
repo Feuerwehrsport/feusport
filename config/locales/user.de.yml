@@ -24,10 +24,12 @@ de:
         created_at: Erstellt am
         drop_myself: Eigenen Zugang löschen
         email: E-Mail-Adresse
+        expires_at: Gültig bis
         text: E-Mail-Text
       user_team_access_request:
         created_at: Erstellt am
         email: E-Mail-Adresse
+        expires_at: Gültig bis
         text: E-Mail-Text
     models:
       simple_access:
@@ -48,6 +50,9 @@ de:
       user_team_access_request:
         one: Verwalteranfrage
         other: Verwalteranfragen
+  invitation_validity:
+    expired: abgelaufen
+    revoked: nicht mehr gültig
   simple_form:
     hints:
       user:

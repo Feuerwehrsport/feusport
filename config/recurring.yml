@@ -3,6 +3,10 @@ production:
     class: 'Competitions::Publishing::ReminderJob'
     priority: 40
     schedule: 0 10 * * tue
+  invitation_cleanup:
+    class: 'InvitationValidity::CleanupJob'
+    priority: 50
+    schedule: 37 4 * * *
   import_suggestions:
     class: ImportSuggestionsJob
     priority: 50

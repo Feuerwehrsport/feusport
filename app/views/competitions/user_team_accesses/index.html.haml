@@ -34,11 +34,13 @@
             %tr
               %th= UserTeamAccessRequest.human_attribute_name(:created_at)
               %th= UserTeamAccessRequest.human_attribute_name(:email)
+              %th= UserTeamAccessRequest.human_attribute_name(:expires_at)
               %th
             - @competition.user_team_access_requests.where(team: @team).sort.each do |req|
               %tr
                 %td= l(req.created_at)
                 %td= req.email
+                %td= invitation_validity_tag(req)
                 %td
                   = link_to(competition_team_access_request_path(id: req.id), class: 'btn btn-light btn-sm', data: { turbo_confirm: 'Anfrage wirklich entfernen?', 'turbo-method': :delete }) do
                     %i.far.fa-trash

@@ -53,6 +53,13 @@ module ApplicationHelper
     icon_link_btn('far fa-trash', path, options)
   end
 
+  def invitation_validity_tag(invitation)
+    status = invitation.validity_status
+    return l(invitation.expires_at.to_date) if status == :valid
+
+    tag.span(t("invitation_validity.#{status}"), class: 'badge text-bg-warning')
+  end
+
   def icon_link_btn(icon_classes, path, options = {})
     btn_link_to(tag.i('', class: icon_classes), path, options)
   end

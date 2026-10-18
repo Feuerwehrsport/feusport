@@ -6,4 +6,6 @@ Dieser Text wurde dir von *<%= @user_team_access_request.sender.name %>* geschic
 
 [[Anfrage annehmen]](<%= connect_competition_team_access_request_url(@user_team_access_request.competition.year, @user_team_access_request.competition.slug, @team.id, @user_team_access_request.id, token: @user_team_access_request.token) %>)
 
+Die Einladung ist bis zum **<%= l(@user_team_access_request.expires_at.to_date) %>** gültig. Danach musst du dich erneut einladen lassen.
+
 Sobald du die Anfrage annimmst, hast du vollen Zugriff auf diese Mannschaft und kannst zum Beispiel Wettkämpfer ergänzen.
