@@ -277,6 +277,23 @@ RSpec.describe Score::List do
            }
       expect(entries[0].reload.run).to eq 2
     end
+
+    it 'saves only via post and ignores unknown entries' do
+      sign_in user
+
+      entries = person_list.reload.entries
+      new_order = { '0' => entries[2].id, '1' => entries[1].id, '2' => entries[0].id, '3' => SecureRandom.uuid }
+
+      expect do
+        get "/#{competition.year}/#{competition.slug}/score/lists/#{person_list.id}/move",
+            params: { new_order:, list: { new_order:, save: true } }
+      end.not_to(change { entries.map { |entry| entry.reload.run } })
+
+      post "/#{competition.year}/#{competition.slug}/score/lists/#{person_list.id}/move",
+           params: { new_order:, list: { new_order:, save: true } }
+      expect(response).to have_http_status(:success)
+      expect(entries[2].reload.run).to eq 1
+    end
   end
 
   describe 'interacts with conditions' do

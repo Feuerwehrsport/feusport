@@ -3,7 +3,7 @@
 class Competitions::AccessesController < CompetitionNestedController
   default_resource resource_class: UserAccess, through_association: :user_accesses
 
-  def edit
+  def update
     if params[:registration_mail_info] == 'true'
       resource_instance.update(registration_mail_info: true)
     elsif params[:registration_mail_info] == 'false'

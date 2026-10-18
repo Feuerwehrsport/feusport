@@ -17,7 +17,7 @@ class Competitions::Score::ListsController < CompetitionNestedController
   end
 
   def move
-    return if params[:new_order].blank?
+    return if !request.post? || params[:new_order].blank?
 
     order_params = params.require(:list).permit(:save, new_order: {})
 
@@ -29,6 +29,8 @@ class Competitions::Score::ListsController < CompetitionNestedController
       run = (index / @list.track_count) + 1
 
       entry = @list.entries.find { |e| e.id == entry_id }
+      next if entry.nil?
+
       entry.assign_attributes(track:, run:)
       entry.save if order_params[:save]
     end

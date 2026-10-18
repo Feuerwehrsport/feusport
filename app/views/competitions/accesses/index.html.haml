@@ -22,7 +22,7 @@
                 %td= access.user.email
                 %td{ style: 'width: 60px; text-align: center', title: UserAccess.human_attribute_name(:registration_mail_info_full) }
                   - if access.user == current_user
-                    = icon_link_btn("far #{access.registration_mail_info? ? 'fa-square-check' : 'fa-square'}", edit_competition_access_path(id: access.id, registration_mail_info: !access.registration_mail_info))
+                    = icon_link_btn("far #{access.registration_mail_info? ? 'fa-square-check' : 'fa-square'}", competition_access_path(id: access.id, registration_mail_info: !access.registration_mail_info), data: { turbo_method: :patch })
                   - else
                     .far{ class: access.registration_mail_info? ? 'fa-square-check' : 'fa-square' }
                 %td{ style: 'width: 60px; text-align: center' }

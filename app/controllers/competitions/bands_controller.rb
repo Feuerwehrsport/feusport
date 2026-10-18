@@ -8,14 +8,13 @@ class Competitions::BandsController < CompetitionNestedController
     send_xlsx(Exports::Xlsx::Bands, args: [@competition])
   end
 
-  def edit
-    if params[:move] == 'up'
+  def move
+    if params[:direction] == 'up'
       @band.move_higher
-      redirect_to action: :index
-    elsif params[:move] == 'down'
+    elsif params[:direction] == 'down'
       @band.move_lower
-      redirect_to action: :index
     end
+    redirect_to action: :index
   end
 
   def create

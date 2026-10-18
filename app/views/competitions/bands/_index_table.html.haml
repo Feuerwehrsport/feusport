@@ -17,6 +17,6 @@
       %td= band.person_tag_names
       %td= band.team_tag_names
       %td.text-end
-        = btn_link_to '↥', { action: :edit, id: band, move: :up }, disabled: band.first?
-        = btn_link_to '↧', { action: :edit, id: band, move: :down }, disabled: band.last?
+        = btn_link_to '↥', move_competition_band_path(id: band, direction: :up), disabled: band.first?, data: { turbo_method: :patch }
+        = btn_link_to '↧', move_competition_band_path(id: band, direction: :down), disabled: band.last?, data: { turbo_method: :patch }
         = btn_link_to(t('a.show'), competition_band_path(id: band.id))

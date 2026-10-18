@@ -48,6 +48,11 @@ RSpec.describe 'competitions/certificates/templates' do
 
       expect do
         get "/#{competition.year}/#{competition.slug}/certificates/templates/#{new_id}/duplicate"
+        expect(response).to have_http_status(:not_found)
+      end.not_to change(Certificates::Template, :count)
+
+      expect do
+        post "/#{competition.year}/#{competition.slug}/certificates/templates/#{new_id}/duplicate"
       end.to change(Certificates::Template, :count).by(1)
       expect(flash[:info]).to eq 'Duplikat erstellt'
 
@@ -55,6 +60,10 @@ RSpec.describe 'competitions/certificates/templates' do
       expect(response).to redirect_to "/#{competition.year}/#{competition.slug}/certificates/templates/#{dup_id}"
 
       get "/#{competition.year}/#{competition.slug}/certificates/templates/#{new_id}/remove_file?type=image"
+      expect(response).to have_http_status(:not_found)
+      expect(Certificates::Template.find(new_id).image).to be_present
+
+      delete "/#{competition.year}/#{competition.slug}/certificates/templates/#{new_id}/remove_file?type=image"
       expect(response).to redirect_to "/#{competition.year}/#{competition.slug}/certificates/templates/#{new_id}"
 
       expect(Certificates::Template.find(new_id).image).not_to be_present

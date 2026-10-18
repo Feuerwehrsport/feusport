@@ -97,7 +97,9 @@ Rails.application.routes.draw do
 
     # wrench menu
     resources :disciplines
-    resources :bands
+    resources :bands do
+      member { patch :move }
+    end
     resources :assessments
 
     namespace :certificates do
@@ -105,8 +107,8 @@ Rails.application.routes.draw do
       resources :templates do
         member do
           get :edit_text_fields
-          get :duplicate
-          get :remove_file
+          post :duplicate
+          delete :remove_file
         end
       end
       resources :lists, only: %i[new create] do
@@ -116,7 +118,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :accesses, only: %i[index edit destroy]
+    resources :accesses, only: %i[index update destroy]
     resources :access_requests, only: %i[new create destroy] do
       member { get :connect }
     end

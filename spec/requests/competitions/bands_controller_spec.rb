@@ -39,13 +39,18 @@ RSpec.describe Band do
       band = described_class.find_by(gender: 'male')
       expect(band.position).to eq 2
 
-      # move Männer up
+      # GET does not move anymore
       get "/#{competition.year}/#{competition.slug}/bands/#{band.id}/edit?move=up"
+      expect(response).to have_http_status(:success)
+      expect(band.reload.position).to eq 2
+
+      # move Männer up
+      patch "/#{competition.year}/#{competition.slug}/bands/#{band.id}/move?direction=up"
       expect(response).to redirect_to("/#{competition.year}/#{competition.slug}/bands")
       expect(band.reload.position).to eq 1
 
       # move Männer down
-      get "/#{competition.year}/#{competition.slug}/bands/#{band.id}/edit?move=down"
+      patch "/#{competition.year}/#{competition.slug}/bands/#{band.id}/move?direction=down"
       expect(response).to redirect_to("/#{competition.year}/#{competition.slug}/bands")
       expect(band.reload.position).to eq 2
 

@@ -18,7 +18,7 @@
           %th= Certificates::Template.human_attribute_name :image
           - if @template.image.attached?
             %td= image_tag(@template.image, width: '100px')
-            %td.text-end= btn_link_to(t('a.delete'), action: :remove_file, type: :image)
+            %td.text-end= btn_link_to(t('a.delete'), { action: :remove_file, type: :image }, data: { turbo_method: :delete })
           - else
             %td Nicht angegeben
             %td
@@ -26,7 +26,7 @@
           %th= Certificates::Template.human_attribute_name :font
           - if @template.font.attached?
             %td{ style: "font-family: certificates_template_#{@template.id}_regular" } Beispieltext
-            %td.text-end= btn_link_to(t('a.delete'), action: :remove_file, type: :font)
+            %td.text-end= btn_link_to(t('a.delete'), { action: :remove_file, type: :font }, data: { turbo_method: :delete })
           - else
             %td Nicht angegeben
             %td
@@ -34,7 +34,7 @@
           %th= Certificates::Template.human_attribute_name :font2
           - if @template.font2.attached?
             %td{ style: "font-family: certificates_template_#{@template.id}_bold" } Beispieltext
-            %td.text-end= btn_link_to(t('a.delete'), action: :remove_file, type: :font2)
+            %td.text-end= btn_link_to(t('a.delete'), { action: :remove_file, type: :font2 }, data: { turbo_method: :delete })
           - else
             %td Nicht angegeben
             %td
@@ -47,7 +47,7 @@
           = btn_link_to 'Textpositionen', action: :edit_text_fields
           = btn_link_to 'Bearbeiten', action: :edit
           = btn_link_to 'Vorschau als PDF', { format: :pdf }, target: '_blank', rel: 'noopener'
-          = btn_link_to 'Vorlage duplizieren', { action: :duplicate }
+          = btn_link_to 'Vorlage duplizieren', { action: :duplicate }, data: { turbo_method: :post }
           = btn_link_to 'Löschen', { action: :destroy }, data: { turbo_confirm: 'Vorlage wirklich löschen?', 'turbo-method': :delete }
 .row
   .col-lg-6.mt-3

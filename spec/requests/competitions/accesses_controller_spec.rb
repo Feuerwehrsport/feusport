@@ -213,6 +213,10 @@ RSpec.describe Competitions::AccessesController do
       expect(response).to be_successful
 
       get competition_nested("accesses/#{competition.user_accesses.first.id}/edit?registration_mail_info=false")
+      expect(response).to have_http_status(:not_found)
+      expect(UserAccess.pluck(:registration_mail_info)).to eq [true]
+
+      patch competition_nested("accesses/#{competition.user_accesses.first.id}?registration_mail_info=false")
       expect(response).to redirect_to(competition_nested('accesses'))
 
       expect(UserAccess.pluck(:registration_mail_info)).to eq [false]
@@ -220,7 +224,7 @@ RSpec.describe Competitions::AccessesController do
       get "/#{competition.year}/#{competition.slug}/accesses"
       expect(response).to match_html_fixture.with_affix('index-without-mailinfo')
 
-      get competition_nested("accesses/#{competition.user_accesses.first.id}/edit?registration_mail_info=true")
+      patch competition_nested("accesses/#{competition.user_accesses.first.id}?registration_mail_info=true")
       expect(response).to redirect_to(competition_nested('accesses'))
 
       expect(UserAccess.pluck(:registration_mail_info)).to eq [true]
