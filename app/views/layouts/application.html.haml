@@ -6,6 +6,7 @@
     %meta{ content: 'width=device-width,initial-scale=1', name: 'viewport' }/
     = csrf_meta_tags
     = csp_meta_tag
+    %meta{ name: 'turbo-prefetch', content: 'false' }/
     = stylesheet_link_tag 'application', 'data-turbo-track': 'reload'
     = javascript_include_tag 'application', 'data-turbo-track': 'reload', defer: true
     %link{ rel: :icon, type: 'image/png', href: image_path('favicon.png') }
