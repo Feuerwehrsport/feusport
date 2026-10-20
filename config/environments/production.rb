@@ -42,8 +42,12 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
-  # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
+  # nginx terminiert TLS und setzt X-Forwarded-Proto https (auch für /cable).
+  config.assume_ssl = true
+  # Secure-Flag für alle Cookies und Umleitung auf HTTPS. HSTS sendet auch nginx (für statische Dateien),
+  # Rails muss denselben Wert senden: `hsts: false` hieße "max-age=0" und würde HSTS im Browser abschalten.
+  config.force_ssl = true
+  config.ssl_options = { hsts: { expires: 365.days, subdomains: true, preload: true } }
 
   # Include generic and useful information about system operation, but avoid logging too much
   # information to avoid inadvertent exposure of personally identifiable information (PII).
