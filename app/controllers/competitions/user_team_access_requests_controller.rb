@@ -53,6 +53,8 @@ class Competitions::UserTeamAccessRequestsController < CompetitionNestedControll
 
     resource_instance.sender = current_user
     resource_instance.team = @team
+    # load_and_authorize_resource prüft noch ohne Team (ability.rb: access.team.blank?), deshalb hier mit Team
+    authorize!(:create, resource_instance)
     name = ''
 
     @possible_friends = current_user.friends - @team.users

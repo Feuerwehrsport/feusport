@@ -201,6 +201,24 @@ RSpec.describe Competitions::UserTeamAccessesController do
     end
   end
 
+  context 'when user is not allowed to edit the team' do
+    before { sign_in other_user }
+
+    it 'does not create invitations' do
+      get competition_nested("teams/#{team.id}/access_requests/new")
+      expect(response).to redirect_to('/')
+      expect(flash[:alert]).to eq 'Zugriff verweigert'
+
+      expect do
+        post competition_nested("teams/#{team.id}/access_requests"),
+             params: { user_team_access_request: { email: 'foo@bar.de', text: 'Hallo' } }
+        expect(response).to redirect_to('/')
+      end.not_to have_enqueued_job
+
+      expect(UserTeamAccessRequest.count).to eq 0
+    end
+  end
+
   context 'when team belongs to another competition' do
     let(:other_competition) { create(:competition, name: 'Fremd-Cup') }
     let(:other_band) { create(:band, competition: other_competition) }
