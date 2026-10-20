@@ -3,6 +3,7 @@ const suggestions = function (div) {
   const teamShortcut = document.getElementById('team_shortcut');
   let lastValue = teamName.value;
   let shortcutChanged = false;
+  let updateTimer = null;
 
   const setShortcut = function (shortcutValue) {
     teamShortcut.value = shortcutValue.substr(0, 12);
@@ -52,7 +53,9 @@ const suggestions = function (div) {
     if (lastValue !== newValue) {
       lastValue = newValue;
       if (!shortcutChanged) setShortcut(newValue);
-      updateSuggestions();
+      // erst nach einer kurzen Tipppause anfragen (Server hat ein Rate-Limit)
+      clearTimeout(updateTimer);
+      updateTimer = setTimeout(updateSuggestions, 200);
     }
   });
 };

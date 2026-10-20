@@ -45,7 +45,7 @@ class FireSportStatistics::Person < ApplicationRecord
   auto_strip_attributes :first_name, :last_name
 
   scope :where_name_like, ->(name) do
-    query = "%#{name.chars.join('%')}%"
+    query = "%#{name.chars.map { |char| sanitize_sql_like(char) }.join('%')}%"
     spelling_query = FireSportStatistics::PersonSpelling.where("(first_name || ' ' || last_name) ILIKE ?", query)
                                                         .select(:person_id)
     where("(first_name || ' ' || last_name) ILIKE ? OR id IN (#{spelling_query.to_sql})", query)

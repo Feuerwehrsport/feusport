@@ -5,6 +5,7 @@ const suggestions = function (div) {
   const personSuggestion = document.querySelector('#person_suggestion');
 
   let lastValue = personSuggestion.value;
+  let updateTimer = null;
 
   const updateSuggestions = function () {
     const table = div.querySelector('table');
@@ -63,7 +64,9 @@ const suggestions = function (div) {
           else lastName.value += nameParts[i] + ' ';
         }
 
-        updateSuggestions();
+        // erst nach einer kurzen Tipppause anfragen (Server hat ein Rate-Limit)
+        clearTimeout(updateTimer);
+        updateTimer = setTimeout(updateSuggestions, 200);
       }
     }
   });
