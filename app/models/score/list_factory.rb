@@ -68,6 +68,9 @@ class Score::ListFactory < ApplicationRecord
   schema_validations
   validates :discipline, presence: true
   validates :status, inclusion: { in: STEPS }, allow_nil: true
+  # Ein unbekannter STI-Typ würde gespeichert und ließe sich danach nicht mehr laden (500).
+  # Ab generator_params prüft type_valid strenger (nur zur Disziplin passende Generatoren).
+  validates :type, inclusion: { in: ['Score::ListFactory', *GENERATORS] }, unless: -> { step_reached?(:generator_params) }
 
   validates :assessments, presence: true, if: -> { step_reached?(:names) }
   validate :assessments_possible, if: -> { step_reached?(:names) }
