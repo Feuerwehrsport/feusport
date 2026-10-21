@@ -16,19 +16,23 @@ class Certificates::List
     @template ||= competition&.certificates_templates&.find_by(id: template_id)
   end
 
+  # Urkunden erstellen nur Admins (inkl. Gastzugang), deshalb immer mit nicht öffentlichen Startlisten
   def score_result
     @score_result ||= competition&.score_results&.find_by(id: score_result_id)
+                                 &.tap { |result| result.include_hidden_lists = true }
   end
 
   def group_score_result
     @group_score_result ||= begin
       result = competition&.score_results&.find_by(id: group_score_result_id)
+      result.include_hidden_lists = true if result
       Score::GroupResult.new(result) if result
     end
   end
 
   def competition_result
     @competition_result ||= competition&.score_competition_results&.find_by(id: competition_result_id)
+                                       &.tap { |result| result.include_hidden_lists = true }
   end
 
   def series_team_assessment

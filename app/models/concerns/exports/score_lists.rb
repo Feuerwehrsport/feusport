@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 module Exports::ScoreLists
+  # hide_times: Zeiten und Ziele weglassen (öffentlicher Export bei versteckten Ergebnissen)
   def show_export_data(list, more_columns: false, pdf: false, hint_size: 6,
                        show_bib_numbers: competition.show_bib_numbers?,
-                       separate_target_times_as_columns: false)
+                       separate_target_times_as_columns: false, hide_times: false)
     data = [show_export_header(list, more_columns:,
                                      show_bib_numbers:,
-                                     separate_target_times_as_columns:)]
+                                     separate_target_times_as_columns:, hide_times:)]
 
     score_list_entries(list) do |entry, run, track, _best_of_run|
       line = []
@@ -28,14 +29,18 @@ module Exports::ScoreLists
         line.push(team_name)
       end
 
-      if list.separate_target_times?
-        if separate_target_times_as_columns
-          line.push(entry&.second_time_left_target, entry&.second_time_right_target)
-        else
-          line.push(entry&.target_times_as_data(pdf:, hint_size:))
+      if hide_times
+        line.push('') if more_columns
+      else
+        if list.separate_target_times?
+          if separate_target_times_as_columns
+            line.push(entry&.second_time_left_target, entry&.second_time_right_target)
+          else
+            line.push(entry&.target_times_as_data(pdf:, hint_size:))
+          end
         end
+        line.push(entry.try(:human_time))
       end
-      line.push(entry.try(:human_time))
       line.push('', '') if more_columns
       data.push(line)
     end
@@ -55,7 +60,7 @@ module Exports::ScoreLists
     { content: name, size: 5 }
   end
 
-  def show_export_header(list, more_columns:, show_bib_numbers:, separate_target_times_as_columns:)
+  def show_export_header(list, more_columns:, show_bib_numbers:, separate_target_times_as_columns:, hide_times: false)
     header = %w[Lauf Bahn]
     if list.single_discipline?
       header.push('Nr.') if show_bib_numbers
@@ -64,7 +69,7 @@ module Exports::ScoreLists
     header.push('Mannschaft')
     if more_columns
       header.push('', '', '')
-    else
+    elsif !hide_times
       if list.separate_target_times?
         if separate_target_times_as_columns
           header.push('Links', 'Rechts')

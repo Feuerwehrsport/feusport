@@ -28,12 +28,12 @@ module Exports::ScoreResults
         line.push(entity&.fire_sport_statistics_team_id, entity&.number, entity&.export_gender) if full
       end
       if result.multi_result_method_disabled?
-        result.lists.each do |list|
+        result.shown_lists.each do |list|
           entry = row.result_entry_from(list)
           line.push(entry&.target_times_as_data(pdf:)) if pdf && list.separate_target_times?
           line.push(entry&.human_time.to_s)
         end
-        line.push(row.best_result_entry&.human_time) unless result.lists.one?
+        line.push(row.best_result_entry&.human_time) unless result.shown_lists.one?
       else
         result.results.each { |inner_result| line.push(row.result_entry_from(inner_result)&.human_time) }
         line.push(row.best_result_entry&.human_time)
@@ -52,14 +52,15 @@ module Exports::ScoreResults
     header.push('Mannschaft')
     header.push('statistik_team_id', 'statistik_team_number', 'gender') if full
     if result.multi_result_method_disabled?
-      result.lists.each do |list|
+      result.shown_lists.each do |list|
+        label = list.results_public? ? list.shortcut : "#{list.shortcut} (versteckt)"
         if pdf && list.separate_target_times?
-          header.push(content: list.shortcut, colspan: 2)
+          header.push(content: label, colspan: 2)
         else
-          header.push(export_headers ? 'time' : list.shortcut)
+          header.push(export_headers ? 'time' : label)
         end
       end
-      header.push('Bestzeit') unless result.lists.one?
+      header.push('Bestzeit') unless result.shown_lists.one?
     else
       result.results.each do |sub_result|
         header.push(sub_result.assessment.discipline.short_name)

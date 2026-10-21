@@ -59,7 +59,8 @@ class Score::Result < ApplicationRecord
   has_many :results, class_name: 'Score::Result', through: :result_multi_references
   has_many :result_list_factories, class_name: 'Score::ResultListFactory', dependent: :destroy
 
-  attr_accessor :show_hidden_result
+  # Admin-Ansicht: Startlisten, die nicht öffentlich sind (Score::List#results_public?), fließen mit ein
+  attr_accessor :include_hidden_lists
 
   delegate :year, to: :competition
   delegate :discipline, to: :assessment, allow_nil: true
@@ -128,6 +129,20 @@ class Score::Result < ApplicationRecord
     @rows ||= add_ranks(generate_rows.sort)
   end
 
+  # Listen, die in die Berechnung eingehen (öffentlich nur die freigegebenen)
+  def shown_lists
+    @shown_lists ||= include_hidden_lists ? lists.to_a : lists.select(&:results_public?)
+  end
+
+  # Nicht öffentliche Listen, auch aus den Teilergebnissen einer Mehrfachwertung
+  def hidden_lists
+    if multi_result_method_disabled?
+      lists.reject(&:results_public?)
+    else
+      results.flat_map(&:hidden_lists).uniq
+    end
+  end
+
   def starting_time_required?
     rows.any?(&:starting_time_required?)
   end
@@ -142,10 +157,7 @@ class Score::Result < ApplicationRecord
 
     out_of_competition_rows = {}
     rows = {}
-    lists.each do |list|
-      next if list.hidden?
-      next if !show_hidden_result && list.hidden_results?
-
+    shown_lists.each do |list|
       list.entries.not_waiting
           .includes(assessment: :band).to_a
           .each do |list_entry|
@@ -181,6 +193,7 @@ class Score::Result < ApplicationRecord
 
     rows = {}
     results.each do |result|
+      result.include_hidden_lists = include_hidden_lists
       result.rows.each do |result_row|
         rows[result_row.entity.id] ||= result_row_class.new(result_row.entity, self)
         rows[result_row.entity.id].add_result_row(result_row)

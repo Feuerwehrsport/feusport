@@ -58,6 +58,12 @@ class CompetitionNestedController < ApplicationController
     @current_ability ||= ::Ability.new(current_user, simple_access: current_simple_access)
   end
 
+  # Admins (inkl. Gastzugang) sehen Ergebnisse inklusive nicht öffentlicher Startlisten (Score::List#results_public?)
+  def include_hidden_lists?
+    can?(:manage, @competition)
+  end
+  helper_method :include_hidden_lists?
+
   def current_simple_access
     return @current_simple_access if defined?(@current_simple_access)
 

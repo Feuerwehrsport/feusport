@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-Exports::Xlsx::Score::List = Struct.new(:list) do
+Exports::Xlsx::Score::List = Struct.new(:list, :hide_times) do
   include Exports::Xlsx::Base
   include Exports::ScoreLists
 
@@ -8,7 +8,7 @@ Exports::Xlsx::Score::List = Struct.new(:list) do
 
   def perform
     add_worksheet(export_title) do |sheet|
-      show_export_data(list).each { |row| sheet.add_row(row) }
+      show_export_data(list, hide_times:).each { |row| sheet.add_row(row) }
     end
   end
 end

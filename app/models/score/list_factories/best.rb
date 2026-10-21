@@ -44,6 +44,11 @@ class Score::ListFactories::Best < Score::ListFactory
     %i[before_result best_count]
   end
 
+  # Listen erstellen nur Admins: auch Vorläufe aus nicht öffentlichen Startlisten zählen
+  def before_result
+    super&.tap { |result| result.include_hidden_lists = true }
+  end
+
   def preview_entries_count
     [before_result.rows.count, best_count].min
   end

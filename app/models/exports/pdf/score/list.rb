@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-Exports::Pdf::Score::List = Struct.new(:list, :more_columns) do
+Exports::Pdf::Score::List = Struct.new(:list, :more_columns, :hide_times) do
   include Exports::Pdf::Base
   include Exports::ScoreLists
 
@@ -9,7 +9,7 @@ Exports::Pdf::Score::List = Struct.new(:list, :more_columns) do
   def perform
     pdf_header(export_title, discipline_key: list.discipline&.key, date: list.date)
 
-    lines = show_export_data(list, more_columns:, pdf: true)
+    lines = show_export_data(list, more_columns:, pdf: true, hide_times:)
     list_track_count = list.track_count
 
     lines_per_page = (32 / list_track_count) * list_track_count
@@ -55,20 +55,26 @@ Exports::Pdf::Score::List = Struct.new(:list, :more_columns) do
   protected
 
   def column_widths
-    @column_widths ||= begin
-      widths = { 0 => 35, 1 => 35, -1 => 50 }
-      widths[2] = 35 if competition.show_bib_numbers? && list.single_discipline?
-      if more_columns
-        widths[-1] = 40
-        widths[-2] = 40
-      end
-      widths[-3] = 40 if more_columns
-      if list.separate_target_times?
-        widths[-1] = 40
-        widths[-2] = 40
-      end
-      widths
+    @column_widths ||= calculate_column_widths
+  end
+
+  def calculate_column_widths
+    widths = { 0 => 35, 1 => 35 }
+    widths[2] = 35 if competition.show_bib_numbers? && list.single_discipline?
+    # ohne Zeitspalte bekommt die Mannschaft den freien Platz
+    return widths if hide_times && !more_columns
+
+    widths[-1] = 50
+    if more_columns
+      widths[-1] = 40
+      widths[-2] = 40
     end
+    widths[-3] = 40 if more_columns
+    if list.separate_target_times?
+      widths[-1] = 40
+      widths[-2] = 40
+    end
+    widths
   end
 
   def pdf_row_colors

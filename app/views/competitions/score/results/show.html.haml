@@ -20,6 +20,10 @@
           - if can?(:edit, @result) && @competition.certificates_templates.exists?
             = btn_link_to 'Urkunden', new_competition_certificates_list_path(score_result_id: @result.id)
 
+        - if @result.include_hidden_lists && @result.hidden_lists.any?
+          - text = 'Diese Ergebnisse enthalten Startlisten, die noch nicht öffentlich sind. Besucher sehen die Ergebnisse ohne diese Listen.'
+          = render 'hidden_lists_notice', hidden_lists: @result.hidden_lists, text:
+
         - if @result.starting_time_required?
           = card('Startzeit benötigt', class: 'mb-3 text-bg-warning') do |c|
             - c.body do

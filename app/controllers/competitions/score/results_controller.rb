@@ -4,7 +4,7 @@ class Competitions::Score::ResultsController < CompetitionNestedController
   default_resource resource_class: Score::Result, through_association: :score_results
 
   def show
-    @result.show_hidden_result = true if can?(:edit, @result)
+    @result.include_hidden_lists = include_hidden_lists?
 
     send_pdf(Exports::Pdf::Score::Result, args: [@result, params[:only]]) && return
     send_xlsx(Exports::Xlsx::Score::Result, args: [@result]) && return

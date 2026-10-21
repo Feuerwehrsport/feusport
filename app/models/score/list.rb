@@ -54,6 +54,11 @@ class Score::List < ApplicationRecord
   competition_scoped_ids :assessments, results: :score_results
   accepts_nested_attributes_for :entries, allow_destroy: true
 
+  # Versteckte Liste oder versteckte Zeiten: Einträge zählen öffentlich nicht in Ergebnisse
+  def results_public?
+    !hidden? && !hidden_results?
+  end
+
   def next_free_track
     last_entry = entries.last
     run = last_entry.try(:run) || 1

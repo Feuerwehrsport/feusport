@@ -42,8 +42,15 @@ class Score::CompetitionResult < ApplicationRecord
 
   competition_scoped_ids results: :score_results
 
+  # Admin-Ansicht: siehe Score::Result#include_hidden_lists
+  attr_accessor :include_hidden_lists
+
   def rows(*)
     @rows ||= result_type.present? ? add_ranks(send(result_type)) : []
+  end
+
+  def hidden_lists
+    results.flat_map(&:hidden_lists).uniq
   end
 
   def self.result_types
@@ -57,6 +64,7 @@ class Score::CompetitionResult < ApplicationRecord
 
   def for_results
     results.each do |result|
+      result.include_hidden_lists = include_hidden_lists
       result_rows = result.group_result.rows
 
       ranks = {}

@@ -2,7 +2,7 @@
 
 .row.g-4
   .col-lg-8
-    - @competition.score_competition_results.sort.each do |result|
+    - @competition_results.each do |result|
       - if can?(:create, resource_class.new(competition: @competition))
         - name = capture do
           - if result.hidden?
@@ -33,6 +33,10 @@
 
   - if can?(:create, resource_class.new(competition: @competition))
     .col-lg-4
+      - hidden_lists = @competition_results.flat_map(&:hidden_lists).uniq
+      - if hidden_lists.any?
+        - text = 'Die Gesamtwertungen enthalten Startlisten, die noch nicht öffentlich sind. Besucher sehen die Wertungen ohne diese Listen.'
+        = render 'competitions/score/results/hidden_lists_notice', hidden_lists:, text:
       = card(t('a.actions'), class: 'mb-3') do |c|
         - c.primary_actions do |actions|
           - actions.link_to t('a.add'), { action: :new }, end_icon: :square_plus

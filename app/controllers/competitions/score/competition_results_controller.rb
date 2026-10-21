@@ -4,11 +4,18 @@ class Competitions::Score::CompetitionResultsController < CompetitionNestedContr
   default_resource resource_class: Score::CompetitionResult, through_association: :score_competition_results
 
   def index
-    send_pdf(Exports::Pdf::Score::CompetitionResults, args: [@competition, @competition_results.sort]) && return
-    send_xlsx(Exports::Xlsx::Score::CompetitionResults, args: [@competition, @competition_results.sort]) && return
+    @competition_results = @competition.score_competition_results.sort
+    @competition_results.each { |result| result.include_hidden_lists = include_hidden_lists? }
+    exported = include_hidden_lists? ? @competition_results : @competition_results.reject(&:hidden?)
+
+    send_pdf(Exports::Pdf::Score::CompetitionResults, args: [@competition, exported]) && return
+    send_xlsx(Exports::Xlsx::Score::CompetitionResults, args: [@competition, exported]) && return
   end
 
   def show
+    return redirect_to(action: :index) if @competition_result.hidden? && !include_hidden_lists?
+
+    @competition_result.include_hidden_lists = include_hidden_lists?
     send_pdf(Exports::Pdf::Score::CompetitionResults, args: [@competition, [@competition_result]]) && return
     send_xlsx(Exports::Xlsx::Score::CompetitionResults, args: [@competition, [@competition_result]]) && return
 

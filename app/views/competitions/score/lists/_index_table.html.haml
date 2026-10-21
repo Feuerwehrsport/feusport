@@ -5,6 +5,8 @@
         %td{ style: 'width: 3rem' }
           - if list.hidden?
             %i.far.fa-eye-slash{ title: 'Nicht öffentlich' }
+          - elsif list.hidden_results?
+            %i.far.fa-eye-low-vision{ title: 'Öffentlich, Ergebnisse versteckt' }
           - else
             %i.far.fa-eye{ title: 'Öffentlich' }
       %td

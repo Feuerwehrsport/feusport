@@ -39,8 +39,14 @@ class Competitions::Score::ListsController < CompetitionNestedController
   end
 
   def show
-    send_pdf(Exports::Pdf::Score::List, args: [@list, params[:more_columns].present?])
-    send_xlsx(Exports::Xlsx::Score::List, args: [@list])
+    # Besucher: versteckte Listen gar nicht exportieren, versteckte Ergebnisse ohne Zeiten
+    if @list.hidden? && !include_hidden_lists? && !request.format.html?
+      return redirect_to(competition_score_list_path(id: @list.id))
+    end
+
+    hide_times = @list.hidden_results? && !include_hidden_lists?
+    send_pdf(Exports::Pdf::Score::List, args: [@list, params[:more_columns].present?, hide_times])
+    send_xlsx(Exports::Xlsx::Score::List, args: [@list, hide_times])
     @results = @list.results.includes(assessment: %i[band discipline])
   end
 

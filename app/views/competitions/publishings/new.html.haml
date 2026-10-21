@@ -21,6 +21,10 @@
           = link_to 'Abbrechen', competition_show_path, class: 'btn btn-light'
 
   .col-md-4
+    - hidden_lists = @competition.score_lists.reject(&:results_public?)
+    - if hidden_lists.any?
+      - text = 'Diese Startlisten sind noch nicht öffentlich. Ihre Ergebnisse werden nicht übertragen. Gib sie vorher frei, wenn sie mit übertragen werden sollen.'
+      = render 'competitions/score/results/hidden_lists_notice', hidden_lists: hidden_lists.sort_by(&:name), text:
     = card_body('Feuerwehrsport-Statistik') do
       %p.text-center= image_tag('statistiken-logo.png', class: 'statistiken-logo')
       %p Auf der Seite #{link_to('Feuerwehrsport-Statistik', 'https://feuerwehrsport-statistik.de')} werden Ergebnisse von allen Wettkämpfen im Bereich des Feuerwehrsports gesammelt und aufgebereitet. Eine Veröffentlichung ist wünschenswert, sollte aber erst nach Abschluss des Wettkampfes gemacht werden.

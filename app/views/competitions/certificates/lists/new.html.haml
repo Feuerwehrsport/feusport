@@ -40,3 +40,7 @@
         - c.footer do
           = f.primary_button :submit
           = f.cancel_button(competition_score_results_path)
+  - hidden_lists = @competition.score_lists.reject(&:results_public?)
+  - if hidden_lists.any?
+    .col-md-4
+      = render 'competitions/score/results/hidden_lists_notice', hidden_lists: hidden_lists.sort_by(&:name), text: 'Diese Startlisten sind noch nicht öffentlich. Urkunden enthalten ihre Einträge trotzdem.'

@@ -5,11 +5,11 @@
     %th Mannschaft
     - if result.multi_result_method_disabled?
       %th Bestzeit
-      - result.lists.each do |list|
+      - result.shown_lists.each do |list|
         - if list.separate_target_times?
-          %th.hide-xs{ colspan: 2 }= list.shortcut
+          %th.hide-xs{ colspan: 2 }= result_list_column_label(list)
         - else
-          %th.hide-xs= list.shortcut
+          %th.hide-xs= result_list_column_label(list)
     - else
       %th Ergebnis
       - result.results.each do |result|
@@ -27,7 +27,7 @@
       %td
         %strong= row.best_result_entry.human_time
       - if result.multi_result_method_disabled?
-        - result.lists.each do |list|
+        - result.shown_lists.each do |list|
           - if list.separate_target_times?
             %td.separate-times.hide-xs
               = row.result_entry_from(list)&.human_time_left_target
