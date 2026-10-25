@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class CompetitionNestedController < ApplicationController
-  SIMPLE_ACCESS_TIMEOUT = 1.hour
-
   before_action :load_competition
   authorize_resource :competition
 
@@ -79,15 +77,14 @@ class CompetitionNestedController < ApplicationController
     session.delete(simple_access_session_key)
   end
 
-  # Gast-Sessions laufen nach einer Stunde ohne Anfrage ab, jede Anfrage verlängert sie.
+  # Jede Anfrage verlängert die Gast-Session, abgelaufene werden entfernt
   def load_simple_access_from_session
-    data = forget_simple_access
-    return unless data.is_a?(Hash) && Time.zone.at(data['last_seen_at'].to_i) > SIMPLE_ACCESS_TIMEOUT.ago
-
-    SimpleAccess.find_by(id: data['id'])&.tap { |simple_access| remember_simple_access(simple_access) }
+    simple_access = SimpleAccess.from_session(session, @competition)
+    simple_access ? remember_simple_access(simple_access) : forget_simple_access
+    simple_access
   end
 
   def simple_access_session_key
-    "simple_access_#{@competition.id}"
+    SimpleAccess.session_key(@competition)
   end
 end

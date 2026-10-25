@@ -1,8 +1,19 @@
 # frozen_string_literal: true
 
 class ScoreResultChannel < ApplicationCable::Channel
+  # Admins bekommen einen eigenen Stream, der nicht öffentliche Startlisten enthält (Score::Result#include_hidden_lists)
   def subscribed
-    stream_from "score_result_#{params[:score_result_id]}"
+    result = Score::Result.find_by(id: params[:score_result_id])
+    return reject if result.nil?
+
+    ability = ability_for(result.competition)
+    return reject unless ability.can?(:read, result)
+
+    stream_from self.class.stream_name(result, admin: ability.can?(:manage, result.competition))
+  end
+
+  def self.stream_name(result, admin:)
+    "score_result_#{result.id}#{'_admin' if admin}"
   end
 
   class Updater < ApplicationJob
@@ -11,11 +22,11 @@ class ScoreResultChannel < ApplicationCable::Channel
     discard_on ActiveJob::DeserializationError
 
     def perform(result)
-      html = ApplicationController.render(partial: 'competitions/score/results/result_show',
-                                          locals: { result: result })
+      broadcast(result, admin: false)
 
-      ActionCable.server.broadcast("score_result_#{result.id}",
-                                   { html: })
+      admin_result = Score::Result.find(result.id)
+      admin_result.include_hidden_lists = true
+      broadcast(admin_result, admin: true)
     end
 
     def self.safe_perform_later(result)
@@ -28,6 +39,13 @@ class ScoreResultChannel < ApplicationCable::Channel
                                    .where.not(active_job_id: updater.job_id)
 
       future_jobs.select { |fj| fj.arguments['arguments'] == arguments }.each(&:discard)
+    end
+
+    private
+
+    def broadcast(result, admin:)
+      html = ApplicationController.render(partial: 'competitions/score/results/result_show', locals: { result: })
+      ActionCable.server.broadcast(ScoreResultChannel.stream_name(result, admin:), { html: })
     end
   end
 end

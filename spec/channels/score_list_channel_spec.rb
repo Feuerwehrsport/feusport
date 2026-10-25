@@ -7,13 +7,51 @@ RSpec.describe ScoreListChannel do
   let(:list) { create(:score_list, competition:, track_count: 2) }
 
   describe '#subscribed' do
-    it 'streams from editable and non editable list streams' do
+    let(:admin) { competition.users.first }
+    let(:session) { {} }
+
+    it 'allows the editable stream only for admins' do
+      stub_connection(current_user: nil, session:)
+      subscribe(score_list_id: list.id, editable: true)
+      expect(subscription).to be_rejected
+
+      subscribe(score_list_id: list.id, editable: false)
+      expect(subscription).to be_confirmed
+      expect(subscription).to have_stream_from("score_list_#{list.id}_editable_false")
+
+      stub_connection(current_user: admin, session:)
       subscribe(score_list_id: list.id, editable: true)
       expect(subscription).to be_confirmed
       expect(subscription).to have_stream_from("score_list_#{list.id}_editable_true")
+    end
 
+    it 'allows the editable stream for guest logins' do
+      simple_access = SimpleAccess.create!(competition:, name: 'Gast', password: 'geheim123')
+      session[SimpleAccess.session_key(competition)] = { 'id' => simple_access.id, 'last_seen_at' => Time.current.to_i }
+      stub_connection(current_user: nil, session:)
+
+      subscribe(score_list_id: list.id, editable: true)
+      expect(subscription).to be_confirmed
+
+      session[SimpleAccess.session_key(competition)]['last_seen_at'] = 2.hours.ago.to_i
+      subscribe(score_list_id: list.id, editable: true)
+      expect(subscription).to be_rejected
+    end
+
+    it 'rejects hidden lists, invisible competitions and unknown lists for visitors' do
+      stub_connection(current_user: nil, session:)
+
+      list.update!(hidden: true)
       subscribe(score_list_id: list.id, editable: false)
-      expect(subscription).to have_stream_from("score_list_#{list.id}_editable_false")
+      expect(subscription).to be_rejected
+
+      list.update!(hidden: false)
+      competition.update!(visible: false)
+      subscribe(score_list_id: list.id, editable: false)
+      expect(subscription).to be_rejected
+
+      subscribe(score_list_id: SecureRandom.uuid, editable: false)
+      expect(subscription).to be_rejected
     end
   end
 

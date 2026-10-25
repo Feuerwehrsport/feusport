@@ -7,10 +7,25 @@ RSpec.describe ScoreResultChannel do
   let(:result) { create(:score_result, competition:) }
 
   describe '#subscribed' do
-    it 'streams from result stream' do
+    it 'streams the public result to visitors and the full result to admins' do
+      stub_connection(current_user: nil, session: {})
       subscribe(score_result_id: result.id)
       expect(subscription).to be_confirmed
       expect(subscription).to have_stream_from("score_result_#{result.id}")
+
+      stub_connection(current_user: competition.users.first, session: {})
+      subscribe(score_result_id: result.id)
+      expect(subscription).to have_stream_from("score_result_#{result.id}_admin")
+    end
+
+    it 'rejects invisible competitions and unknown results for visitors' do
+      stub_connection(current_user: nil, session: {})
+      subscribe(score_result_id: SecureRandom.uuid)
+      expect(subscription).to be_rejected
+
+      competition.update!(visible: false)
+      subscribe(score_result_id: result.id)
+      expect(subscription).to be_rejected
     end
   end
 
@@ -22,6 +37,21 @@ RSpec.describe ScoreResultChannel do
         end.to(have_broadcasted_to("score_result_#{result.id}").with do |data|
           expect(data['html']).to include('Keine Einträge gefunden')
         end)
+      end
+
+      it 'includes hidden lists only in the admin stream' do
+        person = create(:person, competition:, band: result.assessment.band, last_name: 'Versteckt')
+        create_score_list(result, { person => 1500 }).update!(hidden_results: true)
+
+        expect do
+          expect do
+            described_class.perform_now(result)
+          end.to(have_broadcasted_to("score_result_#{result.id}").with do |data|
+                   expect(data['html']).not_to include('Versteckt')
+                 end)
+        end.to(have_broadcasted_to("score_result_#{result.id}_admin").with do |data|
+                 expect(data['html']).to include('Versteckt')
+               end)
       end
     end
 

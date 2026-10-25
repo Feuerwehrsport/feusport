@@ -1,8 +1,18 @@
 # frozen_string_literal: true
 
 class ScoreListChannel < ApplicationCable::Channel
+  # Bearbeitbarer Stream (Zeiten trotz hidden_results, Bearbeiten-Links) nur mit Bearbeitungsrecht,
+  # versteckte Listen gar nicht für Besucher
   def subscribed
-    stream_from "score_list_#{params[:score_list_id]}_editable_#{params[:editable]}"
+    list = Score::List.find_by(id: params[:score_list_id])
+    return reject if list.nil?
+
+    ability = ability_for(list.competition)
+    editable = ActiveModel::Type::Boolean.new.cast(params[:editable]) == true
+    allowed = editable ? ability.can?(:edit, list) : ability.can?(:read, list) && !list.hidden?
+    return reject unless allowed
+
+    stream_from "score_list_#{list.id}_editable_#{editable}"
   end
 
   class Updater < ApplicationJob
