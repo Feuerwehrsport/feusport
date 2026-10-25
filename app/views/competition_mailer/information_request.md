@@ -7,6 +7,6 @@ E-Mail-Adresse: **<%= @information_request.user.email %>**
 
 Nachricht:
 
-<%= @information_request.message %>
+<%= EmailMarkdown.render_user_text(@information_request.message) %>
 
 [[Direkt zum Wettkampf]](<%= competition_show_url(@competition.year, @competition.slug) %>)

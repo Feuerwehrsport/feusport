@@ -18,6 +18,31 @@ RSpec.describe CompetitionMailer do
     end
   end
 
+  describe 'user text in mails' do
+    let(:text) do
+      <<~TEXT
+        Hallo **fett** und *kursiv*
+
+        - Punkt
+
+        [[Jetzt bestätigen]](https://evil.example/login) [Hier](https://evil.example/a) <https://evil.example/b>
+        ![Bild](https://evil.example/x.png) <a href="https://evil.example/c">x</a> <script>alert(1)</script>
+      TEXT
+    end
+    let(:access_request) { create(:user_access_request, token: 'secret-token', text:) }
+    let(:mail) { described_class.with(access_request:).access_request }
+
+    it 'keeps formatting but renders no links, buttons, images or html' do
+      body = mail.html_part&.body&.decoded || mail.body.decoded
+      expect(body).to include('<strong>fett</strong>', '<em>kursiv</em>', '>Punkt<')
+      expect(body).to include('Jetzt bestätigen (https://evil.example/login)', 'Hier (https://evil.example/a)')
+      expect(body).to include('&lt;script&gt;')
+      expect(body).not_to include('href="https://evil.example')
+      expect(body).not_to include('src="https://evil.example')
+      expect(body.scan('class="btn-link"').size).to eq 1
+    end
+  end
+
   describe 'access_request_connected' do
     let(:user) { create(:user) }
     let(:sender) { create(:user, :other) }

@@ -7,7 +7,8 @@ Wertungsgruppe: **<%= @person.band.name %>**
 Angemeldet durch: **<%= @person.users.map(&:name).join(', ') %>**
 
 Anmeldungshinweise:
-<%= @person.registration_hint %>
+
+<%= EmailMarkdown.render_user_text(@person.registration_hint) %>
 
 [[Direkt zum Wettkämpfer]](<%= competition_person_url(@competition.year, @competition.slug, @person.id) %>)
 

@@ -201,6 +201,25 @@ RSpec.describe Competitions::UserTeamAccessesController do
     end
   end
 
+  context 'when too many invitations are sent' do
+    it 'limits invitations per minute' do
+      store = ActiveSupport::Cache::MemoryStore.new
+      allow(Competitions::UserTeamAccessRequestsController.cache_store).to receive(:increment) do |*args, **opts|
+        store.increment(*args, **opts)
+      end
+      sign_in user
+
+      expect do
+        6.times do |i|
+          post competition_nested("teams/#{team.id}/access_requests"),
+               params: { user_team_access_request: { email: "einladung#{i}@example.com", text: 'Hallo' } }
+        end
+      end.to change(UserTeamAccessRequest, :count).by(5)
+      expect(response).to redirect_to(competition_nested("teams/#{team.id}/accesses"))
+      expect(flash[:alert]).to eq :too_many_requests
+    end
+  end
+
   context 'when user is not allowed to edit the team' do
     before { sign_in other_user }
 

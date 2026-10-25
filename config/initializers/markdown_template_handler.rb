@@ -45,8 +45,28 @@ class EmailHtmlRenderer < Redcarpet::Render::HTML
   end
 end
 
+# Freitexte von Benutzern (Einladungen, Anfragen, Anmeldehinweise): Markdown-Formatierung ja,
+# aber keine Links, Buttons ([[Text]](url)), Bilder oder HTML – sonst ließen sich Phishing-Links einschleusen.
+class EmailUserTextRenderer < EmailHtmlRenderer
+  def link(link, _title, content)
+    text = content.to_s.delete_prefix('[').delete_suffix(']')
+    url = ERB::Util.html_escape(link)
+    text == url ? text : "#{text} (#{url})"
+  end
+
+  def autolink(link, _link_type)
+    ERB::Util.html_escape(link)
+  end
+
+  def image(link, _title, alt_text)
+    ERB::Util.html_escape(alt_text.presence || link)
+  end
+end
+
 class EmailMarkdown
   RENDERER = Redcarpet::Markdown.new(EmailHtmlRenderer.new(hard_wrap: true), no_intra_emphasis: true)
+  USER_TEXT_RENDERER = Redcarpet::Markdown.new(EmailUserTextRenderer.new(hard_wrap: true, escape_html: true),
+                                               no_intra_emphasis: true)
 
   def self.renderer
     RENDERER
@@ -54,6 +74,13 @@ class EmailMarkdown
 
   def self.render(text)
     renderer.render(text).html_safe
+  end
+
+  # Fertiges HTML in einer Zeile: In der Mail-Vorlage braucht der Aufruf eine eigene Zeile mit Leerzeilen
+  # davor und danach, dann übernimmt Redcarpet den Block unverändert (kein zweites Markdown-Rendern).
+  def self.render_user_text(text)
+    html = USER_TEXT_RENDERER.render(text.to_s).gsub(/\s*\n\s*/, ' ').strip
+    %(<div>#{html}</div>).html_safe
   end
 end
 

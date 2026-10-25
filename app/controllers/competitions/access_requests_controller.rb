@@ -3,6 +3,9 @@
 class Competitions::AccessRequestsController < CompetitionNestedController
   default_resource resource_class: UserAccessRequest, through_association: :user_access_requests
   skip_authorize_resource :competition, only: :connect
+  # Schutz vor Massen-Mails an beliebige Adressen
+  rate_limit to: 5, within: 1.minute, only: :create, by: -> { current_user&.id || request.remote_ip },
+             with: -> { redirect_to competition_accesses_path, alert: :too_many_requests }
 
   def create
     @access_request.assign_attributes(access_request_params)

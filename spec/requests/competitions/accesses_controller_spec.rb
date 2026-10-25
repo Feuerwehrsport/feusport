@@ -124,6 +124,25 @@ RSpec.describe Competitions::AccessesController do
     end
   end
 
+  context 'when too many invitations are sent' do
+    it 'limits invitations per minute' do
+      store = ActiveSupport::Cache::MemoryStore.new
+      allow(Competitions::AccessRequestsController.cache_store).to receive(:increment) do |*args, **opts|
+        store.increment(*args, **opts)
+      end
+      sign_in user
+
+      expect do
+        6.times do |i|
+          post competition_nested('access_requests'),
+               params: { user_access_request: { email: "einladung#{i}@example.com", text: 'Hallo' } }
+        end
+      end.to change(UserAccessRequest, :count).by(5)
+      expect(response).to redirect_to(competition_nested('accesses'))
+      expect(flash[:alert]).to eq :too_many_requests
+    end
+  end
+
   context 'when invitation is no longer valid' do
     let(:sender) { create(:user, email: 'sender@meier.de') }
     let!(:sender_access) { UserAccess.create!(user: sender, competition:) }

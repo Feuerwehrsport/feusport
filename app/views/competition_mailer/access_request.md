@@ -1,4 +1,4 @@
-<%= @access_request.text %>
+<%= EmailMarkdown.render_user_text(@access_request.text) %>
 
 ---
 
