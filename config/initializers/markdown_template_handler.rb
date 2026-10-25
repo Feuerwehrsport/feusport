@@ -11,7 +11,7 @@ class EmailHtmlRenderer < Redcarpet::Render::HTML
   end
 
   def list_item(text, _list_type)
-    text = text.gsub(/(?:\n\r?|\r\n?)/, '<br>').gsub('<br>\s*\z', '')
+    text = text.gsub(/(?:\n\r?|\r\n?)/, '<br>').sub(/(?:<br>\s*)+\z/, '')
     %(<li style="margin: 0; margin-bottom: 5px; line-height: 1.5; color: #414141;">#{text}</li>)
   end
 

@@ -34,7 +34,7 @@ RSpec.describe CompetitionMailer do
 
     it 'keeps formatting but renders no links, buttons, images or html' do
       body = mail.html_part&.body&.decoded || mail.body.decoded
-      expect(body).to include('<strong>fett</strong>', '<em>kursiv</em>', '>Punkt<')
+      expect(body).to include('<strong>fett</strong>', '<em>kursiv</em>', '>Punkt</li>')
       expect(body).to include('Jetzt bestätigen (https://evil.example/login)', 'Hier (https://evil.example/a)')
       expect(body).to include('&lt;script&gt;')
       expect(body).not_to include('href="https://evil.example')
