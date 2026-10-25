@@ -43,6 +43,38 @@ RSpec.describe Score::ListEntry do
   let(:score_list_entry) { build(:score_list_entry, list: score_list, assessment:, competition:) }
 
   describe 'validation' do
+    context 'when entity belongs to another competition' do
+      let(:other_competition) { create(:competition, name: 'Fremd-Cup') }
+      let(:other_band) { create(:band, competition: other_competition) }
+      let(:other_team) { create(:team, competition: other_competition, band: other_band) }
+
+      it 'rejects people, teams and team relays of other competitions' do
+        score_list_entry.entity = create(:person, competition: other_competition, band: other_band)
+        expect(score_list_entry).not_to be_valid
+        expect(score_list_entry.errors.details[:entity]).to eq [{ error: :not_same_competition }]
+
+        score_list_entry.entity = other_team
+        expect(score_list_entry).not_to be_valid
+
+        score_list_entry.entity = TeamRelay.create!(team: other_team, number: 1)
+        expect(score_list_entry).not_to be_valid
+
+        own_team = create(:team, competition:, band:)
+        score_list_entry.entity = TeamRelay.create!(team: own_team, number: 1)
+        expect(score_list_entry).to be_valid
+      end
+    end
+
+    context 'when entity type is not allowed' do
+      it 'rejects it without loading the entity' do
+        score_list_entry.entity_type = 'User'
+        score_list_entry.entity_id = competition.users.first.id
+        expect(score_list_entry).not_to be_valid
+        expect(score_list_entry.errors.details[:entity_type]).to include(a_hash_including(error: :inclusion))
+        expect(score_list_entry.errors.details[:entity]).to be_empty
+      end
+    end
+
     context 'when track count' do
       it 'validates track count from list' do
         expect(score_list_entry).to be_valid

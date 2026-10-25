@@ -24,6 +24,7 @@ class TeamRelay < ApplicationRecord
 
   validates :team, :number, presence: true
   delegate :fire_sport_statistics_team, :fire_sport_statistics_team_id, :band, :export_gender, to: :team
+  delegate :competition, to: :team, allow_nil: true
 
   schema_validations
 

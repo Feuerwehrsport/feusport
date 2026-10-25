@@ -35,6 +35,7 @@
 class Score::ListEntry < ApplicationRecord
   include Score::ResultEntrySupport
 
+  ENTITY_TYPES = %w[Person Team TeamRelay].freeze
   BEFORE_CHECK_METHODS =
     %i[result_type edit_second_time edit_second_time_left_target edit_second_time_right_target].freeze
   edit_time(:time_left_target)
@@ -51,6 +52,9 @@ class Score::ListEntry < ApplicationRecord
   validates :track, numericality: { less_than_or_equal_to: :track_count }
   validate :check_changed_while_editing, on: :update
   validates :list, :assessment, same_competition: true
+  validates :entity_type, inclusion: { in: ENTITY_TYPES }
+  # Nur bei erlaubtem Typ prüfen, sonst würde schon die Prüfung eine beliebige Klasse laden
+  validates :entity, same_competition: true, if: -> { entity_type.in?(ENTITY_TYPES) }
 
   schema_validations
   before_validation do

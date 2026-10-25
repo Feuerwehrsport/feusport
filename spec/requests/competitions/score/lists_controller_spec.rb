@@ -147,6 +147,26 @@ RSpec.describe Score::List do
     end
   end
 
+  describe 'entries of other competitions' do
+    let!(:person_list) { create_score_list(result_hl, person1 => :waiting) }
+    let(:other_competition) { create(:competition, name: 'Fremd-Cup') }
+    let(:other_band) { create(:band, competition: other_competition) }
+    let(:other_person) { create(:person, competition: other_competition, band: other_band) }
+
+    it 'does not add foreign people' do
+      sign_in user
+
+      expect do
+        patch "/#{competition.year}/#{competition.slug}/score/lists/#{person_list.id}",
+              params: { score_list: { entries_attributes: {
+                '0' => { 'entity_id' => other_person.id, 'entity_type' => 'Person', 'track' => '2', 'run' => '1',
+                         'assessment_id' => person_list.entries.first.assessment_id },
+              } } }
+      end.not_to change(Score::ListEntry, :count)
+      expect(response).to have_http_status(:unprocessable_content)
+    end
+  end
+
   describe 'edit list' do
     let!(:person_list) { create_score_list(result_hl, person1 => :waiting, person2 => :waiting, person3 => :waiting) }
     let!(:team_list) { create_score_list(result_la, team_female => :waiting) }
