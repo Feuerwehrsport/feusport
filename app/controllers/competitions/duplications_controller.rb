@@ -32,8 +32,9 @@ class Competitions::DuplicationsController < CompetitionNestedController
     @duplication.assign_attributes(duplication_params) if params[:duplication].present?
     authorize!(:create, @duplication)
 
-    return unless @duplication.duplicate_from.nil?
+    return redirect_to competition_presets_path if @duplication.duplicate_from.nil?
 
-    redirect_to competition_presets_path
+    # Nur Wettkämpfe als Vorlage, die man auch lesen darf (wie die Auswahl in presets/index)
+    authorize!(:read, @duplication.duplicate_from)
   end
 end

@@ -64,6 +64,26 @@ RSpec.describe 'competitions/documents' do
     end
   end
 
+  context 'when source competition is not readable' do
+    let(:other_user) { create(:user, :other) }
+
+    before do
+      old.update!(visible: false, users: [other_user])
+      sign_in user
+    end
+
+    it 'does not duplicate it' do
+      get competition_nested("duplication/new?duplication[duplicate_from_id]=#{old.id}")
+      expect(response).to redirect_to('/')
+      expect(flash[:alert]).to eq 'Zugriff verweigert'
+
+      expect do
+        post competition_nested('duplication'), params: { duplication: { confirm: '1', duplicate_from_id: old.id } }
+      end.not_to change(Discipline, :count)
+      expect(competition.reload.preset_ran).to be(false)
+    end
+  end
+
   context 'when preset already ran' do
     it 'redirects to competition' do
       competition.update!(preset_ran: true)
