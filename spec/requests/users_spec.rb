@@ -191,6 +191,17 @@ RSpec.describe User do
     end
   end
 
+  describe 'sign in with a password hashed with the old pepper' do
+    it 'works and converts the hash' do
+      legacy = BCrypt::Password.create("Password#{LegacyPepperSupport::LEGACY_PEPPER}", cost: 4).to_s
+      user.update_columns(encrypted_password: legacy)
+
+      post '/users/sign_in', params: { user: { email: user.email, password: 'Password' } }
+      expect(flash[:notice]).to eq 'Erfolgreich angemeldet.'
+      expect(user.reload.encrypted_password).not_to eq legacy
+    end
+  end
+
   describe 'rate limits' do
     before do
       store = ActiveSupport::Cache::MemoryStore.new

@@ -48,6 +48,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :confirmable, :lockable, :timeoutable, :trackable
+  include LegacyPepperSupport
 
   has_many :user_access_requests, class_name: 'UserAccessRequest', dependent: :destroy, foreign_key: :sender_id,
                                   inverse_of: :sender

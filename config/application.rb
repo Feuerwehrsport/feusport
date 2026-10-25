@@ -44,10 +44,10 @@ module Feusport
                                      view_specs: false
 
     config.active_record.belongs_to_required_by_default = false
-    config.active_record.encryption.key_derivation_salt =
-      ENV.fetch('ENCRYPTION_KEY_DERIVATION_SALT', 'Oe0dCt3pLslia4nLkADHWmskBTfSRwb6')
-    config.active_record.encryption.primary_key =
-      ENV.fetch('ENCRYPTION_PRIMARY_KEY', 'S0KXvOn2ar5TOKTBv7KBxqwguYgaIdUO')
+    # Ohne Rückfallwerte: Fehlt die Variable, bricht ein späteres `encrypts` laut ab statt mit einem öffentlichen
+    # Schlüssel zu verschlüsseln (derzeit nutzt kein Modell `encrypts`).
+    config.active_record.encryption.key_derivation_salt = ENV.fetch('ENCRYPTION_KEY_DERIVATION_SALT', nil)
+    config.active_record.encryption.primary_key = ENV.fetch('ENCRYPTION_PRIMARY_KEY', nil)
 
     config.x.email_validation = { mx: true }
     config.x.feuerwehrsport_statistik = {
