@@ -190,4 +190,34 @@ RSpec.describe User do
       expect(user.reload.unlock_token).not_to be_nil
     end
   end
+
+  describe 'rate limits' do
+    before do
+      store = ActiveSupport::Cache::MemoryStore.new
+      allow(ActionController::Base.cache_store).to receive(:increment) { |*args, **opts| store.increment(*args, **opts) }
+      user
+    end
+
+    def expect_limit(count, path, redirect, params)
+      count.times { post path, params: }
+      expect(flash[:alert]).not_to eq :too_many_requests
+
+      post path, params: params
+      expect(response).to redirect_to(redirect)
+      expect(flash[:alert]).to eq :too_many_requests
+    end
+
+    it 'limits sign in attempts' do
+      expect_limit(10, '/users/sign_in', '/users/sign_in', { user: { email: user.email, password: 'falsch' } })
+    end
+
+    it 'limits mails for password, confirmation and unlock' do
+      expect do
+        expect_limit(5, '/users/password', '/users/password/new', { user: { email: user.email } })
+      end.to have_enqueued_mail(Devise::Mailer, :reset_password_instructions).exactly(5)
+
+      expect_limit(5, '/users/confirmation', '/users/confirmation/new', { user: { email: user.email } })
+      expect_limit(5, '/users/unlock', '/users/unlock/new', { user: { email: user.email } })
+    end
+  end
 end
