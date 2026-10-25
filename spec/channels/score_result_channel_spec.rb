@@ -39,6 +39,16 @@ RSpec.describe ScoreResultChannel do
         end)
       end
 
+      it 'stops sending to visitors when the competition is invisible' do
+        competition.update!(visible: false)
+
+        expect do
+          expect do
+            described_class.perform_now(result)
+          end.not_to have_broadcasted_to("score_result_#{result.id}")
+        end.to have_broadcasted_to("score_result_#{result.id}_admin")
+      end
+
       it 'includes hidden lists only in the admin stream' do
         person = create(:person, competition:, band: result.assessment.band, last_name: 'Versteckt')
         create_score_list(result, { person => 1500 }).update!(hidden_results: true)

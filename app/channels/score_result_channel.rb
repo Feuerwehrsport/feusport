@@ -21,8 +21,9 @@ class ScoreResultChannel < ApplicationCable::Channel
 
     discard_on ActiveJob::DeserializationError
 
+    # Wie bei ScoreListChannel::Updater: ist der Wettkampf inzwischen unsichtbar, nichts mehr an Besucher senden
     def perform(result)
-      broadcast(result, admin: false)
+      broadcast(result, admin: false) if result.competition.visible?
 
       admin_result = Score::Result.find(result.id)
       admin_result.include_hidden_lists = true

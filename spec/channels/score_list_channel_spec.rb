@@ -87,6 +87,37 @@ RSpec.describe ScoreListChannel do
         expect(not_editable[:tracks][entry1.id]).not_to include('Zeiten bearbeiten')
         expect(editable[:tracks][entry1.id]).to include('Zeiten bearbeiten')
       end
+
+      context 'when visibility changes after subscribing' do
+        let(:broadcasts) { {} }
+
+        before do
+          entry1.update_columns(result_type: 'valid', time: 1234)
+          allow(ActionCable.server).to receive(:broadcast) { |stream, data| broadcasts[stream] = data }
+        end
+
+        it 'stops sending to visitors when the list is hidden' do
+          list.update!(hidden: true)
+          described_class.perform_now(list, tab_session_id: nil, run: 1)
+
+          expect(broadcasts.keys).to eq ["score_list_#{list.id}_editable_true"]
+        end
+
+        it 'stops sending to visitors when the competition is invisible' do
+          competition.update!(visible: false)
+          described_class.perform_now(list, tab_session_id: nil, run: 1)
+
+          expect(broadcasts.keys).to eq ["score_list_#{list.id}_editable_true"]
+        end
+
+        it 'sends no times to visitors when the results are hidden' do
+          list.update!(hidden_results: true)
+          described_class.perform_now(list, tab_session_id: nil, run: 1)
+
+          expect(broadcasts["score_list_#{list.id}_editable_false"][:tracks][entry1.id]).not_to include('12,34')
+          expect(broadcasts["score_list_#{list.id}_editable_true"][:tracks][entry1.id]).to include('12,34')
+        end
+      end
     end
 
     describe '.safe_perform_later' do

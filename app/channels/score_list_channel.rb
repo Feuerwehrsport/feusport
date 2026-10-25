@@ -20,7 +20,10 @@ class ScoreListChannel < ApplicationCable::Channel
 
     discard_on ActiveJob::DeserializationError
 
+    # Berechtigungen gelten nur beim Abonnieren. Deshalb hier den aktuellen Stand prüfen: Wurde die Liste
+    # (oder der Wettkampf) inzwischen versteckt, bekommen schon verbundene Besucher nichts mehr.
     def perform(list, tab_session_id:, run: nil)
+      public = list.competition.visible? && !list.hidden?
       tracks = {}
       tracks_editable = {}
       if run.present?
@@ -28,20 +31,16 @@ class ScoreListChannel < ApplicationCable::Channel
           next if run != crun
           next if entry.nil?
 
-          tracks[entry.id] = ApplicationController.render(
-            partial: 'competitions/score/lists/list_entry_with_times',
-            locals: { entry:, run:, track:, list:, best_of_run:, editable: false, destroy_index: nil, edit_index: nil },
-          )
-
-          tracks_editable[entry.id] = ApplicationController.render(
-            partial: 'competitions/score/lists/list_entry_with_times',
-            locals: { entry:, run:, track:, list:, best_of_run:, editable: true, destroy_index: nil, edit_index: nil },
-          )
+          locals = { entry:, run:, track:, list:, best_of_run: }
+          tracks[entry.id] = render_entry(**locals, editable: false) if public
+          tracks_editable[entry.id] = render_entry(**locals, editable: true)
         end
       end
 
-      ActionCable.server.broadcast("score_list_#{list.id}_editable_false",
-                                   { run:, tab_session_id:, tracks: tracks })
+      if public
+        ActionCable.server.broadcast("score_list_#{list.id}_editable_false",
+                                     { run:, tab_session_id:, tracks: tracks })
+      end
       ActionCable.server.broadcast("score_list_#{list.id}_editable_true",
                                    { run:, tab_session_id:, tracks: tracks_editable })
     end
@@ -56,6 +55,13 @@ class ScoreListChannel < ApplicationCable::Channel
                                    .where.not(active_job_id: updater.job_id)
 
       future_jobs.select { |fj| fj.arguments['arguments'] == arguments }.each(&:discard)
+    end
+
+    private
+
+    def render_entry(**locals)
+      ApplicationController.render(partial: 'competitions/score/lists/list_entry_with_times',
+                                   locals: { **locals, destroy_index: nil, edit_index: nil })
     end
   end
 end
