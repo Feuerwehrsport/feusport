@@ -572,6 +572,30 @@ RSpec.describe Score::Result do
         ["D-Cup - #{round.year} - LA-Männer", "#{round.id}-male-la"],
       ]
     end
+
+    it 'rejects newly added keys that do not fit' do
+      result.series_team_round_keys = ['', "#{round.id}-male-la"]
+      expect(result).not_to be_valid
+      expect(result.errors.details[:series_team_round_keys]).to eq [{ error: :inclusion }]
+
+      result.series_team_round_keys = []
+      result.series_person_round_keys = ['', "#{round.id}-male-hl"]
+      expect(result).to be_valid
+    end
+
+    it 'keeps already stored keys valid even if the series no longer fits' do
+      result.update_columns(series_team_round_keys: ['', 'gibt-es-nicht'])
+      result.reload
+
+      result.forced_name = 'Neuer Name'
+      expect(result).to be_valid
+
+      result.series_person_round_keys = ["#{round.id}-male-hl"]
+      expect(result).to be_valid
+
+      result.series_team_round_keys = ['']
+      expect(result).to be_valid
+    end
   end
 
   describe 'multi result' do

@@ -74,6 +74,7 @@ class Score::Result < ApplicationRecord
   before_validation :clean_tags
   validate :useless_team_tags
   validate :useless_person_tags
+  validate :added_series_round_keys_possible
   validate :discipline_changed, on: :update
   validates :group_run_count, :group_score_count, numericality: { greater_than: 0 }
   validates :assessment, :competition_results, :results, same_competition: true
@@ -246,6 +247,20 @@ class Score::Result < ApplicationRecord
 
     errors.add(:person_tags_included, :invalid)
     errors.add(:person_tags_excluded, :invalid)
+  end
+
+  # Nur neu hinzugefügte Serien prüfen: Ältere Ergebnisse können Serien enthalten, die es nicht mehr gibt
+  # (oder deren Jahr vorbei ist), sie sollen trotzdem bearbeitbar bleiben.
+  def added_series_round_keys_possible
+    { team: :series_team_round_keys, person: :series_person_round_keys }.each do |entity_key, attribute|
+      next unless will_save_change_to_attribute?(attribute)
+
+      added = (Array(self[attribute]) - Array(attribute_in_database(attribute))).compact_blank
+      next if added.empty?
+
+      possible = Series::Round.possible_series_round_keys(entity_key, discipline_key:, year:).map(&:last)
+      errors.add(attribute, :inclusion) unless (added - possible).empty?
+    end
   end
 
   def discipline_changed

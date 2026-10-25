@@ -31,9 +31,11 @@ RSpec.describe Series::TeamPointsCorrection do
   let(:round) { create(:series_round, :with_team_config, :with_person_config) }
   let(:team_round_key) { "#{round.id}-male-la" }
   let(:person_round_key) { "#{round.id}-male-hl" }
+  # Schlüssel direkt setzen: Das HL-Ergebnis passt nicht zur LA-Mannschaftswertung (Validierung nur für neue Schlüssel)
   let!(:result) do
-    create(:score_result, competition:, series_team_round_keys: [team_round_key, ''],
-                          series_person_round_keys: [person_round_key])
+    create(:score_result, competition:).tap do |result|
+      result.update_columns(series_team_round_keys: [team_round_key, ''], series_person_round_keys: [person_round_key])
+    end
   end
 
   let(:fss_team) { create(:fire_sport_statistics_team) }

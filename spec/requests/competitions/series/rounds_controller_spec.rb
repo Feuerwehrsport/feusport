@@ -26,6 +26,18 @@ RSpec.describe 'competitions/series/rounds' do
   let(:person1) { create(:person, :generated, competition:) }
   let(:person2) { create(:person, :generated, competition:) }
 
+  describe 'round of another series' do
+    it 'is not shown and creates no cup' do
+      expect do
+        get "/#{competition.year}/#{competition.slug}/series/rounds/#{round.id}"
+        expect(response).to have_http_status(:not_found)
+
+        get "/#{competition.year}/#{competition.slug}/series/rounds/#{round.id}.pdf"
+        expect(response).to have_http_status(:not_found)
+      end.not_to change(Series::Cup, :count)
+    end
+  end
+
   describe 'display round calculation' do
     before do
       view_sanitizer.gsub(%r{/series/rounds/\d+.pdf}, 'ROUND_URL_PDF')

@@ -7,7 +7,10 @@ RSpec.describe 'competitions/series/team_points_corrections' do
   let(:user) { competition.users.first }
   let(:round) { create(:series_round, :with_team_config, :with_person_config) }
   let(:team_round_key) { "#{round.id}-male-la" }
-  let!(:result) { create(:score_result, competition:, series_team_round_keys: [team_round_key]) }
+  let(:la_assessment) { create(:assessment, competition:, discipline: create(:discipline, :la, competition:)) }
+  let!(:result) do
+    create(:score_result, competition:, assessment: la_assessment, series_team_round_keys: [team_round_key])
+  end
   let(:fss_team) { create(:fire_sport_statistics_team) }
   let(:base_path) { competition_nested('series/team_points_corrections') }
   let(:correction) { Series::TeamPointsCorrection.first }

@@ -7,7 +7,7 @@ class Competitions::Series::RoundsController < CompetitionNestedController
   end
 
   def show
-    round = Series::Round.find(params[:id])
+    round = Series::Round.exists_for(@competition).find(params[:id])
 
     send_pdf(Exports::Pdf::Series::Round, args: [round, @competition]) && return
 
