@@ -90,6 +90,6 @@ class Competitions::Score::ListFactoriesController < CompetitionNestedController
     params.require(:score_list_factory).permit(:discipline_id, :next_step, :name, :shortcut, :track_count, :hidden,
                                                :type, :before_result_id, :before_list_id, :best_count, :track,
                                                :separate_target_times, :single_competitors_first, :show_best_of_run,
-                                               result_ids: [], assessment_ids: [], band_ids: [])
+                                               result_ids: [], assessment_ids: [])
   end
 end
