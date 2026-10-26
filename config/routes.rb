@@ -89,6 +89,9 @@ Rails.application.routes.draw do
       resources :competition_results
       resources :list_print_generators, only: %i[index new show edit update destroy]
       resources :list_conditions, only: %i[new create edit update destroy]
+      resource :monitor, only: :show do
+        get :content
+      end
     end
 
     namespace :series do

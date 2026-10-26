@@ -14,8 +14,12 @@
         - c.primary_actions do |actions|
           - actions.link_to t('a.add'), new_competition_score_list_factories_path, end_icon: :square_plus
 
+      - if resource_collection.exists? || can?(:create, resource_class.new(competition: @competition))
         - c.actions do |actions|
-          - actions.link_to 'Mehrere zusammen drucken', competition_score_list_print_generators_path
+          - if resource_collection.exists?
+            - actions.link_to 'Live-Anzeige', competition_score_monitor_path, end_icon: :tv
+          - if can?(:create, resource_class.new(competition: @competition))
+            - actions.link_to 'Mehrere zusammen drucken', competition_score_list_print_generators_path
   - if can?(:manage, @competition)
     .col-lg-4
       = card_body(t('a.actions'), class: 'mb-3') do |_c|

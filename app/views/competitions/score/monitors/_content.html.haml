@@ -1,0 +1,12 @@
+.score-monitor-blocks{ class: "score-monitor-count-#{monitor.blocks.size.clamp(1, 4)}", data: { list_ids: monitor.lists.map(&:id).join(',') } }
+  - if monitor.blocks.empty?
+    .score-monitor-empty Derzeit gibt es keine öffentliche Startliste.
+  - monitor.blocks.each do |block|
+    .score-monitor-block
+      %h1.score-monitor-title= block.list.name
+      = render 'runs', list: block.list, runs: block.runs
+      - if block.runs.none? { |run| run.state == :current }
+        .score-monitor-finished Startliste beendet
+      - if block.following_list
+        %h2.score-monitor-following Danach: #{block.following_list.name}
+        = render 'runs', list: block.following_list, runs: block.following_runs

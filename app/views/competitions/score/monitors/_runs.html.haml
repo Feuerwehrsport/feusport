@@ -1,0 +1,25 @@
+- runs.each do |run|
+  .score-monitor-run{ class: "score-monitor-#{run.state}" }
+    .score-monitor-run-number
+      - if run.state == :current
+        .score-monitor-now Jetzt
+      = run.number
+    .score-monitor-tracks
+      - run.entries.each_with_index do |entry, index|
+        .score-monitor-track
+          - if list.track_count > 1
+            .score-monitor-track-number= index + 1
+          .score-monitor-name
+            - if entry.nil?
+              .score-monitor-free –
+            - elsif list.single_discipline?
+              - if list.competition.show_bib_numbers? && entry.entity.bib_number.present?
+                %span.score-monitor-bib= entry.entity.bib_number
+              = entry.entity.full_name
+              .score-monitor-sub= entry.entity.team_shortcut_name(entry.assessment_type)
+            - else
+              = entry.entity.full_name
+              - if list.show_multiple_assessments? && list.multiple_assessments?
+                .score-monitor-sub= entry.assessment.name
+          - if entry && !list.hidden_results? && !entry.result_waiting?
+            .score-monitor-time= entry.human_time

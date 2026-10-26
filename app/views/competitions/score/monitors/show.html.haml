@@ -1,0 +1,31 @@
+- @page_title = "Live-Anzeige - #{@competition.name}"
+.score-monitor{ data: { content_url: content_competition_score_monitor_path, storage_key: "score-monitor-#{@competition.id}" } }
+  .score-monitor-menu
+    %button.score-monitor-toggle{ type: :button, title: 'Menü' }
+      %i.far.fa-bars
+    .score-monitor-panel.d-none
+      .fw-bold.mb-2= @competition.name
+      = link_to competition_score_lists_path, class: 'btn btn-sm btn-light w-100 mb-3' do
+        %i.far.fa-arrow-left
+        Zurück zu den Startlisten
+      .fw-bold.small Startlisten
+      .form-check
+        %input.form-check-input.score-monitor-automatic#score-monitor-automatic{ type: :checkbox }
+        %label.form-check-label{ for: 'score-monitor-automatic' } Automatisch
+      - @monitor.available_lists.each do |list|
+        .form-check
+          %input.form-check-input.score-monitor-list{ type: :checkbox, value: list.id, id: "score-monitor-list-#{list.id}" }
+          %label.form-check-label{ for: "score-monitor-list-#{list.id}" }= list.name
+      .fw-bold.small.mt-3 Größe
+      .btn-group.w-100.mb-3
+        %button.btn.btn-sm.btn-light.score-monitor-smaller{ type: :button } A−
+        %button.btn.btn-sm.btn-light.score-monitor-size-reset{ type: :button } 100 %
+        %button.btn.btn-sm.btn-light.score-monitor-bigger{ type: :button } A+
+      %button.btn.btn-sm.btn-light.w-100.score-monitor-fullscreen{ type: :button }
+        %i.far.fa-expand
+        Vollbild
+  .score-monitor-status
+    %span.score-monitor-connection{ title: 'Verbindung' }
+    %span.score-monitor-clock
+  .score-monitor-content
+    = render 'content', monitor: @monitor
