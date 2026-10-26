@@ -117,6 +117,64 @@ RSpec.describe 'People' do
     end
   end
 
+  context 'when a team is given by name' do
+    let!(:other_user) { create(:user, :other) }
+    let!(:foreign_team) { create(:team, competition:, band:, name: 'FF Fremd') }
+
+    def create_person(team_name)
+      post competition_nested('people'),
+           params: { band_id: band.id, person: { first_name: 'Erika', last_name: 'Muster', team_id: '',
+                                                 create_team_name: team_name } }
+    end
+
+    before { competition.update!(registration_open_until: Date.current, registration_open: 'open', visible: true) }
+
+    it 'rejects foreign teams with the same name (case insensitive)' do
+      sign_in other_user
+
+      expect { create_person(' ff fremd ') }.not_to change(Person, :count)
+      expect(response).to have_http_status(:unprocessable_content)
+      expect(response.body).to include('ist bereits angemeldet')
+      expect(foreign_team.reload.people).to be_empty
+    end
+
+    it 'uses own teams with the same name' do
+      own_team = create(:team, competition:, band:, name: 'FF Eigen')
+      UserTeamAccess.create!(user: other_user, competition:, team: own_team)
+      sign_in other_user
+
+      expect { create_person('ff eigen') }.to change(Person, :count).by(1).and not_change(Team, :count)
+      expect(Person.last.team).to eq own_team
+    end
+
+    it 'creates a new team with the applicant as team leader' do
+      sign_in other_user
+
+      expect do
+        expect { create_person('FF Neu') }.to change(Team, :count).by(1)
+      end.to have_enqueued_job.with('CompetitionMailer', 'registration_team', 'deliver_now', any_args)
+      team = Team.find_by(name: 'FF Neu')
+      expect(team.users).to eq [other_user]
+      expect(Person.last.team).to eq team
+    end
+
+    it 'respects the team limit' do
+      band.update!(max_teams: 1)
+      sign_in other_user
+
+      expect { create_person('FF Neu') }.not_to change(Team, :count)
+      expect(response).to have_http_status(:unprocessable_content)
+      expect(response.body).to include('die maximale Anzahl an Mannschaften ist erreicht')
+    end
+
+    it 'lets admins use any team with that name' do
+      sign_in user
+
+      expect { create_person('FF FREMD') }.to change(Person, :count).by(1).and not_change(Team, :count)
+      expect(Person.last.team).to eq foreign_team
+    end
+  end
+
   context 'when team leader manipulates team param' do
     let!(:other_user) { create(:user, :other, phone_number: '1234') }
     let!(:own_team) { create(:team, competition:, band:, name: 'Own', user_team_accesses: [user_team_access]) }

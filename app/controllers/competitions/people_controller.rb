@@ -27,9 +27,11 @@ class Competitions::PeopleController < CompetitionNestedController
 
   def create
     @person.assign_attributes(person_params)
+    assign_team_from_name
     authorize_person_team!
     if @person.save
       CompetitionMailer.with(person: @person).registration_person.deliver_later if @person.users.exists?
+      send_new_team_mail
 
       if params[:return_to] == 'team'
         redirect_to competition_team_path(id: @person.team_id, jump_to: 'people-table'), notice: :saved
@@ -45,8 +47,10 @@ class Competitions::PeopleController < CompetitionNestedController
   def update
     @person.assign_attributes(person_params)
     @person.check_band_limit = !can?(:manage, @competition)
+    assign_team_from_name
     authorize_person_team!
     if @person.save
+      send_new_team_mail
       if params[:return_to] == 'team'
         redirect_to competition_team_path(id: @person.team_id, jump_to: 'people-table'), notice: :saved
       elsif params[:return_to] == 'without_statistics_connection'
@@ -70,6 +74,31 @@ class Competitions::PeopleController < CompetitionNestedController
   end
 
   protected
+
+  def assign_team_from_name
+    name = @person.create_team_name.to_s.strip
+    return if name.blank? || @person.team&.persisted?
+
+    admin = can?(:manage, @competition)
+    teams = @person.band.teams.where('LOWER(TRIM(teams.name)) = ?', name.downcase).to_a
+    @person.team = admin ? teams.first : teams.find { |team| can?(:sub_edit, team) }
+    return if @person.team.present?
+    return @person.create_team_name_error = :team_name_taken if teams.any?
+
+    @new_team = @person.build_team(competition: @competition, band: @person.band, name:, shortcut: name.first(12),
+                                   disable_autocreate_assessment_requests: true)
+    return if admin
+    return @person.create_team_name_error = :team_registration_closed unless can?(:create, @new_team)
+    return @person.create_team_name_error = :teams_limit_reached if @person.band.teams_limit_reached?
+
+    @new_team.user_team_accesses.build(user: current_user, competition: @competition)
+  end
+
+  def send_new_team_mail
+    return unless @new_team&.persisted? && @new_team.users.exists?
+
+    CompetitionMailer.with(team: @new_team).registration_team.deliver_later
+  end
 
   def authorize_person_team!
     authorize!(:sub_edit, @person.team) if @person.team.present? && @person.team_id_changed?

@@ -12,6 +12,10 @@ de:
         registration_hint: Anmeldungshinweise
         tags: Kennzeichnungen
         team: Mannschaft
+    errors:
+      messages:
+        team_name_taken: ist bereits angemeldet. Wähle einen anderen Namen oder wende dich an den Mannschaftsleiter.
+        team_registration_closed: kann nicht angelegt werden, die Anmeldung ist geschlossen
     models:
       person: Wettkämpfer
   simple_form:

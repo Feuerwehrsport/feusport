@@ -46,20 +46,20 @@ class Person < ApplicationRecord
 
   auto_strip_attributes :first_name, :last_name, :bib_number, :registration_hint
 
-  before_validation :create_team_from_name
   before_save :assign_registration_order
 
   schema_validations
   validate :validate_team_band
   validates :band, :team, same_competition: true
   validate :validate_band_limit, if: :check_band_limit
+  validate { errors.add(:create_team_name, create_team_name_error) if create_team_name_error }
 
   accepts_nested_attributes_for :requests, allow_destroy: true
 
   default_scope { order(:last_name, :first_name) }
   scope :registration_order, -> { reorder(:registration_order) }
 
-  attr_accessor :create_team_name, :check_band_limit
+  attr_accessor :create_team_name, :create_team_name_error, :check_band_limit
 
   def full_name
     "#{first_name} #{last_name}"
@@ -122,15 +122,5 @@ class Person < ApplicationRecord
     return unless registration_order.zero? && team.present?
 
     self.registration_order = (team.people.maximum(:registration_order) || 0) + 1
-  end
-
-  def create_team_from_name
-    return if create_team_name.blank? || team&.persisted?
-
-    self.team = Team.find_by(band:, name: create_team_name)
-    return if team&.persisted?
-
-    build_team(competition:, disable_autocreate_assessment_requests: true,
-               name: create_team_name, shortcut: create_team_name.first(12), band:)
   end
 end
