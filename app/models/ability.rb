@@ -54,10 +54,10 @@ class Ability
     can(:read, Person, competition: read_ua)
     can(:manage, Person, competition: manage_ua)
 
-    can(:read, Certificates::Template, competition: read_ua)
-    can(:manage, Certificates::Template, competition: manage_ua)
-    can(:manage, Certificates::List, competition: manage_ua)
-    can(:manage, Certificates::Import, competition: manage_ua)
+    # Urkunden auch nach der Übertragung (gesperrter Wettkampf): Sie ändern keine Ergebnisse
+    can(:manage, Certificates::Template, competition: read_ua)
+    can(:manage, Certificates::List, competition: read_ua)
+    can(:manage, Certificates::Import, competition: read_ua)
 
     can(:read, Score::List, competition: read_ua)
     can(:manage, Score::List, competition: manage_ua)

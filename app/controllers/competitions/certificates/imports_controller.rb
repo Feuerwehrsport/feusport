@@ -23,10 +23,7 @@ class Competitions::Certificates::ImportsController < CompetitionNestedControlle
   end
 
   def assign_new_resource
-    my_template_ids = Certificates::Template.where(importable_for_me: true).accessible_by(current_ability).pluck(:id)
-    other_template_ids = Certificates::Template.where(importable_for_others: true).pluck(:id)
-
-    @selectable_templates = Certificates::Template.where(id: my_template_ids + other_template_ids)
+    @selectable_templates = Certificates::Template.importable(current_ability)
                                                   .includes(:competition)
                                                   .reorder('competitions.date' => :desc, 'competitions.name' => :asc,
                                                            'name' => :asc)

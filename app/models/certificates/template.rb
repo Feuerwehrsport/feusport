@@ -31,6 +31,7 @@ class Certificates::Template < ApplicationRecord
   PRAWN_IMAGE_TYPES = %w[image/png image/jpg image/jpeg].freeze
   CONVERTED_IMAGE_TYPES = %w[image/webp image/gif image/tiff image/heic image/heif].freeze
   PDF_TYPE = 'application/pdf'
+  EXAMPLE_NAME = 'Beispiel-Urkunde (Vorlage)'
   A4_PORTRAIT = [595.28, 841.89].freeze
 
   schema_validations
@@ -61,6 +62,11 @@ class Certificates::Template < ApplicationRecord
 
   auto_strip_attributes :name
 
+  # Eigene (importable_for_me, über die Ability) und für alle freigegebene Vorlagen
+  def self.importable(ability)
+    where(importable_for_others: true).or(where(id: where(importable_for_me: true).accessible_by(ability).select(:id)))
+  end
+
   def image_pdf?
     image.attached? && image.content_type == PDF_TYPE
   end
@@ -81,7 +87,7 @@ class Certificates::Template < ApplicationRecord
   accepts_nested_attributes_for :text_fields, allow_destroy: true
 
   def self.create_example(competition)
-    template = create(competition:, name: 'Beispiel-Urkunde (Vorlage)', importable_for_me: false)
+    template = create(competition:, name: EXAMPLE_NAME, importable_for_me: false)
     template.update(
       text_fields_attributes: [
         {

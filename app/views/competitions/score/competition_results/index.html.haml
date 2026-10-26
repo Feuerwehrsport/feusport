@@ -30,6 +30,8 @@
           - c.actions do |actions|
             - actions.link_to 'PDF', { action: :show, id: result.id, format: :pdf }, end_icon: :file_pdf, target: '_blank', rel: 'noopener'
             - actions.link_to 'XLS', { action: :show, id: result.id, format: :xlsx }, end_icon: :file_excel
+            - if certificates_allowed?
+              - actions.link_to 'Urkunden', new_competition_certificates_list_path(competition_result_id: result.id), end_icon: :file_certificate
 
   - if can?(:create, resource_class.new(competition: @competition))
     .col-lg-4

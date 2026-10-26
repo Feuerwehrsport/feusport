@@ -54,5 +54,5 @@
       - actions.link_to 'Details zur Berechnung', "#calculation-hint-#{config.key}", end_icon: :calculator, data: { 'bs-toggle' => 'collapse' }
       - actions.link_to 'PDF', { format: :pdf }, end_icon: :file_pdf, target: '_blank', rel: 'noopener'
 
-      - if can?(:manage, @competition) && @competition.certificates_templates.exists?
-        - actions.link_to 'Urkunden', new_competition_certificates_list_path(series_team_assessmen_id: config.round_key), end_icon: :file_certificate
+      - if certificates_allowed? && @competition.certificates_templates.exists?
+        - actions.link_to 'Urkunden', new_competition_certificates_list_path(series_team_assessment_id: config.round_key), end_icon: :file_certificate

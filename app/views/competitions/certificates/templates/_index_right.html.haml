@@ -1,3 +1,7 @@
+- if certificates_import_hint?
+  = card_body('Vorlagen aus früheren Wettkämpfen', class: 'mb-3 text-bg-info') do
+    %p Du hast in früheren Wettkämpfen schon Urkundenvorlagen gestaltet. Übernimm sie in diesen Wettkampf, statt neu anzufangen.
+    .d-grid= link_to 'Vorlage importieren', new_competition_certificates_import_path, class: 'btn btn-light btn-sm'
 = card_body('Erläuterung') do
   %p Hier kannst du Vorlagen für Urkunden anlegen, die später mit den Ergebnislisten automatisch ausgefüllt werden.
   .alert.alert-info Bitte beachte, dass diese Funktionen nur mit Firefox und Chrome ausführlich getestet wurden.

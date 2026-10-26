@@ -5,6 +5,10 @@
     .col-lg-8.mb-4
       = render 'overview_card', result: @result
 
+    - if !can?(:edit, @result) && certificates_allowed? && @competition.certificates_templates.exists?
+      .col-lg-4
+        = card_body('Urkunden', class: 'mb-3') do
+          .d-grid= btn_link_to 'Urkunden erstellen', new_competition_certificates_list_path(score_result_id: @result.id)
     - if can?(:edit, @result)
       .col-lg-4
         = card(t('a.actions'), class: 'mb-3') do |c|
@@ -17,7 +21,7 @@
               - if @result.band&.team_tags.present? || @result.band&.person_tags.present?
                 = btn_link_to 'Kennzeichungen', action: :edit, form: 'tags'
               = btn_link_to 'Löschen', { action: :destroy }, data: { turbo_method: 'delete', turbo_confirm: 'Ergebnisliste wirklich löschen? Die zugehörigen Startlisten werden verändert!' }
-          - if can?(:edit, @result) && @competition.certificates_templates.exists?
+          - if certificates_allowed? && @competition.certificates_templates.exists?
             = btn_link_to 'Urkunden', new_competition_certificates_list_path(score_result_id: @result.id)
 
         - if @result.include_hidden_lists && @result.hidden_lists.any?
