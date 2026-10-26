@@ -52,4 +52,5 @@
 .row
   .col-lg-6.mt-3
     = card_body('Vorschau') do
-      %iframe#certificates-template-preview{ src: url_for(format: :pdf) }
+      = link_to preview_competition_certificates_template_path(id: @template.id), class: 'gallery-item', data: { type: 'image', gallery: 'certificates-preview', title: @template.name } do
+        = image_tag preview_competition_certificates_template_path(id: @template.id), alt: "Vorschau: #{@template.name}", id: 'certificates-template-preview'

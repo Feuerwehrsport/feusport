@@ -110,6 +110,7 @@ Rails.application.routes.draw do
       resources :templates do
         member do
           get :edit_text_fields
+          get :preview
           post :duplicate
           delete :remove_file
         end

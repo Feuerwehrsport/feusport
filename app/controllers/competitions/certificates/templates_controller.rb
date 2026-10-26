@@ -9,6 +9,15 @@ class Competitions::Certificates::TemplatesController < CompetitionNestedControl
     end
   end
 
+  # Beispiel-Urkunde als Bild, auf dem Server gecacht und per ETag im Browser
+  def preview
+    preview = Certificates::Preview.new(@template)
+    return unless stale?(etag: preview.cache_key)
+
+    image = preview.image
+    send_data image[:data], type: image[:content_type], disposition: 'inline'
+  end
+
   def duplicate
     new_template = @template.duplicate_to(@competition)
     flash[:info] = 'Duplikat erstellt'

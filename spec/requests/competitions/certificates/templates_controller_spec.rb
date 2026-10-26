@@ -106,4 +106,28 @@ RSpec.describe 'competitions/certificates/templates' do
       expect_access_denied
     end
   end
+
+  describe 'preview image' do
+    let(:template) { create(:certificates_template, competition:) }
+    let(:path) { "/#{competition.year}/#{competition.slug}/certificates/templates/#{template.id}/preview" }
+
+    it 'renders an image with etag' do
+      sign_in user
+
+      get path
+      expect(response).to have_http_status(:success)
+      expect(response.media_type).to be_in(%w[image/png image/jpeg])
+
+      get path, headers: { 'If-None-Match' => response.headers['ETag'] }
+      expect(response).to have_http_status(:not_modified)
+
+      get "/#{competition.year}/#{competition.slug}/certificates/templates/#{template.id}"
+      expect(response.body).to include(%(class="gallery-item"), %(src="#{path}"))
+    end
+
+    it 'requires access' do
+      get path
+      expect_access_denied
+    end
+  end
 end
