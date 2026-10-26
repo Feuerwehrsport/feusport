@@ -10,7 +10,7 @@
     - c.direct do
       .row
         .col-md-10
-          #certificates-template-position{ data: { font_family_regular: @template.font.attached? ? "certificates_template_#{@template.id}_regular" : '', font_family_bold: @template.font2.attached? ? "certificates_template_#{@template.id}_bold" : '', background: @template.image.attached? ? rails_blob_path(@template.image) : '', config: Certificates::TextField::KEY_CONFIG.to_json } }
+          #certificates-template-position{ data: { font_family_regular: @template.font.attached? ? "certificates_template_#{@template.id}_regular" : '', font_family_bold: @template.font2.attached? ? "certificates_template_#{@template.id}_bold" : '', background: @template.image.attached? ? certificates_background_path(@template) : '', config: Certificates::TextField::KEY_CONFIG.to_json } }
 
         .col-md-2#position-buttons
           .btn.btn-light.btn-sm#add-new-field Feld hinzufügen

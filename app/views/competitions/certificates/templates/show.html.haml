@@ -17,7 +17,7 @@
         %tr
           %th= Certificates::Template.human_attribute_name :image
           - if @template.image.attached?
-            %td= image_tag(@template.image, width: '100px')
+            %td= image_tag(certificates_background_path(@template), width: '100px')
             %td.text-end= btn_link_to(t('a.delete'), { action: :remove_file, type: :image }, data: { turbo_method: :delete })
           - else
             %td Nicht angegeben

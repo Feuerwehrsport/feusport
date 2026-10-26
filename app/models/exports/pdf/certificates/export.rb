@@ -7,11 +7,26 @@ Exports::Pdf::Certificates::Export = Struct.new(:template, :export_title, :rows,
     pdf.font_families.update('certificates_template_regular' => { normal: font_path })
     pdf.font_families.update('certificates_template_bold' => { normal: font2_path })
 
+    image_source = template.background_image_source if background_image
     rows.each_with_index do |row, i|
-      pdf.image(template.image_path, at: [0, height], width:, height:) if template.image.attached? && background_image
+      pdf.image(image_source, at: [0, height], width:, height:) if image_source
       template.text_fields.each { |position| render_position(position, row) }
 
       pdf.start_new_page if i != rows.count - 1
+    end
+  end
+
+  # PDF-Hintergrund als Vektor unter jede Seite legen (Rasterbilder setzt perform direkt mit pdf.image)
+  def bytestream
+    @bytestream ||= begin
+      data = pdf.render
+      if background_image && template.image_pdf?
+        background = template.background_pdf_page
+        document = CombinePDF.parse(data)
+        document.pages.each { |page| page >> background }
+        data = document.to_pdf
+      end
+      data
     end
   end
 

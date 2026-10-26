@@ -30,6 +30,10 @@ de:
       certificates/text_field:
         key: Wert
         text: Freitext
+    errors:
+      messages:
+        pdf_a4_portrait: muss ein PDF im Format A4 hochkant sein
+        pdf_single_page: muss ein PDF mit genau einer Seite sein
     models:
       certificates/template:
         one: Urkundenvorlage

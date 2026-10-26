@@ -37,6 +37,34 @@ RSpec.describe Exports::Pdf::Certificates::Export do
     expect(export.pdf.page_count).to eq 2
   end
 
+  it 'stamps a PDF background under every page' do
+    template = Certificates::Template.create!(competition:, name: 'PDF', image: background_pdf_upload)
+    create(:certificates_text_field, :free_text, template:)
+
+    with_background = perform(described_class.new(template.reload, 'Urkunden', [row, row], true))
+    pages = stamped_pages(with_background.bytestream)
+    expect(pages.size).to eq 2
+    expect(pages).to all(include(CertificateBackgrounds::MARKER))
+
+    without_background = perform(described_class.new(template, 'Urkunden', [row], false))
+    expect(stamped_pages(without_background.bytestream).join).not_to include(CertificateBackgrounds::MARKER)
+  end
+
+  it 'converts other raster formats to JPG' do
+    template = Certificates::Template.create!(competition:, name: 'WebP', image: background_webp_upload)
+    create(:certificates_text_field, :free_text, template:)
+    export = described_class.new(template.reload, 'Urkunden', [row], true)
+    sources = []
+    allow(export.pdf).to receive(:image).and_wrap_original do |original, source, **options|
+      sources.push(source)
+      original.call(source, **options)
+    end
+    perform(export)
+
+    expect(sources.size).to eq 1
+    expect(sources.first.string.byteslice(0, 2).bytes).to eq [0xFF, 0xD8]
+  end
+
   it 'does not render the background image when disabled' do
     create(:certificates_text_field, :free_text, template:)
     export = described_class.new(template.reload, 'Urkunden', [row], false)

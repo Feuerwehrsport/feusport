@@ -44,6 +44,7 @@ gem 'caxlsx'
 gem 'prawn'
 gem 'prawn-table'
 gem 'prawn-qrcode'
+gem 'combine_pdf' # PDF-Hintergründe unter Urkunden legen
 gem 'matrix'
 
 gem 'json'

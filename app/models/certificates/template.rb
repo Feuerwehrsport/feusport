@@ -26,8 +26,17 @@ class Certificates::Template < ApplicationRecord
   belongs_to :competition, touch: true
   has_many :text_fields, class_name: 'Certificates::TextField', inverse_of: :template, dependent: :destroy
 
+  # Hintergründe: PNG/JPG nutzt Prawn direkt, andere Rasterformate werden zu JPG umgewandelt, ein PDF wird als
+  # Vektor unter die Urkunden gelegt (combine_pdf). Kein SVG (Skripte, externe Verweise).
+  PRAWN_IMAGE_TYPES = %w[image/png image/jpg image/jpeg].freeze
+  CONVERTED_IMAGE_TYPES = %w[image/webp image/gif image/tiff image/heic image/heif].freeze
+  PDF_TYPE = 'application/pdf'
+  A4_PORTRAIT = [595.28, 841.89].freeze
+
   schema_validations
-  validates :image, blob: { content_type: ['image/png', 'image/jpg', 'image/jpeg'], size_range: 1..(10.megabytes) }
+  validates :image, blob: { content_type: [*PRAWN_IMAGE_TYPES, *CONVERTED_IMAGE_TYPES, PDF_TYPE],
+                            size_range: 1..(10.megabytes) }
+  validate :validate_pdf_image
   validates :font, :font2,
             blob: { content_type: ['ttf', 'application/font-sfnt', 'font/ttf'], size_range: 1..(10.megabytes) }
 
@@ -51,6 +60,23 @@ class Certificates::Template < ApplicationRecord
   end
 
   auto_strip_attributes :name
+
+  def image_pdf?
+    image.attached? && image.content_type == PDF_TYPE
+  end
+
+  # Für pdf.image in Prawn: Pfad (PNG/JPG) oder JPG-Daten (andere Rasterformate), nil bei PDF
+  def background_image_source
+    return if !image.attached? || image_pdf?
+    return image_path if image.content_type.in?(PRAWN_IMAGE_TYPES)
+
+    StringIO.new(image.variant(format: :jpg, saver: { quality: 92 }).processed.download)
+  end
+
+  # Seite für combine_pdf, nur bei PDF-Hintergrund
+  def background_pdf_page
+    CombinePDF.parse(image.download).pages.first if image_pdf?
+  end
 
   accepts_nested_attributes_for :text_fields, allow_destroy: true
 
@@ -125,5 +151,35 @@ class Certificates::Template < ApplicationRecord
 
   def long_name
     "(#{I18n.l(competition.date)} - #{competition.name}) #{name}"
+  end
+
+  private
+
+  # Nur beim Hochladen prüfen: genau eine Seite, A4 hochkant (Urkunden sind immer A4 hochkant)
+  def validate_pdf_image
+    return unless image_pdf? && attachment_changes['image']
+
+    pages = CombinePDF.parse(uploaded_image_data).pages
+    return errors.add(:image, :pdf_single_page) unless pages.one?
+
+    errors.add(:image, :pdf_a4_portrait) unless a4_portrait?(pages.first)
+  rescue CombinePDF::ParsingError
+    errors.add(:image, :invalid)
+  end
+
+  def a4_portrait?(page)
+    x0, y0, x1, y1 = page.mediabox
+    width = (x1 - x0).abs
+    height = (y1 - y0).abs
+    width, height = height, width if page[:Rotate].to_i.abs % 180 == 90
+    (width - A4_PORTRAIT[0]).abs < 2 && (height - A4_PORTRAIT[1]).abs < 2
+  end
+
+  # Hochgeladene Datei oder (beim Duplizieren) vorhandener Blob
+  def uploaded_image_data
+    attachable = attachment_changes['image'].attachable
+    return attachable.download if attachable.is_a?(ActiveStorage::Blob)
+
+    attachable.read.tap { attachable.rewind }
   end
 end

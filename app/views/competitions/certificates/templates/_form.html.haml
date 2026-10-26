@@ -1,6 +1,6 @@
 - c.body do
   = f.input :name, hint: 'Interner Name'
-  = f.input :image, as: :file, hint: ['Hintergrundbild zur Orientierung', @template.image_hint].compact_blank.join('; ')
+  = f.input :image, as: :file, input_html: { accept: '.png,.jpg,.jpeg,.webp,.gif,.tif,.tiff,.heic,.heif,.pdf' }, hint: ['Hintergrundbild zur Orientierung: PNG, JPG, WebP, GIF, TIFF, HEIC oder PDF (eine Seite, A4 hochkant)', @template.image_hint].compact_blank.join('; ')
   = f.input :font, as: :file, hint: ['Schriftart für variable Texte', @template.font_hint].compact_blank.join('; ')
   = f.input :font2, as: :file, hint: ['Zweite Schriftart für variable Texte', @template.font2_hint].compact_blank.join('; ')
 
