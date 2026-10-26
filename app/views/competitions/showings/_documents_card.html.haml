@@ -3,14 +3,18 @@
   %ul.list-group.list-group-flush
     - @competition.documents.each do |document|
       %li.list-group-item
-        - if can?(:manage, document)
-          .float-end
-            .btn-group
+        .float-end
+          .btn-group
+            = link_to(rails_blob_path(document.file, disposition: 'attachment'), class: 'btn btn-light btn-sm', title: 'Herunterladen') do
+              .far.fa-download
+            - if can?(:manage, document)
               = link_to(edit_competition_document_path(id: document.id), class: 'btn btn-light btn-sm') do
                 .far.fa-edit
               = link_to(competition_document_path(id: document.id), class: 'btn btn-light btn-sm', data: { turbo_confirm: 'Dokument wirklich entfernen?', 'turbo-method': :delete }) do
                 .far.fa-trash
-        = link_to rails_blob_path(document.file, disposition: 'attachment') do
+        -# Öffnen: Bilder in der Lightbox, alles andere (PDF) im Browser in einem neuen Tab; Herunterladen über den Knopf
+        - image = document.file.content_type.start_with?('image/')
+        = link_to rails_blob_path(document.file, disposition: 'inline'), class: ('gallery-item' if image), target: ('_blank' unless image), rel: ('noopener' unless image), data: (image ? { type: 'image', gallery: 'documents', title: document.title } : nil) do
           .row
             .col-3
               - if document.file.representable?

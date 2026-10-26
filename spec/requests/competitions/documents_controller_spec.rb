@@ -44,6 +44,28 @@ RSpec.describe 'competitions/documents' do
     end
   end
 
+  describe 'links on the competition page' do
+    it 'opens images in the lightbox, PDFs in a new tab and offers a download button' do
+      image = competition.documents.create!(title: 'Lageplan', file: fixture_file_upload('pixel.jpg'))
+      pdf = create(:document, competition:)
+
+      get competition_nested
+      html = response.parsed_body
+      image_link = html.at_css("a[href='#{rails_blob_path(image.file, disposition: 'inline')}']")
+      pdf_link = html.at_css("a[href='#{rails_blob_path(pdf.file, disposition: 'inline')}']")
+
+      expect(image_link['class']).to eq 'gallery-item'
+      expect(image_link['data-gallery']).to eq 'documents'
+      expect(pdf_link['class']).to be_nil
+      expect(pdf_link['target']).to eq '_blank'
+
+      [image, pdf].each do |document|
+        download = html.at_css("a[href='#{rails_blob_path(document.file, disposition: 'attachment')}']")
+        expect(download['title']).to eq 'Herunterladen'
+      end
+    end
+  end
+
   describe 'download' do
     it 'redirects to' do
       get "/#{competition.year}/#{competition.slug}/dd/foo"
