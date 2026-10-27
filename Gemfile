@@ -69,9 +69,6 @@ group :development, :test do
   gem 'haml-lint', require: false
   gem 'i18n-tasks'
 
-  gem 'guard', require: false # on demand tests
-  gem 'guard-rspec', require: false # on demand tests
-
   gem 'simplecov', require: false # test coverage
 
   gem 'csv' # inspect spreadsheets
