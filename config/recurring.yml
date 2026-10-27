@@ -3,6 +3,10 @@ production:
     class: 'Competitions::Publishing::ReminderJob'
     priority: 40
     schedule: 0 10 * * tue
+  new_competition_mailing_job:
+    class: NewCompetitionMailingJob
+    priority: 40
+    schedule: 12 7 * * *
   invitation_cleanup:
     class: 'InvitationValidity::CleanupJob'
     priority: 50

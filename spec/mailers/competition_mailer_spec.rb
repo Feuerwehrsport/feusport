@@ -135,6 +135,24 @@ RSpec.describe CompetitionMailer do
     end
   end
 
+  describe 'new_competitions' do
+    let(:user) { create(:user, :other) }
+    let(:competition) { create(:competition) }
+    let(:other_competition) { create(:competition, name: 'D-Cup', place: 'Berlin', date: Date.parse('2024-03-02')) }
+
+    it 'renders the headers and body' do
+      mail = described_class.with(user:, competitions: [competition]).new_competitions
+      expect(mail.subject).to eq('Neuer Wettkampf - MV-Cup')
+      expect(mail.header[:to].to_s).to eq 'Other Meier <other@meier.de>'
+      expect(mail.header[:from].to_s).to eq 'Feuerwehrsport <no-reply@feusport.de>'
+      expect(mail).to match_html_fixture
+
+      mail = described_class.with(user:, competitions: [competition, other_competition]).new_competitions
+      expect(mail.subject).to eq('2 neue Wettkämpfe')
+      expect(mail).to match_html_fixture.with_affix('multiple')
+    end
+  end
+
   describe 'snapshot_reminder' do
     let(:competition) { create(:competition) }
     let(:mail) { described_class.with(competition:).snapshot_reminder }

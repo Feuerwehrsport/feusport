@@ -83,6 +83,18 @@ class CompetitionMailer < ApplicationMailer
     )
   end
 
+  def new_competitions
+    @user = @params[:user]
+    @competitions = @params[:competitions]
+
+    subject = if @competitions.one?
+                "Neuer Wettkampf - #{@competitions.first.name}"
+              else
+                "#{@competitions.count} neue Wettkämpfe"
+              end
+    mail(to: email_address_with_name(@user.email, @user.name), subject:)
+  end
+
   def information_request
     @information_request = @params[:information_request]
     @competition = @information_request.competition

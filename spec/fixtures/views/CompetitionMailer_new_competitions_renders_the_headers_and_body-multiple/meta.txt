@@ -1,0 +1,4 @@
+CompetitionMailer new_competitions renders the headers and body-multiple
+
+mailer
+html

@@ -74,6 +74,34 @@
 <div class="pb-4 mt-4 container">
 <div class="row g-4">
 <div class="col-lg-7 col-xl-8">
+<div class="d-flex justify-content-end mb-2">
+<button aria-controls="competitions-filter" aria-expanded="false" class="btn btn-sm btn-outline-secondary" data-bs-target="#competitions-filter" data-bs-toggle="collapse" title="Wettkämpfe filtern und sortieren" type="button">
+<i class="far fa-filter"></i>
+Filter
+</button>
+</div>
+<form id="competitions-filter" class="collapse competitions-filter" data-auto-submit="true" action="/" accept-charset="UTF-8" method="get"><div class="card card-body mb-3 d-flex flex-row flex-wrap gap-3 align-items-center">
+<div aria-label="Sortierung" class="btn-group btn-group-sm" role="group">
+<input type="radio" name="sort" id="filter-sort-date" value="date" class="btn-check" autocomplete="off" checked="checked" />
+<label class="btn btn-outline-primary" for="filter-sort-date">
+<i class="far fa-calendar"></i>
+Nach Datum
+</label>
+<input type="radio" name="sort" id="filter-sort-published" value="published" class="btn-check" autocomplete="off" />
+<label class="btn btn-outline-primary" for="filter-sort-published">
+<i class="far fa-sparkles"></i>
+Neu veröffentlicht
+</label>
+</div>
+<div aria-label="Merkmale" class="d-flex flex-wrap gap-1" role="group">
+</div>
+<div class="d-flex gap-2 ms-auto">
+<noscript>
+<button class="btn btn-sm btn-primary" type="submit">Filtern</button>
+</noscript>
+</div>
+</div>
+</form>
 <div class="card">
 <div class="card-header mt-0">
 <h4 class="mb-0">
@@ -84,24 +112,32 @@ Februar 2024
 <a class="list-group-item list-group-item-action current-competition" href="/2024/mv-cup"><div class="d-flex flex-row">
 <div class="discipline-icons"></div>
 <div class="ms-3">
-<h6 class="mb-0">MV-Cup</h6>
+<h6 class="mb-0">
+MV-Cup
+<span class="badge text-bg-success ms-1">Neu</span>
+</h6>
 <div class="mt-0">
 <small>29.02.2024</small>
 <small>Rostock</small>
 </div>
 </div>
 </div>
-</a><a class="list-group-item list-group-item-action current-competition" href="/2024/mv-cup-1"><div class="d-flex flex-row">
+</a>
+<a class="list-group-item list-group-item-action current-competition" href="/2024/mv-cup-1"><div class="d-flex flex-row">
 <div class="discipline-icons"></div>
 <div class="ms-3">
-<h6 class="mb-0">MV-Cup</h6>
+<h6 class="mb-0">
+MV-Cup
+<span class="badge text-bg-success ms-1">Neu</span>
+</h6>
 <div class="mt-0">
 <small>29.02.2024</small>
 <small>Rostock</small>
 </div>
 </div>
 </div>
-</a></div>
+</a>
+</div>
 </div>
 
 </div>

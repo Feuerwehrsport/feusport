@@ -1,0 +1,43 @@
+- filter_toggle_classes = filter.customized? ? 'btn-primary active' : 'btn-outline-secondary'
+.d-flex.justify-content-end.mb-2
+  %button.btn.btn-sm{ class: filter_toggle_classes, type: 'button', title: 'Wettkämpfe filtern und sortieren',
+                      'aria-controls': 'competitions-filter', 'aria-expanded': 'false',
+                      data: { bs_toggle: 'collapse', bs_target: '#competitions-filter' } }
+    %i.far.fa-filter
+    Filter
+    - if filter.customized?
+      %span.badge.text-bg-light.ms-1{ title: 'Aktive Einstellungen' }= filter.customizations_count
+
+= form_with(url: request.path, method: :get, id: 'competitions-filter', class: 'collapse competitions-filter',
+            data: { auto_submit: true }) do
+  .card.card-body.mb-3.d-flex.flex-row.flex-wrap.gap-3.align-items-center
+    .btn-group.btn-group-sm{ role: 'group', 'aria-label': 'Sortierung' }
+      - { 'date' => ['Nach Datum', 'far fa-calendar'], 'published' => ['Neu veröffentlicht', 'far fa-sparkles'] }.each do |value, (label, icon)|
+        = radio_button_tag(:sort, value, filter.sort == value, class: 'btn-check', id: "filter-sort-#{value}", autocomplete: 'off')
+        %label.btn.btn-outline-primary{ for: "filter-sort-#{value}" }
+          %i{ class: icon }
+          = label
+
+    .d-flex.flex-wrap.gap-1{ role: 'group', 'aria-label': 'Merkmale' }
+      - features.each do |feature|
+        = check_box_tag('feature_ids[]', feature.id, feature.id.in?(filter.feature_ids), class: 'btn-check', id: "filter-feature-#{feature.id}", autocomplete: 'off')
+        %label.btn.btn-sm.btn-outline-secondary.rounded-pill{ for: "filter-feature-#{feature.id}" }= feature.name
+
+    - if filter.lnglat.present?
+      .input-group.input-group-sm.competitions-filter-distance
+        %span.input-group-text Umkreis
+        = number_field_tag(:distance, filter.distance, min: 1, step: 1, class: 'form-control', placeholder: 'alle')
+        %span.input-group-text km
+
+    .d-flex.gap-2.ms-auto
+      %noscript
+        %button.btn.btn-sm.btn-primary{ type: 'submit' } Filtern
+      - if user_signed_in? && (current_user.feature_ids.present? || current_user.lnglat.present?)
+        = link_to(url_for(Competitions::Filter.for_user(current_user).to_params.merge(sort: filter.to_params[:sort])),
+                  class: 'btn btn-sm btn-light') do
+          %i.far.fa-heart
+          Meine Interessen
+      - if filter.customized?
+        = link_to(request.path, class: 'btn btn-sm btn-light') do
+          %i.far.fa-xmark
+          Zurücksetzen

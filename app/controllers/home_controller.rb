@@ -12,6 +12,10 @@ class HomeController < ApplicationController
                       @competitions.where(year: params[:year].to_i)
                     end
 
+    @filter = Competitions::Filter.new(**filter_params.to_h.symbolize_keys, lnglat: current_user&.lnglat)
+    @competitions = @filter.apply(@competitions)
+    @features = Feature.all
+
     @current_dates = ((Date.current - 3.days)..(Date.current + 3.days))
   end
 
@@ -30,5 +34,11 @@ class HomeController < ApplicationController
 
   def disseminators
     @disseminators = Disseminator.reorder(:name)
+  end
+
+  protected
+
+  def filter_params
+    params.permit(:sort, :distance, feature_ids: [])
   end
 end

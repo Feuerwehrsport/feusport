@@ -8,7 +8,8 @@
 
 .row.g-4
   .col-lg-7.col-xl-8
-    = render('competitions_card', competitions: @competitions)
+    = render('competitions_filter', filter: @filter, features: @features)
+    = render('competitions_card', competitions: @competitions, filter: @filter)
 
   .col-lg-5.col-xl-4
     = render('info_card', snapshot: Snapshot.for_home)

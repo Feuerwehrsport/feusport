@@ -4,7 +4,7 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 
-# generated from version 20261018090000
+# generated from version 20261027100000
 
 module SchemaValidations
   extend ActiveSupport::Concern
@@ -208,9 +208,11 @@ module SchemaValidations
       validates_with_filter :lottery_numbers, {inclusion: {in: [true, false], message: :blank}}
       validates_with_filter :name, {length: {allow_nil: true, maximum: 50}}
       validates_with_filter :name, {presence: {}}
+      validates_with_filter :new_competition_mailing_sent_at, {date_time_in_db_range: {}}
       validates_with_filter :place, {length: {allow_nil: true, maximum: 50}}
       validates_with_filter :place, {presence: {}}
       validates_with_filter :preset_ran, {inclusion: {in: [true, false], message: :blank}}
+      validates_with_filter :published_at, {date_time_in_db_range: {}}
       validates_with_filter :registration_open, {numericality: {allow_nil: true, only_integer: true, greater_than_or_equal_to: -2147483648, less_than: 2147483648}} unless enums.include?(:registration_open)
       validates_with_filter :registration_open, {presence: {}}
       validates_with_filter :registration_open_until, {date_in_db_range: {}}

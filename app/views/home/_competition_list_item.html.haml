@@ -1,0 +1,32 @@
+= link_to(competition_path(competition), class: home_competition_classes(competition)) do
+  - if can?(:extend_read, competition)
+    .float-end
+      - if competition.locked?
+        .far.fa-lock
+      - elsif can?(:edit, competition)
+        .far.fa-edit
+      - unless competition.visible?
+        %br
+        .far.fa-eye-slash
+  .d-flex.flex-row
+    - disciplines = competition.disciplines.sort.map(&:key)
+    - if disciplines.none?
+      .discipline-icons
+    - elsif disciplines.one?
+      .discipline-icons.one-discipline
+        %img{ src: image_path("disciplines/#{disciplines[0]}.svg") }
+    - else
+      .discipline-icons.four-discipline
+        - disciplines.first(4).each do |discipline|
+          %img{ src: image_path("disciplines/#{discipline}.svg") }
+    .ms-3
+      %h6.mb-0
+        = competition.name
+        - if competition.newly_published?
+          %span.badge.text-bg-success.ms-1 Neu
+      .mt-0
+        %small= l(competition.date)
+        %small= competition.place
+      - if show_published_at && competition.published_at.present?
+        %small.text-muted
+          veröffentlicht am #{l(competition.published_at.to_date)}

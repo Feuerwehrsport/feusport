@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_18_090000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_27_100000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -153,8 +153,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_090000) do
     t.text "address"
     t.geography "lnglat", limit: {srid: 4326, type: "st_point", geographic: true}
     t.datetime "snapshot_reminder_sent"
+    t.datetime "published_at"
+    t.datetime "new_competition_mailing_sent_at"
     t.index ["date"], name: "index_competitions_on_date"
     t.index ["lnglat"], name: "index_competitions_on_lnglat", using: :gist
+    t.index ["published_at"], name: "index_competitions_on_published_at"
     t.index ["wko_id"], name: "index_competitions_on_wko_id"
     t.index ["year", "slug"], name: "index_competitions_on_year_and_slug", unique: true
   end

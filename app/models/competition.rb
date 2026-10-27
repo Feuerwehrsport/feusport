@@ -4,34 +4,37 @@
 #
 # Table name: competitions
 #
-#  id                      :uuid             not null, primary key
-#  address                 :text
-#  change_people_until     :date
-#  date                    :date             not null
-#  description             :text
-#  flyer_content           :text
-#  flyer_headline          :string
-#  lnglat                  :geography        point, 4326
-#  locked_at               :datetime
-#  lottery_numbers         :boolean          default(FALSE), not null
-#  name                    :string(50)       not null
-#  place                   :string(50)       not null
-#  preset_ran              :boolean          default(FALSE), not null
-#  registration_open       :integer          default("unstated"), not null
-#  registration_open_until :date
-#  show_bib_numbers        :boolean          default(FALSE), not null
-#  slug                    :string(50)       not null
-#  snapshot_reminder_sent  :datetime
-#  visible                 :boolean          default(FALSE), not null
-#  year                    :integer          not null
-#  created_at              :datetime         not null
-#  updated_at              :datetime         not null
-#  wko_id                  :uuid
+#  id                              :uuid             not null, primary key
+#  address                         :text
+#  change_people_until             :date
+#  date                            :date             not null
+#  description                     :text
+#  flyer_content                   :text
+#  flyer_headline                  :string
+#  lnglat                          :geography        point, 4326
+#  locked_at                       :datetime
+#  lottery_numbers                 :boolean          default(FALSE), not null
+#  name                            :string(50)       not null
+#  new_competition_mailing_sent_at :datetime
+#  place                           :string(50)       not null
+#  preset_ran                      :boolean          default(FALSE), not null
+#  published_at                    :datetime
+#  registration_open               :integer          default("unstated"), not null
+#  registration_open_until         :date
+#  show_bib_numbers                :boolean          default(FALSE), not null
+#  slug                            :string(50)       not null
+#  snapshot_reminder_sent          :datetime
+#  visible                         :boolean          default(FALSE), not null
+#  year                            :integer          not null
+#  created_at                      :datetime         not null
+#  updated_at                      :datetime         not null
+#  wko_id                          :uuid
 #
 # Indexes
 #
 #  index_competitions_on_date           (date)
 #  index_competitions_on_lnglat         (lnglat) USING gist
+#  index_competitions_on_published_at   (published_at)
 #  index_competitions_on_wko_id         (wko_id)
 #  index_competitions_on_year_and_slug  (year,slug) UNIQUE
 #
@@ -78,7 +81,13 @@ class Competition < ApplicationRecord
   has_many :snapshots, class_name: 'Snapshot', dependent: :destroy
   has_many :publishings, class_name: 'FireSportStatistics::Publishing', dependent: :destroy
 
+  NEWLY_PUBLISHED_DURATION = 14.days
+
   scope :current, -> { where(date: (14.days.ago..6.months.from_now)) }
+  scope :near, ->(lnglat, distance_km) {
+    where('ST_DWithin(competitions.lnglat, ST_SetSRID(ST_MakePoint(?, ?), 4326)::geography, ?)',
+          lnglat.longitude, lnglat.latitude, distance_km * 1000)
+  }
 
   before_validation(on: :create) do
     self.year = date&.year
@@ -107,6 +116,7 @@ class Competition < ApplicationRecord
 
   auto_strip_attributes :name, :place, :slug, :description, :flyer_headline, :flyer_content, :address
   before_validation { self.slug = slug.to_s.parameterize }
+  before_save { self.published_at ||= Time.current if visible? }
   schema_validations
   validates :registration_open_until, presence: true, if: -> { registration_open == 'open' }
   validates :registration_open_until, :change_people_until,
@@ -124,6 +134,10 @@ class Competition < ApplicationRecord
     )
     html = markdown.render(description.to_s)
     Sanitize.fragment(html, Sanitize::Config::RELAXED).html_safe # xss safe
+  end
+
+  def newly_published?
+    published_at.present? && published_at >= NEWLY_PUBLISHED_DURATION.ago
   end
 
   def date=(new_date)

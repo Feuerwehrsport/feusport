@@ -21,6 +21,7 @@ import './_name_preview';
 import './_vertical_scroll';
 import './_hcaptcha';
 import './_score_monitor';
+import './_auto_submit';
 
 onVisit(() => {
   GLightbox({
