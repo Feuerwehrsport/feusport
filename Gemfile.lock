@@ -47,7 +47,7 @@ GEM
       erubi (~> 1.11)
       rails-dom-testing (~> 2.2)
       rails-html-sanitizer (~> 1.6)
-    active_link_to (1.1.0)
+    active_link_to (1.1.1)
       actionpack
       addressable
     activejob (8.1.4)
@@ -101,7 +101,7 @@ GEM
     bcrypt_pbkdf (1.1.2)
     bigdecimal (3.3.1)
     bindex (0.8.1)
-    bootsnap (1.26.0)
+    bootsnap (1.26.1)
       msgpack (~> 1.5)
     brakeman (8.1.0)
       racc
@@ -274,7 +274,7 @@ GEM
       railties (>= 7.1)
       stimulus-rails
       turbo-rails
-    msgpack (1.8.5)
+    msgpack (1.8.6)
     mutex_m (0.3.0)
     nenv (0.3.0)
     net-imap (0.6.8)
@@ -284,23 +284,26 @@ GEM
       net-protocol
     net-protocol (0.4.0)
       timeout
-    net-scp (4.1.0)
-      net-ssh (>= 2.6.5, < 8.0.0)
-    net-sftp (4.0.0)
-      net-ssh (>= 5.0.0, < 8.0.0)
+    net-scp (4.1.3)
+      net-ssh (>= 2.6.5, < 9.0.0)
+    net-sftp (4.1.0)
+      net-ssh (>= 5.0.0, < 9.0.0)
     net-smtp (0.5.2)
       net-protocol
-    net-ssh (7.3.6)
+    net-ssh (8.0.4)
+      logger
+      openssl (>= 3.2.0)
     nio4r (2.7.5)
     nokogiri (1.19.4-x86_64-linux-gnu)
       racc (~> 1.4)
     notiffany (0.1.3)
       nenv (~> 0.1)
       shellany (~> 0.0)
+    openssl (4.0.2)
     orm_adapter (0.5.0)
     ostruct (0.6.3)
     parallel (2.3.0)
-    parser (3.3.12.0)
+    parser (3.3.13.0)
       ast (~> 2.4.1)
       racc
     pdf-core (0.10.0)
@@ -318,7 +321,7 @@ GEM
       prawn (>= 1.3.0, < 3.0.0)
     prettyprint (0.2.1)
     prism (1.9.0)
-    pry (0.16.0)
+    pry (0.16.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
       reline (>= 0.6.0)
@@ -331,7 +334,7 @@ GEM
     rack-session (2.1.2)
       base64 (>= 0.1.0)
       rack (>= 3.0.0)
-    rack-test (2.2.0)
+    rack-test (2.3.0)
       rack (>= 1.3)
     rackup (2.3.1)
       rack (>= 3)
@@ -403,7 +406,7 @@ GEM
     rgeo-activerecord (8.1.0)
       activerecord (>= 8.1, < 8.2)
       rgeo (>= 3.0)
-    roo (3.0.0)
+    roo (4.0.0)
       base64 (~> 0.2)
       csv (~> 3)
       logger (~> 1)
@@ -434,7 +437,7 @@ GEM
       rspec-mocks (>= 3.13.0, < 5.0.0)
       rspec-support (>= 3.13.0, < 5.0.0)
     rspec-support (3.13.7)
-    rubocop (1.92.0)
+    rubocop (1.92.1)
       json (>= 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
@@ -475,8 +478,8 @@ GEM
       ffi (~> 1.12)
       logger
     rubyzip (3.7.0)
-    sanitize (7.0.0)
-      crass (~> 1.0.2)
+    sanitize (7.0.1)
+      crass (~> 1.0.8)
       nokogiri (>= 1.16.8)
     sassc (2.4.0)
       ffi (~> 1.9)
@@ -636,7 +639,7 @@ DEPENDENCIES
   websocket-client-simple
 
 RUBY VERSION
-  ruby 4.0.7p0
+  ruby 4.0.9p0
 
 BUNDLED WITH
   4.0.20
