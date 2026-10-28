@@ -47,17 +47,17 @@ RSpec.describe Competitions::SimpleAccessLoginsController do
     it 'expires after one hour without requests' do
       login
 
-      Timecop.freeze(50.minutes.from_now) do
+      travel_to(50.minutes.from_now) do
         get competition_nested('editing/edit')
         expect(response).to have_http_status(:success)
       end
 
-      Timecop.freeze(100.minutes.from_now) do
+      travel_to(100.minutes.from_now) do
         get competition_nested('editing/edit')
         expect(response).to have_http_status(:success)
       end
 
-      Timecop.freeze(161.minutes.from_now) do
+      travel_to(161.minutes.from_now) do
         get competition_nested('editing/edit')
         expect_access_denied
         expect(session.key?("simple_access_#{competition.id}")).to be false
