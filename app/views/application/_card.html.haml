@@ -19,5 +19,3 @@
             .btn-group
               - card.actions.each do |action|
                 = render 'nav_link', link: action, a_class: 'btn btn-outline-secondary btn-sm', link_options: action.link_options
-  - elsif card.footer.present?
-    .card-footer= card.footer
