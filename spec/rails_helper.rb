@@ -46,5 +46,8 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     FactoryBot.find_definitions
+    # Routes are lazy loaded since Rails 8. Devise registers its Warden strategies while loading them,
+    # but Warden copies its config at the start of a request. Without this the first sign in would fail.
+    Rails.application.reload_routes_unless_loaded
   end
 end
