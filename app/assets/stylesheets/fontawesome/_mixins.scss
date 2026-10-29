@@ -1,6 +1,10 @@
 // mixins
 // --------------------------
 
+@use 'sass:string';
+@use 'functions' as *;
+@use 'variables' as *;
+
 // base rendering for an icon
 @mixin fa-icon {
   -webkit-font-smoothing: antialiased;
@@ -58,7 +62,7 @@
   @extend .fa-solid;
 
   &::before {
-    content: unquote("\"#{ $fa-var }\"");
+    content: string.unquote("\"#{ $fa-var }\"");
   }
 }
 
@@ -67,7 +71,7 @@
   @extend .fa-regular;
 
   &::before {
-    content: unquote("\"#{ $fa-var }\"");
+    content: string.unquote("\"#{ $fa-var }\"");
   }
 }
 
@@ -76,7 +80,7 @@
   @extend .fa-light;
 
   &::before {
-    content: unquote("\"#{ $fa-var }\"");
+    content: string.unquote("\"#{ $fa-var }\"");
   }
 }
 
@@ -85,7 +89,7 @@
   @extend .fa-thin;
 
   &::before {
-    content: unquote("\"#{ $fa-var }\"");
+    content: string.unquote("\"#{ $fa-var }\"");
   }
 }
 
@@ -94,10 +98,10 @@
   @extend .fa-duotone;
 
   &::before {
-    content: unquote("\"#{ $fa-var }\"");
+    content: string.unquote("\"#{ $fa-var }\"");
   }
   &::after {
-    content: unquote("\"#{ $fa-var }#{ $fa-var }\"");
+    content: string.unquote("\"#{ $fa-var }#{ $fa-var }\"");
   }
 }
 
@@ -106,7 +110,7 @@
   @extend .fa-sharp-solid;
 
   &::before {
-    content: unquote("\"#{ $fa-var }\"");
+    content: string.unquote("\"#{ $fa-var }\"");
   }
 }
 
@@ -115,7 +119,7 @@
   @extend .fa-brands;
 
   &::before {
-    content: unquote("\"#{ $fa-var }\"");
+    content: string.unquote("\"#{ $fa-var }\"");
   }
 }
 

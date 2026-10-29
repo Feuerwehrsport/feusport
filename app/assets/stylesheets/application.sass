@@ -1,17 +1,18 @@
-@import bootstrap/bootstrap
+@use 'sass:color'
+@use 'bootstrap/bootstrap' as *
 
-@import fontawesome/fontawesome
-@import fontawesome/regular
+@use 'fontawesome/fontawesome'
+@use 'fontawesome/regular'
 
-@import 'glightbox/dist/css/glightbox'
-@import 'leaflet/dist/leaflet'
-@import 'easymde/dist/easymde.min'
-@import social_share_buttons
-@import certificates
-@import form
-@import sortable
-@import vertical_scroll
-@import score_monitor
+@use 'glightbox/dist/css/glightbox'
+@use 'leaflet/dist/leaflet'
+@use 'easymde/dist/easymde.min'
+@use 'social_share_buttons'
+@use 'certificates'
+@use 'form'
+@use 'sortable'
+@use 'vertical_scroll'
+@use 'score_monitor'
 
 
 .navbar-brand
@@ -44,7 +45,7 @@
     @include media-breakpoint-down(md)
       font-size: calc(0.8rem + 1vw)
 
-  h1
+  h1, .h1
     @include media-breakpoint-down(md)
       font-size: calc(1rem + 2.4vw)
 
@@ -53,7 +54,7 @@
   padding-block: 0.5rem
   margin-top: -1px
   box-shadow: $box-shadow-sm
-  border: 0 solid darken($fs-gray, 5%)
+  border: 0 solid color.adjust($fs-gray, $lightness: -5%)
   border-top-width: 1px
 
   @include media-breakpoint-up(xl)
@@ -99,7 +100,7 @@
     &:first-child
       border-top-width: 0
 
-    > h1, h2, h3
+    > h1, > .h1, h2, .h2, h3, .h3
       @extend .display-6
 
   > .card-footer
@@ -122,16 +123,16 @@
           border-right: 0
 
 .text-bg-accent2
-  --bs-card-cap-bg: #{darken($accent2, 5%)}
+  --bs-card-cap-bg: #{color.adjust($accent2, $lightness: -5%)}
 
 .text-bg-dark
   .nav
     --bs-nav-link-color: #{$light}
-    --bs-nav-link-hover-color: #{darken($light, 20%)}
+    --bs-nav-link-hover-color: #{color.adjust($light, $lightness: -20%)}
 
     .dropdown-menu
       --bs-nav-link-color: #{$dark}
-      --bs-nav-link-hover-color: #{darken($dark, 20%)}
+      --bs-nav-link-hover-color: #{color.adjust($dark, $lightness: -20%)}
 
 .card
   box-shadow: $box-shadow-sm
@@ -171,9 +172,9 @@ td.xs-rotate-hint
 .btn-primary, .card-primary-action
   --bs-btn-color: #{$white}
   --bs-btn-active-color: #{$white}
-  --bs-btn-active-bg: #{darken($primary, 15%)}
+  --bs-btn-active-bg: #{color.adjust($primary, $lightness: -15%)}
   --bs-btn-hover-color: #{$white}
-  --bs-btn-hover-bg: #{darken($primary, 7.5%)}
+  --bs-btn-hover-bg: #{color.adjust($primary, $lightness: -7.5%)}
 
 .card-primary-action
   @extend .btn, .btn-primary
@@ -226,7 +227,7 @@ td.xs-rotate-hint
       width: 98%
     td, th
       padding: 0.2rem
-      border: 0.01rem solid darken($fs-gray, 5%)
+      border: 0.01rem solid color.adjust($fs-gray, $lightness: -5%)
       @include media-breakpoint-only(xs)
         font-size: 0.9rem
     th
@@ -340,7 +341,7 @@ tr.best-time-of-run td, tr.best-time-of-run th
 .blockquote
   margin-left: 1em
   padding-left: 1em
-  border-left: 3px solid darken($fs-gray, 5%)
+  border-left: 3px solid color.adjust($fs-gray, $lightness: -5%)
   font-size: 1em
 
 .map-target

@@ -1,0 +1,82 @@
+// Bootstrap with the feusport theme. Use it in every stylesheet with `@use 'bootstrap/bootstrap' as *`.
+// Only the variables differing from Bootstrap's defaults are configured here.
+@use 'sass:color';
+
+$fs-red: #d16864;
+$fs-yellow: #ffd983;
+$fs-gray: #f1eeed;
+$fs-black: #000407;
+
+$accent1: color.adjust($fs-red, $lightness: -7.5%);
+$accent2: hsl(10 20% 89% / 1);
+
+$-secondary: #6e6967;
+$-info: #c5d3e6;
+$-danger: #993441;
+
+@forward 'bootstrap/scss/bootstrap' with (
+  $primary: $fs-red,
+  $secondary: $-secondary,
+  $success: #1b974c,
+  $info: $-info,
+  $warning: #e5c51e,
+  $danger: $-danger,
+  $light: $fs-gray,
+  $dark: #40485e,
+  $theme-colors: (
+    'primary': $fs-red,
+    'secondary': $-secondary,
+    'success': #1b974c,
+    'info': $-info,
+    'warning': #e5c51e,
+    'danger': $-danger,
+    'light': $fs-gray,
+    'dark': #40485e,
+    'accent1': $accent1,
+    'accent2': $accent2,
+  ),
+
+  $danger-text-emphasis: #fff,
+  $info-bg-subtle: color.mix(#fff, $-info, 10%),
+  $danger-bg-subtle: $-danger,
+  $danger-border-subtle: color.mix(#fff, $-danger, 10%),
+
+  $enable-dark-mode: false,
+
+  $body-bg: $fs-gray,
+  $body-secondary-bg: color.adjust($fs-gray, $lightness: -5%),
+  $body-tertiary-bg: color.adjust($fs-gray, $lightness: -7.5%),
+
+  $link-color: $-secondary,
+  $link-decoration: none,
+  $link-hover-decoration: underline,
+
+  $border-color: $fs-gray,
+  $border-radius: .25rem,
+  $border-radius-sm: .20rem,
+  $border-radius-lg: .4rem,
+
+  $h1-font-size: 3.25rem,
+  $headings-font-weight: 300,
+
+  $table-bg: #fff,
+  $input-bg: #fff,
+  $input-border-color: color.adjust($fs-gray, $lightness: -7.5%),
+
+  // Bootstrap: $navbar-brand-font-size * $line-height-base
+  $navbar-brand-height: 1.25rem * 1.5 * 1.2,
+  $navbar-brand-padding-y: 0,
+  $navbar-toggler-padding-y: .15rem,
+  $navbar-toggler-padding-x: .35rem,
+  $navbar-toggler-border-radius: var(--bs-border-radius-sm),
+  $navbar-dark-color: rgba(#fff, .80),
+  $navbar-dark-hover-color: rgba(#fff, .90),
+
+  $dropdown-bg: #fff,
+  $card-border-width: 0,
+  $card-cap-bg: color.adjust($fs-gray, $lightness: 4%),
+  $alert-border-width: 0,
+  $list-group-bg: transparent,
+  // lighten($fs-gray, 8%) exceeds 100% lightness and was clamped to white
+  $list-group-hover-bg: white,
+);

@@ -1,3 +1,8 @@
+@use 'sass:string';
+@use 'functions' as *;
+@use 'variables' as *;
+@use 'mixins' as *;
+
 // specific icon class definition
 // -------------------------
 
@@ -5,5 +10,5 @@
 readers do not read off random characters that represent icons */
 
 @each $name, $icon in $fa-icons {
-  .#{$fa-css-prefix}-#{$name}::before { content: unquote("\"#{ $icon }\""); }
+  .#{$fa-css-prefix}-#{$name}::before { content: string.unquote("\"#{ $icon }\""); }
 }

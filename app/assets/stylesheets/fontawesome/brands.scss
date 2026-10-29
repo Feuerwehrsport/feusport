@@ -3,8 +3,9 @@
  * License - https://fontawesome.com/license (Commercial License)
  * Copyright 2022 Fonticons, Inc.
  */
-@import 'functions';
-@import 'variables';
+@use 'sass:string';
+@use 'functions' as *;
+@use 'variables' as *;
 
 :root, :host {
   --#{$fa-css-prefix}-style-family-brands: 'Font Awesome 6 Brands';
@@ -26,5 +27,5 @@
 }
 
 @each $name, $icon in $fa-brand-icons {
-  .#{$fa-css-prefix}-#{$name}:before { content: unquote("\"#{ $icon }\""); }
+  .#{$fa-css-prefix}-#{$name}:before { content: string.unquote("\"#{ $icon }\""); }
 }

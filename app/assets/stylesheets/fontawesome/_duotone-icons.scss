@@ -1,3 +1,8 @@
+@use 'sass:string';
+@use 'functions' as *;
+@use 'variables' as *;
+@use 'mixins' as *;
+
 // specific duotone icon class definition
 // -------------------------
 
@@ -5,6 +10,6 @@
 
 @each $name, $icon in $fa-icons {
   .fad.#{$fa-css-prefix}-#{$name}::after, .#{$fa-css-prefix}-duotone.#{$fa-css-prefix}-#{$name}::after {
-    content: unquote("\"#{ $icon }#{ $icon }\"");
+    content: string.unquote("\"#{ $icon }#{ $icon }\"");
   }
 }
