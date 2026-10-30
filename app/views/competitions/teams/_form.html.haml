@@ -11,10 +11,10 @@
       = f.input :registration_hint, input_html: { rows: 4 }
     - else
       = f.association :band, disabled: true
-      = f.input :name, input_html: { autocomplete: :off }, hint: 'Keine Nummern im Namen angeben!'
+      = f.input :name, input_html: { autocomplete: :off, data: { digit_warning: 'Bitte trage hier keine Nummer ein. Dafür gibt es das Feld »Nummer«.' } }, hint: 'Keine Nummern im Namen angeben!'
       .suggestions-entries.for-teams
         %table.table.table-hover.table-condensed
-      = f.input :shortcut, input_html: { maxlength: 12 }, hint: 'Keine Nummern im Namen angeben!'
+      = f.input :shortcut, input_html: { maxlength: 12, data: { digit_warning: 'Bitte trage hier keine Nummer ein. Dafür gibt es das Feld »Nummer«.' } }, hint: 'Keine Nummern im Namen angeben!'
       = f.input :number, hint: 'Die Nummer wird erst angezeigt, wenn es mehrere Mannschaften mit gleichen Namen gibt.'
       .row
         - if @team.band.team_tags.present?

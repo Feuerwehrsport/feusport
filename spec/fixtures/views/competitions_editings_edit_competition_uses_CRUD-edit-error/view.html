@@ -138,7 +138,7 @@ new-description</textarea><small class="form-text text-muted">Du kannst den Text
 <legend>Adresse</legend>
 <div class="row">
 <div class="col-md-6">
-<div class="form-group string required competition_place form-group-invalid"><label class="control-label string required" for="competition_place">Ort <abbr title="required">*</abbr></label><input class="form-control is-invalid string required" aria-invalid="true" type="text" name="competition[place]" id="competition_place" /><div class="invalid-feedback">Ort muss ausgefüllt werden</div><small class="form-text text-muted">Es sieht besser aus, wenn du hier nur den Namen des Ortes schreibst. Die vollständige Anschrift solltest du im Adressfeld angeben.</small></div>
+<div class="form-group string required competition_place form-group-invalid"><label class="control-label string required" for="competition_place">Ort <abbr title="required">*</abbr></label><input class="form-control is-invalid string required" data-digit-warning="Bitte trage hier keine Postleitzahl ein. Dafür gibt es das Feld »Adresse«." aria-invalid="true" type="text" name="competition[place]" id="competition_place" /><div class="invalid-feedback">Ort muss ausgefüllt werden</div><small class="form-text text-muted">Es sieht besser aus, wenn du hier nur den Namen des Ortes schreibst. Die vollständige Anschrift solltest du im Adressfeld angeben.</small></div>
 </div>
 <div class="col-md-6">
 <div class="form-group text optional competition_address"><label class="control-label text optional" for="competition_address">Adresse</label><textarea class="form-control text optional" name="competition[address]" id="competition_address">

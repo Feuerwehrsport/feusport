@@ -12,7 +12,7 @@
 
             .row
               .col-md-6
-                = f.input :place
+                = f.input :place, input_html: { data: { digit_warning: 'Bitte trage hier keine Postleitzahl ein. Dafür gibt es das Feld »Adresse«.' } }
               .col-md-6
                 = f.input :address
                 .btn.btn-light.btn-sm#search-address Adresse in Karte übernehmen
