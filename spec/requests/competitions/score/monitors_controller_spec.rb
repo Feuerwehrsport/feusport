@@ -87,6 +87,18 @@ RSpec.describe 'competitions/score/monitors' do
     expect(response.body).to include('Derzeit gibt es keine öffentliche Startliste.')
   end
 
+  it 'shows separate target times' do
+    list_la.update!(separate_target_times: true)
+    list_la.entries.find_by(run: 1).update!(time_left_target: 2210, time_right_target: 2345)
+
+    get "#{base}/content"
+    expect(response.body).to include('L: 22,10', 'R: 23,45', '23,45')
+
+    list_la.update!(hidden_results: true)
+    get "#{base}/content"
+    expect(response.body).not_to include('L: 22,10')
+  end
+
   it 'needs read access to the competition' do
     competition.update!(visible: false)
 

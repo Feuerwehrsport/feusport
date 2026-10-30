@@ -130,7 +130,8 @@
       background: rgba($black, 0.15)
 
     .score-monitor-sub,
-    .score-monitor-track-number
+    .score-monitor-track-number,
+    .score-monitor-targets
       color: rgba($white, 0.8)
 
 .score-monitor-run-number
@@ -184,6 +185,15 @@
 
 .score-monitor-free
   color: $gray-500
+
+// Zielzeiten links und rechts untereinander, damit die Zeile nicht höher wird
+.score-monitor-targets
+  font-size: 0.6em
+  line-height: 1.15
+  text-align: right
+  white-space: nowrap
+  color: $gray-600
+  font-variant-numeric: tabular-nums
 
 .score-monitor-time
   font-weight: bold

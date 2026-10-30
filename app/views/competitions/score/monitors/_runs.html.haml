@@ -22,4 +22,8 @@
               - if list.show_multiple_assessments? && list.multiple_assessments?
                 .score-monitor-sub= entry.assessment.name
           - if entry && !list.hidden_results? && !entry.result_waiting?
+            - if list.separate_target_times? && entry.target_times_as_data.present?
+              .score-monitor-targets
+                %div= entry.human_time_left_target
+                %div= entry.human_time_right_target
             .score-monitor-time= entry.human_time
