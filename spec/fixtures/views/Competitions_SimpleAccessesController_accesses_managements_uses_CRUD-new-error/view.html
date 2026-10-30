@@ -130,10 +130,11 @@ Erweitert
 </div>
 </div>
 <div class="card-body">
-<div class="form-group select required simple_access_name form-group-valid"><label class="control-label select required" for="simple_access_name">Name <abbr title="required">*</abbr></label><select class="form-select select required" autofocus="autofocus" name="simple_access[name]" id="simple_access_name"><option value="Admin">Admin</option>
-<option value="Wettkampfrichter">Wettkampfrichter</option></select></div>
+<div class="form-group string required simple_access_name form-group-valid"><label class="control-label string required" for="simple_access_name">Name <abbr title="required">*</abbr></label><input class="form-control string required" maxlength="50" autofocus="autofocus" size="50" type="text" value="foo" name="simple_access[name]" id="simple_access_name" /><small class="form-text text-muted">Diesen Namen wählt man beim Anmelden aus, z. B. »Admin«, »Wettkampfrichter« oder »Zeitnehmer Löschangriff«.</small></div>
 <div class="form-group password optional simple_access_password form-group-valid"><label class="control-label password optional" for="simple_access_password">Passwort</label><input class="form-control password optional" type="password" name="simple_access[password]" id="simple_access_password" /></div>
 <div class="form-group password optional simple_access_password_confirmation form-group-invalid"><label class="control-label password optional" for="simple_access_password_confirmation">Passwortbestätigung</label><input class="form-control is-invalid password optional" aria-invalid="true" type="password" name="simple_access[password_confirmation]" id="simple_access_password_confirmation" /><div class="invalid-feedback">Passwortbestätigung stimmt nicht mit Passwort überein</div></div>
+<fieldset class="form-group radio_buttons required simple_access_permission form-group-valid"><div class="col-form-label pt-0">Rechte <abbr title="required">*</abbr></div><input type="hidden" name="simple_access[permission]" value="" /><div class="form-check"><input class="form-check-input radio_buttons required" type="radio" value="full" checked="checked" name="simple_access[permission]" id="simple_access_permission_full" /><label class="form-check-label collection_radio_buttons" for="simple_access_permission_full">Alles verwalten</label></div><div class="form-check"><input class="form-check-input radio_buttons required" type="radio" value="results" name="simple_access[permission]" id="simple_access_permission_results" /><label class="form-check-label collection_radio_buttons" for="simple_access_permission_results">Nur Zeiten eintragen (alle nicht versteckten Startlisten)</label></div><div class="form-check"><input class="form-check-input radio_buttons required" type="radio" value="selected_results" name="simple_access[permission]" id="simple_access_permission_selected_results" /><label class="form-check-label collection_radio_buttons" for="simple_access_permission_selected_results">Nur Zeiten eintragen (ausgewählte Startlisten)</label></div></fieldset>
+<fieldset class="form-group check_boxes optional simple_access_score_list_ids"><div class="col-form-label pt-0">Freigegebene Startlisten</div><input type="hidden" name="simple_access[score_list_ids][]" value="" /><small class="form-text text-muted">Gilt nur für »Nur Zeiten eintragen (ausgewählte Startlisten)«.</small></fieldset>
 
 </div>
 <div class="card-footer">
@@ -155,9 +156,11 @@ Erweitert
 <div class="card-body">
 <p>Ein Gastzugang ist für die Admins und Wettkampfrichter am Veranstaltungstag gedacht, die keinen Eigenen Zugang über feusport.de haben. Du kannst dafür ein einfaches Passwort wählen und es auf allen Tablets schnell eingeben.</p>
 <p>Der Link zum Login findet du auf der Startseite des Wettkampfes unter <b>Gastzugang</b>.</p>
+<p>Für Zeitnehmer kannst du die Rechte auf das Eintragen von Zeiten beschränken. Versteckte Startlisten sind dabei nur erreichbar, wenn du sie ausdrücklich auswählst. Wird eine ausgewählte Startliste gelöscht, verliert der Zugang das Recht dafür und bekommt keine anderen Startlisten dazu.</p>
 
 </div>
 </div>
+
 </div>
 </div>
 </div>

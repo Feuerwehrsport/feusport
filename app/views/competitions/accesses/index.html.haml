@@ -43,11 +43,18 @@
           %table.table
             %tr
               %th= SimpleAccess.human_attribute_name(:name)
+              %th= SimpleAccess.human_attribute_name(:permission)
               %th
             - @competition.simple_accesses.sort.each do |access|
               %tr
                 %td= access.name
-                %td.text-end
+                %td
+                  = t("simple_accesses.permissions.#{access.permission}")
+                  - if access.permission_selected_results?
+                    %br
+                    %small.text-muted= access.score_lists.sort.map(&:name).join(', ').presence || 'Keine Startliste'
+                %td.text-end.text-nowrap
+                  = short_edit_link(edit_competition_simple_access_path(id: access.id))
                   = link_to(competition_simple_access_path(id: access.id), class: 'btn btn-light btn-sm', data: { turbo_confirm: 'Zugang wirklich entfernen?', 'turbo-method': :delete }) do
                     %i.far.fa-trash
       - else

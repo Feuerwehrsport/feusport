@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_27_100000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_30_100000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -593,6 +593,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_27_100000) do
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "permission", default: 0, null: false
+    t.uuid "score_list_ids", default: [], null: false, array: true
     t.index ["competition_id", "name"], name: "index_simple_accesses_on_competition_id_and_name", unique: true
     t.index ["competition_id"], name: "index_simple_accesses_on_competition_id"
   end

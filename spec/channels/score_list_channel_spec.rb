@@ -38,6 +38,20 @@ RSpec.describe ScoreListChannel do
       expect(subscription).to be_rejected
     end
 
+    it 'allows the editable stream for restricted guest logins only for their lists' do
+      other_list = create(:score_list, competition:, track_count: 2)
+      simple_access = SimpleAccess.create!(competition:, name: 'Gast', password: 'geheim123',
+                                           permission: :selected_results, score_list_ids: [list.id])
+      session[SimpleAccess.session_key(competition)] = { 'id' => simple_access.id, 'last_seen_at' => Time.current.to_i }
+      stub_connection(current_user: nil, session:)
+
+      subscribe(score_list_id: list.id, editable: true)
+      expect(subscription).to be_confirmed
+
+      subscribe(score_list_id: other_list.id, editable: true)
+      expect(subscription).to be_rejected
+    end
+
     it 'rejects hidden lists, invisible competitions and unknown lists for visitors' do
       stub_connection(current_user: nil, session:)
 

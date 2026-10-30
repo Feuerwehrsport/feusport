@@ -4,7 +4,7 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 
-# generated from version 20261027100000
+# generated from version 20261030100000
 
 module SchemaValidations
   extend ActiveSupport::Concern
@@ -728,13 +728,16 @@ module SchemaValidations
     end
 
     def dbv_simple_accesses_validations(enums: [])
-      belongs_to_presence_validations_for([:competition_id])
+      belongs_to_presence_validations_for([:competition_id, :permission, :score_list_ids])
       belongs_to_uniqueness_validations_for([["competition_id", "name"]])
       uniqueness_validations_for([["competition_id", "name"]])
       validates_with_filter :competition_id, {presence: {}}
       validates_with_filter :created_at, {date_time_in_db_range: {}}
       validates_with_filter :created_at, {presence: {}}
       validates_with_filter :name, {presence: {}}
+      validates_with_filter :permission, {numericality: {allow_nil: true, only_integer: true, greater_than_or_equal_to: -2147483648, less_than: 2147483648}} unless enums.include?(:permission)
+      validates_with_filter :permission, {presence: {}}
+      validates_with_filter :score_list_ids, {not_null: {}}
       validates_with_filter :updated_at, {date_time_in_db_range: {}}
       validates_with_filter :updated_at, {presence: {}}
     end
@@ -1218,6 +1221,13 @@ module SchemaValidations
       return if value.year.between?(-4711, 5_874_896) # see https://www.postgresql.org/docs/9.3/datatype-datetime.html
 
       record.errors.add(attr_name, :invalid)
+    end
+  end
+
+  # Like presence, but accepts blank values like an empty hash or array
+  class NotNullValidator < ActiveModel::EachValidator
+    def validate_each(record, attr_name, value)
+      record.errors.add(attr_name, :blank) if value.nil?
     end
   end
 end

@@ -9,7 +9,7 @@ class ScoreListChannel < ApplicationCable::Channel
 
     ability = ability_for(list.competition)
     editable = ActiveModel::Type::Boolean.new.cast(params[:editable]) == true
-    allowed = editable ? ability.can?(:edit, list) : ability.can?(:read, list) && !list.hidden?
+    allowed = editable ? ability.can?(:edit_times, list) : ability.can?(:read, list) && !list.hidden?
     return reject unless allowed
 
     stream_from "score_list_#{list.id}_editable_#{editable}"

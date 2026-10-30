@@ -1,0 +1,4 @@
+Competitions::SimpleAccessesController accesses managements uses CRUD-edit-error
+
+request
+html

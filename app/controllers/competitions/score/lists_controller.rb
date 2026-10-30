@@ -40,18 +40,18 @@ class Competitions::Score::ListsController < CompetitionNestedController
 
   def show
     # Besucher: versteckte Listen gar nicht exportieren, versteckte Ergebnisse ohne Zeiten
-    if @list.hidden? && !include_hidden_lists? && !request.format.html?
-      return redirect_to(competition_score_list_path(id: @list.id))
-    end
+    editable = can?(:edit_times, @list)
+    return redirect_to(competition_score_list_path(id: @list.id)) if @list.hidden? && !editable && !request.format.html?
 
-    hide_times = @list.hidden_results? && !include_hidden_lists?
+    hide_times = @list.hidden_results? && !editable
     send_pdf(Exports::Pdf::Score::List, args: [@list, params[:more_columns].present?, hide_times])
     send_xlsx(Exports::Xlsx::Score::List, args: [@list, hide_times])
     @results = @list.results.includes(assessment: %i[band discipline])
   end
 
+  # Der Block wird über update gespeichert, das auch Teilnehmer ändern kann
   def edit_times
-    authorize!(:edit_times, resource_instance)
+    authorize!(:update, resource_instance)
   end
 
   def update

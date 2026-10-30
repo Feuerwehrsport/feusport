@@ -124,20 +124,25 @@ class Ability
   end
 
   def global_abilities
-    can(:read, Competition, visible: true)
-    can(%i[read download preview image], Document, competition: { visible: true })
-    can(:read, Discipline, competition: { visible: true })
-    can(:read, Band, competition: { visible: true })
-    can(:read, Assessment, competition: { visible: true })
-    can(:read, Team, competition: { visible: true })
-    can(:read, Person, competition: { visible: true })
-    can(:read, Score::List, competition: { visible: true })
-    can(:read, Score::Result, competition: { visible: true })
-    can(:read, Score::CompetitionResult, competition: { visible: true })
+    read_abilities(visible: true)
+  end
+
+  def read_abilities(competition)
+    can(:read, Competition, competition)
+    can(%i[read download preview image], Document, competition:)
+    can(:read, Discipline, competition:)
+    can(:read, Band, competition:)
+    can(:read, Assessment, competition:)
+    can(:read, Team, competition:)
+    can(:read, Person, competition:)
+    can(:read, Score::List, competition:)
+    can(:read, Score::Result, competition:)
+    can(:read, Score::CompetitionResult, competition:)
   end
 
   def simple_access_abilities(simple_access)
     return if simple_access.competition.locked?
+    return results_abilities(simple_access) unless simple_access.permission_full?
 
     can(:manage, Competition, id: simple_access.competition_id)
     # Gäste dürfen den Wettkampf verwalten, aber nicht löschen, verstecken, veröffentlichen oder überschreiben
@@ -163,5 +168,19 @@ class Ability
     can(:manage, Score::ListFactory, competition: { id: simple_access.competition_id })
     can(:manage, Score::ListPrintGenerator, competition: { id: simple_access.competition_id })
     can(:manage, Score::ListCondition, competition: { id: simple_access.competition_id })
+  end
+
+  # Gast darf nur Zeiten eintragen: alle sichtbaren Startlisten oder nur die freigegebenen (auch versteckte)
+  def results_abilities(simple_access)
+    read_abilities(id: simple_access.competition_id)
+
+    lists = { competition_id: simple_access.competition_id }
+    if simple_access.permission_selected_results?
+      lists[:id] = simple_access.score_list_ids
+    else
+      lists[:hidden] = false
+    end
+    can(:edit_times, Score::List, lists)
+    can(%i[edit_times edit_result_types], Score::ListEntry, competition_id: simple_access.competition_id)
   end
 end

@@ -1,0 +1,4 @@
+Competitions::SimpleAccessesController accesses managements uses CRUD-index-restricted
+
+request
+html

@@ -4,14 +4,6 @@
   .col-lg-8
     = simple_form_for([:competition, resource_instance], url: competition_simple_accesses_path) do |f|
       = card('Neuen Zugang anlegen') do |c|
-        - c.body do
-          = f.input :name, autofocus: true, as: :select, collection: @name_suggestions, include_blank: false
-          = f.input :password
-          = f.input :password_confirmation
-        - c.footer do
-          = f.primary_button :submit
-          = f.cancel_button(competition_accesses_path)
+        = render('form', f:, c:)
   .col-lg-4
-    = card_body('Gastzugänge') do
-      %p Ein Gastzugang ist für die Admins und Wettkampfrichter am Veranstaltungstag gedacht, die keinen Eigenen Zugang über feusport.de haben. Du kannst dafür ein einfaches Passwort wählen und es auf allen Tablets schnell eingeben.
-      %p Der Link zum Login findet du auf der Startseite des Wettkampfes unter <b>Gastzugang</b>.
+    = render('right')

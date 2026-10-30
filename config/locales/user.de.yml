@@ -6,6 +6,8 @@ de:
         name: Name
         password: Passwort
         password_confirmation: Passwortbestätigung
+        permission: Rechte
+        score_list_ids: Freigegebene Startlisten
       user:
         current_password: Aktuelles Passwort
         distance: Radius in km
@@ -53,8 +55,16 @@ de:
   invitation_validity:
     expired: abgelaufen
     revoked: nicht mehr gültig
+  simple_accesses:
+    permissions:
+      full: Alles verwalten
+      results: Nur Zeiten eintragen (alle nicht versteckten Startlisten)
+      selected_results: Nur Zeiten eintragen (ausgewählte Startlisten)
   simple_form:
     hints:
+      simple_access:
+        name: Diesen Namen wählt man beim Anmelden aus, z. B. »Admin«, »Wettkampfrichter« oder »Zeitnehmer Löschangriff«.
+        score_list_ids: Gilt nur für »Nur Zeiten eintragen (ausgewählte Startlisten)«.
       user:
         phone_number: Die Telefonnummer dient für Rückfragen bei Mannschaftsanmeldungen. Sie kann bei jeder Anmeldung auch später noch geändert werden.
       user_access_request:

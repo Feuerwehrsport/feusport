@@ -4,13 +4,15 @@
   .row.g-4
     .col-lg-8
       = card(@list.name) do |c|
-        - if can?(:edit, @list) || !@list.hidden?
+        - editable = can?(:edit_times, @list)
+        - list_editable = can?(:edit, @list)
+        - if editable || !@list.hidden?
           - c.direct do
-            %table.table.much-data.score-list-channel{ data: { score_list_id: @list.id, score_list_editable: can?(:edit, @list) ? '1' : '0' } }
+            %table.table.much-data.score-list-channel{ data: { score_list_id: @list.id, score_list_editable: editable ? '1' : '0' } }
               = render 'list_headline', times: true, list: @list, edit: false
               %tbody
                 - score_list_entries(@list) do |entry, run, track, best_of_run|
-                  = render partial: 'list_entry_with_times', locals: { entry:, run:, track:, list: @list, best_of_run:, editable: can?(:edit, @list), destroy_index: params[:destroy_index], edit_index: params[:edit_index] }
+                  = render partial: 'list_entry_with_times', locals: { entry:, run:, track:, list: @list, best_of_run:, editable:, destroy_index: (params[:destroy_index] if list_editable), edit_index: (params[:edit_index] if list_editable) }
           - c.actions do |actions|
             - actions.link_to 'PDF', { format: :pdf }, end_icon: :file_pdf, target: '_blank', rel: 'noopener'
             - actions.link_to 'XLS', { format: :xlsx }, end_icon: :file_excel
