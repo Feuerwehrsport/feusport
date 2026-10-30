@@ -202,6 +202,28 @@ Keine Verknüpfung mit einer vorhandenen Person
 
 <small class="form-text text-muted">Eine Verknüpfung ist bei Wettkampfserien wichtig, um vorhanden Ergebnisse zu nutzen.</small>
 <fieldset class="group">
+<legend>Wertungen</legend>
+<div class="assessment-request">
+<fieldset class="form-group boolean optional person_requests__destroy"><div class="form-check"><input name="person[requests_attributes][0][_destroy]" type="hidden" value="1" /><input class="form-check-input boolean optional" type="checkbox" value="0" name="person[requests_attributes][0][_destroy]" id="person_requests_attributes_0__destroy" /><label class="form-check-label boolean optional" for="person_requests_attributes_0__destroy">Teilnahme</label></div></fieldset>
+<div class="form-group hidden person_requests_assessment_id form-group-valid"><input class="form-control hidden" type="hidden" value="UUID" name="person[requests_attributes][0][assessment_id]" id="person_requests_attributes_0_assessment_id" /></div>
+<div class="row edit-assesment-type">
+<div class="col-md-9">
+<div class="form-group select required person_requests_assessment_type form-group-valid"><label class="control-label select required" for="person_requests_attributes_0_assessment_type">Hakenleitersteigen - Frauen <abbr title="required">*</abbr></label><select class="form-select select required assessment-types" name="person[requests_attributes][0][assessment_type]" id="person_requests_attributes_0_assessment_type"><option selected="selected" value="group_competitor">Mannschaftswertung</option>
+<option value="single_competitor">Einzelstarter</option>
+<option value="out_of_competition">Außer der Wertung</option></select></div>
+</div>
+<div class="col-md-3 group-competitor-order">
+</div>
+<div class="col-md-3 single-competitor-order">
+</div>
+<div class="col-md-3 competitor-order">
+<div class="form-group integer required person_requests_competitor_order form-group-valid"><label class="control-label integer required" for="person_requests_attributes_0_competitor_order">Nummer <abbr title="required">*</abbr></label><input class="form-control numeric integer required" type="number" step="1" value="0" name="person[requests_attributes][0][competitor_order]" id="person_requests_attributes_0_competitor_order" /></div>
+</div>
+</div>
+</div>
+
+</fieldset>
+<fieldset class="group">
 <div class="form-group text optional person_registration_hint"><label class="control-label text optional" for="person_registration_hint">Anmeldungshinweise</label><textarea class="form-control text optional" rows="4" name="person[registration_hint]" id="person_registration_hint">
 </textarea><small class="form-text text-muted">Diese Hinweise/Notizen sind nur für schreibberechtigte Nutzer zu sehen.</small></div>
 </fieldset>

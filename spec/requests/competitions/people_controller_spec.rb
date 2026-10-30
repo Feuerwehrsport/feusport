@@ -93,6 +93,46 @@ RSpec.describe 'People' do
     end
   end
 
+  context 'when assessments are chosen while creating' do
+    let!(:hb) { create(:discipline, :hb, competition:) }
+    let!(:assessment_hb) { create(:assessment, competition:, discipline: hb, band:) }
+    let(:team) { create(:team, competition:, band:) }
+
+    def create_person(last_name, hb: false)
+      post competition_nested('people'),
+           params: { band_id: band.id, person: {
+             first_name: 'first-name', last_name:, team_id: team.id,
+             requests_attributes: {
+               '0' => { _destroy: '0', assessment_id: assessment.id, assessment_type: 'group_competitor' },
+               '1' => { _destroy: hb ? '0' : '1', assessment_id: assessment_hb.id,
+                        assessment_type: 'single_competitor' },
+             }
+           } }
+    end
+
+    it 'saves the chosen assessments with automatic orders' do
+      sign_in user
+
+      create_person('', hb: true)
+      expect(response).to have_http_status(:unprocessable_content)
+      expect(response.body.scan('type="checkbox" value="0" checked="checked" name="person[requests_attributes]').size)
+        .to eq 2
+
+      expect { create_person('one') }.to change(AssessmentRequest, :count).by(1)
+      expect { create_person('two', hb: true) }.to change(AssessmentRequest, :count).by(2)
+
+      one = Person.find_by!(last_name: 'one')
+      expect(one.requested_assessments).to eq [assessment]
+      expect(one.request_for(assessment)).to have_attributes(assessment_type: 'group_competitor',
+                                                             group_competitor_order: 1)
+
+      two = Person.find_by!(last_name: 'two')
+      expect(two.request_for(assessment)).to have_attributes(group_competitor_order: 2)
+      expect(two.request_for(assessment_hb)).to have_attributes(assessment_type: 'single_competitor',
+                                                                single_competitor_order: 1)
+    end
+  end
+
   context 'when user is a applicant' do
     let!(:other_user) { create(:user, :other, phone_number: '1234') }
 

@@ -1,0 +1,32 @@
+- @competition.assessments.requestable_for_person(@person.band).each do |assessment|
+  - next if params[:assessment_id].present? && params[:assessment_id] != assessment.id
+
+  -# Abgeschickte Werte behalten (z. B. nach Validierungsfehler), sonst gespeicherten Stand oder neue Wertung
+  - request = @person.requests.find { |r| r.assessment_id == assessment.id }
+  - checked = request.present? && !request.marked_for_destruction?
+  - request ||= @person.requests.build(assessment:)
+  .assessment-request
+    = f.simple_fields_for :requests, request do |g|
+      = g.input :_destroy, as: :boolean, label: 'Teilnahme', input_html: { checked: }, checked_value: '0', unchecked_value: '1'
+      = g.input :assessment_id, as: :hidden
+
+      .row.edit-assesment-type
+        .col-md-9
+          = g.input :assessment_type, as: :select, collection: AssessmentRequest.possible_assessment_types(assessment), label: assessment.name, label_method: ->(type) { t("assessment_types.#{type}") }, include_blank: false, input_html: { class: 'assessment-types' }
+        -# Beim Anlegen vergibt AssessmentRequest#set_valid_competitor_order die Nummern beim Speichern
+        .col-md-3.group-competitor-order
+          - if @person.persisted?
+            = g.input :group_competitor_order
+        .col-md-3.single-competitor-order
+          - if @person.persisted?
+            = g.input :single_competitor_order
+        .col-md-3.competitor-order
+          - case assessment.discipline.key
+          - when 'fs'
+            = g.input :competitor_order, collection: AssessmentRequest.fs_names.each_with_index.map { |n, i| [n, i] }, include_blank: false
+          - when 'la'
+            = g.input :competitor_order, collection: AssessmentRequest.la_names.each_with_index.map { |n, i| [n, i] }, include_blank: false
+          - when 'gs'
+            = g.input :competitor_order, collection: AssessmentRequest.gs_names.each_with_index.map { |n, i| [n, i] }, include_blank: false
+          - else
+            = g.input :competitor_order

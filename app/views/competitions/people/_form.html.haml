@@ -50,6 +50,11 @@
     = render('connected', person: @person, remove: true)
     %small.form-text.text-muted Eine Verknüpfung ist bei Wettkampfserien wichtig, um vorhanden Ergebnisse zu nutzen.
 
+    - unless @person.persisted?
+      %fieldset.group
+        %legend= Assessment.model_name.human(count: :many)
+        = render('assessment_request_fields', f:)
+
     %fieldset.group
       - if @person.users.exists?
         .col-md-6
