@@ -56,6 +56,11 @@ RSpec.describe 'competitions/score/results' do
       get "/#{competition.year}/#{competition.slug}/score/results/#{result.id}/edit"
       expect(response).to match_html_fixture.with_affix('edit')
 
+      get "/#{competition.year}/#{competition.slug}/score/results/#{result.id}/edit",
+          params: { form: 'series_assessments' }
+      expect(response.body).to include('Eigene Wettkampfserie')
+      expect(response.body).to include('mailto:georf@georf.de')
+
       patch "/#{competition.year}/#{competition.slug}/score/results/#{result.id}",
             params: { score_result: { assessment_id: nil } }
       expect(response).to match_html_fixture.with_affix('edit-with-error').for_status(422)

@@ -1,0 +1,14 @@
+- if params[:form] == 'series_assessments'
+  = card_body('Eigene Wettkampfserie') do
+    %p Deine Serie fehlt? Zum Beispiel eine Kreis- oder Regionalwertung über mehrere Wettkämpfe? Eigene Serien können noch nicht selbst angelegt werden, ich richte sie aber gerne für dich ein. Dafür brauche ich:
+    %ul
+      %li den Namen der Serie und das Jahr
+      %li die Disziplinen und Wertungsgruppen (z. B. Löschangriff Frauen)
+      %li wie die Punkte vergeben werden (z. B. 1. Platz 15 Punkte, 2. Platz 14 Punkte …)
+      %li wie die Plätze berechnet werden (z. B. erst Punkte, dann beste Zeit)
+      %li wie viele Teilnahmen gewertet werden bzw. wie viele Streichwerte es gibt
+      %li wie viele Teilnahmen mindestens für eine Platzierung nötig sind
+      %li welche Wettkämpfe zur Serie gehören
+    %p.mb-0
+      Schreib mir einfach eine E-Mail an #{mail_to('georf@georf.de')} oder lege ein
+      #{link_to('Issue über Github', 'https://github.com/Feuerwehrsport/feusport/issues')} an.
