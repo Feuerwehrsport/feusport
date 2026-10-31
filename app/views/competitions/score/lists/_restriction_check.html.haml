@@ -25,3 +25,17 @@
           %td= entry.run
           %td= entry.track
           %td= condition.assessments.map(&:name).join(', ')
+
+- gap_check = Score::ListGapCheck.new(list)
+- unless gap_check.valid?
+  = card_direct('Wenig Pause zu anderen Startlisten', class: 'mb-3 text-bg-warning') do
+    %table.table.table-condensed.small.table-warning
+      - gap_check.conflicts.each do |conflict|
+        %tr
+          %td #{conflict.entry.run}/#{conflict.entry.track}
+          %td= conflict.entry.entity.full_name
+          %td
+            = link_to(conflict.other_list.name, competition_score_list_path(id: conflict.other_list.id))
+            %br
+            %small #{conflict.at_end ? 'Am Ende' : 'Am Anfang'}: Lauf #{conflict.other_run}
+    .card-body.small.pt-0 Zwischen diesen Starts und den Starts in der anderen Startliste am selben Tag liegen weniger als #{Score::ListGapCheck::RUNS} Läufe.
