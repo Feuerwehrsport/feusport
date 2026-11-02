@@ -20,6 +20,4 @@ jobs:
       - name: Security audit dependencies
         run: bundle exec bundler-audit check --update
       - name: Security audit Ruby and RubyGems
-        run: |
-          gem install ruby_audit
-          ruby-audit check
+        run: bundle exec ruby-audit check

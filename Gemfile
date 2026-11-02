@@ -76,6 +76,7 @@ group :development, :test do
 
   # audit tools
   gem 'bundler-audit'
+  gem 'ruby_audit'
   gem 'brakeman'
 end
 
