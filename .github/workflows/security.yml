@@ -1,0 +1,25 @@
+name: "Security audit"
+on:
+  schedule:
+    - cron: "0 5 * * *"
+  workflow_dispatch:
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    env:
+      BUNDLE_WITHOUT: production development
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Install Ruby and gems
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '4.0.9'
+          bundler-cache: true
+
+      - name: Security audit dependencies
+        run: bundle exec bundler-audit check --update
+      - name: Security audit Ruby and RubyGems
+        run: |
+          gem install ruby_audit
+          ruby-audit check
