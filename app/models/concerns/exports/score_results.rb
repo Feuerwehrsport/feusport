@@ -25,7 +25,9 @@ module Exports::ScoreResults
         line.push(entity&.team&.fire_sport_statistics_team_id, entity&.team&.number, entity&.export_gender) if full
       else
         line.push(entity&.full_name)
-        line.push(entity&.fire_sport_statistics_team_id, entity&.number, entity&.export_gender) if full
+        # Bei Staffeln (A, B, …) gehört die Nummer der Mannschaft in die Statistik, nicht die der Staffel
+        team = entity.is_a?(TeamRelay) ? entity.team : entity
+        line.push(team&.fire_sport_statistics_team_id, team&.number, team&.export_gender) if full
       end
       if result.multi_result_method_disabled?
         result.shown_lists.each do |list|
