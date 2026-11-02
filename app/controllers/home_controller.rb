@@ -25,6 +25,7 @@ class HomeController < ApplicationController
   end
 
   def info; end
+  def donations; end
   def help; end
   def help_assessment; end
 

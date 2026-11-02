@@ -1,0 +1,4 @@
+= page do |page|
+  = page.tabs do |tabs|
+    = tabs.link_to 'Über', info_path, active: action_name == 'info'
+    = tabs.link_to 'Spenden', donations_path, active: action_name == 'donations'

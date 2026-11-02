@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   root 'home#home'
   get 'info', to: 'home#info', as: :info
+  get 'donations', to: 'home#donations', as: :donations
   get 'disseminators', to: 'home#disseminators', as: :disseminators
   get 'help', to: 'home#help', as: :help
   get 'help_assessment', to: 'home#help_assessment', as: :help_assessment

@@ -1,0 +1,82 @@
+- content_for :page_header do
+  = page_title('Spenden')
+  %p.lead.mb-0 feusport.de ist kostenlos und werbefrei – und das bleibt auch so.
+= render 'home/info_header'
+
+.row.g-4
+  .col-lg-6
+    = card_body('Wer trägt die Kosten?') do
+      %p
+        Alle Kosten rund um feusport.de trägt die #{link_to('Lichtbit GmbH', 'https://lichtbit.com')} oder ich selbst.
+        Niemand muss für die Nutzung etwas bezahlen, und daran ändert sich auch nichts, wenn keine Spenden eingehen.
+      %table.table.mb-3
+        %tr
+          %th Server und Speicherplatz
+          %td laufend
+        %tr
+          %th Domain
+          %td laufend
+        %tr
+          %th Netzwerktechnik, Laptops und weitere Ausstattung
+          %td in der Anfangszeit bereitgestellt
+        %tr
+          %th Entwicklung
+          %td mindestens 1.200 Stunden
+      %p.mb-0 Die Entwicklung passiert in meiner Freizeit. Ich mache das gern, weil ich hoffe, dass die Seite den Sport weiterbringt und vielen Wettkämpfen hilft.
+
+    .mt-4
+      = card_body('Wofür Spenden verwendet werden') do
+        %p Eine Spende ist ein Dankeschön, keine Bedingung. Damit nachvollziehbar bleibt, was damit passiert:
+        %ol
+          %li.mb-2
+            .fw-bold Ein Abendessen mit meiner Frau
+            Sie hat unzählige Abende und Wochenenden mitgetragen, an denen ich programmiert habe. Das hat sie sich verdient.
+          %li
+            .fw-bold Die Serverkosten
+            Kommt mehr zusammen, bezahle ich davon den Server. Das senkt meine eigenen Ausgaben.
+
+    .mt-4
+      = card_body('Eingegangene Spenden') do
+        %p Alle Spenden werden hier aufgeführt. Ohne ausdrücklichen Wunsch erscheint dabei kein Name.
+        %p.text-body-secondary.mb-0 Bisher ist noch keine Spende eingegangen.
+
+  .col-lg-6
+    = card_body('So kannst du spenden') do
+      - if donation_iban.present?
+        %h5 Überweisung
+        %table.table.table-sm
+          %tr
+            %th Empfänger
+            %td= DonationHelper::DONATION_RECIPIENT
+          %tr
+            %th IBAN
+            %td.user-select-all.text-nowrap= formatted_donation_iban
+          %tr
+            %th Verwendungszweck
+            %td= DonationHelper::DONATION_PURPOSE
+        .d-flex.align-items-center.gap-3.mb-4
+          = image_tag donation_girocode, alt: 'GiroCode für eine Überweisung', width: 160, height: 160,
+                                         class: 'border rounded flex-shrink-0'
+          .small.text-body-secondary Mit der Banking-App scannen, den Betrag wählst du selbst.
+      %h5 PayPal
+      %p= link_to('paypal.me/georglimbach', DonationHelper::DONATION_PAYPAL_URL)
+      %p.small.text-body-secondary.mb-0 Wenn du in der Liste namentlich genannt werden möchtest, schreib es einfach dazu.
+
+    .mt-4
+      = card_body('Fanartikel') do
+        %p.mb-0
+          Fanartikel rund um feusport.de sind in Planung. Wenn du eine Idee oder einen Wunsch hast,
+          schreib mir gern an #{mail_to('georf@georf.de')}.
+
+    .mt-4
+      = card_body('Andere Wege') do
+        %ul.mb-0
+          %li.mb-2
+            .fw-bold Individuelle Software
+            Ich bin beruflich als Entwickler tätig. Falls euer Unternehmen eine maßgeschneiderte Anwendung braucht, meldet euch gern bei der #{link_to('Lichtbit GmbH', 'https://lichtbit.com')}.
+          %li.mb-2
+            .fw-bold Mitmachen
+            Ideen, Fehlermeldungen und Programmierarbeit sind #{link_to('auf Github', 'https://github.com/Feuerwehrsport/feusport')} jederzeit willkommen.
+          %li
+            .fw-bold Rückmeldung
+            Lob, nette Nachrichten oder einfach ein Dankeschön motivieren mehr, als man denkt.

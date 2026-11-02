@@ -94,6 +94,18 @@ RSpec.describe 'Home' do
     end
   end
 
+  describe 'donations' do
+    it 'shows donations page' do
+      get '/donations'
+      expect(response.body).to include('DE31 1203 0000 1029 1862 59', 'GiroCode', 'data:image/png;base64,')
+
+      stub_const('DonationHelper::DONATION_IBAN', nil)
+      get '/donations'
+      expect(response).to match_html_fixture
+      expect(response.body).not_to include('GiroCode')
+    end
+  end
+
   describe 'help' do
     it 'shows help page' do
       get '/help'
