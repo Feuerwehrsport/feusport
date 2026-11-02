@@ -38,6 +38,9 @@
                   In der Warteschlange
                 - else
                   = l(publishing.published_at)
+        .card-body.small
+          Schön, dass feusport.de bei diesem Wettkampf helfen konnte. Die Seite bleibt kostenlos.
+          Wer sich trotzdem bedanken möchte, findet #{link_to('hier', donations_path)} ein paar Möglichkeiten.
 
       - unless @competition.visible?
         .card-header.text-bg-warning

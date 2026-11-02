@@ -25,6 +25,19 @@ RSpec.describe 'competitions/visibilities' do
     end
   end
 
+  describe 'locked competition' do
+    let!(:competition) { create(:competition, visible: true, locked_at: Time.current) }
+
+    it 'shows donation hint' do
+      get "/#{competition.year}/#{competition.slug}"
+      expect(response.body).to include('Bearbeitung beendet', 'Wer sich trotzdem bedanken möchte', 'href="/donations"')
+
+      competition.update!(locked_at: nil)
+      get "/#{competition.year}/#{competition.slug}"
+      expect(response.body).not_to include('href="/donations"')
+    end
+  end
+
   describe 'simple_access_login' do
     let(:wko) { create(:wko) }
     let!(:competition) { create(:competition, visible: true, wko:) }
