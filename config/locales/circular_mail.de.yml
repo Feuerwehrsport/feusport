@@ -1,0 +1,19 @@
+---
+de:
+  activerecord:
+    attributes:
+      circular_mail:
+        message: Nachricht
+        subject: Betreff
+    models:
+      circular_mail:
+        one: Rundmail
+        other: Rundmails
+  circular_mails:
+    recipients:
+      one: 1 Empfänger
+      other: "%{count} Empfänger"
+  simple_form:
+    hints:
+      circular_mail:
+        message: Die Nachricht geht an alle Anmeldungen dieses Wettkampfes. Du kannst **fett**, *kursiv* und Aufzählungen verwenden.

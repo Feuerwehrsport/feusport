@@ -72,6 +72,7 @@ class Competition < ApplicationRecord
   has_many :simple_accesses, class_name: 'SimpleAccess', dependent: :destroy
   has_many :team_list_restrictions, dependent: :destroy
   has_many :information_requests, dependent: :destroy
+  has_many :circular_mails, dependent: :destroy
   has_many :series_round_competition_associations, dependent: :destroy, class_name: 'Series::RoundCompetitionAssociation'
   has_many :series_rounds, class_name: 'Series::Round', through: :series_round_competition_associations, source: :round
   has_many :series_team_points_corrections, class_name: 'Series::TeamPointsCorrection', dependent: :destroy

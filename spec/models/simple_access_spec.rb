@@ -9,7 +9,7 @@ require 'rails_helper'
 #  id              :uuid             not null, primary key
 #  name            :string           not null
 #  password_digest :string
-#  permission      :integer          default(0), not null
+#  permission      :integer          default("full"), not null
 #  score_list_ids  :uuid             default([]), not null, is an Array
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null

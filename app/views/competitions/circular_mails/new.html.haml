@@ -1,0 +1,9 @@
+= render 'competitions/header', competition: @competition, sub: 'Rundmail schreiben'
+
+.row.g-4
+  .col-lg-8
+    = simple_form_for([:competition, resource_instance]) do |f|
+      = card('Rundmail an alle Anmeldungen') do |c|
+        = render('form', f:, c:)
+  .col-lg-4
+    = render('new_right')

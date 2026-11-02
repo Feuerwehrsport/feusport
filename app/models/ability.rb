@@ -87,6 +87,7 @@ class Ability
     can(:manage, UserAccessRequest, competition: manage_ua)
 
     can(:create, InformationRequest, &:possible?)
+    can(:create, CircularMail, competition: { user_accesses: { user_id: user.id } })
 
     can(:read, FireSportStatistics::Publishing, competition: read_ua)
     can(:manage, Competitions::Publishing, competition: manage_ua)

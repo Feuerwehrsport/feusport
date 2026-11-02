@@ -1,0 +1,9 @@
+- c.body do
+  - if f.object.errors[:base].any?
+    .alert.alert-danger= f.object.errors[:base].to_sentence
+  = f.input :subject
+  = f.input :message, input_html: { rows: 10 }
+  = hcaptcha
+- c.footer do
+  = f.primary_button :submit, 'Rundmail verschicken'
+  = f.cancel_button(competition_show_path)

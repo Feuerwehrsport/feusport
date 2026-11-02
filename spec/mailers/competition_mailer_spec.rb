@@ -195,6 +195,27 @@ RSpec.describe CompetitionMailer do
     end
   end
 
+  describe 'circular_mail' do
+    let!(:competition) { create(:competition) }
+    let(:team) { create(:team, competition:, band: create(:band, :female, competition:)) }
+    let(:circular_mail) { create(:circular_mail, competition:, user: competition.users.first) }
+    let(:mail) { described_class.with(circular_mail:).circular_mail }
+
+    before do
+      UserTeamAccess.create!(user: create(:user, :other), competition:, team:)
+    end
+
+    it 'renders the headers and body' do
+      expect(mail.subject).to eq('Wichtige Infos - MV-Cup')
+      expect(mail.header[:to].to_s).to eq 'Alfred Meier <alfred@meier.de>'
+      expect(mail.header[:from].to_s).to eq 'Feuerwehrsport <no-reply@feusport.de>'
+      expect(mail.header[:cc].to_s).to eq ''
+      expect(mail.bcc).to eq ['other@meier.de']
+      expect(mail.header[:reply_to].to_s).to eq 'Alfred Meier <alfred@meier.de>'
+      expect(mail).to match_html_fixture
+    end
+  end
+
   describe 'access_deleted' do
     let(:competition) { create(:competition) }
     let(:actor) { competition.users.first }

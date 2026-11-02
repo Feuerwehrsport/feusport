@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_30_100000) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_02_100000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -119,6 +119,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_30_100000) do
     t.text "md", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "circular_mails", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "competition_id", null: false
+    t.uuid "user_id", null: false
+    t.string "subject", limit: 200, null: false
+    t.text "message", null: false
+    t.integer "recipients_count", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["competition_id"], name: "index_circular_mails_on_competition_id"
+    t.index ["user_id"], name: "index_circular_mails_on_user_id"
   end
 
   create_table "competition_features", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -952,6 +964,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_30_100000) do
   add_foreign_key "bands", "competitions"
   add_foreign_key "certificates_templates", "competitions"
   add_foreign_key "certificates_text_fields", "certificates_templates", column: "template_id"
+  add_foreign_key "circular_mails", "competitions"
+  add_foreign_key "circular_mails", "users"
   add_foreign_key "competition_features", "competitions"
   add_foreign_key "competition_features", "features"
   add_foreign_key "competitions", "wkos"

@@ -4,7 +4,7 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 
-# generated from version 20261030100000
+# generated from version 20261102100000
 
 module SchemaValidations
   extend ActiveSupport::Concern
@@ -183,6 +183,21 @@ module SchemaValidations
       validates_with_filter :title, {presence: {}}
       validates_with_filter :updated_at, {date_time_in_db_range: {}}
       validates_with_filter :updated_at, {presence: {}}
+    end
+
+    def dbv_circular_mails_validations(enums: [])
+      belongs_to_presence_validations_for([:competition_id, :recipients_count, :user_id])
+      validates_with_filter :competition_id, {presence: {}}
+      validates_with_filter :created_at, {date_time_in_db_range: {}}
+      validates_with_filter :created_at, {presence: {}}
+      validates_with_filter :message, {presence: {}}
+      validates_with_filter :recipients_count, {numericality: {allow_nil: true, only_integer: true, greater_than_or_equal_to: -2147483648, less_than: 2147483648}} unless enums.include?(:recipients_count)
+      validates_with_filter :recipients_count, {presence: {}}
+      validates_with_filter :subject, {length: {allow_nil: true, maximum: 200}}
+      validates_with_filter :subject, {presence: {}}
+      validates_with_filter :updated_at, {date_time_in_db_range: {}}
+      validates_with_filter :updated_at, {presence: {}}
+      validates_with_filter :user_id, {presence: {}}
     end
 
     def dbv_competition_features_validations(enums: [])

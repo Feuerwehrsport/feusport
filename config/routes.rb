@@ -41,6 +41,7 @@ Rails.application.routes.draw do
     get 'di/:idpart', to: 'documents#image', as: :document_image
     resource :publishing, only: %i[new create]
     resources :information_requests, only: %i[new create]
+    resources :circular_mails, only: %i[new create]
 
     # top menu
     resources :teams, only: %i[new create show edit update index] do

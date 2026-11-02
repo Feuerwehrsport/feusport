@@ -72,6 +72,9 @@
             = link_to 'Bearbeitung aktivieren', new_competition_unlocking_path, class: 'btn btn-light btn-sm'
             = link_to 'Schnappschuss hinzufügen', new_competition_snapshot_path, class: 'btn btn-light btn-sm'
 
+          - if can?(:create, CircularMail.new(competition: @competition))
+            = link_to 'Rundmail an Anmeldungen', new_competition_circular_mail_path, class: 'btn btn-light btn-sm'
+
           - if InformationRequest.new(competition: @competition).possible?
             = link_to 'Anfrage stellen', new_competition_information_request_path, class: 'btn btn-light btn-sm'
 

@@ -1,0 +1,4 @@
+competitions/circular_mails sends a circular mail-new-without-recipients-error
+
+request
+html

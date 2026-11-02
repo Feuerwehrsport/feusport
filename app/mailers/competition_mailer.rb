@@ -106,6 +106,19 @@ class CompetitionMailer < ApplicationMailer
     )
   end
 
+  def circular_mail
+    @circular_mail = @params[:circular_mail]
+    @competition = @circular_mail.competition
+    sender = email_address_with_name(@circular_mail.user.email, @circular_mail.user.name)
+
+    mail(
+      to: sender,
+      bcc: @circular_mail.recipients.map { |user| email_address_with_name(user.email, user.name) },
+      reply_to: sender,
+      subject: "#{@circular_mail.subject} - #{@competition.name}",
+    )
+  end
+
   def access_deleted
     @competition = @params[:competition]
     @actor = @params[:actor]

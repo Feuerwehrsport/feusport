@@ -1,0 +1,9 @@
+- recipients = resource_instance.recipients
+= card_body('Empfänger') do
+  %p Die Rundmail geht an alle Nutzer, die eine Mannschaft oder einen Wettkämpfer zu diesem Wettkampf angemeldet haben oder verwalten. Die Empfänger stehen im <b>BCC</b> und sehen sich gegenseitig nicht.
+  %p Du bekommst die E-Mail selbst als Kopie. Antworten gehen direkt an deine E-Mail-Adresse.
+  - if recipients.any?
+    %p.mb-0
+      %b= t('circular_mails.recipients', count: recipients.count)
+  - else
+    %p.mb-0.text-danger Es gibt noch keine angemeldeten Mannschaften oder Wettkämpfer mit Nutzerkonto.
