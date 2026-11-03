@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     post 'import', to: 'dashboards#import', as: :import
     delete 'cache', to: 'dashboards#clear_cache', as: :cache
     post 'publishings', to: 'dashboards#retry_publishings', as: :publishings
+    resources :changelogs, except: %i[show]
+    resources :disseminators, except: %i[show]
   end
 
   root 'home#home'

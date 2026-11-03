@@ -1,0 +1,12 @@
+= render 'admin/header'
+
+= card_direct('Änderungen') do
+  %table.table.mb-0
+    - @resources.each do |changelog|
+      %tr
+        %td= l(changelog.date)
+        %td= changelog.title
+        %td.text-end
+          = short_edit_link(edit_admin_changelog_path(changelog))
+          = short_destroy_link(admin_changelog_path(changelog), data: { turbo_method: :delete, turbo_confirm: 'Wirklich löschen?' })
+  .card-footer= btn_link_to('Änderung hinzufügen', new_admin_changelog_path)

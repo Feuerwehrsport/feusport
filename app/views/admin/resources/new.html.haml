@@ -1,0 +1,7 @@
+= render 'admin/header'
+
+.row.g-4
+  .col-lg-8
+    = simple_form_for([:admin, @resource]) do |f|
+      = card("#{resource_class.model_name.human} hinzufügen") do |c|
+        = render('form', f:, c:)

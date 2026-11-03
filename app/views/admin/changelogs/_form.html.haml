@@ -1,0 +1,7 @@
+- c.body do
+  = f.input :date, html5: true
+  = f.input :title
+  = f.input :md, input_html: { rows: 10 }
+- c.footer do
+  = f.primary_button :submit, 'Speichern'
+  = f.cancel_button(admin_changelogs_path)

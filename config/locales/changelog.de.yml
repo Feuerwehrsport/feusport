@@ -1,0 +1,16 @@
+---
+de:
+  activerecord:
+    attributes:
+      changelog:
+        date: Datum
+        md: Beschreibung
+        title: Titel
+    models:
+      changelog:
+        one: Änderung
+        other: Änderungen
+  simple_form:
+    hints:
+      changelog:
+        md: Markdown ist erlaubt.

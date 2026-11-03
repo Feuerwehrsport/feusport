@@ -1,0 +1,14 @@
+---
+de:
+  activerecord:
+    attributes:
+      disseminator:
+        email_address: E-Mail-Adresse
+        lfv: LFV
+        name: Name
+        phone_number: Telefonnummer
+        position: Position
+    models:
+      disseminator:
+        one: Multiplikator
+        other: Multiplikatoren

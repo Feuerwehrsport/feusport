@@ -1,0 +1,15 @@
+= render 'admin/header'
+
+= card_direct('Multiplikatoren') do
+  %table.table.mb-0
+    - @resources.each do |disseminator|
+      %tr
+        %td= disseminator.name
+        %td= disseminator.lfv
+        %td= disseminator.position
+        %td= disseminator.email_address
+        %td= disseminator.phone_number
+        %td.text-end
+          = short_edit_link(edit_admin_disseminator_path(disseminator))
+          = short_destroy_link(admin_disseminator_path(disseminator), data: { turbo_method: :delete, turbo_confirm: 'Wirklich löschen?' })
+  .card-footer= btn_link_to('Multiplikator hinzufügen', new_admin_disseminator_path)

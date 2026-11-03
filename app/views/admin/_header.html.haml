@@ -1,0 +1,5 @@
+= page do |page|
+  = page.tabs do |tabs|
+    = tabs.link_to 'Übersicht', admin_root_path, active: controller_name == 'dashboards'
+    = tabs.link_to 'Änderungen', admin_changelogs_path, active: controller_name == 'changelogs'
+    = tabs.link_to 'Multiplikatoren', admin_disseminators_path, active: controller_name == 'disseminators'

@@ -1,0 +1,9 @@
+- c.body do
+  = f.input :name
+  = f.input :lfv
+  = f.input :position
+  = f.input :email_address
+  = f.input :phone_number
+- c.footer do
+  = f.primary_button :submit, 'Speichern'
+  = f.cancel_button(admin_disseminators_path)
