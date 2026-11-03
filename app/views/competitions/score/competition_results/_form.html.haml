@@ -2,7 +2,7 @@
   %datalist#band-names
     - @competition.bands.sort.each do |band|
       %option{ value: band.name }
-  = f.input :name, hint: 'Überlicherweise: Frauen oder Männer', input_html: { list: 'band-names' }
+  = f.input :name, hint: 'Üblicherweise: Frauen oder Männer', input_html: { list: 'band-names' }
   %fieldset.group
     = f.input :hidden, hint: 'Manchmal baut es mehr Spannung auf, wenn die Gesamtwertung nicht öffentlich einsehbar ist.'
   %fieldset.group

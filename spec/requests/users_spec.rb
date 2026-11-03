@@ -74,7 +74,7 @@ RSpec.describe User do
       post '/users/password', params: { user: { email: user.email } }
       expect(response).to redirect_to new_user_session_path
       expect(flash[:notice]).to eq(
-        'Du erhältst in wenigen Minuten eine E-Mail mit der Anleitung, wie Du Dein Passwort zurücksetzen kannst.',
+        'Du erhältst in wenigen Minuten eine E-Mail mit der Anleitung, wie du dein Passwort zurücksetzen kannst.',
       )
       expect(user.reload.reset_password_sent_at).to be > 1.hour.ago
     end
@@ -109,7 +109,7 @@ RSpec.describe User do
       sign_in user
       delete '/users'
       expect(response).to redirect_to root_path
-      expect(flash[:notice]).to eq 'Dein Konto wurde gelöscht. Wir hoffen, dass wir Dich bald wiedersehen.'
+      expect(flash[:notice]).to eq 'Dein Konto wurde gelöscht. Wir hoffen, dass wir dich bald wiedersehen.'
     end
   end
 
@@ -122,7 +122,7 @@ RSpec.describe User do
         expect(response).to redirect_to root_path
         expect(flash[:notice]).to eq(
           'Du erhältst in wenigen Minuten eine E-Mail mit einem Link für die Bestätigung der Registrierung. ' \
-          'Klicke auf den Link, um Dein Konto zu aktivieren.',
+          'Klicke auf den Link, um dein Konto zu aktivieren.',
         )
       end.to change(described_class, :count).by(1)
     end
@@ -151,7 +151,7 @@ RSpec.describe User do
       post '/users/confirmation', params: { user: { email: user.email } }
       expect(response).to redirect_to new_user_session_path
       expect(flash[:notice]).to eq(
-        'Du erhältst in wenigen Minuten eine E-Mail, mit der Du Deine Registrierung bestätigen kannst.',
+        'Du erhältst in wenigen Minuten eine E-Mail, mit der du deine Registrierung bestätigen kannst.',
       )
     end
   end
@@ -171,7 +171,7 @@ RSpec.describe User do
     it 'unlocks' do
       get '/users/unlock', params: { unlock_token: 'ABC' }
       expect(response).to redirect_to new_user_session_path
-      expect(flash[:notice]).to eq 'Dein Konto wurde entsperrt. Bitte melde Dich an, um fortzufahren.'
+      expect(flash[:notice]).to eq 'Dein Konto wurde entsperrt. Bitte melde dich an, um fortzufahren.'
       expect(user.reload.locked_at).to be_nil
     end
   end
@@ -185,7 +185,7 @@ RSpec.describe User do
       post '/users/unlock', params: { user: { email: user.email } }
       expect(response).to redirect_to new_user_session_path
       expect(flash[:notice]).to eq(
-        'Du erhältst in wenigen Minuten eine E-Mail mit der Anleitung, wie Du Dein Konto entsperren kannst.',
+        'Du erhältst in wenigen Minuten eine E-Mail mit der Anleitung, wie du dein Konto entsperren kannst.',
       )
       expect(user.reload.unlock_token).not_to be_nil
     end

@@ -107,7 +107,7 @@ const swapCheck = function (table, tbody, query) {
     // sichtbar machen
     c.classList.remove('d-none');
 
-    // bei Änderung überpüfen
+    // bei Änderung überprüfen
     c.addEventListener('input', () => {
       let c1 = null;
       let c2 = null;

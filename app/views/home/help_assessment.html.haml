@@ -18,14 +18,14 @@
         %li Vergleich der Bestzeiten
         %li Vergleich der zweitbesten Zeiten (usw.)
         %li Anzahl gültiger Versuche
-        %li Bei weiterer Gleichheit: Wettkämpfer landen auf dem gleichem Platz
+        %li Bei weiterer Gleichheit: Wettkämpfer landen auf dem gleichen Platz
 
   .col-lg-6
     = card_body('Erläuterung') do
       %p Für gleiche Leistung beim 100m-Hindernislauf und dem Hakenleitersteigen ist in der #{link_to('WKO 2023', wko_path('2023'))} der Punkt 9.2 relevant.
       %figure
         %blockquote.blockquote
-          %p Die Wettkämpfer jeder Wettkampfmannschaft dürfen in der Regel je zwei Läufe machen, von denen der bessere gewertet wird. Ist nur ein Versuch gültig, geht dieser in die Wertung ein. Sind beide Versuche ungültig wird der Wettkämpfer am Ende des Starterfeldes platziert. [...]
+          %p Die Wettkämpfer jeder Wettkampfmannschaft dürfen in der Regel je zwei Läufe machen, von denen der bessere gewertet wird. Ist nur ein Versuch gültig, geht dieser in die Wertung ein. Sind beide Versuche ungültig, wird der Wettkämpfer am Ende des Starterfeldes platziert. [...]
           %p Bei Zeitgleichheit zweier oder mehrerer Wettkämpfer beim besseren Lauf entscheidet die bessere Zeit im schlechteren Versuch über die bessere Platzierung. Hat einer der Wettkämpfer nur einen erfolgreichen Versuch aufzuweisen, ist diesem der zeitgleiche Wettkämpfer mit zwei erfolgreichen Versuchen vorzuziehen. Sind bei zwei oder mehreren Wettkämpfern auch die schlechteren Versuche zeitgleich, so werden diese auf dem gleichen Rang platziert.
           %p [...]
         %figcaption.blockquote-footer Quelle: WKO 2023, Punkt 9.2
@@ -39,7 +39,7 @@
         %li Vergleich der Bestzeiten
         %li Vergleich der zweitbesten Zeiten (usw.)
         %li Anzahl gültiger Versuche
-        %li Bei weiterer Gleichheit: Wettkämpfer landen auf dem gleichem Platz
+        %li Bei weiterer Gleichheit: Wettkämpfer landen auf dem gleichen Platz
 
   .col-lg-6
     = card_body('Erläuterung') do
@@ -47,7 +47,7 @@
       %figure
         %blockquote.blockquote
           %p Die Zweikampfzeiten ergeben sich aus der Addition der Bestzeiten des jeweiligen Wettkämpfers in den Disziplinen 100 m-Hindernislauf und Hakenleitersteigen. Ist ein Wettkämpfer in einer dieser beiden Disziplinen nicht gestartet, wird er im Zweikampf nicht gewertet.
-          %p Bei Zeitgleichheit zweier oder mehrerer Wettkämpfer entscheidet die bessere Gesamtzeit der zweiten Versuche über die bessere Platzierung. Sind auch diese Zeiten gleich, der werden die Wettkämpfer auf dem gleichen Rang platziert.
+          %p Bei Zeitgleichheit zweier oder mehrerer Wettkämpfer entscheidet die bessere Gesamtzeit der zweiten Versuche über die bessere Platzierung. Sind auch diese Zeiten gleich, werden die Wettkämpfer auf dem gleichen Rang platziert.
           %p Ergebnisse aus Finalläufen werden im Zweikampf nicht berücksichtigt.
         %figcaption.blockquote-footer Quelle: WKO 2023, Punkt 9.2
 
@@ -59,9 +59,9 @@
       %p In folgender Reihenfolge berechnet das System die Platzierung:
       %ol
         %li Vergleich der Bestzeiten der besten x Wettkämpfer
-        %li Vergleich der zweitbesten Zeiten (der x Wettkämpfer mit den Bestezeiten) (usw.)
+        %li Vergleich der zweitbesten Zeiten (der x Wettkämpfer mit den Bestzeiten) (usw.)
         %li Bei jeder Iteration wird die Mannschaft mit mehr gültigen Versuchen bevorzugt.
-        %li Bei gleichen Anzahl gültigen Versuchen wird die Summe der übrigen Zeiten herangezogen
+        %li Bei gleicher Anzahl gültiger Versuche wird die Summe der übrigen Zeiten herangezogen
 
   .col-lg-6
     = card_body('Erläuterung') do
@@ -70,7 +70,7 @@
         %blockquote.blockquote
           %p Von jeder Wettkampfmannschaft wird die ausgeschriebene Anzahl von Zeiten der besten Wettkämpfer für die Mannschaftswertung addiert. In die Mannschaftswertungen gehen die Ergebnisse eventuell ausgeschriebener Finalläufe nicht ein.
           %p Erreichen zwei oder mehrere Wettkampfmannschaften in dieser Disziplin die gleiche Zeitsumme, so entscheidet die bessere Zeitsumme aus den schlechteren Versuchen der gleichen Wettkämpfer. Haben einer oder mehrere dieser Wettkämpfer nur einen erfolgreichen Versuch aufzuweisen, ist bei Zeitgleichheit bei den besseren Versuchen jener Wettkampfmannschaft der Vorrang zu geben, von der mehr der Wettkämpfer zwei erfolgreiche Versuche aufzuweisen haben.
-          %p Falls nicht mindestens die für die Mannschaftswertung ausgeschriebene Anzahl von Wettkämpfern wenigstens einen erfolgreichen Lauf haben, wird diese Wettkampfmannschaft in der Mannschaftswertung dieser Disziplin hinter die Mannschaften mit genügend gültigen Läufen platziert. Haben mehrere Mannschaften nicht genügend gültigen Zeiten, so entscheidet bei gleicher Anzahl gewerteter Zeiten die niedrigste Zeitsumme dieser über die bessere Platzierung.
+          %p Falls nicht mindestens die für die Mannschaftswertung ausgeschriebene Anzahl von Wettkämpfern wenigstens einen erfolgreichen Lauf haben, wird diese Wettkampfmannschaft in der Mannschaftswertung dieser Disziplin hinter die Mannschaften mit genügend gültigen Läufen platziert. Haben mehrere Mannschaften nicht genügend gültige Zeiten, so entscheidet bei gleicher Anzahl gewerteter Zeiten die niedrigste Zeitsumme dieser über die bessere Platzierung.
         %figcaption.blockquote-footer Quelle: WKO 2023, Punkt 9.3
 
   .col-lg-6
@@ -113,7 +113,7 @@
           %p Die erreichte Zeit im Löschangriff ist für die Platzierung maßgebend.
           %p Der Veranstalter kann zwei Versuche je Wettkampfmannschaft ausschreiben, von denen dann der bessere gewertet wird.
           %p Erreichen zwei oder mehrere Wettkampfmannschaften die gleiche Zeit in ihrem besten Versuch, wird bei der Durchführung von zwei Läufen zur Ermittlung der besseren Platzierung die Zeit des anderen Laufes der Mannschaft mit einbezogen.
-          %p Wird nur ein Lauf durchgeführt, entscheidet bei Zeitgleichheit die frühere Startzeit und somit das früher erreichte Ergebnis über die besser Platzierung.
+          %p Wird nur ein Lauf durchgeführt, entscheidet bei Zeitgleichheit die frühere Startzeit und somit das früher erreichte Ergebnis über die bessere Platzierung.
         %figcaption.blockquote-footer Quelle: WKO 2023, Punkt 9.5
 
   .col-lg-6
@@ -130,11 +130,11 @@
         %li Bei gleicher Punktzahl entscheidet die Bestzeit im Löschangriff
         %li Ist auch diese gleich, werden die Mannschaften gleich platziert
 
-      %p Bei der Berechung der Platzierung gibt es Änderungen bei der Staffelreihenfolge:
+      %p Bei der Berechnung der Platzierung gibt es Änderungen bei der Staffelreihenfolge:
       %ol
         %li Vergleich der Bestzeiten einer Mannschaft
         %li Vergleich der zweitbesten Zeiten (usw.)
-        %li Bei weiterer Gleichheit: Mannschaften landen auf dem gleichem Platz
+        %li Bei weiterer Gleichheit: Mannschaften landen auf dem gleichen Platz
 
   .col-lg-6
     = card_body('Erläuterung') do

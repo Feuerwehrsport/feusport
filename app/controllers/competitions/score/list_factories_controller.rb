@@ -40,7 +40,7 @@ class Competitions::Score::ListFactoriesController < CompetitionNestedController
 
   def destroy
     @list_factory.destroy
-    redirect_to competition_score_lists_path, notice: 'Listerstellung wurde abgebrochen'
+    redirect_to competition_score_lists_path, notice: 'Listenerstellung wurde abgebrochen'
   end
 
   def copy_list

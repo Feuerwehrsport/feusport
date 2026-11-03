@@ -7,7 +7,7 @@ de:
       certificates/list:
         background_image: Hintergrundbild einbetten
         competition_result_id: Gesamtwertung
-        group_score_result_id: Mannschaftwertung
+        group_score_result_id: Mannschaftswertung
         score_result_id: Ergebnisliste
         series_person_assessment_id: Serienergebnisse - Einzel
         series_team_assessment_id: Serienergebnisse - Mannschaft

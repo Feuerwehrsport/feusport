@@ -15,7 +15,7 @@ module AccessDeniedSupport
         flash[:alert] = 'Zugriff verweigert'
         redirect_to main_app.root_path
       else
-        flash[:alert] = 'Bitte melde Dich an, um diese Funktion nutzen zu können.'
+        flash[:alert] = 'Bitte melde dich an, um diese Funktion nutzen zu können.'
         session[:requested_url_before_login] = request.fullpath if request.format == :html
 
         redirect_params = {}

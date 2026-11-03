@@ -6,5 +6,5 @@ end
 
 def expect_access_denied(redirect_to_url: '/users/sign_in')
   expect(response).to redirect_to(redirect_to_url)
-  expect(flash[:alert]).to eq 'Bitte melde Dich an, um diese Funktion nutzen zu können.'
+  expect(flash[:alert]).to eq 'Bitte melde dich an, um diese Funktion nutzen zu können.'
 end

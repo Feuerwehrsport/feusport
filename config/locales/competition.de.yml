@@ -16,7 +16,7 @@ de:
     attributes:
       competition:
         address: Adresse
-        change_people_until: Wettkämper ändern bis einschließlich
+        change_people_until: Wettkämpfer ändern bis einschließlich
         date: Datum
         description: Beschreibung
         features: Merkmale

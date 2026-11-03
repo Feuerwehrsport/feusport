@@ -15,7 +15,7 @@
             = f.input :hint, as: :text, hint: 'Du solltest den Administratoren von Feuerwehrsport-Statistik Hinweise auf besondere Umstände geben. Zum Beispiel, welche Ausschreibung genutzt wurde oder ob die Ziele eine Dosen waren. Es reicht ein kurzer Hinweis: WKO2023 - DIN - Zielgeräte'
           - if @competition.score_lists.empty?
             .card-body.text-bg-warning.mb-2
-              Anscheinend hast du deine Ergebnisse <b>extern gepflegt</b>. Lade Sie doch als PDF hier in Feusport zu deinem Wettkampf hoch. Dann können alle Teilnehmer die Ergebnisse nochmal ansehen.
+              Anscheinend hast du deine Ergebnisse <b>extern gepflegt</b>. Lade sie doch als PDF hier in Feusport zu deinem Wettkampf hoch. Dann können alle Teilnehmer die Ergebnisse nochmal ansehen.
         - c.footer do
           = f.button :submit, 'Veröffentlichen', class: 'btn-primary'
           = link_to 'Abbrechen', competition_show_path, class: 'btn btn-light'

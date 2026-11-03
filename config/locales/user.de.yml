@@ -17,7 +17,7 @@ de:
         password_confirmation: Passwortbestätigung
         phone_number: Telefonnummer
         remember_me: Eingeloggt bleiben
-        reset_password_token: Zurücksetz-Link
+        reset_password_token: Link zum Zurücksetzen
         want_mailing: Gewünschte Benachrichtigungen
       user_access:
         registration_mail_info: Infomail
