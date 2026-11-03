@@ -10,6 +10,9 @@ class ApplicationMailer < ActionMailer::Base
 
   self.delivery_job = DeliveryJob
 
+  # Jobs bringen die Sprache mit, mit der sie eingeplant wurden. Mails sind immer deutsch.
+  around_action { |_mailer, action| I18n.with_locale(:de, &action) }
+
   def mail(*)
     attachments.inline['logo.png'] = {
       mime_type: 'image/png',

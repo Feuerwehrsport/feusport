@@ -192,6 +192,11 @@ RSpec.describe CompetitionMailer do
       expect(mail.header[:to].to_s).to eq 'Alfred Meier <alfred@meier.de>'
       expect(mail).to match_html_fixture
     end
+
+    it 'formats dates in german even if job runs with another locale' do
+      body = I18n.with_locale(:en) { mail.html_part.body.decoded }
+      expect(body).to include('<em>20.02.2023</em>', '<em>14.03.2024</em>')
+    end
   end
 
   describe 'information_request' do
