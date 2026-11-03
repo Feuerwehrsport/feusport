@@ -28,5 +28,9 @@ Rails.application.configure do
     policy.connect_src :self, 'https://nominatim.openstreetmap.org', *HCAPTCHA_SOURCES
   end
 
-  # Bewusst ohne Nonce: Es gibt keine Inline-Skripte. Ein Nonce bei style-src würde 'unsafe-inline' außer Kraft setzen.
+  # Eigene Views haben keine Inline-Skripte. Mission Control bettet aber seine Importmap inline ein,
+  # importmap-rails versieht diese Skripte automatisch mit dem Nonce.
+  # Nur für script-src: Ein Nonce bei style-src würde 'unsafe-inline' außer Kraft setzen.
+  config.content_security_policy_nonce_generator = ->(_request) { SecureRandom.base64(16) }
+  config.content_security_policy_nonce_directives = %w[script-src]
 end

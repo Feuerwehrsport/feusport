@@ -43,5 +43,15 @@ RSpec.describe ApplicationController do
       expect(response.headers['X-Frame-Options']).to eq 'SAMEORIGIN'
       expect(policy.find { |directive| directive.start_with?('script-src') }).not_to include('unsafe')
     end
+
+    it 'provides a script nonce for the inline importmap of mission control' do
+      get '/info'
+      policy = response.headers['Content-Security-Policy'].split(';').map(&:strip)
+      nonce = policy.find { |directive| directive.start_with?('script-src') }[/'nonce-([^']+)'/, 1]
+
+      expect(nonce).to be_present
+      expect(response.body).to include(%(<meta name="csp-nonce" content="#{nonce}" />))
+      expect(policy.find { |directive| directive.start_with?('style-src') }).not_to include('nonce')
+    end
   end
 end

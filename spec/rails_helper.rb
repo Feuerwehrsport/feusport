@@ -39,6 +39,7 @@ RSpec.configure do |config|
   config.before do
     FactoryBot.rewind_sequences
     view_sanitizer.gsub(/[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}/, 'UUID')
+    view_sanitizer.gsub(/name="csp-nonce" content="[^"]*"/, 'name="csp-nonce"') # zufälliger CSP-Nonce
   end
   config.before(type: :mailer) do
     view_sanitizer.gsub(/src="cid:[^\s.]+.mail"/, 'src="cid:CID.mail"')
