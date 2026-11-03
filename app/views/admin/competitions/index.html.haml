@@ -1,0 +1,37 @@
+= render 'admin/header'
+
+= render 'admin/search', placeholder: 'Name, Ort oder Jahr'
+
+= card_direct('Wettkämpfe') do
+  .table-responsive
+    %table.table.table-sm.mb-0.align-middle
+      %tr
+        %th Datum
+        %th Wettkampf
+        %th Verantwortliche
+        %th
+      - @competitions.each do |competition|
+        - action_params = { id: competition.id, q: params[:q], page: params[:page] }.compact
+        %tr
+          %td= l(competition.date)
+          %td
+            = link_to(competition.name, competition_path(competition))
+            - unless competition.visible?
+              %span.badge.text-bg-warning Nicht öffentlich
+            - if competition.locked?
+              %span.badge.text-bg-secondary Abgeschlossen
+            .small= competition.place
+          %td.small
+            - competition.users.sort_by(&:name).each do |user|
+              %div= mail_to(user.email, user.name)
+          %td.text-end
+            - if competition.users.include?(current_user)
+              - confirm = { data: { turbo_confirm: 'Eigenen Zugriff entfernen?' } }
+              = button_to('Mich entfernen', leave_admin_competition_path(action_params),
+                          method: :delete, class: 'btn btn-light btn-sm', form: confirm)
+            - else
+              - confirm = { data: { turbo_confirm: 'Dich selbst als Verantwortlichen eintragen?' } }
+              = button_to('Mich hinzufügen', join_admin_competition_path(action_params),
+                          class: 'btn btn-light btn-sm', form: confirm)
+
+= render 'admin/pagination'

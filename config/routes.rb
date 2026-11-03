@@ -11,6 +11,21 @@ Rails.application.routes.draw do
     post 'publishings', to: 'dashboards#retry_publishings', as: :publishings
     resources :changelogs, except: %i[show]
     resources :disseminators, except: %i[show]
+    resources :users, only: %i[index] do
+      member do
+        post :unlock
+        post :disable
+        post :enable
+        post :confirm
+        post :reset_password
+      end
+    end
+    resources :competitions, only: %i[index] do
+      member do
+        post :join
+        delete :leave
+      end
+    end
   end
 
   root 'home#home'

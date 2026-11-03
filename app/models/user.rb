@@ -12,6 +12,7 @@
 #  confirmed_at           :datetime
 #  current_sign_in_at     :datetime
 #  current_sign_in_ip     :string(100)
+#  disabled_at            :datetime
 #  distance               :integer
 #  email                  :string(100)      not null
 #  encrypted_password     :string(100)      not null
@@ -78,6 +79,18 @@ class User < ApplicationRecord
     user_ids = UserAccess.where(competition_id: competition_ids).pluck(:user_id) +
                UserTeamAccess.where(team_id: user_team_accesses.select(:team_id)).pluck(:user_id)
     User.where(id: user_ids).where.not(id:).order(:name)
+  end
+
+  def disabled?
+    disabled_at.present?
+  end
+
+  def active_for_authentication?
+    super && !disabled?
+  end
+
+  def inactive_message
+    disabled? ? :disabled : super
   end
 
   def send_devise_notification(notification, *)

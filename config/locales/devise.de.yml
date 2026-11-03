@@ -9,6 +9,7 @@ de:
       send_paranoid_instructions: Falls Deine E-Mail-Adresse in unserer Datenbank existiert, erhältst Du in wenigen Minuten eine E-Mail, mit der Du Deine Registrierung bestätigen kannst.
     failure:
       already_authenticated: Du bist bereits angemeldet.
+      disabled: Dein Konto wurde deaktiviert. Wende dich an den Administrator.
       inactive: Dein Konto ist noch nicht aktiv.
       invalid: "%{authentication_keys} oder Passwort ungültig"
       last_attempt: Du hast noch einen Versuch, bis Dein Konto gesperrt wird.

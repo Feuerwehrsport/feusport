@@ -1,0 +1,4 @@
+admin/competitions lists, searches and joins competitions
+
+request
+html

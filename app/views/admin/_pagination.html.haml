@@ -1,0 +1,9 @@
+- if @page_count > 1
+  %nav.mt-3
+    %ul.pagination.pagination-sm.justify-content-center.mb-0
+      %li.page-item{ class: ('disabled' if @page == 1) }
+        = link_to('Zurück', url_for(request.query_parameters.merge(page: @page - 1)), class: 'page-link')
+      %li.page-item.disabled
+        %span.page-link Seite #{@page} von #{@page_count}
+      %li.page-item{ class: ('disabled' if @page == @page_count) }
+        = link_to('Weiter', url_for(request.query_parameters.merge(page: @page + 1)), class: 'page-link')

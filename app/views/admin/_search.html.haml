@@ -1,0 +1,5 @@
+= form_with url: request.path, method: :get, class: 'd-flex gap-2 mb-3' do
+  = search_field_tag :q, params[:q], class: 'form-control form-control-sm', placeholder: placeholder
+  = submit_tag 'Suchen', name: nil, class: 'btn btn-light btn-sm'
+  - if params[:q].present?
+    = link_to 'Zurücksetzen', request.path, class: 'btn btn-outline-secondary btn-sm'

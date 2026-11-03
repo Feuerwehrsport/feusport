@@ -1,0 +1,47 @@
+= render 'admin/header'
+
+= render 'admin/search', placeholder: 'Name oder E-Mail-Adresse'
+
+= card_direct('Nutzer') do
+  .table-responsive
+    %table.table.table-sm.mb-0.align-middle
+      %tr
+        %th Name
+        %th Registriert
+        %th Letzte Anmeldung
+        %th Wettkämpfe
+        %th
+      - @users.each do |user|
+        - action_params = { id: user.id, q: params[:q], page: params[:page] }.compact
+        %tr
+          %td
+            = user.name
+            - if user.admin?
+              %span.badge.text-bg-primary Admin
+            - unless user.confirmed?
+              %span.badge.text-bg-warning Unbestätigt
+            - if user.access_locked?
+              %span.badge.text-bg-warning Vorübergehend gesperrt
+            - if user.disabled?
+              %span.badge.text-bg-danger Deaktiviert
+            .small= mail_to(user.email)
+          %td= l(user.created_at.to_date)
+          %td= user.last_sign_in_at.present? ? l(user.last_sign_in_at.to_date) : '–'
+          %td= user.user_accesses.size
+          %td.text-end
+            .d-flex.flex-wrap.gap-1.justify-content-end
+              - if user.access_locked?
+                = button_to('Entsperren', unlock_admin_user_path(action_params), class: 'btn btn-light btn-sm')
+              - unless user.confirmed?
+                = button_to('Bestätigen', confirm_admin_user_path(action_params), class: 'btn btn-light btn-sm')
+              - confirm = { data: { turbo_confirm: "E-Mail zum Zurücksetzen an #{user.email} senden?" } }
+              = button_to('Passwort-Link senden', reset_password_admin_user_path(action_params),
+                          class: 'btn btn-light btn-sm', form: confirm)
+              - if user.disabled?
+                = button_to('Aktivieren', enable_admin_user_path(action_params), class: 'btn btn-light btn-sm')
+              - elsif user != current_user
+                - confirm = { data: { turbo_confirm: "#{user.name} wirklich deaktivieren?" } }
+                = button_to('Deaktivieren', disable_admin_user_path(action_params),
+                            class: 'btn btn-danger btn-sm', form: confirm)
+
+= render 'admin/pagination'
