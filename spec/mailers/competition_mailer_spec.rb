@@ -181,6 +181,19 @@ RSpec.describe CompetitionMailer do
     end
   end
 
+  describe 'deletion_notice' do
+    let(:competition) do
+      create(:competition, visible: false, date: Date.parse('2023-02-20'), deletion_notified_at: Time.current)
+    end
+    let(:mail) { described_class.with(competition:).deletion_notice }
+
+    it 'renders the headers and body' do
+      expect(mail.subject).to eq('Dein nicht öffentlicher Wettkampf wird gelöscht - MV-Cup')
+      expect(mail.header[:to].to_s).to eq 'Alfred Meier <alfred@meier.de>'
+      expect(mail).to match_html_fixture
+    end
+  end
+
   describe 'information_request' do
     let(:information_request) { create(:information_request) }
     let(:mail) { described_class.with(information_request:).information_request }

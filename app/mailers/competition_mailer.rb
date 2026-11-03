@@ -83,6 +83,16 @@ class CompetitionMailer < ApplicationMailer
     )
   end
 
+  def deletion_notice
+    @competition = @params[:competition]
+
+    to = @competition.users.map { |user| email_address_with_name(user.email, user.name) }
+    mail(
+      to:,
+      subject: "Dein nicht öffentlicher Wettkampf wird gelöscht - #{@competition.name}",
+    )
+  end
+
   def new_competitions
     @user = @params[:user]
     @competitions = @params[:competitions]

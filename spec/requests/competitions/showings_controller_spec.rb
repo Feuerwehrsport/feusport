@@ -25,6 +25,22 @@ RSpec.describe 'competitions/visibilities' do
     end
   end
 
+  describe 'hidden competition with deletion notice' do
+    let!(:competition) do
+      create(:competition, visible: false, date: Date.parse('2023-02-20'), deletion_notified_at: Time.current)
+    end
+
+    it 'shows deletion date' do
+      sign_in competition.users.first
+      get "/#{competition.year}/#{competition.slug}"
+      expect(response.body).to include('Wird am 14.03.2024 automatisch gelöscht')
+
+      competition.update!(visible: true)
+      get "/#{competition.year}/#{competition.slug}"
+      expect(response.body).not_to include('automatisch gelöscht')
+    end
+  end
+
   describe 'locked competition' do
     let!(:competition) { create(:competition, visible: true, locked_at: Time.current) }
 

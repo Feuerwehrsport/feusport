@@ -8,6 +8,7 @@
 #  address                         :text
 #  change_people_until             :date
 #  date                            :date             not null
+#  deletion_notified_at            :datetime
 #  description                     :text
 #  flyer_content                   :text
 #  flyer_headline                  :string

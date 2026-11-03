@@ -4,7 +4,7 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 
-# generated from version 20261103090432
+# generated from version 20261103095857
 
 module SchemaValidations
   extend ActiveSupport::Concern
@@ -219,6 +219,7 @@ module SchemaValidations
       validates_with_filter :created_at, {presence: {}}
       validates_with_filter :date, {date_in_db_range: {}}
       validates_with_filter :date, {presence: {}}
+      validates_with_filter :deletion_notified_at, {date_time_in_db_range: {}}
       validates_with_filter :locked_at, {date_time_in_db_range: {}}
       validates_with_filter :lottery_numbers, {inclusion: {in: [true, false], message: :blank}}
       validates_with_filter :name, {length: {allow_nil: true, maximum: 50}}

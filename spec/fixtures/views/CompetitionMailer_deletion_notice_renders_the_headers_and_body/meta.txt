@@ -1,0 +1,4 @@
+CompetitionMailer deletion_notice renders the headers and body
+
+mailer
+html

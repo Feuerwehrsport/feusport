@@ -8,6 +8,7 @@
 #  address                         :text
 #  change_people_until             :date
 #  date                            :date             not null
+#  deletion_notified_at            :datetime
 #  description                     :text
 #  flyer_content                   :text
 #  flyer_headline                  :string
@@ -118,6 +119,7 @@ class Competition < ApplicationRecord
   auto_strip_attributes :name, :place, :slug, :description, :flyer_headline, :flyer_content, :address
   before_validation { self.slug = slug.to_s.parameterize }
   before_save { self.published_at ||= Time.current if visible? }
+  before_save { self.deletion_notified_at = nil if visible? }
   schema_validations
   validates :registration_open_until, presence: true, if: -> { registration_open == 'open' }
   validates :registration_open_until, :change_people_until,

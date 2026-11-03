@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_03_090432) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_03_095857) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -167,6 +167,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_03_090432) do
     t.datetime "snapshot_reminder_sent"
     t.datetime "published_at"
     t.datetime "new_competition_mailing_sent_at"
+    t.datetime "deletion_notified_at"
     t.index ["date"], name: "index_competitions_on_date"
     t.index ["lnglat"], name: "index_competitions_on_lnglat", using: :gist
     t.index ["published_at"], name: "index_competitions_on_published_at"

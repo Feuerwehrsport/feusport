@@ -7,6 +7,10 @@ production:
     class: NewCompetitionMailingJob
     priority: 40
     schedule: 12 7 * * *
+  competition_auto_deletion:
+    class: 'Competitions::AutoDeletion::Job'
+    priority: 50
+    schedule: 7 4 * * *
   invitation_cleanup:
     class: 'InvitationValidity::CleanupJob'
     priority: 50

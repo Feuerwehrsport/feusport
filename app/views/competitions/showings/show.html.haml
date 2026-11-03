@@ -48,6 +48,9 @@
             .text-center
               .far.fa-eye-slash
               Nicht öffentlich sichtbar
+            - if @competition.deletion_notified_at.present?
+              .text-center.small
+                Wird am #{l(Competitions::AutoDeletion.deletion_date(@competition))} automatisch gelöscht
             - if can?(:change_visibility, @competition)
               = link_to 'Sichtbarkeit bearbeiten', edit_competition_visibility_path, class: 'btn btn-light btn-sm'
       - if @competition.registration_possible?
