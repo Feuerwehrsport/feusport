@@ -30,7 +30,8 @@ module Feusport
     config.i18n.default_locale = :de
 
     config.active_job.queue_adapter = :solid_queue
-    config.solid_queue.preserve_finished_jobs = false
+    config.solid_queue.preserve_finished_jobs = true
+    config.solid_queue.clear_finished_jobs_after = 1.day
     config.solid_queue.shutdown_timeout = 30.seconds
     config.solid_queue.default_concurrency_control_period = 2.hours
 
