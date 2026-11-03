@@ -21,10 +21,13 @@ de:
         year_not_valid: hat ein ungültiges Jahr
   alerts:
     band_full: Diese Wertungsgruppe ist ausgebucht.
+    cache_cleared: Der Cache wurde geleert.
     check_errors: 'Bitte überprüfe folgende Fehler:'
     deleted: Der Eintrag wurde gelöscht.
+    import_started: Der Import wurde gestartet.
     invitation_expired: Die Einladung ist abgelaufen. Bitte lass dich erneut einladen.
     invitation_revoked: Die Einladung ist nicht mehr gültig. Bitte lass dich erneut einladen.
+    publishings_retried: Die offenen Übertragungen werden erneut versucht.
     saved: Die Änderungen wurden gespeichert.
     too_many_requests: Zu viele Versuche. Bitte warte eine Minute und versuche es dann erneut.
   assessment_types:

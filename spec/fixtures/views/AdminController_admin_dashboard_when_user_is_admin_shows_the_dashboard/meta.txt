@@ -1,0 +1,4 @@
+AdminController admin dashboard when user is admin shows the dashboard
+
+request
+html

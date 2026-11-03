@@ -4,6 +4,13 @@ Rails.application.routes.draw do
   mount ActionCable.server => '/cable'
   mount MissionControl::Jobs::Engine, at: '/admin-jobs'
 
+  namespace :admin do
+    root 'dashboards#show'
+    post 'import', to: 'dashboards#import', as: :import
+    delete 'cache', to: 'dashboards#clear_cache', as: :cache
+    post 'publishings', to: 'dashboards#retry_publishings', as: :publishings
+  end
+
   root 'home#home'
   get 'info', to: 'home#info', as: :info
   get 'donations', to: 'home#donations', as: :donations

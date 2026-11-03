@@ -1,0 +1,39 @@
+- content_for :page_header do
+  = page_title('Admin')
+
+.row.g-4
+  .col-lg-6
+    = card_body('Hintergrundjobs') do
+      %p
+        Fehlgeschlagene Jobs:
+        %b= @failed_jobs_count
+      = btn_link_to('Mission Control öffnen', '/admin-jobs')
+
+    .mt-4
+      = card_body('Import aus der Feuerwehrsport-Statistik') do
+        %p
+          Letzter Import:
+          %b= @last_import_at.present? ? l(@last_import_at) : 'noch nie'
+        - if @import_pending
+          %p.text-body-secondary.mb-0 Ein Import ist bereits eingeplant oder läuft gerade.
+        - else
+          = button_to('Import starten', admin_import_path, class: 'btn btn-light btn-sm')
+
+    .mt-4
+      = card_body('Cache') do
+        %p Ergebnisse und Startlisten werden für nicht angemeldete Besucher zwischengespeichert, ebenso die Vorschau der Urkunden.
+        = button_to('Cache leeren', admin_cache_path, method: :delete, class: 'btn btn-light btn-sm',
+                                                      form: { data: { turbo_confirm: 'Cache wirklich leeren?' } })
+
+  .col-lg-6
+    = card_body('Offene Übertragungen') do
+      - if @open_publishings.empty?
+        %p.text-body-secondary.mb-0 Keine offenen Übertragungen.
+      - else
+        %table.table.table-sm
+          - @open_publishings.each do |publishing|
+            %tr
+              %td= link_to(publishing.competition.name, competition_path(publishing.competition))
+              %td= publishing.user.name
+              %td= l(publishing.created_at)
+        = button_to('Erneut versuchen', admin_publishings_path, class: 'btn btn-light btn-sm')

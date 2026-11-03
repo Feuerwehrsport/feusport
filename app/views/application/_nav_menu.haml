@@ -10,6 +10,9 @@
       = active_link_to('Hilfe', help_path, class: 'nav-link')
     %li.nav-item
       = active_link_to('Über feusport.de', info_path, class: 'nav-link')
+    - if current_user&.admin?
+      %li.nav-item
+        = active_link_to('Admin', admin_root_path, class: 'nav-link')
     - if user_signed_in?
       %li.nav-item.dropdown
         %a.nav-link.dropdown-toggle{ 'aria-expanded' => 'false', 'data-bs-toggle' => 'dropdown', href: '#', role: 'button' }
