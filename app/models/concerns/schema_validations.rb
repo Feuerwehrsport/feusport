@@ -4,7 +4,7 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 
-# generated from version 20261103095857
+# generated from version 20261109120000
 
 module SchemaValidations
   extend ActiveSupport::Concern
@@ -83,6 +83,28 @@ module SchemaValidations
       uniqueness_validations_for([["blob_id", "variation_digest"]])
       validates_with_filter :blob_id, {presence: {}}
       validates_with_filter :variation_digest, {presence: {}}
+    end
+
+    def dbv_api_accesses_validations(enums: [])
+      belongs_to_presence_validations_for([:competition_id, :permission, :score_list_ids])
+      belongs_to_uniqueness_validations_for([["competition_id", "name"], ["pairing_code"], ["token_digest"]])
+      uniqueness_validations_for([["competition_id", "name"], ["pairing_code"], ["token_digest"]])
+      validates_with_filter :competition_id, {presence: {}}
+      validates_with_filter :created_at, {date_time_in_db_range: {}}
+      validates_with_filter :created_at, {presence: {}}
+      validates_with_filter :device_name, {length: {allow_nil: true, maximum: 100}}
+      validates_with_filter :last_used_at, {date_time_in_db_range: {}}
+      validates_with_filter :name, {length: {allow_nil: true, maximum: 50}}
+      validates_with_filter :name, {presence: {}}
+      validates_with_filter :paired_at, {date_time_in_db_range: {}}
+      validates_with_filter :pairing_code, {length: {allow_nil: true, maximum: 8}}
+      validates_with_filter :pairing_code_expires_at, {date_time_in_db_range: {}}
+      validates_with_filter :permission, {numericality: {allow_nil: true, only_integer: true, greater_than_or_equal_to: -2147483648, less_than: 2147483648}} unless enums.include?(:permission)
+      validates_with_filter :permission, {presence: {}}
+      validates_with_filter :score_list_ids, {not_null: {}}
+      validates_with_filter :token_digest, {length: {allow_nil: true, maximum: 64}}
+      validates_with_filter :updated_at, {date_time_in_db_range: {}}
+      validates_with_filter :updated_at, {presence: {}}
     end
 
     def dbv_assessment_requests_validations(enums: [])

@@ -156,6 +156,9 @@ Rails.application.routes.draw do
       member { get :connect }
     end
     resources :simple_accesses, only: %i[new create edit update destroy]
+    resources :api_accesses, only: %i[new create edit update destroy] do
+      member { post :regenerate_code }
+    end
     resource :simple_access_login, only: %i[new create destroy]
     resources :presets, only: %i[index edit update]
   end
@@ -164,6 +167,15 @@ Rails.application.routes.draw do
     namespace :suggestions do
       post :people
       post :teams
+    end
+  end
+
+  namespace :api do
+    resource :docs, only: :show
+    namespace :v1, defaults: { format: :json } do
+      resources :pairings, only: :create
+      resources :lists, only: %i[index show]
+      resources :list_entries, only: :update
     end
   end
 

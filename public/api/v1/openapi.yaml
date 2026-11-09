@@ -1,0 +1,316 @@
+openapi: 3.0.3
+info:
+  title: feusport.de Geräte-API
+  version: 1.0.0
+  description: >-
+    Schnittstelle für Stoppuhren und andere Geräte. Ein Gerät ist immer auf genau einen Wettkampf
+    beschränkt. Zeiten sind Ganzzahlen in Hundertstelsekunden. Clients müssen unbekannte Felder ignorieren.
+servers:
+  - url: https://feusport.de
+security:
+  - bearerToken: []
+paths:
+  /api/v1/pairings:
+    post:
+      summary: Code gegen Token tauschen
+      description: >-
+        Der Code wird auf der Zugänge-Seite des Wettkampfs erzeugt, ist 15 Minuten gültig und funktioniert
+        nur einmal. Ein erneutes Koppeln ersetzt den bisherigen Token des Zugangs.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PairingRequest'
+      responses:
+        '201':
+          description: Gerät gekoppelt, der Token wird nur in dieser Antwort übertragen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pairing'
+        '401':
+          description: Code unbekannt, abgelaufen oder Wettkampf gesperrt (invalid_code).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Zu viele Versuche, maximal 10 pro Minute (too_many_requests).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/lists:
+    get:
+      summary: Startlisten abrufen
+      description: Liefert alle Startlisten, für die das Gerät freigegeben ist.
+      responses:
+        '200':
+          description: Liste der Startlisten.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [lists]
+                additionalProperties: false
+                properties:
+                  lists:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/List'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/lists/{id}:
+    get:
+      summary: Startliste mit Einträgen abrufen
+      description: Mit dem Parameter run werden nur die Einträge eines Laufs geliefert.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: run
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        '200':
+          description: Startliste mit Einträgen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListWithEntries'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/v1/list_entries/{id}:
+    patch:
+      summary: Ergebnis eines Eintrags speichern
+      description: >-
+        version muss dem zuletzt gelesenen Wert entsprechen. Nicht gesendete Felder bleiben unverändert.
+        Felder, die zur Startliste nicht passen, werden ignoriert: Bei getrennten Zielen zählen nur
+        time_left_target und time_right_target (time wird daraus berechnet), sonst nur time.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListEntryUpdate'
+      responses:
+        '200':
+          description: Gespeicherter Eintrag.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListEntry'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: >-
+            Der Eintrag wurde inzwischen geändert (conflict) und enthält den aktuellen Stand im Feld entry.
+            Nach einem Timeout kann das auch die eigene, bereits gespeicherte Änderung sein.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conflict'
+        '422':
+          description: Ungültige Werte, Details im Feld fields (validation_failed).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+components:
+  securitySchemes:
+    bearerToken:
+      type: http
+      scheme: bearer
+  responses:
+    Unauthorized:
+      description: Token fehlt, ist ungültig oder abgelaufen (invalid_token). Das Gerät muss neu gekoppelt werden.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Nicht gefunden oder für dieses Gerät nicht freigegeben (not_found).
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    PairingRequest:
+      type: object
+      required: [code]
+      properties:
+        code:
+          type: string
+          description: Achtstelliger Code von der Zugänge-Seite.
+          example: '12345678'
+        device_name:
+          type: string
+          description: Optionaler Gerätename für die Übersicht, höchstens 100 Zeichen.
+          example: Stoppuhr 1
+    Pairing:
+      type: object
+      required: [token, token_expires_at, competition]
+      additionalProperties: false
+      properties:
+        token:
+          type: string
+          description: Wird bei jeder weiteren Anfrage als Bearer-Token gesendet.
+        token_expires_at:
+          type: string
+          format: date-time
+          description: Spätestes Ende der Gültigkeit. Das Sperren des Wettkampfs beendet sie früher.
+        competition:
+          type: object
+          required: [id, name, date]
+          additionalProperties: false
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+            date:
+              type: string
+              format: date
+    List:
+      type: object
+      required: [id, name, track_count, separate_target_times]
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: ID der Startliste.
+        name:
+          type: string
+          description: Name der Startliste.
+        track_count:
+          type: integer
+          description: Anzahl der Bahnen.
+        separate_target_times:
+          type: boolean
+          description: Wenn true, werden die Zeiten für linkes und rechtes Ziel getrennt erfasst.
+    ListWithEntries:
+      allOf:
+        - $ref: '#/components/schemas/List'
+        - type: object
+          required: [entries]
+          properties:
+            entries:
+              type: array
+              items:
+                $ref: '#/components/schemas/ListEntry'
+    ListEntry:
+      type: object
+      required: [id, run, track, name, band, time, time_left_target, time_right_target, result_type, version]
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: ID des Eintrags.
+        run:
+          type: integer
+          description: Lauf.
+        track:
+          type: integer
+          description: Bahn.
+        name:
+          type: string
+          description: Name der Person oder Mannschaft.
+        band:
+          type: string
+          description: Wertungsgruppe.
+        time:
+          type: integer
+          nullable: true
+          description: Zeit am Ziel in Hundertstelsekunden.
+        time_left_target:
+          type: integer
+          nullable: true
+          description: Zeit am linken Ziel in Hundertstelsekunden.
+        time_right_target:
+          type: integer
+          nullable: true
+          description: Zeit am rechten Ziel in Hundertstelsekunden.
+        result_type:
+          type: string
+          enum: [waiting, valid, invalid, no_run]
+          description: Zustand des Eintrags.
+        version:
+          type: string
+          description: Stand des Ergebnisses, wird beim Speichern unverändert zurückgesendet.
+    ListEntryUpdate:
+      type: object
+      required: [version]
+      properties:
+        version:
+          type: string
+          description: Wert aus dem zuletzt gelesenen Eintrag.
+        time:
+          type: integer
+          nullable: true
+          description: Zeit in Hundertstelsekunden, größer als 0.
+        time_left_target:
+          type: integer
+          nullable: true
+          description: Zeit am linken Ziel in Hundertstelsekunden, größer als 0.
+        time_right_target:
+          type: integer
+          nullable: true
+          description: Zeit am rechten Ziel in Hundertstelsekunden, größer als 0.
+        result_type:
+          type: string
+          enum: [waiting, valid, invalid, no_run]
+          description: Für valid muss eine Zeit vorliegen, bei getrennten Zielen beide Zeiten.
+    Error:
+      type: object
+      required: [error]
+      additionalProperties: false
+      properties:
+        error:
+          type: string
+          description: Maschinenlesbarer Fehlercode.
+    Conflict:
+      type: object
+      required: [error, entry]
+      additionalProperties: false
+      properties:
+        error:
+          type: string
+          description: Immer conflict.
+        entry:
+          $ref: '#/components/schemas/ListEntry'
+    ValidationError:
+      type: object
+      required: [error, fields]
+      additionalProperties: false
+      properties:
+        error:
+          type: string
+          description: Immer validation_failed.
+        fields:
+          type: object
+          description: Fehlercodes je Feld, z. B. blank oder greater_than.
+          additionalProperties:
+            type: array
+            items:
+              type: string

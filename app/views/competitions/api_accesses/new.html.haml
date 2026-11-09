@@ -1,0 +1,9 @@
+= render 'competitions/header', competition: @competition, sub: "#{resource_class.model_name.human} hinzufügen"
+
+.row.g-4
+  .col-lg-8
+    = simple_form_for([:competition, resource_instance], url: competition_api_accesses_path) do |f|
+      = card('Neuen Gerätezugang anlegen') do |c|
+        = render('form', f:, c:)
+  .col-lg-4
+    = render('right')

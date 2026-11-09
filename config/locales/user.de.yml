@@ -2,6 +2,10 @@
 de:
   activerecord:
     attributes:
+      api_access:
+        name: Name
+        permission: Rechte
+        score_list_ids: Freigegebene Startlisten
       simple_access:
         name: Name
         password: Passwort
@@ -34,6 +38,9 @@ de:
         expires_at: Gültig bis
         text: E-Mail-Text
     models:
+      api_access:
+        one: Gerätezugang
+        other: Gerätezugänge
       simple_access:
         one: Gastzugang
         other: Gastzugänge
@@ -52,6 +59,10 @@ de:
       user_team_access_request:
         one: Verwalteranfrage
         other: Verwalteranfragen
+  api_accesses:
+    permissions:
+      results: Alle nicht versteckten Startlisten
+      selected_results: Nur ausgewählte Startlisten
   invitation_validity:
     expired: abgelaufen
     revoked: nicht mehr gültig
@@ -62,6 +73,9 @@ de:
       selected_results: Nur Zeiten eintragen (ausgewählte Startlisten)
   simple_form:
     hints:
+      api_access:
+        name: Beschreibt das Gerät in der Übersicht, z. B. »Stoppuhr Bahn 1«.
+        score_list_ids: Gilt nur für »Nur ausgewählte Startlisten«.
       simple_access:
         name: Diesen Namen wählt man beim Anmelden aus, z. B. »Admin«, »Wettkampfrichter« oder »Zeitnehmer Löschangriff«.
         score_list_ids: Gilt nur für »Nur Zeiten eintragen (ausgewählte Startlisten)«.

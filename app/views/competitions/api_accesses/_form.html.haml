@@ -1,0 +1,7 @@
+- c.body do
+  = f.input :name, autofocus: true, input_html: { maxlength: 50 }
+  = f.input :permission, as: :radio_buttons, collection: ApiAccess::PERMISSIONS.keys, label_method: ->(permission) { t("api_accesses.permissions.#{permission}") }
+  = f.input :score_list_ids, as: :check_boxes, collection: @competition.score_lists.sort, label_method: ->(list) { list.hidden? ? "#{list.name} (versteckt)" : list.name }
+- c.footer do
+  = f.primary_button :submit
+  = f.cancel_button(competition_accesses_path)

@@ -71,6 +71,8 @@ group :development, :test do
 
   gem 'simplecov', require: false # test coverage
 
+  gem 'committee-rails' # prüft API-Antworten gegen die OpenAPI-Datei
+
   gem 'csv' # inspect spreadsheets
   gem 'roo' # inspect spreadsheets
 

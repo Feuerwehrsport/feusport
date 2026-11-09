@@ -1,0 +1,71 @@
+- content_for :page_header do
+  = page_title(@openapi.dig('info', 'title'))
+  %p.lead.mb-0 Für Entwickler von Stoppuhren und anderen Geräten, Version #{@openapi.dig('info', 'version')}
+
+.row.g-4
+  .col-lg-8
+    = card_body('Ablauf') do
+      %ol
+        %li Ein Wettkampf-Admin legt auf der Seite <b>Zugänge</b> einen Gerätezugang an und erhält einen achtstelligen Code.
+        %li Das Gerät tauscht den Code gegen einen Token. Der Code ist 15 Minuten gültig und funktioniert nur einmal.
+        %li Das Gerät sendet den Token bei jeder Anfrage im Header <code>Authorization: Bearer …</code> und ist damit auf diesen Wettkampf beschränkt.
+      %pre.mb-0
+        :preserve
+          curl -X POST https://feusport.de/api/v1/pairings \
+            -H 'Content-Type: application/json' \
+            -d '{"code": "12345678", "device_name": "Stoppuhr 1"}'
+
+          curl https://feusport.de/api/v1/lists \
+            -H 'Authorization: Bearer TOKEN'
+
+          curl 'https://feusport.de/api/v1/lists/LIST_ID?run=1' \
+            -H 'Authorization: Bearer TOKEN'
+
+          curl -X PATCH https://feusport.de/api/v1/list_entries/ENTRY_ID \
+            -H 'Authorization: Bearer TOKEN' \
+            -H 'Content-Type: application/json' \
+            -d '{"version": "VERSION", "time": 2234, "result_type": "valid"}'
+  .col-lg-4
+    = card_body('Regeln') do
+      %ul.mb-0
+        %li Zeiten sind Ganzzahlen in Hundertstelsekunden: 22,34 s wird als <code>2234</code> gesendet.
+        %li Unbekannte Felder in Antworten müssen ignoriert werden. Neue Felder gelten nicht als inkompatible Änderung.
+        %li Inkompatible Änderungen erscheinen nur unter einer neuen Version im Pfad.
+        %li= link_to 'OpenAPI-Beschreibung (YAML)', '/api/v1/openapi.yaml'
+
+  .col-12
+    = card_body('Endpunkte') do
+      - @openapi['paths'].each do |path, operations|
+        - operations.each do |method, operation|
+          %h5.mt-3
+            %code #{method.upcase} #{path}
+          %p
+            %b= operation['summary']
+            %br
+            = operation['description']
+          %table.table.table-sm
+            %tr
+              %th{ style: 'width: 80px' } Status
+              %th Bedeutung
+            - operation['responses'].each do |status, response|
+              %tr
+                %td= status
+                %td= response['description']
+
+  .col-12
+    = card_body('Datenstrukturen') do
+      - @openapi.dig('components', 'schemas').each do |name, schema|
+        - next if schema['properties'].blank?
+
+        %h5.mt-3= name
+        %table.table.table-sm
+          %tr
+            %th Feld
+            %th Typ
+            %th Beschreibung
+          - schema['properties'].each do |field, property|
+            %tr
+              %td
+                %code= field
+              %td= [property['type'], property['enum']&.join(' | '), ('oder null' if property['nullable'])].compact.join(', ')
+              %td= property['description']

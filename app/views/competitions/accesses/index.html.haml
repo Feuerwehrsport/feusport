@@ -65,6 +65,9 @@
         - c.primary_actions do |actions|
           - actions.link_to t('a.add'), new_competition_simple_access_path, end_icon: :square_plus
 
+  .col-lg-7
+    = render 'competitions/api_accesses/overview'
+
   - if @competition.user_access_requests.exists?
     .col-lg-8
       = card(UserAccessRequest.model_name.human(count: :many)) do |c|

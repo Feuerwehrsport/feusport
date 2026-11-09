@@ -1,0 +1,42 @@
+= card(ApiAccess.model_name.human(count: :many)) do |c|
+  - if @competition.api_accesses.exists?
+    - c.direct do
+      %table.table
+        %tr
+          %th= ApiAccess.human_attribute_name(:name)
+          %th Status
+          %th
+        - @competition.api_accesses.sort.each do |access|
+          %tr
+            %td
+              = access.name
+              %br
+              %small.text-muted= t("api_accesses.permissions.#{access.permission}")
+              - if access.permission_selected_results?
+                %small.text-muted (#{access.score_lists.sort.map(&:name).join(', ').presence || 'Keine Startliste'})
+            %td
+              - if access.pairing_code_valid?
+                Code:
+                %b.font-monospace= access.pairing_code
+                %br
+                %small.text-muted gültig bis #{l(access.pairing_code_expires_at)}
+              - elsif access.paired?
+                Verbunden#{access.device_name.present? ? " (#{access.device_name})" : ''}
+              - else
+                Code abgelaufen
+              - if access.last_used_at.present?
+                %br
+                %small.text-muted Zuletzt aktiv: #{l(access.last_used_at)}
+            %td.text-end.text-nowrap
+              = link_to(regenerate_code_competition_api_access_path(id: access.id), class: 'btn btn-light btn-sm', title: 'Neuen Code erzeugen', data: { turbo_method: :post }) do
+                %i.far.fa-rotate
+              = short_edit_link(edit_competition_api_access_path(id: access.id))
+              = link_to(competition_api_access_path(id: access.id), class: 'btn btn-light btn-sm', data: { turbo_confirm: 'Zugang wirklich entfernen? Das Gerät verliert sofort den Zugriff.', 'turbo-method': :delete }) do
+                %i.far.fa-trash
+  - else
+    - c.body do
+      .alert.alert-info= t('a.no_entries_found')
+
+  - if can?(:create, ApiAccess.new(competition: @competition))
+    - c.primary_actions do |actions|
+      - actions.link_to t('a.add'), new_competition_api_access_path, end_icon: :square_plus

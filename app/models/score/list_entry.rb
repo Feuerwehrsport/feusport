@@ -56,6 +56,15 @@ class Score::ListEntry < ApplicationRecord
   # Nur bei erlaubtem Typ prüfen, sonst würde schon die Prüfung eine beliebige Klasse laden
   validates :entity, same_competition: true, if: -> { entity_type.in?(ENTITY_TYPES) }
 
+  with_options on: :api do
+    validates :time, :time_left_target, :time_right_target,
+              numericality: { only_integer: true, greater_than: 0, less_than: Firesport::INVALID_TIME },
+              allow_nil: true
+    validates :result_type, inclusion: { in: Score::ResultEntrySupport::ENTRY_STATUS }
+    # Das Webformular macht aus leeren Feldern 0, über die API käme sonst ein gültiger Eintrag ohne Zeit an
+    validates :time, presence: true, if: :result_valid?
+  end
+
   schema_validations
   before_validation do
     if list&.separate_target_times?
@@ -113,6 +122,18 @@ class Score::ListEntry < ApplicationRecord
 
   def overview
     "#{list.name}; #{entity.full_name}: #{long_human_time}"
+  end
+
+  # Ändert sich mit jedem Ergebnis, damit die API überholte Schreibzugriffe erkennt
+  def api_version
+    Digest::SHA256.hexdigest([result_type, time, time_left_target, time_right_target].join('|')).first(8)
+  end
+
+  def api_json
+    {
+      id:, run:, track:, name: entity.full_name, band: assessment.band.name,
+      time:, time_left_target:, time_right_target:, result_type:, version: api_version
+    }
   end
 
   private

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_03_095857) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_09_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -43,6 +43,25 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_03_095857) do
     t.uuid "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "api_accesses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "competition_id", null: false
+    t.string "name", limit: 50, null: false
+    t.string "device_name", limit: 100
+    t.integer "permission", default: 1, null: false
+    t.uuid "score_list_ids", default: [], null: false, array: true
+    t.string "pairing_code", limit: 8
+    t.datetime "pairing_code_expires_at"
+    t.string "token_digest", limit: 64
+    t.datetime "paired_at"
+    t.datetime "last_used_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["competition_id", "name"], name: "index_api_accesses_on_competition_id_and_name", unique: true
+    t.index ["competition_id"], name: "index_api_accesses_on_competition_id"
+    t.index ["pairing_code"], name: "index_api_accesses_on_pairing_code", unique: true
+    t.index ["token_digest"], name: "index_api_accesses_on_token_digest", unique: true
   end
 
   create_table "assessment_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -961,6 +980,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_03_095857) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "api_accesses", "competitions"
   add_foreign_key "assessment_requests", "assessments"
   add_foreign_key "assessments", "competitions"
   add_foreign_key "bands", "competitions"

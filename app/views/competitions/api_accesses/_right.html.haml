@@ -1,0 +1,5 @@
+= card_body('Gerätezugänge') do
+  %p Mit einem Gerätezugang können Geräte wie elektronische Stoppuhren Startlisten abrufen und Zeiten direkt eintragen.
+  %p Nach dem Speichern erscheint auf der Zugänge-Seite ein achtstelliger Code. Er ist #{ApiAccess::PAIRING_CODE_VALIDITY.in_minutes.to_i} Minuten gültig und wird einmalig am Gerät eingegeben.
+  %p Der Zugang endet automatisch, sobald der Wettkampf gesperrt wird, spätestens #{ApiAccess::TOKEN_VALIDITY_AFTER_COMPETITION.in_days.to_i} Tage nach dem Wettkampf.
+  %p= link_to 'Dokumentation für Entwickler', api_docs_path

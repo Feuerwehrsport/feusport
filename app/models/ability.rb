@@ -3,10 +3,11 @@
 class Ability
   include CanCan::Ability
 
-  def initialize(user, simple_access: nil)
+  def initialize(user, simple_access: nil, api_access: nil)
     global_abilities
 
     simple_access_abilities(simple_access) if simple_access.present?
+    results_abilities(api_access) if api_access.present?
     return if user.nil?
 
     can(:visit, :disseminator)
@@ -79,6 +80,7 @@ class Ability
     can(:manage, Series::PersonPointsCorrection, competition: manage_ua)
 
     can(:manage, SimpleAccess, competition: manage_ua)
+    can(:manage, ApiAccess, competition: manage_ua)
 
     can(:read, UserAccess, competition: read_ua)
     can(:manage, UserAccess, competition: manage_ua)
