@@ -53,6 +53,7 @@ module Feusport
     config.x.email_validation = { mx: true }
     config.x.feuerwehrsport_statistik = {
       url: 'https://feuerwehrsport-statistik.de',
+      token: ENV.fetch('FEUERWEHRSPORT_STATISTIK_TOKEN', nil),
     }
 
     config.mission_control.jobs.http_basic_auth_enabled = false

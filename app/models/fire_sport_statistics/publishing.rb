@@ -32,6 +32,14 @@ class FireSportStatistics::Publishing < ApplicationRecord
 
   after_create { FireSportStatistics::Publishing::Worker.perform_later }
 
+  # Falscher oder fehlender Token. Steht bewusst nicht in `retry_on`: Wiederholen hilft nicht, der Job soll in
+  # Mission Control als fehlgeschlagen sichtbar werden.
+  class AuthenticationError < StandardError; end
+
+  # Die Statistik hat die Daten mit HTTP 200, aber `"success": false` abgelehnt (z. B. ungültige Daten). Ebenfalls
+  # nicht in `retry_on`.
+  class RejectedError < StandardError; end
+
   class Worker < ApplicationJob
     retry_on Errno::ECONNRESET, EOFError, OpenSSL::SSL::SSLError, Errno::ECONNREFUSED, SocketError, Net::ReadTimeout,
              wait: :polynomially_longer, attempts: 8
@@ -44,25 +52,23 @@ class FireSportStatistics::Publishing < ApplicationRecord
   def publish!
     return false unless valid?
 
-    cookies = login
+    token = Rails.configuration.x.feuerwehrsport_statistik[:token]
+    raise AuthenticationError, 'FEUERWEHRSPORT_STATISTIK_TOKEN fehlt' if token.blank?
 
     response = conn.post('/api/import_requests', { 'import_request[compressed_data]': export_data }.to_query,
-                         'Cookie' => cookies)
+                         'Authorization' => "Bearer #{token}")
 
+    raise AuthenticationError, "Token abgelehnt (HTTP #{response.code})" if %w[401 403].include?(response.code)
     raise SocketError, 'Publishing failed' unless response.code == '200'
+
+    result = JSON.parse(response.body)
+    raise RejectedError, result['message'].presence || 'Übertragung abgelehnt' unless result['success'] == true
 
     update!(published_at: Time.current)
   end
 
   def export_data
     Exports::FullDump.new(competition, user, hint).to_export_data
-  end
-
-  def login
-    response = conn.post('/api/api_users', { 'api_user[name]': competition.name }.to_query)
-    raise SocketError, 'Login failed' unless response.code == '200'
-
-    response.get_fields('set-cookie').map { |cookie| cookie.split('; ')[0] }.join('; ')
   end
 
   def conn
