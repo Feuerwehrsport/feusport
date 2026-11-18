@@ -1,5 +1,5 @@
 = link_to("https://feuerwehrsport-statistik.de/people/#{person.id}", target: '_blank', rel: 'noopener') do
-  = image_tag('statistiken-logo.png', class: 'statistiken-logo')
+  = image_tag('feuerwehrsport-statistik.svg', alt: 'Feuerwehrsport-Statistik', class: 'statistiken-logo')
   Informationen auf Feuerwehrsport-Statistik.de über #{person.full_name}
 
 - if person.personal_best_table.present?
