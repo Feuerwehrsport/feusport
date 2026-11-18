@@ -7,7 +7,11 @@
   %i.far.fa-check.me-2
   Verknüpft mit <strong>#{team.fire_sport_statistics_team&.name}</strong>
   = link_to "https://feuerwehrsport-statistik.de/teams/#{team.fire_sport_statistics_team_id}", target: '_blank', rel: 'noopener', title: 'Informationen über diese Mannschaft auf Feuerwehrsport-Statistik.de aufrufen', class: 'btn btn-sm btn-light ms-2' do
+    = image_tag('feuerwehrsport-statistik.svg', alt: 'Feuerwehrsport-Statistik', class: 'statistiken-logo me-1')
     %i.far.fa-arrow-up-right-from-square
 .alert.alert-warning.mb-0#fire-sport-not-connected{ class: team.fire_sport_statistics_team.present? ? 'd-none' : nil }
   %i.far.fa-warning.me-2
   Keine Verknüpfung mit einer vorhandenen Mannschaft
+  = link_to 'https://feuerwehrsport-statistik.de', target: '_blank', rel: 'noopener', title: 'Feuerwehrsport-Statistik.de aufrufen', class: 'btn btn-sm btn-light ms-2' do
+    = image_tag('feuerwehrsport-statistik.svg', alt: 'Feuerwehrsport-Statistik', class: 'statistiken-logo me-1')
+    %i.far.fa-arrow-up-right-from-square

@@ -25,6 +25,16 @@
       %p.mb-0 Die Entwicklung passiert in meiner Freizeit. Ich mache das gern, weil ich hoffe, dass die Seite den Sport weiterbringt und vielen Wettkämpfen hilft.
 
     .mt-4
+      = card_body('Zusammen mit der Feuerwehrsport-Statistik') do
+        %p.text-center= image_tag('feuerwehrsport-statistik.svg', alt: 'Feuerwehrsport-Statistik', class: 'statistiken-logo')
+        %p
+          feusport.de und die #{link_to('Feuerwehrsport-Statistik', 'https://feuerwehrsport-statistik.de')} gehören zusammen.
+          Beide Projekte entwickle ich, und sie greifen ineinander: Personen und Mannschaften lassen sich mit der Statistik
+          verknüpfen, und die Ergebnisse eines Wettkampfs können nach dem Abschluss direkt dorthin übertragen werden.
+        %p.mb-0
+          Wer feusport.de unterstützt, unterstützt damit auch die Arbeit an der Feuerwehrsport-Statistik.
+
+    .mt-4
       = card_body('Wofür Spenden verwendet werden') do
         %p Eine Spende ist ein Dankeschön, keine Bedingung. Damit nachvollziehbar bleibt, was damit passiert:
         %ol

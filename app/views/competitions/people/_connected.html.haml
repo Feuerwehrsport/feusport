@@ -7,6 +7,7 @@
   %i.far.fa-check.me-2
   Verknüpft mit <strong class="first-name">#{person.fire_sport_statistics_person&.first_name}</strong> <strong class="last-name">#{person.fire_sport_statistics_person&.last_name}</strong>
   = link_to "https://feuerwehrsport-statistik.de/people/#{person.fire_sport_statistics_person_id}", target: '_blank', rel: 'noopener', title: 'Informationen über diese Person auf Feuerwehrsport-Statistik.de aufrufen', class: 'btn btn-sm btn-light ms-2' do
+    = image_tag('feuerwehrsport-statistik.svg', alt: 'Feuerwehrsport-Statistik', class: 'statistiken-logo me-1')
     %i.far.fa-arrow-up-right-from-square
 
   - if can?(:edit, person) && person.band.gender != 'indifferent'
@@ -18,3 +19,6 @@
 .alert.alert-warning.mb-0#fire-sport-not-connected{ class: person.fire_sport_statistics_person.present? ? 'd-none' : nil }
   %i.far.fa-warning.me-2
   Keine Verknüpfung mit einer vorhandenen Person
+  = link_to 'https://feuerwehrsport-statistik.de', target: '_blank', rel: 'noopener', title: 'Feuerwehrsport-Statistik.de aufrufen', class: 'btn btn-sm btn-light ms-2' do
+    = image_tag('feuerwehrsport-statistik.svg', alt: 'Feuerwehrsport-Statistik', class: 'statistiken-logo me-1')
+    %i.far.fa-arrow-up-right-from-square
