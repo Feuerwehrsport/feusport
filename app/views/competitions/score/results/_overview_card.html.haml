@@ -33,6 +33,8 @@
               Ja
               - if result.discipline.single_discipline?
                 (#{result.group_score_count} von #{result.group_run_count})
+                - if result.group_incomplete_rated?
+                  , unvollständige Mannschaften werden gewertet
             - else
               Nein
       - else

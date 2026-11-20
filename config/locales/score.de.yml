@@ -77,6 +77,7 @@ de:
         date: Datum
         forced_name: Name
         group_assessment: Mannschaftswertung
+        group_incomplete_rated: Unvollständige Mannschaften werten
         group_run_count: Wettkämpfer pro Disziplin
         group_score_count: Wettkämpfer in Wertung
         image_key: Symbol

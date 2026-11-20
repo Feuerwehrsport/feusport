@@ -3,7 +3,7 @@
 Score::GroupResult = Struct.new(:result) do
   include Score::Resultable
 
-  delegate :competition, :assessment, :name, :single_discipline?, to: :result
+  delegate :competition, :assessment, :name, :single_discipline?, :group_incomplete_rated?, to: :result
 
   def rows(*)
     @rows ||= if single_discipline?

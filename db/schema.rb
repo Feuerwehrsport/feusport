@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_09_120000) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_20_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -504,6 +504,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_09_120000) do
     t.boolean "calculation_help", default: false, null: false
     t.string "series_team_round_keys", default: [], array: true
     t.string "series_person_round_keys", default: [], array: true
+    t.boolean "group_incomplete_rated", default: false, null: false
     t.index ["assessment_id"], name: "index_score_results_on_assessment_id"
     t.index ["competition_id"], name: "index_score_results_on_competition_id"
   end

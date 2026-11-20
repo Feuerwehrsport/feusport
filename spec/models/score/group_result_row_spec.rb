@@ -87,4 +87,62 @@ RSpec.describe 'Score::GroupResultRow' do
       end
     end
   end
+
+  context 'with incomplete teams rated' do
+    let(:result) do
+      create(:score_result, competition:, assessment:, group_run_count: 4, group_score_count: 3,
+                            group_assessment: true, group_incomplete_rated: true)
+    end
+
+    let(:complete) { create(:team, competition:, band:) }
+    let(:two_starters) { create(:team, competition:, band:) }
+    let(:one_starter) { create(:team, competition:, band:) }
+    let(:two_valid) { create(:team, competition:, band:) }
+    let(:no_valid) { create(:team, competition:, band:) }
+    let(:too_many) { create(:team, competition:, band:) }
+    let!(:list) do
+      c = people(complete, 3)
+      t = people(two_starters, 2)
+      o = people(one_starter, 1)
+      v = people(two_valid, 3)
+      n = people(no_valid, 2)
+      m = people(too_many, 5)
+      create_score_list(result,
+                        c[0] => 10, c[1] => 10, c[2] => 10,
+                        t[0] => 12, t[1] => 12,
+                        o[0] => 5,
+                        v[0] => 10, v[1] => 10, v[2] => nil,
+                        n[0] => nil, n[1] => nil,
+                        m[0] => 1, m[1] => 1, m[2] => 1, m[3] => 1, m[4] => 1)
+    end
+
+    def people(team, count)
+      Array.new(count) { create(:person, :generated, team:, competition:, band:) }
+    end
+
+    it 'places teams by count of valid times and then by time' do
+      rows = group_result.rows
+      expect(rows.map(&:entity)).to eq [complete, two_valid, two_starters, one_starter, no_valid, too_many]
+      expect(rows.map(&:rank)).to eq [1, 2, 3, 4, 5, 6]
+
+      expect(rows[0].result_entry.time).to eq 30
+      expect(rows[1].result_entry.time).to eq Firesport::INVALID_TIME
+      expect(rows.map(&:competition_result_valid?)).to eq [true, true, true, true, true, false]
+    end
+
+    it 'exports validity for statistics' do
+      group_rows = Exports::Json::Score::Result.new(result).to_hash[:group_rows]
+      valid_index = group_rows.first.index('competition_result_valid')
+      expect(group_rows.drop(1).pluck(valid_index)).to eq [true, true, true, true, true, false]
+    end
+
+    it 'keeps old behaviour without option' do
+      result.update!(group_incomplete_rated: false)
+      rows = Score::Result.find(result.id).group_result.rows
+      expect(rows.map(&:competition_result_valid?).count(true)).to eq 2
+      expect(rows.first.entity).to eq complete
+      expect(rows.first.rank).to eq 1
+      expect(rows.second.entity).to eq two_valid
+    end
+  end
 end

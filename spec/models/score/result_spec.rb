@@ -10,6 +10,7 @@
 #  date                     :date
 #  forced_name              :string(100)
 #  group_assessment         :boolean          default(FALSE), not null
+#  group_incomplete_rated   :boolean          default(FALSE), not null
 #  group_run_count          :integer          default(8), not null
 #  group_score_count        :integer          default(6), not null
 #  image_key                :string(10)

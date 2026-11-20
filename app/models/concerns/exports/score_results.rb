@@ -74,12 +74,15 @@ module Exports::ScoreResults
 
   def build_group_data_rows(result, full: false)
     header = %w[Platz Name Summe]
-    header.push('statistik_team_id', 'statistik_team_number', 'gender') if full
+    header.push('statistik_team_id', 'statistik_team_number', 'gender', 'competition_result_valid') if full
     data = [header]
 
     result.group_result.rows.each do |row|
       line = ["#{row.rank}.", row.team.full_name, row.result_entry.human_time]
-      line.push(row&.team&.fire_sport_statistics_team_id, row&.team&.number, row&.team&.export_gender) if full
+      if full
+        line.push(row&.team&.fire_sport_statistics_team_id, row&.team&.number, row&.team&.export_gender,
+                  row.competition_result_valid?)
+      end
       data.push(line)
     end
     data

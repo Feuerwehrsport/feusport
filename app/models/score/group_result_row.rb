@@ -3,7 +3,7 @@
 Score::GroupResultRow = Struct.new(:team, :score_count, :run_count, :result) do
   include Score::ResultRowSupport
 
-  delegate :competition, to: :result
+  delegate :competition, :group_incomplete_rated?, to: :result
 
   def entity
     team
@@ -30,14 +30,22 @@ Score::GroupResultRow = Struct.new(:team, :score_count, :run_count, :result) do
     @rows_out
   end
 
+  # Bei unvollständigen Mannschaften (siehe group_incomplete_rated?) ist die Zeit ungültig,
+  # die Mannschaft wird aber trotzdem nach Anzahl der gültigen Zeiten platziert.
   def valid?
+    return calculate[:valid_count].positive? if group_incomplete_rated?
+
     result_entry.result_valid?
   end
 
   # Zeigt an, ob es generell gültig ist
   # Ungültig, wenn zu viele oder zu wenige gestartet sind
+  # Mit group_incomplete_rated? dürfen auch weniger Wettkämpfer gestartet sein
   def competition_result_valid?
-    @competition_result_valid ||= @result_rows.count.between?(score_count, run_count)
+    return @competition_result_valid if defined?(@competition_result_valid)
+
+    min_count = group_incomplete_rated? ? 1 : score_count
+    @competition_result_valid = @result_rows.count.between?(min_count, run_count)
   end
 
   def valid_compare
@@ -81,8 +89,20 @@ Score::GroupResultRow = Struct.new(:team, :score_count, :run_count, :result) do
     return { time: Firesport::INVALID_TIME, valid_count: 0 } unless competition_result_valid?
 
     @calculated[position] ||= {
-      time: @rows_in.sum { |row| row.result_entries[position]&.time || 0 },
+      time: calculate_time(position),
       valid_count: @rows_in.count { |row| row.result_entries[position]&.result_valid? || false },
     }
+  end
+
+  def calculate_time(position)
+    if group_incomplete_rated?
+      # Nur gültige Zeiten summieren, damit Mannschaften mit gleich vielen gültigen Zeiten vergleichbar sind
+      @rows_in.sum do |row|
+        entry = row.result_entries[position]
+        entry&.result_valid? ? entry.time : 0
+      end
+    else
+      @rows_in.sum { |row| row.result_entries[position]&.time || 0 }
+    end
   end
 end
